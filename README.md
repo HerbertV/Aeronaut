@@ -6,7 +6,7 @@
 
 -----------------------------------
 
-![Aeronaut Splash](https://github.com/HerbertV/as3-hv/blob/master/docs/Aeronaut_Splash.png?raw=true)
+![Aeronaut Splash](https://github.com/HerbertV/Aeronaut/blob/a9f8b5027bf53cd6c86364282fa6f43a35da05e9/docs/Aeronaut_Splash.png?raw=true)
 
 For more information visit:
 [FoxForceFive.de](http://www.foxforcefive.de/cs/) 
