@@ -1,0 +1,192 @@
+
+<p class="Headline">Advanced Editing - XML</p>
+<br>
+
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a>		
+</p>
+
+
+<p class="Text" align="justify">
+	<b>Working with XML</b>
+	<br>
+	<br>
+	All Data in Aeronaut is stored in AE files, that are nothing more than XML files.
+	This means you can open and edit these files with an editor that can handle an UTF-8
+	encoding. <br>
+	<br>
+	You will find all AE Files in the "data" sub-directory. There you will also find the aeronaut.xsd
+	a XML Schema file that can be used to validate your changes, if you have a XML editor at hand.<br>
+	<br>
+	But the most important thing is:<br>
+	<b>Don't forget to backup these files before you change them!</b>	
+</p>
+<br><br>
+
+
+<p class="Text">
+	<b>Editing BaseData.ae</b>
+	<br>
+	<br>
+	The "baseData.ae" file stores, most of the basic informations:
+	<li>Companies</li>
+	<li>Countries</li>
+	<li>Languages</li>
+	<li>Feats</li>
+	<li>Weapons (Guns, Ammunition and Rocket-like stuff)</li>
+	<li>Aircraft Charactaristics (aka. Special characteristic)</li>
+	<br>
+	So if you want to add for example new weapons or characteristics you start here. There are three different baseData files in the
+	data directory. Only "baseData.ae" is used by the programm, the other two are backups.<br>
+	<br>
+	The best way to add new elements to your base data file is to copy a tag-block and add it to the end of it's section.<br>
+	<br>
+	Here you will find a description of the most important tag-blocks:<br>
+	<br>
+	<br>
+	
+	
+	<i>Company Tag:</i><br>
+	<span class="Code">
+	&lt;company ID="C_001"&gt;<br>
+		&lt;shortName>Bell&lt;/shortName&gt;<br>
+		&lt;longName>Bell Aircraft Corporation&lt;/longName&gt;<br>
+	&lt;/company&gt;<br><br>
+	</span>
+	The Companies are used in the aircraft window to fill the manufacturer list. 
+	The attribute "ID" has to be unique.
+	The "longName" tag is shown in the manufacturer list and the "shortName" tag is used as a prefix
+	for the aircrafts name in the print sheet.
+	<br>
+	<br>
+	
+	<i>Country Tag:</i><br>
+	<span class="Code">
+	&lt;country ID="CY_001" languageID="L_01" srcFlag="na_alaska.jpg"&gt;Alaska&lt;/country&gt;<br>
+	</span>
+	<br>
+	The contries are used in the pilot window for choosing a nationality for your pilot. 
+	The attribute "ID" has to be unique.
+	The attribute "languageID" is a reference to the mother tongue spooken in this country.
+	The attribute "srcFlag" is the file name of the national flag. All Flags are stored in 
+	"\images\nations\" sub-directory.
+	Inside the tag the countries name is stored.
+	<br>
+	<br>
+	<br>
+	
+	
+	<i>Language Tag:</i><br>
+	<span class="Code">
+	&lt;language ID="L_01"&gt;English&lt;/language&gt;<br>
+	</span>
+	<br>
+	If you use the Feat rules you can choose also "Language Feats".
+	The attribute "ID" has to be unique.	
+	<br>
+	<br>
+	<br>
+	
+	<i>Feat Tag:</i><br>
+	<span class="Code">
+	&lt;feat  ID="F_01" maxLvl="0" xpCost="200"&gt;Ace of Aces&lt;/feat&gt;<br>
+	</span>
+	<br>
+	If you use the Feat rules you can choose from this list in the pilot window.
+	The attribute "ID" has to be unique.	
+	The attribute "maxLevel" describes how many levels a feat has. Some feats have no levels. so this value is set to 0.
+	But if it has 2 levels you set this value to 2. 
+	The attribute "xpCost" stores the experience costs per level, if your feat has non levels only a single number is necessary.
+	If your feat has for example 3 levels than you write your costs like this 50,100,150. The first value is the cost for level 1
+	the secound value is for level 2 and so on.
+	<br>
+	<br>
+	<br>
+	
+	<i>Gun Tag:</i><br>
+	<span class="Code">
+	&lt;gun ID="CAL_30_N" range="7" cal="30" weight="150" price="180"&gt;<br>
+		&lt;shortName>30&lt;/shortName&gt;<br>
+		&lt;longName>.30-caliber-gun&lt;/longName&gt;<br>
+	&lt;/gun&gt;<br>
+	</span>
+	<br>
+	Here you can add anything that is attachable to a gunpoint.
+	The attribute "ID" has to be unique.	
+	The attribute "range" is the gun range in hexes.
+	The attribute "cal" is the caliber which is used as a reference for the ammunition.
+	The attribute "weight" is the weight in lbs.
+	The attribute "price" is the price in Dollar.
+	The "longName" tag is shown in the weapon list and the "shortName" tag is used in the print sheet.
+	<br>
+	<br>
+	<br>
+	
+	<i>Ammunition Tag:</i><br>
+	<span class="Code">
+	&lt;ammunition ID="30_AP" cal="30" price="10"&gt;<br>
+		&lt;shortName&gt;AP&lt;/shortName&gt;<br>
+		&lt;longName&gt;Armor Percing .30-cal&lt;/longName&gt;<br>
+	&lt;/ammunition&gt;<br>
+	</span>
+	<br>
+	The attribute "ID" has to be unique.	
+	The attribute "cal" is the caliber which is used as a reference for the gun.
+	The attribute "price" is the price in Dollar.
+	The "longName" tag is shown in the loadout list and the "shortName" tag is used in the print sheet.
+	<br>
+	<br>
+	<br>
+	
+	<i>Rocket Tag:</i><br>
+	<span class="Code">
+	&lt;rocket type="rocket" range="4" slots="1" usesPerSlot="1" ID="AP" price="200"&gt;<br>
+		&lt;shortName&gt;AP&lt;/shortName&gt;<br>
+		&lt;longName&gt;Armor Piercing&lt;/longName&gt;<br>
+	&lt;/rocket&gt;<br>
+	</span>
+	<br>
+	Here you can add anything that is attachable to a rocket hardpoint.
+	The attribute "ID" has to be unique.	
+	The attribute "type" can be rocket, bomb, reloadable or fueltank.
+	The attribute "range" is the range in hexes.
+	The attributes "slots" and "usesPerSlot" describing the space a rocket needs. 
+	The attribute "price" is the price in Dollar.
+	The "longName" tag is shown in the weapon list and the "shortName" tag is used in the print sheet.
+	<br>
+	<br>
+	<br>
+	
+	
+	<i>Special Characteristic Tag:</i><br>
+	<span class="Code">
+	&lt;specialCharacteristic ID="AC_001" groupID="nitro" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false"&gt;<br>
+		&lt;name&gt;Nitro Injectors&lt;/name&gt;<br>
+		&lt;description&gt;&lt;/description&gt;<br>
+	&lt;/specialCharacteristic&gt;<br>
+	</span>
+	<br>
+	The attribute "ID" has to be unique.	
+	The attribute "groupID" is not used so far.
+	The attribute "costType" can be additional, engine, airframe, cockpit, armor, weapon or a comma seperated list of engine, airframe, cockpit, armor and weapon.
+	The attribute "weightChanges" till now only absolute values are possible, but percent values will be enabled with a future update. 
+	The attribute "costChanges" can be absolute or percent. Absolute if costType is additional all other weights are in percent.
+	The "descripton" tag is not used so far.
+	
+	
+	
+</p>
+<br><br>
+
+<p class="Text" align="justify">
+	<b>Editing RulesConfig.ae</b>
+	<br>
+	<br>
+	The "rulesConfig.ae" file defines official rules and custom rules und you can switch them easily in the option menu.
+	
+</p>
+<br>
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a>		
+</p>
+	

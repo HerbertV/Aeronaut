@@ -1,0 +1,30 @@
+<aeronaut XMLVersion="1.0">
+  
+  <pilot type="hero" naturalTouch="7" sixthSense="4" deadEye="6" steadyHand="2" constitution="3" quickDraw="2,1" totalXP="450" currentXP="0" bailOutBonus="0" linkedTo="">
+    
+    <name>Xp tester</name>
+    
+    <appearance gender="male" height="5,9" weight="130" hairColor="test" eyeColor="test" srcFoto=""/>
+    
+    <country ID="CY_004"/>
+    
+    <squadron ID="HollywoodKnights.ae"/>
+    
+    <planename>Your Planename</planename>
+    
+    <description/>
+    
+    <equipment/>
+    
+    <languages>
+      
+      <learnedLanguage ID="L_01" isMotherTongue="true"/>
+    </languages>
+    
+    <feats></feats>
+    
+    <logs missions="0" kills="0" craftLost="0"/>
+    
+  </pilot>
+  
+</aeronaut>

@@ -1,0 +1,45 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft frameType="fighter" PropType="pusher" baseTarget="8" accelRate="2" maxSpeed="3" maxGs="3" decelRate="2" engineCount="1" crewCount="1">
+    
+    <name>Skewer</name>
+    
+    <manufacturer ID="C_023"/>
+    
+    <specs height="12,7" length="30,2" range="400" serviceCeiling="18000" wingspan="35,1"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_022"/>
+      <specialCharacteristic ID="AC_013"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="2"/>
+    
+    <turrets></turrets>
+    
+    <armor starboardwingTrailing="30" tail="30" portwingTrailing="30" starboardwingLeading="40" nose="50" portwingLeading="40"/>
+    
+  </aircraft>
+  
+</aeronaut>

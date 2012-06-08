@@ -1,0 +1,48 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft frameType="heavyFighter" PropType="pusher" baseTarget="5" accelRate="2" maxSpeed="4" maxGs="2" decelRate="2" engineCount="1" crewCount="2">
+    
+    <name>PZ1 Phantasm</name>
+    
+    <manufacturer ID="C_038"/>
+    
+    <specs height="9,11" length="32,6" range="400" serviceCeiling="29000" wingspan="34,2"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_005"/>
+      <specialCharacteristic ID="AC_009"/>
+      <specialCharacteristic ID="AC_023"/>
+      <specialCharacteristic ID="AC_029"/>
+      <specialCharacteristic ID="AC_036"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="CAL_50_S" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="CAL_50_S" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_50_S" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_50_S" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="5"/>
+    
+    <turrets></turrets>
+    
+    <armor starboardwingTrailing="40" tail="40" portwingTrailing="40" starboardwingLeading="50" nose="50" portwingLeading="50"/>
+    
+  </aircraft>
+  
+</aeronaut>

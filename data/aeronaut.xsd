@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Andreas Nutz (seven M GmbH) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="aeronaut">
+		<xs:annotation>
+			<xs:documentation>ROOT</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="baseData">
+					<xs:annotation>
+						<xs:documentation>hier werden basisdaten abgelegt und die Configuration des Tools</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="preferences">
+								<xs:complexType>
+									<xs:attribute name="isDebugMode" type="xs:boolean" default="true"/>
+									<xs:attribute name="debugLevel">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="companies">
+								<xs:annotation>
+									<xs:documentation>wird ua. für die manufactures benutzt</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="company" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="shortName" type="xs:string"/>
+													<xs:element name="longName" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="countries">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="country" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="ID" type="xs:string" use="required"/>
+														<xs:attribute name="srcFlag" type="xs:string" use="required"/>
+														<xs:attribute name="languageID" type="xs:string" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="languages">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="language" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="ID" type="xs:string" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="xpCost" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="feats">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="feat" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>xpCost as CSV Array per Level</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="ID" type="xs:string" use="required"/>
+														<xs:attribute name="xpCost" type="xs:string" use="required"/>
+														<xs:attribute name="maxLvl" type="xs:int" use="required"/>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="weapons">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="guns">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="gun" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>cal = Caliber
+
+weight = wird in lbs angegeben
+
+shortName is used in the aircraft sheet</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="shortName" type="xs:string"/>
+																<xs:element name="longName" type="xs:string"/>
+															</xs:sequence>
+															<xs:attribute name="ID" type="xs:string" use="required"/>
+															<xs:attribute name="cal" type="xs:int" use="required"/>
+															<xs:attribute name="weight" type="xs:int" use="required"/>
+															<xs:attribute name="price" type="xs:int" use="required"/>
+															<xs:attribute name="range" type="xs:int" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ammunitions">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ammunition" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="shortName" type="xs:string"/>
+																<xs:element name="longName" type="xs:string"/>
+															</xs:sequence>
+															<xs:attribute name="ID" type="xs:string" use="required"/>
+															<xs:attribute name="cal" type="xs:int" use="required"/>
+															<xs:attribute name="price" type="xs:int" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="rockets">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="rocket" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="shortName" type="xs:string"/>
+																<xs:element name="longName" type="xs:string"/>
+															</xs:sequence>
+															<xs:attribute name="ID" type="xs:string" use="required"/>
+															<xs:attribute name="type" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="rocket"/>
+																		<xs:enumeration value="bomb"/>
+																		<xs:enumeration value="reloadable"/>
+																		<xs:enumeration value="fueltank"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="slots" type="xs:int" use="required"/>
+															<xs:attribute name="usesPerSlot" type="xs:int" use="required"/>
+															<xs:attribute name="range" type="xs:int" use="required"/>
+															<xs:attribute name="price" type="xs:int" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="aircraftCharacteristics">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="specialCharacteristic" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>costType as CSV Array may contain:
+"additional" "engine" "airframe" "cockpit" "armor" "weapon"
+
+costChanges in percent or fixed cost. fixed if additional all other costs are in percent
+
+weightChanges in percent or fixed weight. fixed if additional all other weights are in percent
+
+
+hasHardcodedAbility = some characteristics have hardcoded stuff then this attribute is true
+
+groupID = there can only be one characterristic with the same groupid on an aircraft
+</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="name" type="xs:string"/>
+													<xs:element name="description" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="groupID" type="xs:string" use="required"/>
+												<xs:attribute name="costType" type="xs:string" use="required"/>
+												<xs:attribute name="costChanges" type="xs:float" use="required"/>
+												<xs:attribute name="weightChanges" type="xs:float" use="required"/>
+												<xs:attribute name="hasHardcodedAbility" type="xs:boolean" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ruleConfigs">
+					<xs:annotation>
+						<xs:documentation>here is all the stuff included that are changeable for custom Houserules and some  other settings that can be change within the option panel</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="genericSettings">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="printAircraftFlavorSheet">
+											<xs:complexType>
+												<xs:attribute name="doPrint" type="xs:boolean" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="modifiedRocketHardpoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ruleMRHP" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="type" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="official"/>
+															<xs:enumeration value="custom"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="massReduction" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="useRule" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="official"/>
+												<xs:enumeration value="custom"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="aircraftCostCalculation">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ruleACC" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="accFormular" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="condition" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="heavyFighter"/>
+																		<xs:enumeration value="fighter"/>
+																		<xs:enumeration value="hoplite"/>
+																		<xs:enumeration value="bomber"/>
+																		<xs:enumeration value="*"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="calcParameter" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="BTN"/>
+																		<xs:enumeration value="-BTN"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="calcOperator" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="+"/>
+																		<xs:enumeration value="-"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="calcValue" type="xs:int" use="required"/>
+															<xs:attribute name="calcDollarMultiplier" type="xs:int" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="type" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="official"/>
+															<xs:enumeration value="custom"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="useRule" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="official"/>
+												<xs:enumeration value="custom"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="activatePilotFeats">
+								<xs:complexType>
+									<xs:attribute name="active" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="activateMaxCharacteristicCheck">
+								<xs:complexType>
+									<xs:attribute name="active" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="squadron">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name"/>
+						</xs:sequence>
+						<xs:attribute name="srcLogo" type="url" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="loadout">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string"/>
+							<xs:element name="gunAmmos">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="gunAmmo" minOccurs="0" maxOccurs="8">
+											<xs:complexType>
+												<xs:attribute name="gunPointNumber" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="8"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ammoID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="rockets">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="rocketLoadout" minOccurs="0" maxOccurs="16">
+											<xs:annotation>
+												<xs:documentation>subSlot = für Raketen die nur halbe Slots brauchen kann 0,1 oder 2 sein.
+0= beide Subslots werden gebraucht
+1= erste subslot
+2= zweiter subslot usw</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="slotNumber" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="8"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="subSlot" type="xs:int" use="required"/>
+												<xs:attribute name="rocketID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="srcAircraft" type="url"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="pilot">
+					<xs:annotation>
+						<xs:documentation>Hier ist alles drin was man für jeden Charakter von CS Braucht</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string"/>
+							<xs:element name="appearance">
+								<xs:complexType>
+									<xs:attribute name="gender" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="male"/>
+												<xs:enumeration value="female"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="height" type="xs:string" use="required"/>
+									<xs:attribute name="weight" type="xs:string" use="required"/>
+									<xs:attribute name="hairColor" type="xs:string" use="required"/>
+									<xs:attribute name="eyeColor" type="xs:string" use="required"/>
+									<xs:attribute name="srcFoto" type="url" use="required"/>
+									<xs:attribute name="srcCounter" type="url" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="country">
+								<xs:complexType>
+									<xs:attribute name="ID" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="squadron">
+								<xs:complexType>
+									<xs:attribute name="ID" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="planename" type="xs:string"/>
+							<xs:element name="noseart">
+								<xs:complexType>
+									<xs:attribute name="src" type="url" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="description" type="xs:string"/>
+							<xs:element name="equipment" type="xs:string"/>
+							<xs:element name="languages">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="learnedLanguage" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="languageID" type="xs:string" use="required"/>
+												<xs:attribute name="isMotherTongue" type="xs:boolean" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="feats">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="learnedFeat" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="currLvl" type="xs:int" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="logs">
+								<xs:complexType>
+									<xs:attribute name="missions" type="xs:int" use="required"/>
+									<xs:attribute name="kills" type="xs:int" use="required"/>
+									<xs:attribute name="craftLost" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="type" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="hero"/>
+									<xs:enumeration value="sidekick"/>
+									<xs:enumeration value="copilotgunner"/>
+									<xs:enumeration value="npc"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="naturalTouch" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="sixthSense" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="deadEye" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="steadyHand" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="constitution" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="quickDraw" type="xs:string" use="required"/>
+						<xs:attribute name="currentXP" type="xs:int" use="required"/>
+						<xs:attribute name="totalXP" type="xs:int" use="required"/>
+						<xs:attribute name="bailOutBonus" type="xs:int" use="required"/>
+						<xs:attribute name="linkedTo" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="aircraft">
+					<xs:annotation>
+						<xs:documentation>Alle Fliegerdaten </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string"/>
+							<xs:element name="manufacturer" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="ID" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="specs">
+								<xs:annotation>
+									<xs:documentation>serviceCeiling in feet
+
+range in miles
+
+wingspan, length and height in feets and inches as CSV first feet then inches. Note: 12 in. = 1 ft.
+</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="serviceCeiling" type="xs:int"/>
+									<xs:attribute name="range" type="xs:int"/>
+									<xs:attribute name="wingspan" type="xs:string"/>
+									<xs:attribute name="length" type="xs:string"/>
+									<xs:attribute name="height" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="specialCharacteristics">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="specialCharacteristic" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="gunpoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="gunpoint" minOccurs="0" maxOccurs="8">
+											<xs:annotation>
+												<xs:documentation>gunID = ID aus basedata</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="pointNumber" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="8"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="gunID" type="xs:string" use="required"/>
+												<xs:attribute name="firelinkGroup" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="0"/>
+															<xs:maxInclusive value="8"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="ammolinkGroup" type="xs:int" use="required"/>
+												<xs:attribute name="direction" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="forward"/>
+															<xs:enumeration value="turret"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="rocketslots">
+								<xs:annotation>
+									<xs:documentation>count deswegen falls man einen slot wegkauft um gewicht zu sparen</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="count" type="xs:int"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="turrets">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="turret" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>linkedGuns = Gun point numbers as CSV Array</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="direction" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="front"/>
+															<xs:enumeration value="rear"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="linkedGuns" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="armor">
+								<xs:complexType>
+									<xs:attribute name="nose" type="xs:int" use="required"/>
+									<xs:attribute name="portwingLeading" type="xs:int" use="required"/>
+									<xs:attribute name="portwingTrailing" type="xs:int" use="required"/>
+									<xs:attribute name="starboardwingLeading" type="xs:int" use="required"/>
+									<xs:attribute name="starboardwingTrailing" type="xs:int" use="required"/>
+									<xs:attribute name="tail" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="description" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="frameType" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="fighter"/>
+									<xs:enumeration value="heavyFighter"/>
+									<xs:enumeration value="hoplite"/>
+									<xs:enumeration value="bomber"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="PropType" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="tractor"/>
+									<xs:enumeration value="pusher"/>
+									<xs:enumeration value="double"/>
+									<xs:enumeration value="hoplite"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="baseTarget" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="0"/>
+									<xs:maxInclusive value="10"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="maxSpeed" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="5"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="maxGs" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="5"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="accelRate" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="5"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="decelRate" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="5"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="crewCount" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="engineCount" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="srcFoto" type="url" use="optional"/>
+						<xs:attribute name="srcCounter" type="url" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="zeppelin">
+					<xs:annotation>
+						<xs:documentation>TODO</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="XMLVersion" type="xs:string" use="required" fixed="1.0"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="url">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9\.]+/*[a-zA-Z0-9/\\%_.]*\?*[a-zA-Z0-9/\\%_.=&amp;]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aeronaut XMLVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="aeronaut.xsd">
+	<baseData>
+		<preferences isDebugMode="false" debugLevel="0"/>
+
+		<!-- ==================================== Companies ==================================== -->
+		<companies>
+			<company ID="C_001">
+				<shortName>Bell</shortName>
+				<longName>Bell Aircraft Corporation</longName>
+			</company>
+			<company ID="C_002">
+				<shortName>Curtiss-Wright</shortName>
+				<longName>Curtiss-Wright Aviation</longName>
+			</company>
+			<company ID="C_003">
+				<shortName>Debruin</shortName>
+				<longName>Debruin Company</longName>
+			</company>
+			<company ID="C_004">
+				<shortName>Fairchild</shortName>
+				<longName>Fairchild Aircraft Manufacturing</longName>			
+			</company>
+			<company ID="C_005">
+				<shortName>Grumman</shortName>
+				<longName>Grumman Aircraft Engineering</longName>
+			</company>
+			<company ID="C_006">
+				<shortName>Hughes</shortName>
+				<longName>Hughes Aviation Company</longName>
+			</company>
+			<company ID="C_007">
+				<shortName>Marquette</shortName>
+				<longName>Marquette Airworks</longName>
+			</company>
+			<company ID="C_008">
+				<shortName>McDonnell</shortName>
+				<longName>McDonnell Aircraft Corporation</longName>
+			</company>
+			<company ID="C_009">
+				<shortName>Mitsubishi</shortName>
+				<longName>Mitsubishi &amp; Nakajima Kotobuki</longName>
+			</company>
+			<company ID="C_010">
+				<shortName>Ravenscroft</shortName>
+				<longName>Ravenscroft</longName>
+			</company>
+			<company ID="C_011">
+				<shortName>Sanderson</shortName>
+				<longName>Sanderson Machine Corporation</longName>
+			</company>
+			<company ID="C_012">
+				<shortName>Whittley &amp; Douglas</shortName>
+				<longName>Whittley &amp; Douglas</longName>
+			</company>
+			<company ID="C_013">
+				<shortName>William and Colt</shortName>
+				<longName>William and Colt Aviation</longName>
+			</company>
+			<company ID="C_014">
+				<shortName>Yakolev</shortName>
+				<longName>Yakolev</longName>
+			</company>
+			<company ID="C_015">
+				<shortName>Ford</shortName>
+				<longName>Ford Motors</longName>
+			</company>
+			<company ID="C_016">
+				<shortName>Metroplex</shortName>
+				<longName>Metroplex Autogyro Corporation</longName>
+			</company>
+			<company ID="C_017">
+				<shortName>StoutMetal</shortName>
+				<longName>StoutMetal/Ford Aircraft Company</longName>
+			</company>
+			<company ID="C_018">
+				<shortName>Blackflag</shortName>
+				<longName>Blackflag</longName>
+			</company>
+			<company ID="C_019">
+				<shortName>Bristol</shortName>
+				<longName>Bristol</longName>
+			</company>
+			<company ID="C_020">
+				<shortName>Focke-Wulf</shortName>
+				<longName>Focke-Wulf</longName>
+			</company>
+			<company ID="C_021">
+				<shortName>GM - Messerschmitt</shortName>
+				<longName>General Motors - Messerschmitt</longName>
+			</company>
+			<company ID="C_022">
+				<shortName>Boeing</shortName>
+				<longName>Boeing Aircraft Company</longName>
+			</company>
+			<company ID="C_023">
+				<shortName>Chance-Vought</shortName>
+				<longName>Chance-Vought</longName>
+			</company>
+			<company ID="C_024">
+				<shortName>TNCA</shortName>
+				<longName>National Aircraft Factory</longName>
+			</company>
+			<company ID="C_025">
+				<shortName>De Havilland</shortName>
+				<longName>De Havilland Aircraft Company</longName>
+			</company>
+			<company ID="C_026">
+				<shortName>Sikorsky</shortName>
+				<longName>Sikorsky Aircraft Division</longName>
+			</company>
+			<company ID="C_027">
+				<shortName>McKinley</shortName>
+				<longName>McKinley Aviation</longName>
+			</company>
+			<company ID="C_028">
+				<shortName>PacAir</shortName>
+				<longName>PacAir Aviation</longName>
+			</company>
+			<company ID="C_029">
+				<shortName>North American</shortName>
+				<longName>North American Aircrafts </longName>
+			</company>
+			<company ID="C_030">
+				<shortName>WADG/Fairchild</shortName>
+				<longName>WADG/Fairchild</longName>
+			</company>
+			<company ID="C_031">
+				<shortName>Voss</shortName>
+				<longName>Voss</longName>
+			</company>
+			<company ID="C_032">
+				<shortName>Hughes-Consolidated</shortName>
+				<longName>Hughes-Consolidated Aircraft</longName>
+			</company>
+			<company ID="C_033">
+				<shortName>Davis</shortName>
+				<longName>Davis Aviation</longName>
+			</company>
+			<company ID="C_034">
+				<shortName>Seversky</shortName>
+				<longName>Seversky Aircraft Corporation</longName>
+			</company>
+			<company ID="C_035">
+				<shortName>Northrop</shortName>
+				<longName>Northrop Aircraft Inc.</longName>
+			</company>
+			<company ID="C_036">
+				<shortName>Deseret Air</shortName>
+				<longName>Deseret Air Company</longName>
+			</company>
+			<company ID="C_037">
+				<shortName>Houston</shortName>
+				<longName>Houston Aircraft Company</longName>
+			</company>
+			<company ID="C_038">
+				<shortName>Rolls-Royce </shortName>
+				<longName>Rolls-Royce </longName>
+			</company>
+			<company ID="C_039">
+				<shortName>Aerotechnologies</shortName>
+				<longName>Aerotechnologies Corporation</longName>
+			</company>
+			<company ID="C_040">
+				<shortName>Moraine-Saulnier</shortName>
+				<longName>Moraine-Saulnier</longName>
+			</company>
+			<company ID="C_041">
+				<shortName>Fairey</shortName>
+				<longName>Fairey Aviation Company Ltd</longName>
+			</company>			
+			<company ID="C_042">
+				<shortName>S.I.P.A.</shortName>
+				<longName>Société Industrielle Pour L'Aviation</longName>
+			</company>
+	
+		</companies>		
+		
+		
+		<!-- ==================================== Countries ==================================== -->
+		<countries>
+				<country ID="CY_001" languageID="L_01" srcFlag="na_alaska.jpg">Alaska</country>
+				<country ID="CY_002" languageID="L_05" srcFlag="na_appalacia.jpg">Appalachia</country>
+				<country ID="CY_003" languageID="L_03" srcFlag="na_arixo.jpg">Arixo</country>
+				<country ID="CY_004" languageID="L_01" srcFlag="na_atlantic.jpg">Atlantic Coalition</country>
+				<country ID="CY_005" languageID="L_01" srcFlag="na_colorado.jpg">Free Colorado</country>
+				<country ID="CY_006" languageID="L_01" srcFlag="na_columbia.jpg">Columbia</country>
+				<country ID="CY_007" languageID="L_01" srcFlag="na_dixie.jpg">Confederation of Dixie and the Outer Banks</country>
+				<country ID="CY_008" languageID="L_01" srcFlag="na_empirestate.jpg">Empire State</country>
+				<country ID="CY_009" languageID="L_06" srcFlag="na_hawaii.jpg">Kingdom of Hawaii</country>
+				<country ID="CY_010" languageID="L_01" srcFlag="na_hollywood.jpg">Nation of Hollywood</country>
+				<country ID="CY_011" languageID="L_01" srcFlag="na_isa.jpg">Industrial States of America</country>
+				<country ID="CY_012" languageID="L_05" srcFlag="na_lakota.jpg">Lakota</country>
+				<country ID="CY_013" languageID="L_02" srcFlag="na_louisiana.jpg">French Louisiana</country>
+				<country ID="CY_014" languageID="L_01" srcFlag="na_maritim.jpg">Maritime Provinces</country>
+				<country ID="CY_015" languageID="L_08" srcFlag="na_mexico.jpg">Mexico</country>
+				<country ID="CY_016" languageID="L_05" srcFlag="na_navajo.jpg">Navajo Nation</country>
+				<country ID="CY_017" languageID="L_01" srcFlag="na_ontario.jpg">Protectorate of Ontario</country>
+				<country ID="CY_018" languageID="L_01" srcFlag="na_pacifica.jpg">Pacifica</country>
+				<country ID="CY_019" languageID="L_01" srcFlag="na_peoplescoll.jpg">Peoples Collective</country>
+				<country ID="CY_020" languageID="L_02" srcFlag="na_quebec.jpg">Republique de Quebec</country>
+				<country ID="CY_021" languageID="L_01" srcFlag="na_texas.jpg">Republic of Texas</country>
+				<country ID="CY_022" languageID="L_01" srcFlag="na_utha.jpg">Utha</country>
+				
+				<country ID="CY_023" languageID="L_11" srcFlag="">Independent Northern Andes Nation</country>
+
+				<country ID="CY_024" languageID="L_01" srcFlag="eu_britishemp.jpg">British Empire and the Commonwealth</country>
+				<country ID="CY_025" languageID="L_02" srcFlag="">France</country>
+				<country ID="CY_026" languageID="L_04" srcFlag="">German Kaiserreich</country>
+				<country ID="CY_027" languageID="L_14" srcFlag="">Italy</country>
+				<country ID="CY_028" languageID="L_03" srcFlag="">Spain</country>
+				<country ID="CY_029" languageID="L_10" srcFlag="">Russia</country>
+				
+				<country ID="CY_030" languageID="L_13" srcFlag="">China</country>
+				<country ID="CY_031" languageID="L_09" srcFlag="asia_japan.jpg">Empire of Japan</country>
+				<country ID="CY_032" languageID="L_15" srcFlag="">Kingdom of Siam</country>
+				<country ID="CY_033" languageID="L_01" srcFlag="">Australia</country>
+		
+		</countries>
+		
+		<languages xpCost="20">
+			<language ID="L_01">English</language>
+			<language ID="L_02">French</language>
+			<language ID="L_03">Spanish</language>
+			<language ID="L_04">German</language>
+			<language ID="L_05">Navajo</language>
+			<language ID="L_06">Hawaiian</language>
+			<language ID="L_07">Indian</language>
+			<language ID="L_08">Nahuatl (Mexicano)</language>
+			<language ID="L_09">Japanese</language>
+			<language ID="L_10">Russian</language>
+			<language ID="L_11">Yucatec Maya</language>
+			<language ID="L_12">Mandarin</language>
+			<language ID="L_13">Cantonese</language>
+			<language ID="L_14">Italian</language>
+			<language ID="L_15">Thai</language>
+			<language ID="L_16">Arabic</language>
+		</languages>
+		
+		<!-- ==================================== Feats ==================================== -->
+		<feats>
+			<feat  ID="F_01" maxLvl="0" xpCost="200">Ace of Aces</feat>
+			<feat  ID="F_02" maxLvl="0" xpCost="60">Airborne</feat>
+			<feat  ID="F_03" maxLvl="0" xpCost="80">Outmaneuver</feat>
+			<feat  ID="F_04" maxLvl="0" xpCost="120">Evade</feat>
+			<feat  ID="F_05" maxLvl="2" xpCost="50,60">Gunner</feat>
+			<feat  ID="F_06" maxLvl="0" xpCost="200">Better lucky than good</feat>
+			<feat  ID="F_07" maxLvl="0" xpCost="50">Chewing Gum Repair</feat>
+			<feat  ID="F_08" maxLvl="0" xpCost="100">Dual Pistol Shooting</feat>
+			<feat  ID="F_09" maxLvl="0" xpCost="40">Picklock</feat>
+			<feat  ID="F_10" maxLvl="0" xpCost="40">First Aid</feat>
+			<feat  ID="F_11" maxLvl="0" xpCost="100">Fleet Comander</feat>
+			<feat  ID="F_12" maxLvl="3" xpCost="40,50,60">Inventor</feat>
+			<feat  ID="F_13" maxLvl="3" xpCost="50,60,70">Gunslinger</feat>
+			<feat  ID="F_14" maxLvl="0" xpCost="80">Kamikaze</feat>
+			<feat  ID="F_15" maxLvl="2" xpCost="50,60">Stunt Pilot</feat>
+			<feat  ID="F_16" maxLvl="2" xpCost="50,40">Mechanic</feat>
+			<feat  ID="F_17" maxLvl="0" xpCost="100">Out of the Sun</feat>
+			<feat  ID="F_18" maxLvl="2" xpCost="70,50">Strafing</feat>
+			<feat  ID="F_19" maxLvl="0" xpCost="100">Squadron Leader</feat>
+			<feat  ID="F_20" maxLvl="0" xpCost="20">Seduction (f)/ Womanizer (m)</feat>
+			<feat  ID="F_21" maxLvl="0" xpCost="20">Know.: Hist./Cult. Antiquity</feat>
+			<feat  ID="F_22" maxLvl="0" xpCost="20">Know.: Hist./Cult. Asia</feat>
+			<feat  ID="F_23" maxLvl="0" xpCost="20">Know.: Hist./Cult. Middle-/Southamerica</feat>
+			<feat  ID="F_24" maxLvl="0" xpCost="20">Know.: Hist./Cult. Native American</feat>
+			<feat  ID="F_25" maxLvl="0" xpCost="20">Know.: Hist./Cult. Europe</feat>
+			<feat  ID="F_26" maxLvl="0" xpCost="20">Know.: Hist./Cult. Egypt</feat>
+			<feat  ID="F_27" maxLvl="0" xpCost="20">Know.: Physics</feat>
+			<feat  ID="F_28" maxLvl="0" xpCost="20">Know.: Chemistry</feat>
+			<feat  ID="F_29" maxLvl="0" xpCost="20">Know.: Mathematics</feat>
+			<feat  ID="F_30" maxLvl="0" xpCost="20">Know.: Aerodynamics</feat>
+			<feat  ID="F_31" maxLvl="0" xpCost="20">Know.: Biology</feat>
+			<feat  ID="F_32" maxLvl="2" xpCost="70,80">Zeppelin Pilot</feat>
+			
+		</feats>
+		
+		<!-- ==================================== Weapons ==================================== -->
+		<weapons>
+			<guns>
+		
+				<!-- ==================================== Normal Guns ==================================== -->
+				<gun ID="CAL_30_N" range="7" cal="30" weight="150"  price="180">
+					<shortName>30</shortName>
+					<longName>.30-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_40_N" range="6" cal="40" weight="250"  price="260">
+					<shortName>40</shortName>
+					<longName>.40-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_50_N" range="5" cal="50" weight="400"  price="400">
+					<shortName>50</shortName>
+					<longName>.50-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_60_N" range="4" cal="60" weight="600"  price="590">
+					<shortName>60</shortName>
+					<longName>.60-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_70_N" range="3" cal="70" weight="850"  price="900">
+					<shortName>70</shortName>
+					<longName>.70-caliber-cannon</longName>
+				</gun>
+
+				<!-- ==================================== inferior Guns ==================================== -->
+				<!-- price -25% -->
+				<gun ID="CAL_30_I" range="7" cal="30" weight="150"  price="143">
+					<shortName>i 30</shortName>
+					<longName>inferior .30-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_40_I" range="6" cal="40" weight="250"  price="195">
+					<shortName>i 40</shortName>
+					<longName>inferior .40-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_50_I" range="5" cal="50" weight="400"  price="300">
+					<shortName>i 50</shortName>
+					<longName>inferior .50-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_60_I" range="4" cal="60" weight="600"  price="443">
+					<shortName>i 60</shortName>
+					<longName>inferior .60-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_70_I" range="3" cal="70" weight="850"  price="675">
+					<shortName>i 70</shortName>
+					<longName>inferior .70-caliber-cannon</longName>
+				</gun>
+				
+				<!-- ==================================== superior Guns ==================================== -->
+				<!-- price x2  -->
+				<gun ID="CAL_30_S" range="7" cal="30" weight="150"  price="360">
+					<shortName>s 30</shortName>
+					<longName>superior .30-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_40_S" range="6" cal="40" weight="250"  price="520">
+					<shortName>s 40</shortName>
+					<longName>superior .40-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_50_S" range="5" cal="50" weight="400"  price="800">
+					<shortName>s 50</shortName>
+					<longName>superior .50-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_60_S" range="4" cal="60" weight="600"  price="1180">
+					<shortName>s  60</shortName>
+					<longName>superior .60-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_70_S" range="3" cal="70" weight="850"  price="1800">
+					<shortName>s . 70</shortName>
+					<longName>superior .70-caliber-cannon</longName>
+				</gun>
+				
+				<!-- ==================================== Premium grade Guns ==================================== -->
+				<!-- price x4  -->
+				<gun ID="CAL_30_PG" range="7" cal="30" weight="150"  price="720">
+					<shortName>pg 30</shortName>
+					<longName>premium grade .30-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_40_PG" range="6" cal="40" weight="250"  price="1040">
+					<shortName>pg 40</shortName>
+					<longName>premium grade .40-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_50_PG" range="5" cal="50" weight="400"  price="1600">
+					<shortName>p 50</shortName>
+					<longName>premium grade .50-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_60_PG" range="4" cal="60" weight="600"  price="2360">
+					<shortName>pg 60</shortName>
+					<longName>premium grade .60-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_70_PG" range="3" cal="70" weight="850"  price="3600">
+					<shortName>pg 70</shortName>
+					<longName>premium grade .70-caliber-cannon</longName>
+				</gun>
+			
+				<!-- ==================================== Light weight Guns ==================================== -->
+				<!-- weight -20%  -->
+				<gun ID="CAL_30_LW" range="7" cal="30" weight="120"  price="720">
+					<shortName>lw 30</shortName>
+					<longName>light weight .30-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_40_LW" range="6" cal="40" weight="200"  price="1040">
+					<shortName>lw 40</shortName>
+					<longName>light weight .40-caliber-MG</longName>
+				</gun>
+				<gun ID="CAL_50_LW" range="5" cal="50" weight="320"  price="1600">
+					<shortName>lw 50</shortName>
+					<longName>light weight .50-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_60_LW" range="4" cal="60" weight="480"  price="2360">
+					<shortName>lw 60</shortName>
+					<longName>light weight .60-caliber-cannon</longName>
+				</gun>
+				<gun ID="CAL_70_LW" range="3" cal="70" weight="680"  price="3600">
+					<shortName>lw 70</shortName>
+					<longName>light weight .70-caliber-cannon</longName>
+				</gun>
+			</guns>
+			
+		
+			<!-- ==================================== Ammunition for Guns ==================================== -->
+			<ammunitions>
+				<ammunition ID="30_AP" cal="30" price="10">
+					<shortName>AP</shortName>
+					<longName>Armor Percing .30-cal</longName>
+				</ammunition>
+				<ammunition ID="40_AP" cal="40" price="15">
+					<shortName>AP</shortName>
+					<longName>Armor Percing .40-cal</longName>
+				</ammunition>
+				<ammunition ID="50_AP" cal="50" price="20">
+					<shortName>AP</shortName>
+					<longName>Armor Percing .50-cal</longName>
+				</ammunition>
+				<ammunition ID="60_AP" cal="60" price="25">
+					<shortName>AP</shortName>
+					<longName>Armor Percing .60-cal</longName>
+				</ammunition>
+				<ammunition ID="70_AP" cal="70" price="30">
+					<shortName>AP</shortName>
+					<longName>Armor Percing .70-cal</longName>
+				</ammunition>
+				
+				<ammunition ID="30_DD" cal="30" price="12">
+					<shortName>DD</shortName>
+					<longName>Dum Dum .30-cal</longName>
+				</ammunition>
+				<ammunition ID="40_DD" cal="40" price="17">
+					<shortName>DD</shortName>
+					<longName>Dum Dum .40-cal</longName>
+				</ammunition>
+				<ammunition ID="50_DD" cal="50" price="22">
+					<shortName>DD</shortName>
+					<longName>Dum Dum .50-cal</longName>
+				</ammunition>
+				<ammunition ID="60_DD" cal="60" price="28">
+					<shortName>DD</shortName>
+					<longName>Dum Dum .60-cal</longName>
+				</ammunition>
+				<ammunition ID="70_DD" cal="70" price="35">
+					<shortName>DD</shortName>
+					<longName>Dum Dum .70-cal</longName>
+				</ammunition>
+				
+				<ammunition ID="30_MAG" cal="30" price="15">
+					<shortName>MAG</shortName>
+					<longName>Magnesium .30-cal</longName>
+				</ammunition>
+				<ammunition ID="40_MAG" cal="40" price="23">
+					<shortName>MAG</shortName>
+					<longName>Magnesium .40-cal</longName>
+				</ammunition>
+				<ammunition ID="50_MAG" cal="50" price="30">
+					<shortName>MAG</shortName>
+					<longName>Magnesium .50-cal</longName>
+				</ammunition>
+				<ammunition ID="60_MAG" cal="60" price="38">
+					<shortName>MAG</shortName>
+					<longName>Magnesium .60-cal</longName>
+				</ammunition>
+				<ammunition ID="70_MAG" cal="70" price="45">
+					<shortName>MAG</shortName>
+					<longName>Magnesium .70-cal</longName>
+				</ammunition>
+			</ammunitions>
+					
+			<!-- ==================================== Rockets ==================================== -->
+			<rockets>
+				<rocket type="rocket" range="4" slots="1" usesPerSlot="2" ID="AP" price="200">
+					<shortName>AP</shortName>
+					<longName>Armor Piercing</longName>
+				</rocket>
+				
+				<rocket type="rocket" range="4" slots="1" usesPerSlot="2" ID="HE" price="175">
+					<shortName>HE</shortName>
+					<longName>High Explosive</longName>
+				</rocket>
+				
+				<rocket type="rocket" range="7" slots="1" usesPerSlot="2" ID="FK" price="150">
+					<shortName>FK</shortName>
+					<longName>Flak</longName>
+				</rocket>
+				
+				<rocket type="rocket" range="7" slots="1" usesPerSlot="2" ID="FL" price="40">
+					<shortName>FL</shortName>
+					<longName>Flare</longName>
+				</rocket>
+				
+				<rocket type="rocket" range="7" slots="1" usesPerSlot="2" ID="S" price="60">
+					<shortName>S</shortName>
+					<longName>Sonic</longName>
+				</rocket>
+				
+				<rocket type="rocket" range="1" slots="1" usesPerSlot="2" ID="HP" price="250">
+					<shortName>HP</shortName>
+					<longName>Harpoon</longName>
+				</rocket>
+
+				<rocket type="rocket" range="7" slots="1" usesPerSlot="2" ID="BP" price="200">
+					<shortName>BP</shortName>
+					<longName>Beeper</longName>
+				</rocket>
+				
+				<rocket type="rocket" range="4" slots="1" usesPerSlot="2" ID="SK" price="220">
+					<shortName>SK</shortName>
+					<longName>Seeker</longName>
+				</rocket>
+
+				<rocket type="rocket" range="7" slots="1" usesPerSlot="2" ID="DR" price="300">
+					<shortName>DR</shortName>
+					<longName>Drill</longName>
+				</rocket>
+
+				<rocket type="rocket" range="0" slots="1" usesPerSlot="1" ID="AT" price="450">
+					<shortName>AT</shortName>
+					<longName>Aerial Torpedo</longName>
+				</rocket>
+
+				<rocket type="rocket" range="1" slots="1" usesPerSlot="2" ID="AM" price="150">
+					<shortName>AM</shortName>
+					<longName>Aerial Mine</longName>
+				</rocket>
+				
+				<rocket type="fueltank" range="0" slots="1" usesPerSlot="1" ID="EFT" price="60">
+					<shortName>EFT</shortName>
+					<longName>External Fuel Tank</longName>
+				</rocket>
+
+				<rocket type="bomb" range="1" slots="1" usesPerSlot="1" ID="B100" price="100">
+					<shortName>B100</shortName>
+					<longName>Bomb (100 lbs.)</longName>
+				</rocket>
+				
+				<rocket type="bomb" range="1" slots="2" usesPerSlot="1" ID="B250" price="200">
+					<shortName>B250</shortName>
+					<longName>Bomb (250 lbs.)</longName>
+				</rocket>
+				
+				<rocket type="bomb" range="1" slots="4" usesPerSlot="1" ID="B500" price="400">
+					<shortName>B500</shortName>
+					<longName>Bomb (500 lbs.)</longName>
+				</rocket>
+		
+				<rocket type="bomb" range="1" slots="8" usesPerSlot="1" ID="B1000" price="700">
+					<shortName>B1000</shortName>
+					<longName>Bomb (1000 lbs.)</longName>
+				</rocket>
+				
+				<!-- TODO spezialfall weil reload billiger kostet nur 100 pro schuss -->
+				<rocket type="reloadable" range="0" slots="1" usesPerSlot="2" ID="SmR" price="400">
+					<shortName>SmR</shortName>
+					<longName>Smoke</longName>
+				</rocket>
+
+				<rocket type="rocket" range="7" slots="1" usesPerSlot="2" ID="VR" price="275">
+					<shortName>VR</shortName>
+					<longName>Vacuum</longName>
+				</rocket>
+
+				<rocket type="rocket" range="1" slots="1" usesPerSlot="2" ID="WR" price="275">
+					<shortName>WR</shortName>
+					<longName>Web-Harpoon-Rocket</longName>
+				</rocket>
+
+				
+				<!-- TODO Airrace Rockets -->
+
+			</rockets>		
+		</weapons>
+		
+		<!-- ==================================== Aircraft Characteristics ==================================== -->
+		<!-- cost Type => additional => fixed absolute cost changes -->
+		<!-- cost Type => all other tpye  => cost changes in percent-->
+		<!-- if groupID == "" then this mod can bought multiple times -->
+		
+		<aircraftCharacteristics>
+
+			<specialCharacteristic ID="AC_001" groupID="nitro" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false" >
+				<name>Nitro Injectors</name>
+				<description></description>
+			</specialCharacteristic>
+						
+			<specialCharacteristic ID="AC_002" groupID="" costType="additional" weightChanges="50" costChanges="200" hasHardcodedAbility="false" >
+				<name>Brake Chutes</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<!-- increases flight range? (geht auch von hand)  and unlock engine counter-->
+			<specialCharacteristic ID="AC_003" groupID="m_engine" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="true" >
+				<name>Multiple Engines</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_004" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false" >
+				<name>Superior Engine (-1)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_005" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="2.00" hasHardcodedAbility="false" >
+				<name>Superior Engine (-2)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_006" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+				<name>Inferior Engine</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_007" groupID="pintlemount" costType="cockpit" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false" >
+				<name>Pintle-Mount Guns</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<!-- ammolink checkbox freischalten -->
+			<specialCharacteristic ID="AC_008" groupID="linkedammo" costType="weapon" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="true" >
+				<name>Linked Ammo Bins</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_009" groupID="stick" costType="airframe" weightChanges="0" costChanges="0.50" hasHardcodedAbility="false" >
+				<name>Light Stick</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_010" groupID="stick" costType="airframe" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+				<name>Heavy Stick</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_011" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>Poor Landing Gear (+1)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_012" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false" >
+				<name>Poor Landing Gear (+2)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_013" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+				<name>No Landing Gear</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_014" groupID="zepHook" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>No Zeppelin Hook</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_015" groupID="radio" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>No Radio</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_016" groupID="range" costType="engine" weightChanges="0" costChanges="0.10" hasHardcodedAbility="false" >
+				<name>Superior Range (I)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_017" groupID="range" costType="engine" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false" >
+				<name>Superior Range (II)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_018" groupID="range" costType="engine" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>Inferior Range (I)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_019" groupID="range" costType="engine" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+				<name>Inferior Range (II)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_020" groupID="poorThrottle" costType="engine" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false" >
+				<name>Poor Throttle</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<!-- add Gs to left or right wing -->
+			<!-- only useable by single engine aircraft-->
+			<specialCharacteristic ID="AC_021" groupID="htengine" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="true" >
+				<name>High Torque Engine</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_022" groupID="flgear" costType="airframe" weightChanges="0" costChanges="0.30" hasHardcodedAbility="false" >
+				<name>Floating Gear</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_023" groupID="cvisi" costType="cockpit" weightChanges="0" costChanges="0.50" hasHardcodedAbility="false" >
+				<name>Improved Cockpit Visibility</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_024" groupID="cvisi" costType="cockpit" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+				<name>Reduced Cockpit Visibility</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_025" groupID="crampedc" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>Cramped Cockpit</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_026" groupID="ssft" costType="engine" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false" >
+				<name>Self Sealing Fuel Tanks</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_027" groupID="gcockpit" costType="cockpit" weightChanges="0" costChanges="2.00" hasHardcodedAbility="false" >
+				<name>G-efficient Cockpit</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_028" groupID="abomber" costType="cockpit,airframe" weightChanges="0" costChanges="0.10" hasHardcodedAbility="false" >
+				<name>Accurate Bomber</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_029" groupID="poorstall" costType="airframe" weightChanges="0" costChanges="-0.25" hasHardcodedAbility="false" >
+				<name>Poor Stall Speed</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_030" groupID="poorhighspeed" costType="airframe,engine" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>Poor High-Speed Handling</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_031" groupID="poorman" costType="airframe" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false" >
+				<name>Poor Maneuverability</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<!-- firelink checkbox freischalten -->
+			<specialCharacteristic ID="AC_032" groupID="linkedfire" costType="weapon" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="true" >
+				<name>Fire-Linked Weapons</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_033" groupID="dog" costType="cockpit" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false" >
+				<name>Dog Basket</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_034" groupID="DtBail" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>Difficult to Bail</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_035" groupID="wodden" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+				<name>Wooden Airframe</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			<specialCharacteristic ID="AC_036" groupID="eseat" costType="cockpit" weightChanges="0" costChanges="3.00" hasHardcodedAbility="false" >
+				<name>Ejector Seat</name>
+				<description></description>
+			</specialCharacteristic>
+			
+			
+		</aircraftCharacteristics>
+		
+	</baseData>
+</aeronaut>

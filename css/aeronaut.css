@@ -1,0 +1,51 @@
+.Headline {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #930000;
+	font-weight: bold;
+}
+
+
+.Text {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	font-weight:normal;
+}
+.Code {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #0048FF;
+	font-weight:normal;
+}
+
+.TextSmall {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	font-weight:normal;
+}
+
+li {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+li.smalllist {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+
+a.hover {
+	text-decoration:underline;
+	border: 0px;
+	color: #930000;
+}
+
+a:link,a:visited,a:active {
+	
+	color:#930000;
+	text-decoration:underline;
+	border: 0px;
+}

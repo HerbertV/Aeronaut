@@ -1,0 +1,45 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft frameType="fighter" PropType="tractor" baseTarget="6" accelRate="2" maxSpeed="3" maxGs="3" decelRate="2" engineCount="1" crewCount="1">
+    
+    <name>F4 Bandit</name>
+    
+    <manufacturer ID="C_004"/>
+    
+    <specs height="13,7" length="24,11" range="500" serviceCeiling="22000" wingspan="27,2"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_024"/>
+      <specialCharacteristic ID="AC_017"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="5"/>
+    
+    <turrets></turrets>
+    
+    <armor starboardwingTrailing="40" tail="40" portwingTrailing="40" starboardwingLeading="50" nose="60" portwingLeading="50"/>
+    
+  </aircraft>
+  
+</aeronaut>

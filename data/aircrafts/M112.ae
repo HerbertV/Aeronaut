@@ -1,0 +1,45 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft frameType="fighter" PropType="tractor" baseTarget="10" accelRate="3" maxSpeed="5" maxGs="3" decelRate="2" engineCount="1" crewCount="1">
+    
+    <name>M112</name>
+    
+    <manufacturer ID="C_042"/>
+    
+    <specs height="7,11" length="22,1" range="400" serviceCeiling="18000" wingspan="22,6"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_014"/>
+      <specialCharacteristic ID="AC_027"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="0"/>
+    
+    <turrets></turrets>
+    
+    <armor starboardwingTrailing="10" tail="20" portwingTrailing="10" starboardwingLeading="10" nose="20" portwingLeading="10"/>
+    
+  </aircraft>
+  
+</aeronaut>

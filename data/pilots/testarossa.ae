@@ -1,0 +1,30 @@
+<aeronaut XMLVersion="1.0">
+  
+  <pilot type="hero" naturalTouch="2" sixthSense="2" deadEye="2" steadyHand="2" constitution="3" quickDraw="2,0" totalXP="450" currentXP="350" bailOutBonus="0" linkedTo="">
+    
+    <name>Testa Rossa</name>
+    
+    <appearance gender="female" height="6,0" weight="121" hairColor="black" eyeColor="blue" srcFoto="female_advent150x150.jpg"/>
+    
+    <country ID="CY_001"/>
+    
+    <squadron ID="BlackSwans.ae"/>
+    
+    <planename>Your Planename</planename>
+    
+    <description/>
+    
+    <equipment/>
+    
+    <languages>
+      
+      <learnedLanguage ID="L_01" isMotherTongue="true"/>
+    </languages>
+    
+    <feats></feats>
+    
+    <logs missions="0" kills="0" craftLost="0"/>
+    
+  </pilot>
+  
+</aeronaut>

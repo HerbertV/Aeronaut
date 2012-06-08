@@ -1,0 +1,49 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="5" accelRate="3" maxSpeed="3" maxGs="3" decelRate="2" engineCount="2" crewCount="2">
+    
+    <name>FW 140 Hellhound</name>
+    
+    <manufacturer ID="C_020"/>
+    
+    <specs height="9,6" length="32,4" range="600" serviceCeiling="18000" wingspan="41,4"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_003"/>
+      <specialCharacteristic ID="AC_005"/>
+      <specialCharacteristic ID="AC_007"/>
+      <specialCharacteristic ID="AC_008"/>
+      <specialCharacteristic ID="AC_023"/>
+      <specialCharacteristic ID="AC_029"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="1" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="1" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="1" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="1" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="2" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="2" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="3" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="3" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="6"/>
+    
+    <turrets></turrets>
+    
+    <armor starboardwingTrailing="40" tail="50" portwingTrailing="40" starboardwingLeading="60" nose="70" portwingLeading="60"/>
+    
+  </aircraft>
+  
+</aeronaut>

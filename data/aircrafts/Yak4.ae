@@ -1,0 +1,49 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft frameType="fighter" PropType="tractor" baseTarget="6" accelRate="2" maxSpeed="2" maxGs="3" decelRate="2" engineCount="2" crewCount="1">
+    
+    <name>YAK-4</name>
+    
+    <manufacturer ID="C_014"/>
+    
+    <specs height="8,2" length="27,2" range="750" serviceCeiling="16500" wingspan="30,2"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_016"/>
+      <specialCharacteristic ID="AC_006"/>
+      <specialCharacteristic ID="AC_003"/>
+      <specialCharacteristic ID="AC_008"/>
+      <specialCharacteristic ID="AC_016"/>
+      <specialCharacteristic ID="AC_024"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="1" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="1" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="2" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="2" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="2" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="2" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="5"/>
+    
+    <turrets></turrets>
+    
+    <armor starboardwingTrailing="40" tail="30" portwingTrailing="40" starboardwingLeading="60" nose="50" portwingLeading="60"/>
+    
+  </aircraft>
+  
+</aeronaut>
