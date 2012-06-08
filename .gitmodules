@@ -1,0 +1,9 @@
+[submodule "as3/hv/core"]
+	path = as3/hv/core
+	url = git@github.com:HerbertV/RAW-as3-hv-core.git
+[submodule "as3/hv/components"]
+	path = as3/hv/components
+	url = git@github.com:HerbertV/RAW-as3-hv-components.git
+[submodule "as3/hv/zinc"]
+	path = as3/hv/zinc
+	url = git@github.com:HerbertV/RAW-as3-hv-zinc.git
