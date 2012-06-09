@@ -66,22 +66,24 @@ package as3.aeronaut
 		// ---------------------------------------------------------------------
 		// 	pathes
 		// ---------------------------------------------------------------------
-		public static const PATH_MODULES:String = "modules/";
-		public static const PATH_CSS:String = "css/";
-		public static const PATH_HELP:String = "help/";
-		public static const PATH_DATA:String = "data/";
-		public static const PATH_IMAGES:String = "images/";
+		public static const PATH_MODULES:String = "modules\\";
+		public static const PATH_CSS:String = "css\\";
+		public static const PATH_HELP:String = "help\\";
+		public static const PATH_DATA:String = "data\\";
+		public static const PATH_IMAGES:String = "images\\";
 		
-		public static const PATH_AIRCRAFT:String = "aircrafts/";
-		public static const PATH_LOADOUT:String = "loadouts/";
-		public static const PATH_PILOT:String = "pilots/";
-		public static const PATH_SQUADRON:String = "squadrons/";
-		public static const PATH_ZEPPELIN:String = "zeppelins/";
+		public static const PATH_AIRCRAFT:String = "aircrafts\\";
+		public static const PATH_LOADOUT:String = "loadouts\\";
+		public static const PATH_PILOT:String = "pilots\\";
+		public static const PATH_SQUADRON:String = "squadrons\\";
+		public static const PATH_ZEPPELIN:String = "zeppelins\\";
 		
-		public static const PATH_NATION:String = "nations/";
+		public static const PATH_NATION:String = "nations\\";
 		
-		public static const PATH_BLUEPRINT:String = "blueprints/";
-		public static const PATH_NOSEART:String = "noseart/";
+		public static const PATH_BLUEPRINT:String = "blueprints\\";
+		public static const PATH_NOSEART:String = "noseart\\";
+		
+		public static const PATH_PINUP:String = "pinups\\";
 				
 		
 		// =====================================================================
