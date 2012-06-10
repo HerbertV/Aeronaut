@@ -19,3 +19,8 @@ For more information visit:
 
 -----------------------------------
 
+### Progress
+
+* Revise all sources from 0.9.4
+* Making swf modules for all Windows
+* Releasing version 1.0.0
