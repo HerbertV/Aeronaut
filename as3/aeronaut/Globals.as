@@ -100,18 +100,18 @@ package as3.aeronaut
 		// Menu and Toolbar
 		public static var myMenuLeft:AbstractModule = null;
 //TODO
-/*		
-		public static var myToolbarBottom:ICSToolbarBottom = null;
+		
+		//public static var myToolbarBottom:ICSToolbarBottom = null;
 		
 		// manager
-		public static var myWindowManager:CSWindowManager = null;
-		public static var myPinupManager:CSPinupManager = null;
+		//public static var myWindowManager:CSWindowManager = null;
+		//public static var myPinupManager:CSPinupManager = null;
 		
 		// objects
 		public static var myBaseData:BaseData = null;
-		public static var myRuleConfigs:RuleConfigs = null;
-*/			
-		public static var lastSelectedImportDir:String = "";
+		//public static var myRuleConfigs:RuleConfigs = null;
+			
+		//public static var lastSelectedImportDir:String = "";
 	
 		
 		// =====================================================================
