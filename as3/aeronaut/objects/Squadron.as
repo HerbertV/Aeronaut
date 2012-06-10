@@ -27,24 +27,22 @@ package as3.aeronaut.objects
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.XMLProcessor;
 	
-	import as3.aeronaut.objects.loadout.*;
-	
 	import as3.hv.core.utils.StringHelper;
 	
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
 	// =========================================================================
-	// Loadout
+	// Squadron
 	// =========================================================================
-	public class Loadout 
+	public class Squadron
 			extends CSBaseObject 
 			implements ICSBaseObject
 	{
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const BASE_TAG:String = "loadout";
+		public static const BASE_TAG:String = "squadron";
 		
 		// =====================================================================
 		// Variables
@@ -54,11 +52,11 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Contructor
 		// =====================================================================
-		public function Loadout()
+		public function Squadron()
 		{
 			super();
 		}
-		
+	
 		// =====================================================================
 		// Functions
 		// =====================================================================
@@ -84,23 +82,21 @@ package as3.aeronaut.objects
 		 * ---------------------------------------------------------------------
 		 * createNew
 		 * ---------------------------------------------------------------------
-		 * Creates the emtpy loadout xml 
+		 * creates an empty squadron xml
 		 */
 		public function createNew():void
 		{
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<loadout srcAircraft="">
-						<name>New Loadout</name>
-						<gunAmmos>
-						</gunAmmos>
-						<rockets>
-						</rockets>
-					</loadout>
+					<squadron srcLogo="">
+						<name>New Squadron</name>
+					</squadron>
 				</aeronaut>;
 		}
 		
+		
+	
 		/**
 		 * ---------------------------------------------------------------------
 		 * loadFile
@@ -111,13 +107,14 @@ package as3.aeronaut.objects
 		{
 			this.myFilename = filename;
 			var loadedxml:XML = XMLProcessor.loadXML(filename);
-			if( Loadout.checkXML(loadedxml) ) 
+			
+			if( Squadron.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
-							"loaded File was not a valid Loadout.",
+							"loaded File  was not a valid Squadron.",
 							DebugLevel.ERROR,
 							filename
 						);
@@ -133,13 +130,13 @@ package as3.aeronaut.objects
 		 */
 		public function setXML(xmldoc:XML):void 
 		{
-			if (Loadout.checkXML(xmldoc) == true) 
+			if( Squadron.checkXML(xmldoc) ) 
 			{
 				this.myXML = xmldoc;
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
-							"set XML was not a valid Loadout.",
+							"set XML was not a valid Squadron.",
 							DebugLevel.ERROR
 						);
 				this.createNew();
@@ -154,7 +151,7 @@ package as3.aeronaut.objects
 		 */
 		public function getName():String 
 		{
-			return myXML.loadout.name.text().toString();
+			return myXML.squadron.name.text().toString();
 		}
 		
 		/**
@@ -165,7 +162,7 @@ package as3.aeronaut.objects
 		 */
 		public function setName(val:String) 
 		{
-			this.myXML.loadout.replace(
+			this.myXML.squadron.replace(
 					"name", 
 					<name>{StringHelper.trim(val," ")}</name>
 				);
@@ -173,158 +170,25 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getSrcAircraft
+		 * getSrcLogo
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getSrcAircraft():String 
+		public function getSrcLogo():String
 		{
-			return myXML.loadout.@srcAircraft;
+			return myXML.squadron.@srcLogo;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setSrcAircraft
+		 * setSrcLogo
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setSrcAircraft(val:String)
+		public function setSrcLogo(val:String) 
 		{
-			this.myXML.loadout.@srcAircraft = val;
+			this.myXML.squadron.@srcLogo = val;
 		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getGunAmmos
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getGunAmmos():Array 
-		{
-			var arr:Array = new Array();
-
-			for each( var ga:XML in myXML..gunAmmo ) 
-			{
-				var obj:GunAmmo = new GunAmmo(
-						ga.@gunPointNumber, 
-						ga.@ammoID 
-					);
-				arr.push(obj);
-			}
-			return arr;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getGunAmmo
-		 * ---------------------------------------------------------------------
-		 * @param pnum
-		 * @return
-		 */
-		public function getGunAmmo(pnum:int):GunAmmo
-		{
-			var xml:XMLList =  myXML..gunAmmo.(@gunPointNumber == pnum);
-			var obj:GunAmmo = new GunAmmo(
-					xml.@gunPointNumber, 
-					xml.@ammoID 
-				);
-			return obj;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setGunAmmos
-		 * ---------------------------------------------------------------------
-		 * @param arr
-		 */
-		public function setGunAmmos(arr:Array) 
-		{
-			var newGunAmmoXML:XML = <gunAmmos>
-									</gunAmmos>;
-									
-			for( var i:int = 0; i< arr.length; i++ )  
-			{
-				newGunAmmoXML.appendChild(
-						<gunAmmo gunPointNumber={arr[i].gunPointNumber} ammoID={arr[i].ammoID} />
-					);
-			}
-			myXML.loadout.replace(
-					"gunAmmos",
-					newGunAmmoXML
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getRocketLoadouts
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getRocketLoadouts():Array 
-		{
-			var arr:Array = new Array();
-
-			for each( var rl:XML in myXML..rocketLoadout ) 
-			{
-				var obj:RocketLoadout = new RocketLoadout(
-						rl.@slotNumber, 
-						rl.@subSlot, 
-						rl.@rocketID 
-					);
-				arr.push(obj);
-			}
-			return arr;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getRocketLoadoutsBySlot
-		 * ---------------------------------------------------------------------
-		 * @param snum
-		 *
-		 * @return
-		 */
-		public function getRocketLoadoutsBySlot(snum:int):Array 
-		{
-			var arr:Array = new Array();
-
-			for each( var rl:XML in myXML..rocketLoadout ) 
-			{
-				if( rl.@slotNumber == snum ) 
-				{
-					var obj:RocketLoadout = new RocketLoadout(
-							rl.@slotNumber, 
-							rl.@subSlot, 
-							rl.@rocketID 
-						);
-					arr.push(obj);
-				}
-			}
-			return arr;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setRocketLoadouts
-		 * ---------------------------------------------------------------------
-		 * @param arr
-		 */
-		public function setRocketLoadouts(arr:Array) 
-		{
-			var newRocketsXML:XML = <rockets>
-									</rockets>;
-									
-			for( var i:int = 0; i< arr.length; i++ )  
-			{
-				newRocketsXML.appendChild(
-						<rocketLoadout slotNumber={arr[i].slotNumber} subSlot={arr[i].subSlot} rocketID={arr[i].rocketID} />
-					);
-			}
-			myXML.loadout.replace(
-					"rockets",
-					newRocketsXML
-				);
-		}
-		
+	
 	}
 }
