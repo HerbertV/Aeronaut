@@ -105,7 +105,7 @@ package as3.aeronaut
 		
 		// manager
 		//public static var myWindowManager:CSWindowManager = null;
-		//public static var myPinupManager:CSPinupManager = null;
+		public static var myPinupManager:CSPinupManager = null;
 		
 		// objects
 		public static var myBaseData:BaseData = null;
