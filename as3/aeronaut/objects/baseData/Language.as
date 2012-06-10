@@ -14,70 +14,59 @@
  * @version: 1.0.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2012 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package as3.aeronaut.objects
+package as3.aeronaut.objects.baseData
 {
-	import mdm.*;
-	
-	import as3.aeronaut.XMLProcessor;
-	
 	// =========================================================================
-	// FileList
+	// Language
 	// =========================================================================
 	// 
-	public class FileList
+	public class Language
 	{
+		// =====================================================================
+		// Variables
+		// =====================================================================
+		public var myID:String;
+		public var myName:String;
+		
+		// =====================================================================
+		// Constructor
+		// =====================================================================
+		
+		/**
+		 * Constructor
+		 * 
+		 * @param id	
+		 * @param n	
+		 */
+		public function Language(
+				id:String,
+				n:String
+			)
+		{
+			myID = id;
+			myName = n;
+		}
+	
+		// =====================================================================
+		// Functions
+		// =====================================================================
+		
 		/**
 		 * ---------------------------------------------------------------------
-		 * generate
+		 * toString
 		 * ---------------------------------------------------------------------
-		 * generates an array of FileListElements. 
 		 *
-		 * @param path 			
-		 *
-		 * @returns				array of files
+		 * @return Object as string
 		 */
-		public static function generate(
-				path:String
-			):Array
+		public function toString():String
 		{
-			path = mdm.Application.path + path;
-			
-			var arr:Array = new Array();
-			var myFiles:Array = mdm.FileSystem.getFileList(
-					path, 
-					"*" + AE_EXT
-				);
-			
-			for( var i:int=0; i<myFiles.length; i++ ) 
-			{
-				var loadedxml:XML = XMLProcessor.loadXML(path + myFiles[i]);
-				
-				if( loadedxml != null ) 
-				{
-					if( XMLProcessor.checkDoc(loadedxml) ) 
-					{
-						var fle:FileListElement = new FileListElement(
-								myFiles[i],
-								loadedxml..name[0]
-							);
-						arr.push(fle);
-					}
-				}
-			}
-			
-			if( arr.length > 1 ) 
-				arr.sortOn(
-						"viewname",
-						Array.CASEINSENSITIVE
-					);
-			
-			return arr;
+			return "baseData.Language ["+myID+", "+myName+"]";
 		}
-		
+	
 	}
 }
