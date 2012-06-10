@@ -14,7 +14,7 @@
  * @version: 1.0.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2010-2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2012 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
@@ -24,8 +24,6 @@ package as3.aeronaut
 	import mdm.*;
 	
 	import flash.text.StyleSheet;
-	
-	import as3.hv.core.utils.StringHelper;
 	
 	import as3.hv.components.tooltip.ITooltip;
 	import as3.hv.components.progress.IProgressSymbol;
@@ -37,9 +35,9 @@ package as3.aeronaut
 	import as3.aeronaut.module.CSWindow;
 	
 	import as3.aeronaut.module.ICSToolbarBottom;
-		
+*/		
 	import as3.aeronaut.objects.*;
-*/	
+	
 	
 	// =========================================================================
 	// Class Globals
@@ -120,47 +118,6 @@ package as3.aeronaut
 		// Functions
 		// =====================================================================
 		
-		/**
-		 * ---------------------------------------------------------------------
-		 * generateFileList
-		 * ---------------------------------------------------------------------
-		 * 
-		 * @param path 			
-		 *
-		 * @returns				array of files
-		 */
-		
-// TODO put it into an extra class FileList in objects
-		/*
-		public static function generateFileList(path:String):Array
-		{
-			path = mdm.Application.path+ StringHelper.replace(path , "/", "\\");
-			
-			var arr:Array = new Array();
-			var myFiles:Array = mdm.FileSystem.getFileList(path, "*"+AE_EXT);
-			
-			for (var i:int=0; i<myFiles.length; i++) 
-			{
-				
-				var loadedxml:XML = XMLProcessor.loadXML(path + myFiles[i]);
-				
-				if (loadedxml != null) 
-				{
-					if (XMLProcessor.checkDocVersion(loadedxml) == true 
-								&& loadedxml.name().localName == "aeronaut") 
-					{
-						var fle:FileListElement = new FileListElement(myFiles[i],loadedxml..name[0]);
-						arr.push(fle);
-					}
-				}
-			}
-			if (arr.length > 1) {
-				arr.sortOn("viewname",Array.CASEINSENSITIVE);
-			}
-			
-			return arr;
-		}
-		*/
 		
 		
 	}
