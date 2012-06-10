@@ -32,34 +32,49 @@ package as3.aeronaut.objects
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.XMLProcessor;
 		
-	import as3.aeronaut.objects.aircraft.*;
+	import as3.aeronaut.objects.pilot.*;
 	
 	// =========================================================================
-	// Zeppelin
+	// Pilot
 	// =========================================================================
-	public class Aircraft 
+	public class Pilot 
 			extends CSBaseObject 
 			implements ICSBaseObject
 	{
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const BASE_TAG:String = "aircraft";
+		public static const BASE_TAG:String = "pilot";
+		
+		public static const TYPE_HERO:String = "hero";
+		public static const TYPE_SIDEKICK:String = "sidekick";
+		public static const TYPE_GUNNER:String = "copilotgunner";
+		public static const TYPE_NPC:String = "npc";
+		
+		public static const BASE_XP_HERO:int = 450;
+		public static const BASE_XP_SIDEKICK:int = 350;
+		public static const BASE_XP_OTHER:int = 0;
+		
+		// xp cost for all stats sort by stat level
+		public static const STAT_XPMATRIX:Array = new Array( 10,10,20,30,40,50,60,70,80,90,0 );
 		
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		private var myLoadoutFile:String = "";
-		private var myPilotFile:String = "";
-		private var myGunnerFile:String = "";
-		private var freeWeight:int = 0;
-				
+		
+		// after the first save becomes a pilot file locked.
+		// This means existing stats or feast can no longer delete
+		// but only added or increased.
+		// If the type is "npc" a file becomes never locked.
+		private var isLocked:Boolean = false;
+		
 		// =====================================================================
 		// Contructor
 		// =====================================================================
-		public function Aircraft()
+		public function Pilot()
 		{
 			super();
+			
 		}
 		
 		// =====================================================================
@@ -82,39 +97,33 @@ package as3.aeronaut.objects
 			
 			return false;
 		}
-		
+				
 		/**
 		 * ---------------------------------------------------------------------
 		 * createNew
 		 * ---------------------------------------------------------------------
-		 * creates an empty aircraft xml
+		 * creates an empty pilot xml
 		 */
 		public function createNew():void
 		{
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<aircraft frameType='fighter' PropType="tractor" baseTarget="5" accelRate="1" maxSpeed="1" maxGs="1" decelRate="2" engineCount="1" crewCount="1" srcFoto="">
-						<name>New Plane</name>
-						<manufacturer ID=""/>
-						<specs height="10,6" length="20,0" range="75" serviceCeiling="5000" wingspan="25,0"/>
-						<specialCharacteristics>
-						</specialCharacteristics>
-						<gunpoints>
-							<gunpoint pointNumber="1"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="2"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="3"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="4"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="5"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="6"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="7"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="8"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-						</gunpoints>
-						<rocketslots count="6"/>
-						<turrets>
-						</turrets>
-						<armor starboardwingTrailing="0" tail="0" portwingTrailing="0" starboardwingLeading="0" nose="0" portwingLeading="0"/>
-					</aircraft>
+					<pilot type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_XP_HERO} currentXP={BASE_XP_HERO} bailOutBonus="0" linkedTo="">
+						<name>New Pilot</name>
+						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
+						<country ID=""/>
+						<squadron ID=""/>
+						<planename>Your Planename</planename>
+						<noseart src=""/>
+						<description> </description>
+						<equipment> </equipment>
+						<languages>
+						</languages>
+						<feats>
+						</feats>
+						<logs missions="0" kills="0" craftLost="0"/>
+					</pilot>
 				</aeronaut>;
 		}
 		
@@ -129,13 +138,14 @@ package as3.aeronaut.objects
 			this.myFilename = filename;
 			var loadedxml:XML = XMLProcessor.loadXML(filename);
 			
-			if( Aircraft.checkXML(loadedxml) ) 
+			if( Pilot.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
+				this.isLocked = true;
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
-							"loaded File  was not a valid Aircraft.",
+							"loaded File was not a valid Pilot.",
 							DebugLevel.ERROR,
 							filename
 						);
@@ -151,106 +161,30 @@ package as3.aeronaut.objects
 		 */
 		public function setXML(xmldoc:XML):void 
 		{
-			if( Aircraft.checkXML(xmldoc) ) 
+			if( Pilot.checkXML(xmldoc) ) 
 			{
 				this.myXML = xmldoc;
+				this.isLocked = true;
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
-							"set XML was not a valid Aircraft.",
+							"set XML was not a valid Pilot.",
 							DebugLevel.ERROR,
 							filename
 						);
 				this.createNew();
 			}
 		}
-				
+		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getLoadoutFile
+		 * getIsLocked
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getLoadoutFile():String 
+		public function getIsLocked():Boolean
 		{
-			return myLoadoutFile;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setLoadoutFile
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setLoadoutFile(val:String) 
-		{
-			myLoadoutFile = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getPilotFile
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getPilotFile():String 
-		{
-			return myPilotFile;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setPilotFile
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setPilotFile(val:String) 
-		{
-			myPilotFile = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getGunnerFile
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getGunnerFile():String 
-		{
-			return myGunnerFile;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setGunnerFile
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setGunnerFile(val:String) 
-		{
-			myGunnerFile = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getFreeWeight
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getFreeWeight():int 
-		{
-			return freeWeight;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setFreeWeight
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setFreeWeight(val:int)
-		{
-			freeWeight = val;
+			return isLocked;
 		}
 		
 		/**
@@ -261,7 +195,7 @@ package as3.aeronaut.objects
 		 */
 		public function getName():String 
 		{
-			return myXML.aircraft.name.text().toString();
+			return myXML.pilot.name.text().toString();
 		}
 		
 		/**
@@ -272,7 +206,7 @@ package as3.aeronaut.objects
 		 */
 		public function setName(val:String) 
 		{
-			this.myXML.aircraft.replace(
+			this.myXML.pilot.replace(
 					"name", 
 					<name>{StringHelper.trim(val," ")}</name>
 				);
@@ -280,200 +214,246 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getFrameType
+		 * getType
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getFrameType():String
+		public function getType():String 
 		{
-			return myXML.aircraft.@frameType;
+			return myXML.pilot.@type;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setFrameType
+		 * setType
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setFrameType(val:String)
+		public function setType(val:String)
 		{
-			this.myXML.aircraft.@frameType = val;
+			this.myXML.pilot.@type = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getPropType
+		 * getNaturalTouch
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getPropType():String 
+		public function getNaturalTouch():int 
 		{
-			return myXML.aircraft.@PropType;
+			return int(myXML.pilot.@naturalTouch);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setPropType
+		 * setNaturalTouch
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setPropType(val:String)
+		public function setNaturalTouch(val:int)
 		{
-			this.myXML.aircraft.@PropType = val;
+			myXML.pilot.@naturalTouch = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getBaseTarget
+		 * getSixthSense
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getBaseTarget():int 
+		public function getSixthSense():int 
 		{
-			return int(myXML.aircraft.@baseTarget);
+			return int(myXML.pilot.@sixthSense);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setBaseTarget
+		 * setSixthSense
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setBaseTarget(val:int)
+		public function setSixthSense(val:int)
 		{
-			myXML.aircraft.@baseTarget = val;
+			myXML.pilot.@sixthSense = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getAccelRate
+		 * getDeadEye
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getAccelRate():int 
+		public function getDeadEye():int 
 		{
-			return int(myXML.aircraft.@accelRate);
+			return int(myXML.pilot.@deadEye);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setAccelRate
+		 * setDeadEye
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setAccelRate(val:int)
+		public function setDeadEye(val:int)
 		{
-			myXML.aircraft.@accelRate = val;
+			myXML.pilot.@deadEye = val;
 		}
-				
+		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getMaxSpeed
+		 * getSteadyHand
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getMaxSpeed():int 
+		public function getSteadyHand():int
 		{
-			return int(myXML.aircraft.@maxSpeed);
+			return int(myXML.pilot.@steadyHand);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setMaxSpeed
+		 * setSteadyHand
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setMaxSpeed(val:int)
+		public function setSteadyHand(val:int)
 		{
-			myXML.aircraft.@maxSpeed = val;
+			myXML.pilot.@steadyHand = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getMaxGs
+		 * getConstitution
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getMaxGs():int 
+		public function getConstitution():int 
 		{
-			return int(myXML.aircraft.@maxGs);
+			return int(myXML.pilot.@constitution);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setMaxGs
+		 * setConstitution
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setMaxGs(val:int)
+		public function setConstitution(val:int)
 		{
-			myXML.aircraft.@maxGs = val;
+			myXML.pilot.@constitution = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getDecelRate
+		 * getQuickDraw
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getDecelRate():int 
+		public function getQuickDraw():Array 
 		{
-			return int(myXML.aircraft.@decelRate);
+			return myXML.pilot.@quickDraw.split(",");
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setDecelRate
+		 * setQuickDraw
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setDecelRate(val:int)
+		public function setQuickDraw(val:int, subval:int)
 		{
-			myXML.aircraft.@decelRate = val;
+			myXML.pilot.@quickDraw = String(val+","+subval);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getEngineCount
+		 * getTotalXP
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getEngineCount():int 
+		public function getTotalXP():int 
 		{
-			return int(myXML.aircraft.@engineCount);
+			return int(myXML.pilot.@totalXP);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setEngineCount
+		 * setTotalXP
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setEngineCount(val:int)
+		public function setTotalXP(val:int)
 		{
-			myXML.aircraft.@engineCount = val;
+			myXML.pilot.@totalXP = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getCrewCount
+		 * getCurrentXP
+		 * ---------------------------------------------------------------------
+		 * xp that are free to spend.
+		 *
+		 * @return
+		 */
+		public function getCurrentXP():int 
+		{
+			return int(myXML.pilot.@currentXP);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setCurrentXP
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setCurrentXP(val:int)
+		{
+			myXML.pilot.@currentXP = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBailOutBonus
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getCrewCount():int 
+		public function getBailOutBonus():int 
 		{
-			return int(myXML.aircraft.@crewCount);
+			return int(myXML.pilot.@bailOutBonus);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setCrewCount
+		 * setBailOutBonus
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setCrewCount(val:int)
+		public function setBailOutBonus(val:int)
 		{
-			myXML.aircraft.@crewCount = val;
+			myXML.pilot.@bailOutBonus = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getGender
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getGender():String 
+		{
+			return myXML.pilot.appearance.@gender;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setGender
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setGender(val:String) 
+		{
+			this.myXML.pilot.appearance.@gender = val;
 		}
 		
 		/**
@@ -482,9 +462,9 @@ package as3.aeronaut.objects
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getHeight():Array
+		public function getHeight():Array 
 		{
-			return myXML..specs.@height.split(",");
+			return myXML..appearance.@height.split(",");
 		}
 		
 		/**
@@ -494,412 +474,76 @@ package as3.aeronaut.objects
 		 * @param feet
 		 * @param inch
 		 */
-		public function setHeight(feet:int, inch:int)
+		public function setHeight(feet:int, inch:int) 
 		{
-			myXML..specs.@height = String(feet+","+inch);
+			myXML..appearance.@height = String(feet + "," + inch);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getLength
+		 * getWeight
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getLength():Array 
+		public function getWeight():int 
 		{
-			return myXML..specs.@length.split(",");
+			return int(myXML.pilot.appearance.@weight);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setLength
-		 * ---------------------------------------------------------------------
-		 * @param feet
-		 * @param inch
-		 */
-		public function setLength(feet:int, inch:int) 
-		{
-			myXML..specs.@length = String(feet+","+inch);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getWingspan
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getWingspan():Array 
-		{
-			return myXML..specs.@wingspan.split(",");
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setWingspan
-		 * ---------------------------------------------------------------------
-		 * @param feet
-		 * @param inch
-		 */
-		public function setWingspan(feet:int, inch:int) 
-		{
-			myXML..specs.@wingspan = String(feet+","+inch);
-		}
-				
-		/**
-		 * ---------------------------------------------------------------------
-		 * getRange
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getRange():int 
-		{
-			return int(myXML..specs.@range);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setRange
+		 * setWeight
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setRange(val:int)
+		public function setWeight(val:int) 
 		{
-			myXML..specs.@range = val;
+			this.myXML.pilot.appearance.@weight = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getServiceCeiling
+		 * getHairColor
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getServiceCeiling():int
+		public function getHairColor():String 
 		{
-			return int(myXML..specs.@serviceCeiling);
+			return myXML.pilot.appearance.@hairColor;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setServiceCeiling
+		 * setHairColor
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setServiceCeiling(val:int)
+		public function setHairColor(val:String) 
 		{
-			myXML..specs.@serviceCeiling = val;
+			this.myXML.pilot.appearance.@hairColor = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getRocketSlotCount
+		 * getEyeColor
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getRocketSlotCount():int
+		public function getEyeColor():String 
 		{
-			return int(myXML..rocketslots.@count);
+			return myXML.pilot.appearance.@eyeColor;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setRocketSlotCount
+		 * setEyeColor
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setRocketSlotCount(val:int)
+		public function setEyeColor(val:String) 
 		{
-			myXML..rocketslots.@count = val;
+			this.myXML.pilot.appearance.@eyeColor = val;
 		}
-				
-		/**
-		 * ---------------------------------------------------------------------
-		 * getArmorSWT
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getArmorSWT():int 
-		{
-			return int(myXML..armor.@starboardwingTrailing);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setArmorSWT
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setArmorSWT(val:int)
-		{
-			myXML..armor.@starboardwingTrailing = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getArmorTail
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getArmorTail():int 
-		{
-			return int(myXML..armor.@tail);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setArmorTail
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setArmorTail(val:int)
-		{
-			myXML..armor.@tail = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getArmorPWT
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getArmorPWT():int 
-		{
-			return int(myXML..armor.@portwingTrailing);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setArmorPWT
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setArmorPWT(val:int)
-		{
-			myXML..armor.@portwingTrailing = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getArmorSWL
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getArmorSWL():int 
-		{
-			return int(myXML..armor.@starboardwingLeading);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setArmorSWL
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setArmorSWL(val:int)
-		{
-			myXML..armor.@starboardwingLeading = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getArmorNose
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getArmorNose():int 
-		{
-			return int(myXML..armor.@nose);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setArmorNose
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setArmorNose(val:int)
-		{
-			myXML..armor.@nose = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getArmorPWL
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getArmorPWL():int 
-		{
-			return int(myXML..armor.@portwingLeading);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setArmorPWL
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setArmorPWL(val:int)
-		{
-			myXML..armor.@portwingLeading = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getManufacturerID
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getManufacturerID():String 
-		{
-			if( myXML..manufacturer != null ) 
-				return myXML..manufacturer.@ID;
-			 
-			return "";
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setManufacturerID
-		 * ---------------------------------------------------------------------
-		 * @param val
-		 */
-		public function setManufacturerID(val:String)
-		{
-			myXML..manufacturer.@ID = val;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getGunpoint
-		 * ---------------------------------------------------------------------
-		 * @param pnum
-		 * 
-		 * @return
-		 */
-		public function getGunpoint(pnum:int):Gunpoint 
-		{
-			var xml:XMLList =  myXML..gunpoint.(@pointNumber == pnum);
-			var gp:Gunpoint = new Gunpoint(
-					xml.@pointNumber, 
-					xml.@gunID
-				);
-			gp.firelinkGroup = xml.@firelinkGroup;
-			gp.ammolinkGroup = xml.@ammolinkGroup;
-			gp.direction = xml.@direction;
-			
-			return gp;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setGunpoint
-		 * ---------------------------------------------------------------------
-		 * @param gp
-		 */
-		public function setGunpoint(gp:Gunpoint) 
-		{
-			var xml:XMLList =  myXML..gunpoint.(@pointNumber == gp.pointNumber);
-			xml.@gunID = gp.gunID;
-			xml.@firelinkGroup = gp.firelinkGroup;
-			xml.@ammolinkGroup = gp.ammolinkGroup;
-			xml.@direction = gp.direction;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getTurrets
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getTurrets():Array 
-		{
-			var arr:Array = new Array();
-
-			for each( var turret:XML in myXML..turret ) 
-			{
-				var obj:Turret = new Turret( turret.@direction );
-				var linked:Array = new Array();
-				if (turret.@linkedGuns != "")
-					linked = turret.@linkedGuns.split(",");
-				
-				obj.linkedGuns = linked;
-				arr.push(obj);
-			}
-			return arr;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setTurrets
-		 * ---------------------------------------------------------------------
-		 * @param arr
-		 */
-		public function setTurrets(arr:Array) 
-		{
-			var newTurretXML:XML = <turrets>
-								   </turrets>;
-									
-			for( var i:int = 0; i< arr.length; i++ )  
-			{
-				var linked:String = "";
-				for( var j:int = 0; j<arr[i].linkedGuns.length; j++ )
-				{
-					linked = linked + arr[i].linkedGuns[j];
-					if (j+1 < arr[i].linkedGuns.length)
-						linked = linked + ",";
-				}
-				newTurretXML.appendChild(
-						<turret direction={arr[i].direction} linkedGuns={linked} />
-					);
-			}
-			myXML.aircraft.replace(
-					"turrets",
-					newTurretXML
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getSpecialCharacteristics
-		 * ---------------------------------------------------------------------
-		 * there is no object class since we need only to store the id 
-		 *
-		 * @return
-		 */
-		public function getSpecialCharacteristics():Array
-		{
-			var arr:Array = new Array();
-
-			for each( var sc:XML in myXML..specialCharacteristic ) 
-				arr.push(sc.@ID);
-			
-			return arr;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setSpecialCharacteristics
-		 * ---------------------------------------------------------------------
-		 * there is no object class since we need only to store the id 
-		 *
-		 * @param arr
-		 */
-		public function setSpecialCharacteristics(arr:Array)
-		{
-			var newScXML:XML = <specialCharacteristics>
-							   </specialCharacteristics>;
-									
-			for( var i:int = 0; i< arr.length; i++ )  
-				newScXML.appendChild(
-						<specialCharacteristic ID={arr[i]} />
-					);
-			
-			myXML.aircraft.replace(
-					"specialCharacteristics",
-					newScXML
-				);
-		}
-		
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -909,20 +553,354 @@ package as3.aeronaut.objects
 		 */
 		public function getSrcFoto():String 
 		{
-			return myXML.aircraft.@srcFoto;
+			return myXML.pilot.appearance.@srcFoto;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
 		 * setSrcFoto
 		 * ---------------------------------------------------------------------
-		 *
 		 * @param val
 		 */
-		public function setSrcFoto(val:String)
+		public function setSrcFoto(val:String) 
 		{
-			myXML.aircraft.@srcFoto = val;
+			this.myXML.pilot.appearance.@srcFoto = val;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCountryID
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getCountryID():String
+		{
+			return myXML.pilot.country.@ID;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setCountryID
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setCountryID(val:String)
+		{
+			this.myXML.pilot.country.@ID = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronID
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getSquadronID():String 
+		{
+			return myXML.pilot.squadron.@ID;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setSquadronID
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setSquadronID(val:String) 
+		{
+			this.myXML.pilot.squadron.@ID = val;
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * getPlanename
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getPlanename():String 
+		{
+			return myXML.pilot.planename.text().toString();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setPlanename
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setPlanename(val:String)
+		{
+			this.myXML.pilot.replace(
+					"planename", 
+					<planename>{StringHelper.trim(val," ")}</planename>
+				);
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * getDescription
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getDescription():String 
+		{
+			return myXML.pilot.description.text().toString();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setDescription
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setDescription(val:String) 
+		{
+			this.myXML.pilot.replace(
+					"description", 
+					<description>{StringHelper.trim(val," ")}</description>
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getEquipment
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getEquipment():String 
+		{
+			return myXML.pilot.equipment.text().toString();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setEquipment
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setEquipment(val:String)
+		{
+			this.myXML.pilot.replace(
+					"equipment", 
+					<equipment>{StringHelper.trim(val," ")}</equipment>
+				);
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * getMotherTongue
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getMotherTongue():LearnedLanguage 
+		{
+			for each( var learnedLanguage:XML in myXML..learnedLanguage ) 
+				if (learnedLanguage.@isMotherTongue == "true") 
+					return new LearnedLanguage(
+							learnedLanguage.@ID, 
+							true
+						);
+			
+			return null;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setMotherTongue
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setMotherTongue(val:LearnedLanguage) 
+		
+		{
+			deleteMotherTongue();
+			myXML..languages.appendChild(
+					<learnedLanguage ID={val.myID} isMotherTongue="true"/>
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * deleteMotherTongue
+		 * ---------------------------------------------------------------------
+		 */
+		public function deleteMotherTongue() 
+		{
+			delete(myXML..learnedLanguage.(@isMotherTongue== "true")[0]);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLearnedLanguages
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLearnedLanguages():Array
+		{
+			var arr:Array = new Array();
+
+			for each( var learnedLanguage:XML in myXML..learnedLanguage ) 
+			{
+				var isMother:Boolean = false;
+				if (learnedLanguage.@isMotherTongue == "true") 
+					isMother = true;
+				
+				var obj:LearnedLanguage = new LearnedLanguage(
+						learnedLanguage.@ID, 
+						isMother 
+					);
+				arr.push(obj);
+			}
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setMotherTongue
+		 * ---------------------------------------------------------------------
+		 * @param arr
+		 */
+		public function setLearnedLanguages(arr:Array) 
+		{
+			var newLanguageXML:XML = <languages>
+									 </languages>;
+									
+			for( var i:int = 0; i< arr.length; i++ )  
+				newLanguageXML.appendChild(
+						<learnedLanguage ID={arr[i].myID} isMotherTongue={String(arr[i].isMotherTongue)} />
+					);
+			
+			myXML.pilot.replace(
+					"languages",
+					newLanguageXML
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLearnedFeats
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLearnedFeats():Array
+		{
+			var arr:Array = new Array();
+
+			for each( var learnedFeat:XML in myXML..learnedFeat ) 
+			{
+				var obj:LearnedFeat = new LearnedFeat(learnedFeat.@ID);
+				obj.currentLevel = learnedFeat.@currLvl;
+				arr.push(obj);
+			}
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setLearnedFeats
+		 * ---------------------------------------------------------------------
+		 * @param arr
+		 */
+		public function setLearnedFeats(arr:Array) 
+		{
+			var newFeatXML:XML = <feats>
+								 </feats>;
+									
+			for( var i:int = 0; i< arr.length; i++ )  
+				newFeatXML.appendChild(
+						<learnedFeat ID={arr[i].myID} currLvl={String(arr[i].currentLevel)} />
+					);
+			
+			myXML.pilot.replace("feats",newFeatXML);
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * getMissionCount
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getMissionCount():int 
+		{
+			return int(myXML.pilot.logs.@missions);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setMissionCount
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setMissionCount(val:int)
+		{
+			myXML.pilot.logs.@missions = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getKills
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getKills():int 
+		{
+			return int(myXML.pilot.logs.@kills);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setKills
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setKills(val:int)
+		{
+			myXML.pilot.logs.@kills = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCraftLost
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getCraftLost():int 
+		{
+			return int(myXML.pilot.logs.@craftLost);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setCraftLost
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setCraftLost(val:int)
+		{
+			myXML.pilot.logs.@craftLost = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSrcNoseart
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getSrcNoseart():String 
+		{
+			return myXML.aircraft.noseart.@srcFoto;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setSrcNoseart
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setSrcNoseart(val:String)
+		{
+			myXML.aircraft.noseart.@srcFoto = val;
+		}
+	
 	}
 }
