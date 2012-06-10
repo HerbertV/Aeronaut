@@ -109,9 +109,9 @@ package as3.aeronaut
 		
 		// objects
 		public static var myBaseData:BaseData = null;
-		//public static var myRuleConfigs:RuleConfigs = null;
+		public static var myRuleConfigs:RuleConfigs = null;
 			
-		//public static var lastSelectedImportDir:String = "";
+		public static var lastSelectedImportDir:String = "";
 	
 		
 		// =====================================================================

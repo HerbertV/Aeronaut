@@ -14,7 +14,7 @@
  * @version: 1.0.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2010-2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2012 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
@@ -23,8 +23,6 @@ package as3.aeronaut
 {
 	// MDM ZINC Lib
 	import mdm.*;
-	
-	import as3.hv.core.utils.StringHelper;
 	
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
@@ -47,13 +45,6 @@ package as3.aeronaut
 		
 		public static const XMLROOTTAG:String = "aeronaut";
 		
-		// =====================================================================
-		// Variables
-		// =====================================================================
-		
-				
-		
-				
 		// =====================================================================
 		// Functions
 		// =====================================================================
