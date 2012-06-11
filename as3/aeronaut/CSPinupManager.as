@@ -134,10 +134,6 @@ package as3.aeronaut
 					loadCompleteHandler
 				);
             currentLoader.contentLoaderInfo.addEventListener(
-					ProgressEvent.PROGRESS, 
-					loadProgressHandler
-				);
-            currentLoader.contentLoaderInfo.addEventListener(
 					IOErrorEvent.IO_ERROR, 
 					ioErrorHandler
 				);
@@ -180,7 +176,7 @@ package as3.aeronaut
 		 * ---------------------------------------------------------------------
 		 * removeHandler
 		 * ---------------------------------------------------------------------
-		 * for removing the pinup 
+		 * for removing the pinup from desk
 		 *
 		 * @param e
 		 */
@@ -312,7 +308,6 @@ package as3.aeronaut
 				);
 		}
 		
-		
 		/**
 		 * ---------------------------------------------------------------------
 		 * shufflePinups
@@ -374,18 +369,6 @@ package as3.aeronaut
 
 		/**
 		 * ---------------------------------------------------------------------
-		 * loadProgressHandler
-		 * ---------------------------------------------------------------------
-		 *
-		 * @param e
-		 */
-		private function loadProgressHandler(e:ProgressEvent):void 
-		{
-        	// not used
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
 		 * ioErrorHandler
 		 * ---------------------------------------------------------------------
 		 *
@@ -393,11 +376,12 @@ package as3.aeronaut
 		 */
 		private function ioErrorHandler(e:IOErrorEvent):void 
 		{
-			Console.getInstance().writeln(
-					"IO Error while loading Pinup: ",
-					DebugLevel.ERROR,
-					e.toString()
-				);
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						"IO Error while loading Pinup: ",
+						DebugLevel.ERROR,
+						e.toString()
+					);
 		}
 
 	}
