@@ -25,9 +25,15 @@ package as3.aeronaut
 	import mdm.*;
 		
 	import flash.display.MovieClip;
-	import flash.display.DisplayObject;
+	import flash.display.Sprite;
+	import flash.display.Bitmap;
 	
 	import flash.geom.Rectangle;
+	import flash.geom.Matrix;
+	import flash.geom.Point;
+	
+	import flash.filters.DropShadowFilter;
+	import flash.filters.BitmapFilterQuality;
 	
 	import flash.events.*;
     
@@ -53,13 +59,11 @@ package as3.aeronaut
 		// Variables
 		// =====================================================================
 		private var myPinupURLs:Array = new Array();
-		
 		private var myPinupContainer:MovieClip;
-		
 		private var maxCounter:int = 0;
-		
 		private var currentLoader:Loader = null;
-		private var currLoadClip:MovieClip = null;
+		private var ductTape:Bitmap = null;
+		
 		
 		// =====================================================================
 		// Constructor
@@ -73,13 +77,25 @@ package as3.aeronaut
 					+ Globals.PATH_IMAGES
 					+ Globals.PATH_PINUP;
 			
+			var tapeFile:String = mdm.Application.path 
+					+ Globals.PATH_IMAGES
+					+ "gui\\ducttape.png";
+			
 			myPinupURLs = mdm.FileSystem.getFileList(
 					path, 
 					"*.png"
 				);
 			
-			
+			// adjust pathes
+			for( var i:int = 0; i<myPinupURLs.length; i++ )
+				myPinupURLs[i] = path + myPinupURLs[i];
+				
 			this.maxCounter = this.myPinupURLs.length;
+			
+			// add ducttape image for button
+			myPinupURLs.push(tapeFile);
+			
+			
 		}
 		
 		// =====================================================================
@@ -97,7 +113,9 @@ package as3.aeronaut
 			if( this.myPinupURLs.length > 0 ) 
 			{
 				Globals.myCSProgressBar.init();
-				this.setupNextLoad(String(this.myPinupURLs.pop()));
+				this.setupNextLoad(
+						String(this.myPinupURLs.pop())
+					);
 			}
 		}
 		
@@ -110,10 +128,6 @@ package as3.aeronaut
 		 */
 		private function setupNextLoad(file:String):void
 		{
-			var path:String = mdm.Application.path 
-					+ Globals.PATH_IMAGES
-					+ Globals.PATH_PINUP;
-			
 			currentLoader = new Loader();
 			currentLoader.contentLoaderInfo.addEventListener(
 					Event.COMPLETE, 
@@ -127,37 +141,197 @@ package as3.aeronaut
 					IOErrorEvent.IO_ERROR, 
 					ioErrorHandler
 				);
-			
-			currentLoader.load( new URLRequest(path + file) );
-			
-			this.currLoadClip = new MovieClip();
-			this.currLoadClip.addChild(currentLoader);
+			currentLoader.load( new URLRequest(file) );
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
 		 * startDragHandler
 		 * ---------------------------------------------------------------------
+		 * for dragging a pinup
 		 *
 		 * @param e
 		 */
 		private function startDragHandler(e:MouseEvent):void
 		{
-			var mc:MovieClip = MovieClip(e.currentTarget);
-			this.myPinupContainer.setChildIndex(mc,maxCounter-1);
-			mc.startDrag(false);
+			var s:Sprite = Sprite(e.currentTarget);
+			// put on top
+			this.myPinupContainer.setChildIndex(
+					s,
+					this.myPinupContainer.numChildren-1
+				);
+			s.startDrag(false);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * startDragHandler
+		 * stopDragHandler
 		 * ---------------------------------------------------------------------
+		 * for dragging a pinup
 		 *
 		 * @param e
 		 */
 		private function stopDragHandler(e:MouseEvent):void
 		{
-			MovieClip(e.currentTarget).stopDrag();
+			Sprite(e.currentTarget).stopDrag();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * removeHandler
+		 * ---------------------------------------------------------------------
+		 * for removing the pinup 
+		 *
+		 * @param e
+		 */
+		private function removeHandler(e:MouseEvent):void
+		{
+			var s:Sprite = Sprite(e.currentTarget);
+			
+			e.stopPropagation();
+			this.myPinupContainer.removeChild(s.parent);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * rotate
+		 * ---------------------------------------------------------------------
+		 * random rotation around center
+		 *
+		 * @param s
+		 */
+		private function rotate(
+				s:Sprite, 
+				angle:int
+			):void 
+		{
+			var m:Matrix = s.transform.matrix;
+			var center:Point = new Point(
+					s.x + s.width/2, 
+					s.y + s.height/2
+				);
+			
+			m.tx -= center.x;
+			m.ty -= center.y;
+			m.rotate( angle * (Math.PI/180) );
+			m.tx += center.x;
+			m.ty += center.y;
+			s.transform.matrix = m;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * createRemoveButton
+		 * ---------------------------------------------------------------------
+		 * creates the ducttape remove button.
+		 *
+		 * @param posx
+		 * @param posy
+		 */
+		private function createRemoveButton(
+				posx:int,
+				posy:int
+			):Sprite
+		{
+			var s:Sprite = new Sprite();
+			var bmp:Bitmap = new Bitmap(ductTape.bitmapData);
+			
+			bmp.smoothing = true;
+			
+			s.addChild(bmp);
+			s.x = posx - s.width/2;
+			s.y = posy - s.height/2;
+			
+			rotate(s, 40 + TrueRandom.generateRangedInt(5) );
+			
+			s.buttonMode = true;
+			s.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					removeHandler
+				);
+			
+			return s;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * createPinup
+		 * ---------------------------------------------------------------------
+		 * finalizes the pinup, 
+		 * random position, rotation and the ducttape button
+		 *
+		 * @param bmp
+		 */
+		private function createPinup(bmp:Bitmap):void
+		{
+			var s:Sprite = new Sprite();
+			//random position
+			var rndX:int = TrueRandom.generateRangedInt(200);
+			var rndY:int = TrueRandom.generateRangedInt(300);
+			
+			bmp.smoothing = true;
+			
+			s.addChild(bmp);
+			s.addChild( createRemoveButton(s.width-5, 5) );
+						
+			s.x = 900 + rndX;
+			s.y = 50 + rndY;
+			rotate(
+					s,
+					TrueRandom.generateRangedInt(10) 
+						* TrueRandom.generateRandomSignedMultiplier() 
+				);
+			
+			// some little dropshadow
+			var dsf:DropShadowFilter = new DropShadowFilter(
+					1, //distance,
+                    45, // angle,
+                    0x000000, //color,
+                    0.7, //alpha,
+                    2, //blurX,
+                    2, //blurY,
+                    0.65, //strength,
+                    BitmapFilterQuality.HIGH
+				);
+			s.filters = new Array(dsf);
+			
+			this.myPinupContainer.addChild(s);
+			
+			s.buttonMode = true;
+			s.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					startDragHandler
+				);
+			s.addEventListener(
+					MouseEvent.MOUSE_UP,
+					stopDragHandler
+				);
+			s.addEventListener(
+					MouseEvent.MOUSE_OUT,
+					stopDragHandler
+				);
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * shufflePinups
+		 * ---------------------------------------------------------------------
+		 * Random z-Order
+		 */
+		private function shufflePinups():void
+		{
+			//Random z-Order
+			for( var i:int = 0; i<this.myPinupContainer.numChildren; i++ )
+			{
+				var rndZ:int = TrueRandom.generateRangedInt(
+						this.myPinupContainer.numChildren-1
+					);
+				this.myPinupContainer.setChildIndex(
+						this.myPinupContainer.getChildAt(i),
+						rndZ
+					);
+			}
 		}
 		
 		/**
@@ -169,31 +343,15 @@ package as3.aeronaut
 		 */
 		private function loadCompleteHandler(e:Event):void 
 		{
-			//random position
-			var rndX:int = TrueRandom.generateRangedInt(200);
-			var rndY:int = TrueRandom.generateRangedInt(300);
-			
-			this.currLoadClip.x = 900 + rndX;
-			this.currLoadClip.y = 50 + rndY;
-			
-			this.myPinupContainer.addChild(this.currLoadClip);
-			
-			this.currLoadClip.buttonMode = true;
-			this.currLoadClip.addEventListener(
-					MouseEvent.MOUSE_DOWN,
-					startDragHandler
-				);
-			this.currLoadClip.addEventListener(
-					MouseEvent.MOUSE_UP,
-					stopDragHandler
-				);
-			this.currLoadClip.addEventListener(
-					MouseEvent.MOUSE_OUT,
-					stopDragHandler
-				);
+			// first one is ducttape
+			if( this.ductTape == null )
+				this.ductTape = Bitmap(currentLoader.content);
+			else
+				createPinup(Bitmap(currentLoader.content));
 			
 			if( this.myPinupURLs.length > 0 )
 			{
+				// go to next
 				var pro:int = int( 
 						((this.maxCounter - this.myPinupURLs.length )
 							/this.maxCounter)*100 
@@ -203,20 +361,12 @@ package as3.aeronaut
 						pro,
 						"loading Pinups..."
 					);
-				this.setupNextLoad(String(this.myPinupURLs.pop()));
+				this.setupNextLoad(
+						String(this.myPinupURLs.pop())
+					);
 			} else {
-
-				// TODO Random rotation
-
-				//Random z-Order
-				for( var i:int = 0; i<this.myPinupContainer.numChildren; i++ )
-				{
-					var rndZ:int = TrueRandom.generateRangedInt(this.maxCounter-1);
-					this.myPinupContainer.setChildIndex(
-							this.myPinupContainer.getChildAt(i),
-							rndZ
-						);
-				}
+				// finished
+				shufflePinups();
 				Globals.myCSProgressBar.setProgressTo(100,"");
 				Globals.myCSProgressBar.hide();
 			}

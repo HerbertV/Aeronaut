@@ -1,0 +1,19 @@
+________              ___   ____     Crimson Skies      __             ________
+\________\-----------/ _ | / __/______  ___  ___ ___ __/ /_----------/________/ 
+    \_______\-------/ __ |/ _// __/ _ \/ _ \/ _ `/ // / __/-------/_______/ 
+       \______\----/_/ |_/___/_/  \___/_//_/\_,_/\_,_/\__/----/______/
+
+================================================================================
+Change Log -- Version 1.0.0 WIP
+================================================================================
+
+Version - 1.0.0 WIP: 
+--------------------------------------------------------------------------------
+- 	Bugfixes and Tests for Windows 7
+	You need admin rights for the first launch. 
+	Otherwise the file association does not work.
+- 	updated to Flashplayer 10.1 (encapsuled via Zinc)
+- 	updated to Zinc Version 3.0.24
+- 	updated to Console 2.0
+- 	Exe split up into Modules
+-  	new Pinup handling (see readme.txt)
