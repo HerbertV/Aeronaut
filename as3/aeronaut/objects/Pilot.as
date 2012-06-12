@@ -169,8 +169,7 @@ package as3.aeronaut.objects
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
 							"set XML was not a valid Pilot.",
-							DebugLevel.ERROR,
-							filename
+							DebugLevel.ERROR
 						);
 				this.createNew();
 			}
