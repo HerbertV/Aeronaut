@@ -17,3 +17,5 @@ Version - 1.0.0 WIP:
 - 	updated to Console 2.0
 - 	Exe split up into Modules
 -  	new Pinup handling (see readme.txt)
+-	Lists are now scrollable via mouse wheel.
+
