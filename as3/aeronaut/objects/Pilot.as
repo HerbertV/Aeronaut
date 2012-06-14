@@ -56,7 +56,19 @@ package as3.aeronaut.objects
 		public static const BASE_XP_OTHER:int = 0;
 		
 		// xp cost for all stats sort by stat level
-		public static const STAT_XPMATRIX:Array = new Array( 10,10,20,30,40,50,60,70,80,90,0 );
+		public static const STAT_XPMATRIX:Array = new Array(
+				10,	// level 1
+				10,	// level 2
+				20, // level 3
+				30, // level 4
+				40, // level 5
+				50, // level 6
+				60, // level 7
+				70, // level 8
+				80, // level 9
+				90, // level 10
+				0	// level 11 special FF5 houserule "ace of aces" feat
+			);
 		
 		// =====================================================================
 		// Variables

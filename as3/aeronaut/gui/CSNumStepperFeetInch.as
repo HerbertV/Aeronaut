@@ -23,194 +23,202 @@ package as3.aeronaut.gui
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import flash.events.Event;
 	import flash.text.TextField;
 	
-	import as3.hv.components.tooltip.ITooltip;
-	import as3.aeronaut.Globals;
+	import as3.aeronaut.CSFormatter;
 	
 	// =========================================================================
-	// CSAbstractListItem
+	// CSNumStepperFeetInch
 	// =========================================================================
-	// Dynamic abstract List class 
-	// lists have variable height. 
-	// the width debends on thier items.
+	// shows its value as feet and inches (e.g. "5,000 ft. 11 in.")
 	//
-	// Any ListItem needs following sub mc's:
-	// - btnRemove
-	// - myLabel
+	// a step is allway an inch.
 	//
-	dynamic public class CSAbstractListItem 
-			extends MovieClip 
-			implements ICSStyleable
+	public class CSNumStepperFeetInch 
+			extends CSAbstractNumStepper
 	{
-		
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		protected var myStyle:int = CSStyle.BLACK;
+		// in feet
+		private var minValue:int = 0;
+		// in feet
+		private var maxValue:int = 0;
 		
-		protected var isActive:Boolean = true;
-		protected var isInvalid:Boolean = false;
-		protected var isRemoveable:Boolean = true;
-		
-		protected var myID:String = "";
+		private var currentFeet:int = 0;
+		private var currentInch:int = 0;
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function CSAbstractListItem()
+		public function CSNumStepperFeetInch()
 		{
 			super();
 		}
 		
+		// =====================================================================
+		// Functions
+		// =====================================================================
+		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setupBaseParams 
+		 * getInch
 		 * ---------------------------------------------------------------------
-		 * Problem in Flash CS3 is, if you link a class file to library 
-		 * symbol you can only use the default Constructor.
-		 * So we need a seperate setup function. 
-		 *
-		 * @param id
-		 * @param lbl
-		 * @param removeable
-		 * @param removeTooltip
+		 * @return
 		 */
-		public function setupBaseParams(
-				id:String,
-				lbl:String,
-				removeable:Boolean=false,
-				removeTooltip:String="remove item"
+		public function getInch():int
+		{
+			return this.currentInch;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getFeet
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getFeet():int
+		{
+			return this.currentFeet;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getValue
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getValue():Array
+		{
+			return new Array(
+					this.currentFeet,
+					this.currentInch
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setValue
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function setValue(
+				feet:int,
+				inch:int
 			):void
 		{
-			this.myLabel.text = lbl;
-			this.myID = id;
-			this.isRemoveable = removeable;
+			this.currentFeet = feet;
+			this.currentInch = inch;
 			
-			this.btnRemove.setActive(this.isRemoveable);
+			this.updateTextField();
+			this.toggleStepButtons();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setupSteps
+		 * ---------------------------------------------------------------------
+		 * minimum inches are always 0
+		 * maximum inches are always 11
+		 *
+		 * @param minFeet
+		 * @param maxFeet
+		 * @param startFeet
+		 * @param startInch
+		 */
+		public function setupSteps(
+				minFeet:int,
+				maxFeet:int,
+				startFeet:int,
+				startInch:int
+			):void
+		{
+			this.minValue = minFeet;
+			this.maxValue = maxFeet;
+			this.currentFeet = startFeet;
+			this.currentInch = startInch;
 			
-			if( this.isRemoveable ) 
-				this.btnRemove.setupTooltip(
-						Globals.myTooltip,
-						removeTooltip
-					);
-		}
-		/**
-		 * ---------------------------------------------------------------------
-		 * getID
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getID():String
-		{
-			return myID;
+			this.updateTextField();
+			this.toggleStepButtons();
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setStyle
+		 * updateTextField
 		 * ---------------------------------------------------------------------
-		 * @param s
+		 * fills the text field with the new value
 		 */
-		public function setStyle(s:int):void 
+		override protected function updateTextField():void
 		{
-			this.myStyle = s;
-			this.btnRemove.setStyle(s);
-			this.btnRemove.updateView();
-			this.updateView();
+			this.txtValue.text = CSFormatter.formatFeetInch(
+					this.currentFeet,
+					this.currentInch
+				);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setActive
+		 * stepUp
 		 * ---------------------------------------------------------------------
-		 * @param a
+		 * set to next value
 		 */
-		public function setActive(a:Boolean):void 
+		override public function stepUp():void
 		{
-			this.isActive = a;
-			this.btnRemove.setActive(a);
-			this.updateView();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setInvalid
-		 * ---------------------------------------------------------------------
-		 * @param i
-		 */
-		public function setInvalid(i:Boolean):void 
-		{
-			this.isInvalid = i;
-			this.updateView();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getIsActive
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getIsActive():Boolean
-		{
-			return this.isActive;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getIsRemoveable
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getIsRemoveable():Boolean
-		{
-			return isRemoveable;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getRemoveButton
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getRemoveButton():CSButtonStyled 
-		{
-			return this.btnRemove;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * updateView
-		 * ---------------------------------------------------------------------
-		 */
-		public function updateView():void 
-		{
-			if( this.myStyle == CSStyle.BLACK ) 
+			this.currentInch++;
+			
+			if( this.currentInch == 12 ) 
 			{
-				if( !this.isActive ) 
-				{
-					this.myLabel.textColor = 0xB1B1B1;
-				} else if( this.isInvalid ) {
-					this.myLabel.textColor = 0xFF0000;
-				} else {
-					this.myLabel.textColor = 0x000000;
-				}
-				return;
-				
-			} 
-			
-			if( this.myStyle == CSStyle.WHITE )
-			{
-				if ( !this.isActive ) 
-				{
-					this.myLabel.textColor = 0xB1B1B1;
-				} else if( this.isInvalid ) {
-					this.myLabel.textColor = 0xFF0000;
-				} else {
-					this.myLabel.textColor = 0xFFFFFF;
-				}
-				return;
+				this.currentInch = 0;
+				this.currentFeet++;
 			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * stepDown
+		 * ---------------------------------------------------------------------
+		 * set to previous value
+		 */
+		override public function stepDown():void
+		{
+			 this.currentInch--;
+			
+					
+			if( this.currentInch == -1 ) 
+			{
+				this.currentInch = 11;
+				this.currentFeet--;
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * hasNextStep
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		override public function hasNextStep():Boolean
+		{
+			if( this.currentFeet < this.maxValue )
+				return true;
+				
+			return false;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * hasPreviousStep
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		override public function hasPreviousStep():Boolean
+		{
+			if( this.currentFeet == this.minValue
+					&& this.currentInch == 0 )
+				return false;
+			
+			return true;
 		}
 	
 	}
