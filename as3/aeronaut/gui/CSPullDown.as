@@ -32,63 +32,74 @@ package as3.aeronaut.gui
  	import fl.transitions.easing.*;
 	
 	// =========================================================================
-	// CSAbstractList
+	// CSPullDown
 	// =========================================================================
-	// Dynamic abstract List class 
-	// lists have variable height. 
-	// the width debends on thier items.
 	//
-	// Any List needs following sub mc's:
-	// - sbtnTop
-	// - sbtnOneUp
-	// - sbtnOneDown
-	// - sbtnBottom
-	// - myMask (a masking mc)
-	// - containerItems ( emtpy container for items )
-	// - BG_open_black
-	// - BG_open_white
-	//
-	dynamic public class CSAbstractList 
+	public class CSPullDown 
 			extends MovieClip 
 			implements ICSStyleable
 	{
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const POS0_CONTAINER:int = 2;
+		public static const POS0_CONTAINER:int = 32;
+		public static const ID_EMPTYSELECTION:String = "!THISISEMPTY!";
 		
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		protected var myStyle:int = CSStyle.BLACK;
+		private var myStyle:int = CSStyle.BLACK;
+				
+		private var isActive:Boolean = true;
+		private var isOpen:Boolean = false;
 		
-		// stores CSAbstracteListItem's
-		protected var listItems:Array = new Array();
-		// stores the items ids
-		protected var listIDs:Array = new Array();
+		private var emptySelectionText:String = "";
+		private var showEmptySelectionInList:Boolean = false;
 		
-		protected var myContainerTween:Tween = null;
-		protected var targetPosContainer:int = POS0_CONTAINER;
+		private var currentSelectionIdx:int = -1;
+		private var lastSelectionIdx:int = -1;
+							
+		private var selectionItems:Array = new Array();
+		private var selectionIDs:Array = new Array();
 		
-		protected var maxVisibleItems:int = 10;
-		protected var itemHeight:int = 20;
-		protected var contVisibleHeight:int = 200;
+		private var myContainerTween:Tween = null;
+		private var targetPosContainer:int = POS0_CONTAINER;
 		
-		protected var scrollWheelSpeed:Number = 1.0;
+		private var maxVisibleItems:int = 10;
+		private var itemHeight:int = 21;
+		private var contVisibleHeight:int = 220;
 		
-		protected var isActive:Boolean = true;
+		private var scrollWheelSpeed:Number = 3.0;
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function CSAbstractList()
+		public function CSPullDown()
 		{
 			super();
-
+			
+			//this.BG_black.visible = false;
+			this.BG_white.visible = false;
+			this.frame_white.visible = false;
+			//this.frame_black.visible = false;
+			
+			this.txtValue.text = "";
+			this.switchPullDownList();
+			
 			this.addEventListener(
-					MouseEvent.MOUSE_WHEEL,
-					scrollWheelHandler
+					MouseEvent.ROLL_OUT,
+					closePullDownHandler
 				);
+			this.addEventListener(
+					MouseEvent.MOUSE_WHEEL, 
+					onMouseWheelEvent
+				);
+			
+			this.btnOpen.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					openPullDownHandler
+				);
+			
 			this.sbtnTop.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					scrollTopHandler
@@ -113,6 +124,27 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * toString
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		override public function toString():String
+		{
+			var str:String = "gui.CSPullDown [selectionIDs="
+					+selectionIDs.length 
+					+ ", selectionItems="
+					+ selectionItems.length
+					+ ", containerItems=" 
+					+ containerItems.numChildren;
+			
+			for( var i:int=0; i<selectionIDs.length; i++) 
+				str += "\n - "+ selectionIDs[i];
+			
+			return str +"\n ]";
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * setStyle
 		 * ---------------------------------------------------------------------
 		 * @param s
@@ -122,13 +154,150 @@ package as3.aeronaut.gui
 			this.myStyle = s;
 			this.updateView();
 			
+			this.btnOpen.setStyle(s);
 			this.sbtnTop.setStyle(s);
 			this.sbtnOneUp.setStyle(s);
 			this.sbtnOneDown.setStyle(s);
 			this.sbtnBottom.setStyle(s);
 			
-			for( var i:uint = 0; i< this.containerItems.numChildren; i++ )
-				this.containerItems.getChildAt(i).setStyle(s);
+			for( var i:uint = 0; i< this.selectionItems.length; i++ )
+				selectionItems[i].setStyle(s);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setEmptySelectionText
+		 * ---------------------------------------------------------------------
+		 * @param s
+		 * @param showInList
+		 */
+		public function setEmptySelectionText(
+				s:String,
+				showInList:Boolean
+			):void
+		{
+			this.emptySelectionText = s;
+			this.showEmptySelectionInList = showInList;
+			
+			if( currentSelectionIdx == -1 )
+				this.txtValue.text = this.emptySelectionText;
+			
+			if( this.showEmptySelectionInList ) 
+				this.addSelectionItem(s,ID_EMPTYSELECTION);
+			
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * addSelectionItem
+		 * ---------------------------------------------------------------------
+		 * @param lbl
+		 * @param id
+		 */
+		public function addSelectionItem(
+				lbl:String, 
+				id:String
+			):void
+		{
+			var newitem:CSPullDownSelectionItem = new CSPullDownSelectionItem();
+			
+			newitem.setStyle(this.myStyle);
+			newitem.setLabel(lbl);
+			newitem.resizeWidth(this.txtValue.width);
+			
+			newitem.y = this.selectionItems.length * newitem.height;
+			
+			newitem.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					clickItemHandler
+				);
+			
+			this.containerItems.addChild(newitem);
+			this.selectionItems.push(newitem);
+			this.selectionIDs.push(id);
+			
+			this.itemHeight = newitem.height;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setMaxVisibleItems
+		 * ---------------------------------------------------------------------
+		 * @param max
+		 */
+		public function setMaxVisibleItems(max:int):void
+		{
+			this.maxVisibleItems = max;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * clearSelectionItemList
+		 * ---------------------------------------------------------------------
+		 */
+		public function clearSelectionItemList():void
+		{
+			this.selectionItems = new Array();
+			this.selectionIDs = new Array();
+			
+			while( this.containerItems.numChildren > 0 )
+				this.containerItems.removeChildAt(0);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * clearSelection
+		 * ---------------------------------------------------------------------
+		 */
+		public function clearSelection()
+		{
+			this.currentSelectionIdx = -1;
+			this.txtValue.text = this.emptySelectionText;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setActiveSelectionItem
+		 * ---------------------------------------------------------------------
+		 * @param id
+		 */
+		public function setActiveSelectionItem(id:String)
+		{
+			var idx:int = this.selectionIDs.indexOf(id);
+			
+			if( idx != -1 ) 
+			{
+				this.txtValue.text = this.selectionItems[idx].getLabel();
+				this.currentSelectionIdx = idx;
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getIDForCurrentSelection
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getIDForCurrentSelection():String
+		{
+			if( currentSelectionIdx > -1 ) 
+				return this.selectionIDs[currentSelectionIdx];
+			
+			return ID_EMPTYSELECTION;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getIDForLastSelection
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getIDForLastSelection():String
+		{
+			if( lastSelectionIdx > -1 )
+				return this.selectionIDs[lastSelectionIdx];
+			
+			return ID_EMPTYSELECTION;
 		}
 		
 		/**
@@ -137,14 +306,11 @@ package as3.aeronaut.gui
 		 * ---------------------------------------------------------------------
 		 * @param a
 		 */
-		public function setActive(a:Boolean):void 
+		public function setActive(a:Boolean):void
 		{
-			this.sbtnTop.setActive(a);
-			this.sbtnOneUp.setActive(a);
-			this.sbtnOneDown.setActive(a);
-			this.sbtnBottom.setActive(a);
-			
 			this.isActive = a;
+			
+			this.btnOpen.setActive(a);
 			this.updateView();
 		}
 		
@@ -161,186 +327,87 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * addItem
-		 * ---------------------------------------------------------------------
-		 * @param item 
-		 * @param update if you want to update the view
-		 */
-		public function addItem(
-				item:CSAbstractListItem,
-				update:Boolean=false
-			):void
-		{
-			item.y = this.listItems.length* item.height;
-			
-			this.containerItems.addChild(item);
-			this.listItems.push(item);
-			this.listIDs.push(item.getID());
-			
-			this.itemHeight = item.height;
-			
-			if( update ) 
-				this.updateView();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * removeItem
-		 * ---------------------------------------------------------------------
-		 * @param id
-		 *
-		 * @return index of the item
-		 */
-		public function removeItem(id:String):int
-		{
-			var idx:int = this.listIDs.indexOf(id);
-			
-			if( idx == -1 )
-				return idx;
-			
-			this.containerItems.removeChildAt(idx);
-			this.listItems.splice(idx,1);
-			this.listIDs.splice(idx,1);
-				
-			//reposition remaining items
-			for( var i:int=0; i< this.containerItems.numChildren; i++ ) 
-				this.containerItems.getChildAt(i).y = i * this.itemHeight;
-				
-			this.updateView();
-			
-			return idx;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getCountOfItems
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getCountOfItems():int
-		{
-			return this.containerItems.numChildren;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * containsItem
-		 * ---------------------------------------------------------------------
-		 * @param id
-		 *
-		 * @return
-		 */
-		public function containsItem(id:String):Boolean
-		{
-			if( listIDs.indexOf(id) > -1 ) 
-				return true;
-			
-			return false;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getItemIDs
-		 * ---------------------------------------------------------------------
-		 * @return
-		 */
-		public function getItemIDs():Array
-		{
-			return this.listIDs;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setItemIsInvalid
-		 * ---------------------------------------------------------------------
-		 * @param idx
-		 * @param invalid
-		 */
-		public function setItemIsInvalid(
-				idx:int,
-				invalid:Boolean
-			):void
-		{
-			CSAbstractListItem(this.listItems[idx]).setInvalid(invalid);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * addRemoveListenerToItem
-		 * ---------------------------------------------------------------------
-		 * to add a custom remove item listener for each implementation.
-		 *
-		 * @param idx
-		 * @param eventType (e.g. MouseEvent.MOUSE_UP)
-		 * @param removeCallback
-		 */
-		public function addRemoveListenerToItem(
-				idx:int, 
-				eventType:String, 
-				removeCallback:Function
-			):void 
-		{
-			var item:CSAbstractListItem = CSAbstractListItem(
-					this.containerItems.getChildAt(idx)
-				);
-			
-			item.getRemoveButton().addEventListener(
-					eventType,
-					removeCallback
-				);
-		}
-		/**
-		 * ---------------------------------------------------------------------
-		 * setMaxVisibleItems
-		 * ---------------------------------------------------------------------
-		 * @param max
-		 */
-		public function setMaxVisibleItems(max:int):void
-		{
-			this.maxVisibleItems = max;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * clearItemList
-		 * ---------------------------------------------------------------------
-		 * removes all items
-		 */
-		public function clearList():void
-		{
-			this.listItems = new Array();
-			this.listIDs = new Array();
-			
-			while( this.containerItems.numChildren > 0 )
-				this.containerItems.removeChildAt(0);
-			
-			this.updateView();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
 		 * updateView
 		 * ---------------------------------------------------------------------
 		 */
 		public function updateView():void
 		{
-			this.sbtnTop.visible = true;
-			this.sbtnOneUp.visible = true;
-			this.sbtnOneDown.visible = true;
-			this.sbtnBottom.visible = true;
-			this.containerItems.visible = true;
+			this.BG_black.visible = false;
+			this.BG_white.visible = false;
+			this.frame_white.visible = false;
+			this.frame_black.visible = false;
 			
-			if( this.myStyle == CSStyle.BLACK )
+			this.frame_black.alpha = 1.0;
+			this.frame_white.alpha = 1.0;
+						
+			if( this.myStyle == CSStyle.BLACK ) 
 			{
-				this.BG_open_black.visible = true;
-				this.BG_open_white.visible = false;
+				this.BG_black.visible = true;
+				this.frame_black.visible = true;
 				
-			} else if( this.myStyle == CSStyle.WHITE ) {
-				this.BG_open_white.visible = true;
-				this.BG_open_black.visible = false;
+				if( !this.isActive ) 
+				{
+					this.txtValue.textColor = 0xB1B1B1;
+					this.frame_black.alpha = 0.2;
+				} else {
+					this.txtValue.textColor = 0x000000;
+				}
+				return;
+			} 
+			if( this.myStyle == CSStyle.WHITE )
+			{
+				this.BG_white.visible = true;
+				this.frame_white.visible = true;
+			
+				if ( !this.isActive )
+				{
+					this.txtValue.textColor = 0xB1B1B1;
+					this.frame_white.alpha = 0.2;
+				} else {
+					this.txtValue.textColor = 0xFFFFFF;
+				}
+				return;
 			}
-			this.updateScrollButtons();
-			this.resizeSelectionMask();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * switchPullDownList
+		 * ---------------------------------------------------------------------
+		 */
+		private function switchPullDownList()
+		{
+			this.BG_open_white.visible = false;
+			this.BG_open_black.visible = false;
+			this.sbtnTop.visible = false;
+			this.sbtnOneUp.visible = false;
+			this.sbtnOneDown.visible = false;
+			this.sbtnBottom.visible = false;
+			
+			this.containerItems.visible = false;
+			
+			if( this.isOpen ) 
+			{
+				this.sbtnTop.visible = true;
+				this.sbtnOneUp.visible = true;
+				this.sbtnOneDown.visible = true;
+				this.sbtnBottom.visible = true;
+				this.containerItems.visible = true;
+				
+				if( this.myStyle == CSStyle.BLACK )
+				{
+					this.BG_open_black.visible = true;
+				} else if( this.myStyle == CSStyle.WHITE ) {
+					this.BG_open_white.visible = true;
+				}
+				this.updateScrollButtons();
+				this.resizeSelectionMask();
+				
+			} else if (this.myContainerTween != null) {
+				this.myContainerTween.stop();
+				this.containerItems.y = POS0_CONTAINER;
+				this.targetPosContainer = POS0_CONTAINER;
+			}
 		}
 		
 		/**
@@ -348,23 +415,25 @@ package as3.aeronaut.gui
 		 * resizeSelectionMask
 		 * ---------------------------------------------------------------------
 		 */
-		protected function resizeSelectionMask():void
+		private function resizeSelectionMask()
 		{
 			var currHeight:int = 0;
 			var offset:int = 1;
-			if( this.maxVisibleItems > this.listItems.length ) 
+			
+			if( this.maxVisibleItems > this.selectionItems.length )
 			{
-				currHeight = this.listItems.length * itemHeight + offset;
+				currHeight = this.selectionItems.length * itemHeight + offset;
 			} else {
 				currHeight = this.maxVisibleItems * itemHeight + offset;
 			}
 			
+			this.BG_open_white.height = currHeight;
+			this.BG_open_black.height = currHeight;
 			this.contVisibleHeight = currHeight;
-			this.myMask.height = currHeight;
-			this.sbtnBottom.y = currHeight - this.sbtnBottom.height;
+			this.myMask.height = currHeight +2;
+			this.sbtnBottom.y = 32 + currHeight - this.sbtnBottom.height;
 			this.sbtnOneDown.y = this.sbtnBottom.y - 30;
 			
-			// 120 is the height need for all four scrollbuttons
 			if( currHeight < 120 ) 
 			{
 				this.sbtnTop.visible = false;
@@ -379,12 +448,13 @@ package as3.aeronaut.gui
 		 * updateScrollButtons
 		 * ---------------------------------------------------------------------
 		 */
-		protected function updateScrollButtons():void
+		private function updateScrollButtons()
 		{
 			var maxPos:int = POS0_CONTAINER 
-					- this.containerItems.height + this.contVisibleHeight;
+					- this.containerItems.height 
+					+ this.contVisibleHeight;
 				
-			if( this.targetPosContainer >= POS0_CONTAINER )
+			if( this.targetPosContainer >= POS0_CONTAINER ) 
 			{
 				this.sbtnTop.setActive(false);
 				this.sbtnOneUp.setActive(false);
@@ -403,23 +473,28 @@ package as3.aeronaut.gui
 			}
 		}
 		
+		
 		// =====================================================================
 		// Event Handler
 		// =====================================================================
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * scrollWheelHandler
+		 * onMouseWheelEvent
 		 * ---------------------------------------------------------------------
 		 * @param e
 		 */
-		protected function scrollWheelHandler(e:MouseEvent):void
+		private function onMouseWheelEvent(e:MouseEvent):void
 		{
-			if( this.maxVisibleItems >= this.listItems.length )
+			if( !this.isActive )
 				return;
-
-			var maxPos:int = POS0_CONTAINER
-					- this.containerItems.height + this.contVisibleHeight;
+			
+			if( !this.isOpen )
+				return;
+				
+			var maxPos:int = POS0_CONTAINER 
+					- this.containerItems.height 
+					+ this.contVisibleHeight;
 			
 			// update current position
 			this.containerItems.y += e.delta * scrollWheelSpeed;
@@ -440,17 +515,80 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * openPullDownHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function openPullDownHandler(e:MouseEvent):void
+		{
+			if( !this.isActive )
+				return;
+				
+			this.isOpen = !this.isOpen;
+			this.switchPullDownList();	
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * closePullDownHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function closePullDownHandler(e:MouseEvent):void
+		{
+			if( !this.isActive )
+				return;
+				
+			if( this.isOpen == true )
+			{
+				this.isOpen = false;
+				this.switchPullDownList();
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * clickItemHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function clickItemHandler(e:MouseEvent):void
+		{
+			var citem:CSPullDownSelectionItem = CSPullDownSelectionItem(
+					e.currentTarget
+				);
+			
+			if( !citem.getIsActive() ) 
+				return;
+				
+			for( var i:int=0; i<this.selectionItems.length; i++ )
+			{
+				if( this.selectionItems[i] == citem ) 
+				{
+					this.lastSelectionIdx = this.currentSelectionIdx;
+					this.currentSelectionIdx = i;
+					this.txtValue.text = citem.getLabel();
+					this.openPullDownHandler(null);
+					citem.resetState();
+					break;
+				}
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * scrollTopHandler
 		 * ---------------------------------------------------------------------
 		 * @param e
 		 */
-		protected function scrollTopHandler(e:MouseEvent):void
+		private function scrollTopHandler(e:MouseEvent):void
 		{
 			var sbtn:CSButtonStyled = CSButtonStyled(e.currentTarget);
+			
 			if( !sbtn.getIsActive() )
 				return;
 				
-			if (this.myContainerTween != null) 
+			if( this.myContainerTween != null )
 				this.myContainerTween.stop();
 				
 			this.targetPosContainer = POS0_CONTAINER;
@@ -473,58 +611,22 @@ package as3.aeronaut.gui
 		 * ---------------------------------------------------------------------
 		 * @param e
 		 */
-		protected function scrollOneUpHandler(e:MouseEvent):void
+		private function scrollOneUpHandler(e:MouseEvent):void
 		{
 			var sbtn:CSButtonStyled = CSButtonStyled(e.currentTarget);
-			if( !sbtn.getIsActive() ) 
-				return;
-				
-			if( this.myContainerTween != null ) 
-				this.myContainerTween.stop();
-				
-			if( (this.targetPosContainer + this.itemHeight ) < POS0_CONTAINER )
-			{
-				this.targetPosContainer = this.targetPosContainer + this.itemHeight;
-			} else {
-				this.targetPosContainer = POS0_CONTAINER;
-			}
-				
-			this.myContainerTween = new Tween(
-					this.containerItems, 
-					"y",
-					None.easeIn, 
-					this.containerItems.y, 
-					this.targetPosContainer, 
-					0.4, 
-					true
-				);
-				
-			this.updateScrollButtons();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * scrollOneUpHandler
-		 * ---------------------------------------------------------------------
-		 * @param e
-		 */
-		protected function scrollOneDownHandler(e:MouseEvent):void
-		{
-			var sbtn:CSButtonStyled = CSButtonStyled(e.currentTarget);
+			
 			if( !sbtn.getIsActive() )
 				return;
 				
 			if( this.myContainerTween != null )
 				this.myContainerTween.stop();
 				
-			var maxPos:int = POS0_CONTAINER
-					- this.containerItems.height + this.contVisibleHeight;
-			
-			if( (this.targetPosContainer - this.itemHeight ) > maxPos ) 
+				
+			if( (this.targetPosContainer + this.itemHeight ) < POS0_CONTAINER )
 			{
-				this.targetPosContainer = this.targetPosContainer - this.itemHeight;
+				this.targetPosContainer = this.targetPosContainer + this.itemHeight;
 			} else {
-				this.targetPosContainer = maxPos;
+				this.targetPosContainer = POS0_CONTAINER;
 			}
 				
 			this.myContainerTween = new Tween(
@@ -542,21 +644,63 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * scrollOneUpHandler
+		 * scrollOneDownHandler
 		 * ---------------------------------------------------------------------
 		 * @param e
 		 */
-		protected function scrollBottomHandler(e:MouseEvent):void
+		private function scrollOneDownHandler(e:MouseEvent):void
 		{
 			var sbtn:CSButtonStyled = CSButtonStyled(e.currentTarget);
-			if( !sbtn.getIsActive() ) 
+			
+			if( !sbtn.getIsActive() )
 				return;
 				
-			if( this.myContainerTween != null ) 
+			if( this.myContainerTween != null )
 				this.myContainerTween.stop();
+				
+			var maxPos:int = POS0_CONTAINER 
+					- this.containerItems.height 
+					+ this.contVisibleHeight;
 			
-			this.targetPosContainer = POS0_CONTAINER 
-					- this.containerItems.height + this.contVisibleHeight;
+			if( (this.targetPosContainer - this.itemHeight ) > maxPos )
+			{
+				this.targetPosContainer = this.targetPosContainer - this.itemHeight;
+			} else {
+				this.targetPosContainer = maxPos ;
+			}
+				
+			this.myContainerTween = new Tween(
+					this.containerItems, 
+					"y", 
+					None.easeIn, 
+					this.containerItems.y, 
+					this.targetPosContainer, 
+					0.4, 
+					true
+				);
+				
+			this.updateScrollButtons();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * scrollBottomHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function scrollBottomHandler(e:MouseEvent):void
+		{
+			var sbtn:CSButtonStyled = CSButtonStyled(e.currentTarget);
+			
+			if( !sbtn.getIsActive() )
+				return;
+				
+			if( this.myContainerTween != null )
+				this.myContainerTween.stop();
+				
+			this.targetPosContainer = POS0_CONTAINER
+					- this.containerItems.height 
+					+ this.contVisibleHeight;
 					
 			this.myContainerTween = new Tween(
 					this.containerItems, 
