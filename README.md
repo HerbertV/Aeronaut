@@ -2,7 +2,7 @@
 
 -----------------------------------
 
-*An unoffical custom aircraft, pilot design and editing tool for the out-of-print CRIMSON SKIES boardgame by created FASA.*
+*An unoffical custom aircraft, pilot design and editing tool for the out-of-print CRIMSON SKIES boardgame created by FASA.*
 
 *Inspired by Scott Janssens' CADET.*
 
