@@ -1,4 +1,4 @@
-/*
+﻿/*
  *    ___   ____                        __  
  *   / _ | / __/______  ___  ___ ___ __/ /_ 
  *  / __ |/ _// __/ _ \/ _ \/ _ `/ // / __/ 
@@ -22,6 +22,8 @@
 package as3.aeronaut
 {
 	import mdm.*;
+	
+	import as3.aeronaut.module.ICSWindow;
 		
 	// =========================================================================
 	// Class CSDialogs
@@ -155,6 +157,7 @@ package as3.aeronaut
 		 * changesNotSaved
 		 * ---------------------------------------------------------------------
 		 * warning dialog for unsaved changes. 
+		 * returns true if the user wants to discard the changes.
 		 *
 		 * @return
 		 */
