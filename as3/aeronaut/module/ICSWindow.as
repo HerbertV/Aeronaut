@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2012 Herbert Veitengruber 
@@ -62,14 +62,53 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * getFilename
 		 * ---------------------------------------------------------------------
+		 * returns the absolut path including the filename. 
+		 * Or "" if there exists no file.
+		 *
 		 * @return
 		 */
 		function getFilename():String;
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getTitle
+		 * ---------------------------------------------------------------------
+		 * returns the window title (e.g. "Pilot", "Aircraft", ...)
+		 *
+		 * @since 1.1.0
+		 * @return
+		 */
+		function getTitle():String;
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getWindowType
+		 * ---------------------------------------------------------------------
+		 * returns a CSWindowManager window type constant (e.g. WND_PILOT) 
+		 *
+		 * @since 1.1.0
+		 * @return
+		 */
+		function getWindowType():int;
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSubPath
+		 * ---------------------------------------------------------------------
+		 * returns the base subpath where the data for this window is stored.
+		 * (e.g. Globals.PATH_AIRCRAFT )
+		 *
+		 * @since 1.1.0
+		 * @return
+		 */
+		function getSubPath():String;
+				
+		/**
+		 * ---------------------------------------------------------------------
 		 * saveObject
 		 * ---------------------------------------------------------------------
+		 * fn is the absolute path to the file.
+		 * 
 		 * @param fn
 		 */
 		function saveObject(fn:String):void;

@@ -94,6 +94,8 @@ package as3.aeronaut.module
 		{
 			super();
 			
+			this.moduleVersion = Globals.version;
+			
 			this.btnWinClose.setupTooltip(Globals.myTooltip,"close");
 			this.btnWinClose.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
@@ -409,7 +411,6 @@ package as3.aeronaut.module
 		private function winCloseHandler(e:MouseEvent):void
 		{
 			Globals.myWindowManager.closeMe(this);
-			
 		}
 		
 		/**
@@ -421,7 +422,6 @@ package as3.aeronaut.module
 		private function winMinHandler(e:MouseEvent):void
 		{
 			Globals.myWindowManager.minimizeMe(this);
-			
 		}
 		
 		/**

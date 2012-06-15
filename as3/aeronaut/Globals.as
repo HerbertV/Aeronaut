@@ -30,14 +30,10 @@ package as3.aeronaut
 
 	import as3.hv.core.net.AbstractModule;
 	
-//TODO
-/*	
-	import as3.aeronaut.module.CSWindow;
-*/	
 	import as3.aeronaut.module.ICSToolbarBottom;
 	
-	import as3.aeronaut.objects.*;
-	
+	import as3.aeronaut.objects.BaseData;
+	import as3.aeronaut.objects.RuleConfigs;
 	
 	// =========================================================================
 	// Class Globals
@@ -46,7 +42,6 @@ package as3.aeronaut
 	//
 	public class Globals
 	{
-			
 		// =====================================================================
 		// Constants
 		// =====================================================================
@@ -82,7 +77,6 @@ package as3.aeronaut
 		public static const PATH_NOSEART:String = "noseart\\";
 		
 		public static const PATH_PINUP:String = "pinups\\";
-				
 		
 		// =====================================================================
 		// Variables
@@ -101,10 +95,8 @@ package as3.aeronaut
 		public static var myMenuLeft:AbstractModule = null;
 		public static var myToolbarBottom:ICSToolbarBottom = null;
 
-		//TODO
-
 		// manager
-		//public static var myWindowManager:CSWindowManager = null;
+		public static var myWindowManager:CSWindowManager = null;
 		public static var myPinupManager:CSPinupManager = null;
 		
 		// objects
@@ -113,12 +105,5 @@ package as3.aeronaut
 			
 		public static var lastSelectedImportDir:String = "";
 	
-		
-		// =====================================================================
-		// Functions
-		// =====================================================================
-		
-		
-		
 	}
 }
