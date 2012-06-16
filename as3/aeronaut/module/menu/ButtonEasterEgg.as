@@ -22,43 +22,32 @@
 package as3.aeronaut.module.menu
 {
 	import flash.display.MovieClip;
-	
 	import flash.events.MouseEvent;
 	
-	import fl.transitions.Tween;
-	import fl.transitions.TweenEvent;
- 	import fl.transitions.easing.*;
-	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.CSWindowManager;
-
+	
 	// =========================================================================
-	// Class ButtonFolder
+	// Class ButtonEasterEgg
 	// =========================================================================
-	// A Folder Button from the main menu.
-	// Linked to btnFolder symbol in modMenu.
+	// The Easter Egg Button from the main menu.
+	// Linked to btnEasterEgg symbol in modMenu.
 	//
-	public class ButtonFolder 
+	public class ButtonEasterEgg
 			extends MovieClip
 	{
 		// =====================================================================
-		// Constants
-		// =====================================================================
-		public static const FOLDER_CLOSE_POS:int = -30;
-		public static const FOLDER_OPEN_POS:int = -10;
-		public static const FOLDER_SPEED:Number = 0.5;
-		
-		// =====================================================================
 		// Variables
 		// =====================================================================
-		private var targetFolder:MovieClip = null;
-		private var tweenFolder:Tween = null;
-		private var linkedWindowType:int = -1;
+		private var isBlueprintHidden:Boolean = false;
+		private var isFotoHidden:Boolean = false;
+		
+		private var blueprint:MovieClip = null;
+		private var foto:MovieClip = null;
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function ButtonFolder()
+		public function ButtonEasterEgg()
 		{
 			super();
 			
@@ -74,25 +63,17 @@ package as3.aeronaut.module.menu
 		 * ---------------------------------------------------------------------
 		 * setup
 		 * ---------------------------------------------------------------------
-		 * @param target 
-		 * @param linkedTo 
+		 * @param bp
+		 * @param f
 		 */
 		public function setup(
-				target:MovieClip,
-				linkedTo:int
+				bp:MovieClip,
+				f:MovieClip
 			):void
 		{
-			this.targetFolder = target;
-			this.linkedWindowType = linkedTo;
+			this.blueprint = bp;
+			this.foto = f;
 			
-			this.addEventListener(
-					MouseEvent.MOUSE_OVER, 
-					overHandler
-				);
-			this.addEventListener(
-					MouseEvent.MOUSE_OUT,
-					outHandler
-				);
 			this.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					downHandler
@@ -105,52 +86,6 @@ package as3.aeronaut.module.menu
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * overHandler
-		 * ---------------------------------------------------------------------
-		 * @param e 
-		 */
-		private function overHandler(e:MouseEvent):void
-		{
-			if( this.tweenFolder != null) 
-				if( this.tweenFolder.isPlaying ) 
-					this.tweenFolder.stop();
-			
-			this.tweenFolder = new Tween(
-					this.targetFolder,
-					"x",
-					Regular.easeOut,
-					this.targetFolder.x,
-					FOLDER_OPEN_POS,
-					FOLDER_SPEED,
-					true
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * outHandler
-		 * ---------------------------------------------------------------------
-		 * @param e 
-		 */
-		private function outHandler(e:MouseEvent):void
-		{
-			if( this.tweenFolder != null ) 
-				if( this.tweenFolder.isPlaying ) 
-					this.tweenFolder.stop();
-			
-			this.tweenFolder = new Tween(
-					this.targetFolder, 
-					"x", 
-					Regular.easeOut, 
-					this.targetFolder.x, 
-					FOLDER_CLOSE_POS, 
-					FOLDER_SPEED, 
-					true
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
 		 * downHandler
 		 * ---------------------------------------------------------------------
 		 * opens the linked window
@@ -159,7 +94,26 @@ package as3.aeronaut.module.menu
 		 */
 		private function downHandler(e:MouseEvent):void
 		{
-			Globals.myWindowManager.openWindow(this.linkedWindowType);
+			if( !this.isBlueprintHidden ) 
+			{
+				this.isBlueprintHidden = true;
+				this.blueprint.visible = false;
+				
+			} else if( !isFotoHidden ) {
+				this.isFotoHidden = true;
+				this.foto.visible = false;
+				
+				// pinup manager
+				Globals.myPinupManager.loadPinups();
+				
+				this.buttonMode = false;
+				this.tabEnabled = false;
+				this.removeEventListener(
+						MouseEvent.MOUSE_DOWN, 
+						downHandler
+					);
+				this.blueprint.visible = true;
+			} 
 		}
 		
 	}

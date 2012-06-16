@@ -30,35 +30,36 @@ package as3.aeronaut.module.menu
  	import fl.transitions.easing.*;
 	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.CSWindowManager;
-
+	
 	// =========================================================================
-	// Class ButtonFolder
+	// Class ButtonAbout
 	// =========================================================================
-	// A Folder Button from the main menu.
+	// The About Button from the main menu.
 	// Linked to btnFolder symbol in modMenu.
 	//
-	public class ButtonFolder 
+	public class ButtonAbout
 			extends MovieClip
 	{
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const FOLDER_CLOSE_POS:int = -30;
-		public static const FOLDER_OPEN_POS:int = -10;
-		public static const FOLDER_SPEED:Number = 0.5;
+		public static const ABOUT_CLOSE_POS:int = -214;
+		public static const ABOUT_OVER_POS:int = -194;
+		public static const ABOUT_OPEN_POS:int = 66;
+	
+		public static const ABOUT_SPEED:Number = 0.5;
 		
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		private var targetFolder:MovieClip = null;
-		private var tweenFolder:Tween = null;
-		private var linkedWindowType:int = -1;
+		private var targetSheet:MovieClip = null;
+		private var tweenSheet:Tween = null;
+		private var isOpen:Boolean = false;
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function ButtonFolder()
+		public function ButtonAbout()
 		{
 			super();
 			
@@ -75,15 +76,19 @@ package as3.aeronaut.module.menu
 		 * setup
 		 * ---------------------------------------------------------------------
 		 * @param target 
-		 * @param linkedTo 
 		 */
 		public function setup(
-				target:MovieClip,
-				linkedTo:int
+				target:MovieClip
 			):void
 		{
-			this.targetFolder = target;
-			this.linkedWindowType = linkedTo;
+			this.targetSheet = target;
+			
+			this.targetSheet.buttonMode = true;
+			this.targetSheet.tabEnabled = false;
+			
+			// set the version in the about sheet
+			this.targetSheet.labelVersion.text = "Version " 
+					+ Globals.version;
 			
 			this.addEventListener(
 					MouseEvent.MOUSE_OVER, 
@@ -95,6 +100,12 @@ package as3.aeronaut.module.menu
 				);
 			this.addEventListener(
 					MouseEvent.MOUSE_DOWN,
+					downHandler
+				);
+			
+			// for easier closing also add listener to sheet.
+			this.targetSheet.addEventListener(
+					MouseEvent.MOUSE_DOWN, 
 					downHandler
 				);
 		}
@@ -111,17 +122,20 @@ package as3.aeronaut.module.menu
 		 */
 		private function overHandler(e:MouseEvent):void
 		{
-			if( this.tweenFolder != null) 
-				if( this.tweenFolder.isPlaying ) 
-					this.tweenFolder.stop();
+			if( this.isOpen )
+				return;
+				
+			if( this.tweenSheet != null) 
+				if( this.tweenSheet.isPlaying ) 
+					this.tweenSheet.stop();
 			
-			this.tweenFolder = new Tween(
-					this.targetFolder,
+			this.tweenSheet = new Tween(
+					this.targetSheet,
 					"x",
 					Regular.easeOut,
-					this.targetFolder.x,
-					FOLDER_OPEN_POS,
-					FOLDER_SPEED,
+					this.targetSheet.x,
+					ABOUT_OVER_POS,
+					ABOUT_SPEED,
 					true
 				);
 		}
@@ -134,17 +148,20 @@ package as3.aeronaut.module.menu
 		 */
 		private function outHandler(e:MouseEvent):void
 		{
-			if( this.tweenFolder != null ) 
-				if( this.tweenFolder.isPlaying ) 
-					this.tweenFolder.stop();
+			if( this.isOpen )
+				return;
+				
+			if( this.tweenSheet != null ) 
+				if( this.tweenSheet.isPlaying ) 
+					this.tweenSheet.stop();
 			
-			this.tweenFolder = new Tween(
-					this.targetFolder, 
+			this.tweenSheet = new Tween(
+					this.targetSheet, 
 					"x", 
 					Regular.easeOut, 
-					this.targetFolder.x, 
-					FOLDER_CLOSE_POS, 
-					FOLDER_SPEED, 
+					this.targetSheet.x, 
+					ABOUT_CLOSE_POS, 
+					ABOUT_SPEED, 
 					true
 				);
 		}
@@ -153,14 +170,40 @@ package as3.aeronaut.module.menu
 		 * ---------------------------------------------------------------------
 		 * downHandler
 		 * ---------------------------------------------------------------------
-		 * opens the linked window
+		 * opens/closes the about sheet
 		 *
 		 * @param e 
 		 */
 		private function downHandler(e:MouseEvent):void
 		{
-			Globals.myWindowManager.openWindow(this.linkedWindowType);
+			if( this.tweenSheet != null ) 
+				if( this.tweenSheet.isPlaying ) 
+					this.tweenSheet.stop();
+			
+			if( this.isOpen )
+			{
+				this.isOpen = false;
+				this.tweenSheet = new Tween(
+						this.targetSheet, 
+						"x", 
+						Regular.easeOut, 
+						this.targetSheet.x, 
+						ABOUT_CLOSE_POS, 
+						ABOUT_SPEED, 
+						true
+					);
+			} else {
+				this.isOpen = true;
+				this.tweenSheet = new Tween(
+						this.targetSheet, 
+						"x", 
+						Regular.easeOut, 
+						this.targetSheet.x, 
+						ABOUT_OPEN_POS, 
+						ABOUT_SPEED, 
+						true
+					);
+			}
 		}
-		
 	}
 }
