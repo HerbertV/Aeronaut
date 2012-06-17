@@ -50,13 +50,13 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getCurrentValue
+		 * getValue
 		 * ---------------------------------------------------------------------
 		 * returns the value of the current selected radio button.
 		 * or "" if nothing is selected.
 		 * @return
 		 */
-		public function getCurrentValue():String 
+		public function getValue():String 
 		{
 			return this.currentValue;
 		}
