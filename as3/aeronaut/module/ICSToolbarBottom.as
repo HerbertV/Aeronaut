@@ -40,13 +40,13 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * updateXPInfosFromPilot
+		 * updateEPInfosFromPilot
 		 * ---------------------------------------------------------------------
 		 * @param win
 		 * @param mission
 		 * @param currentCO
 		 */
-		function updateXPInfosFromPilot(
+		function updateEPInfosFromPilot(
 				win:ICSWindowPilot,
 				mission:int, 
 				currentCO:int

@@ -40,10 +40,6 @@ package as3.aeronaut.module.toolbar
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
 	
-	import as3.hv.core.console.Console;
-	import as3.hv.core.console.DebugLevel;
-	
-	
 	// =========================================================================
 	// Class PageHelp
 	// =========================================================================
@@ -114,6 +110,11 @@ package as3.aeronaut.module.toolbar
 				);
 		}	
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * showPage
+		 * ---------------------------------------------------------------------
+		 */
 		override public function showPage():void
 		{
 			super.showPage();
@@ -278,13 +279,9 @@ package as3.aeronaut.module.toolbar
 		{
 			if( !this.btnScrollUp.getIsActive() ) 
 				return;
-				
-			//Console.getInstance().writeln("up -- scrollV before: "+this.myHTMLText.scrollV,DebugLevel.INFO);
-				
+			
 			this.myHTMLText.scrollV--;
 			this.updateScrollButtons();
-				
-			//Console.getInstance().writeln("up -- scrollV after: "+this.myHTMLText.scrollV,DebugLevel.INFO);				
 		}
 		
 		/**
@@ -298,12 +295,8 @@ package as3.aeronaut.module.toolbar
 			if( !this.btnScrollDown.getIsActive() )
 				return;
 			
-			//Console.getInstance().writeln("down -- scrollV before: "+this.myHTMLText.scrollV,DebugLevel.INFO);
-				
 			this.myHTMLText.scrollV++;
 			this.updateScrollButtons();
-				
-			//Console.getInstance().writeln("down -- scrollV after: "+this.myHTMLText.scrollV,DebugLevel.INFO);
 		}
 		
 	}
