@@ -46,14 +46,20 @@ package as3.aeronaut
 		 */
 		public static function selectLoadAE(iwin:ICSWindow):String
 		{
+			var t:String = "Aeronaut File";
+			var p:String = Globals.PATH_DATA;
+			
+			if( iwin != null )
+			{
+				t = iwin.getTitle();
+				p += iwin.getSubPath();
+			}
 			mdm.Dialogs.BrowseFile.allowMultiple = false;
-    		mdm.Dialogs.BrowseFile.title = "Load " + iwin.getTitle();
+    		mdm.Dialogs.BrowseFile.title = "Load " + t;
     		mdm.Dialogs.BrowseFile.filterList = "Aeronaut|*" + Globals.AE_EXT;
     		mdm.Dialogs.BrowseFile.buttonText = "Load"
 			
-			mdm.Dialogs.BrowseFile.defaultDirectory = mdm.Application.path 
-					+ Globals.PATH_DATA 
-					+ iwin.getSubPath();
+			mdm.Dialogs.BrowseFile.defaultDirectory = mdm.Application.path + p;
 			
 			return mdm.Dialogs.BrowseFile.show();	
 		}
@@ -169,6 +175,57 @@ package as3.aeronaut
 						+ "\nContinue anyway?", 
 					"yesno", 
 					"alert"
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * wantToExit
+		 * ---------------------------------------------------------------------
+		 * want to exit question
+		 *
+		 * @return
+		 */
+		public static function wantToExit():Boolean
+		{
+			return mdm.Dialogs.promptModal(
+					"Are you sure you want to exit?", 
+					"yesno", 
+					"alert"
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * onlyValidPrint
+		 * ---------------------------------------------------------------------
+		 * info 
+		 *
+		 * @return
+		 */
+		public static function onlyValidPrint():Boolean
+		{
+			return mdm.Dialogs.promptModal(
+					"Only valid files can be printed!", 
+					"okcancel", 
+					"info"
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * onlyValidSave
+		 * ---------------------------------------------------------------------
+		 * info 
+		 *
+		 * @return
+		 */
+		public static function onlyValidSave():Boolean
+		{
+			return mdm.Dialogs.promptModal(
+					"Only valid files can be saved!", 
+					"okcancel", 
+					"info"
 				);
 		}
 	}
