@@ -40,6 +40,10 @@ package as3.aeronaut.module.toolbar
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+	
 	// =========================================================================
 	// Class PageHelp
 	// =========================================================================
@@ -100,7 +104,14 @@ package as3.aeronaut.module.toolbar
 					MouseEvent.MOUSE_DOWN, 
 					clickScrollDownHandler
 				);
-//TODO Scrollbar
+
+			this.myScrollbar.setup(
+					myHTMLText,
+					30,
+					280,
+					this.btnScrollUp,
+					this.btnScrollDown
+				);
 		}	
 		
 		override public function showPage():void
@@ -157,6 +168,8 @@ package as3.aeronaut.module.toolbar
 			} else {
 				this.btnScrollDown.setActive(false);
 			}
+			
+			this.myScrollbar.updatePosition();
 		}
 		
 		// =====================================================================
@@ -173,6 +186,7 @@ package as3.aeronaut.module.toolbar
 		private function loadCompleteHandler(e:Event):void 
 		{
 			this.myProgressSymbol.hide();
+			this.myScrollbar.updateSize();
 			this.updateScrollButtons();
 			
 			this.myHelpLoader.removeEventListener(
@@ -227,7 +241,6 @@ package as3.aeronaut.module.toolbar
 					IOErrorEvent.IO_ERROR, 
 					ioErrorHandler
 				);
-
 		}
 		
 		/**
@@ -263,11 +276,15 @@ package as3.aeronaut.module.toolbar
 		 */
 		private function clickScrollUpHandler(e:MouseEvent):void
 		{
-			if( this.btnScrollUp.getIsActive() ) 
-			{
-				this.myHTMLText.scrollV -=1;
-				this.updateScrollButtons();
-			}
+			if( !this.btnScrollUp.getIsActive() ) 
+				return;
+				
+			//Console.getInstance().writeln("up -- scrollV before: "+this.myHTMLText.scrollV,DebugLevel.INFO);
+				
+			this.myHTMLText.scrollV--;
+			this.updateScrollButtons();
+				
+			//Console.getInstance().writeln("up -- scrollV after: "+this.myHTMLText.scrollV,DebugLevel.INFO);				
 		}
 		
 		/**
@@ -278,11 +295,15 @@ package as3.aeronaut.module.toolbar
 		 */
 		private function clickScrollDownHandler(e:MouseEvent):void
 		{
-			if( this.btnScrollDown.getIsActive() == true) 
-			{
-				this.myHTMLText.scrollV +=1;
-				this.updateScrollButtons();
-			}
+			if( !this.btnScrollDown.getIsActive() )
+				return;
+			
+			//Console.getInstance().writeln("down -- scrollV before: "+this.myHTMLText.scrollV,DebugLevel.INFO);
+				
+			this.myHTMLText.scrollV++;
+			this.updateScrollButtons();
+				
+			//Console.getInstance().writeln("down -- scrollV after: "+this.myHTMLText.scrollV,DebugLevel.INFO);
 		}
 		
 	}
