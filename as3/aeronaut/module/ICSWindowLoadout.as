@@ -33,11 +33,11 @@ package as3.aeronaut.module
 	{
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromObject
+		 * initFromLoadout
 		 * ---------------------------------------------------------------------
 		 * @param obj
 		 */
-		function initFromObject(obj:Loadout):void;
+		function initFromLoadout(obj:Loadout):void;
 		
 	}
 }

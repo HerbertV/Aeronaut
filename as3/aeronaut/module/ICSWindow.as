@@ -21,17 +21,69 @@
  */
 package as3.aeronaut.module
 {
+	import as3.aeronaut.objects.ICSBaseObject;
+	
 	// =========================================================================
 	// ICSWindow
 	// =========================================================================
-	// base interface for all CSWindow's
-	// Every window has also it's own sub interface.
+	// @see CSWindow
+	//
+	// Base interface for all CSWindow's.
+	// CSWindow does not implement it.
+	// Your subclass needs to extend CSWindow and implement a sub-interface 
+	// of ICSWindow.
+	// 
 	public interface ICSWindow
 	{
 		/**
 		 * ---------------------------------------------------------------------
+		 * loadObject
+		 * ---------------------------------------------------------------------
+		 * loads a Object from a file into the window.
+		 * fn is the absolute path to the file.
+		 * 
+		 * @since 1.1.0
+		 * @param fn
+		 */
+		function loadObject(fn:String):void;
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * saveObject
+		 * ---------------------------------------------------------------------
+		 * save the windows's object into a file.
+		 * fn is the absolute path to the file.
+		 * 
+		 * @param fn
+		 */
+		function saveObject(fn:String):void;
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * initNewObject
+		 * ---------------------------------------------------------------------
+		 * init a new empty object inside the window.
+		 * this delete's the previous object.
+		 * 
+		 * @since 1.1.0
+		 */
+		function initNewObject():void;
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * initFromObject
+		 * ---------------------------------------------------------------------
+		 * set the object.
+		 *
+		 * @param obj
+		 */
+		function initFromObject(obj:ICSBaseObject):void;
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * updateObjectFromWindow
 		 * ---------------------------------------------------------------------
+		 * copies the form data into the xml object
 		 */
 		function updateObjectFromWindow():void;
 		
@@ -102,16 +154,6 @@ package as3.aeronaut.module
 		 * @return
 		 */
 		function getSubPath():String;
-				
-		/**
-		 * ---------------------------------------------------------------------
-		 * saveObject
-		 * ---------------------------------------------------------------------
-		 * fn is the absolute path to the file.
-		 * 
-		 * @param fn
-		 */
-		function saveObject(fn:String):void;
-				
+		
 	}
 }

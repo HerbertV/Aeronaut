@@ -34,11 +34,11 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromObject
+		 * initFromZeppelin
 		 * ---------------------------------------------------------------------
 		 * @param obj
 		 */
-		function initFromObject(obj:Zeppelin):void;
+		function initFromZeppelin(obj:Zeppelin):void;
 		
 	}
 }

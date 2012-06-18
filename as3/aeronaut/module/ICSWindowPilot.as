@@ -34,11 +34,11 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromObject
+		 * initFromPilot
 		 * ---------------------------------------------------------------------
 		 * @param obj
 		 */
-		function initFromObject(obj:Pilot):void;
+		function initFromPilot(obj:Pilot):void;
 		
 		/**
 		 * ---------------------------------------------------------------------

@@ -40,6 +40,8 @@ package as3.aeronaut.module
 	// =========================================================================
 	// Class CSWindow
 	// =========================================================================
+	// @see ICSWindow
+	//
 	// abstract base class for all windows:
 	// - CSWindowPilot
 	// - CSWindowSquadron
@@ -95,7 +97,20 @@ package as3.aeronaut.module
 			super();
 			
 			this.moduleVersion = Globals.version;
-			
+		}
+		
+		// =====================================================================
+		// Functions
+		// =====================================================================
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * init
+		 * ---------------------------------------------------------------------
+		 * @see AbstractModule
+		 */
+		override public function init():void
+		{
 			this.btnWinClose.setupTooltip(Globals.myTooltip,"close");
 			this.btnWinClose.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
@@ -121,12 +136,35 @@ package as3.aeronaut.module
 					false,
 					0,
 					true
-				);
+				);	
 		}
 		
-		// =====================================================================
-		// Functions
-		// =====================================================================
+		/**
+		 * ---------------------------------------------------------------------
+		 * dispose
+		 * ---------------------------------------------------------------------
+		 * @see AbstractModule
+		 */
+		override public function dispose():void
+		{
+			this.stopTween();
+			this.myMovementTweenX = null;
+			this.myMovementTweenY = null;
+			
+			this.btnWinClose.removeEventListener(
+					MouseEvent.MOUSE_DOWN, 
+					winCloseHandler
+				);
+			this.btnWinMin.removeEventListener(
+					MouseEvent.MOUSE_DOWN, 
+					winMinHandler
+				);
+			
+			this.btnWinMax.removeEventListener(
+					MouseEvent.MOUSE_DOWN, 
+					winMaxHandler
+				);	
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -385,6 +423,7 @@ package as3.aeronaut.module
 					TweenEvent.MOTION_FINISH,
 					tweenCloseFinished
 				);
+			this.dispose();
 		}
 		
 		/**

@@ -33,11 +33,13 @@ package as3.aeronaut
 	import as3.aeronaut.module.CSWindow;
 	import as3.aeronaut.module.ICSWindow;
 	import as3.aeronaut.module.ICSValidate;
+// TODO remove this
+/*
 	import as3.aeronaut.module.ICSWindowPilot;
 	import as3.aeronaut.module.ICSWindowAircraft;
 	import as3.aeronaut.module.ICSWindowLoadout;
-	import as3.aeronaut.module.ICSWindowSquad;
 	import as3.aeronaut.module.ICSWindowZeppelin;
+*/
 	import as3.aeronaut.module.ICSToolbarBottom;
 	
 	import as3.aeronaut.print.IPrintable;
@@ -121,6 +123,8 @@ package as3.aeronaut
 		 * ---------------------------------------------------------------------
 		 * loadWindowModul
 		 * ---------------------------------------------------------------------
+		 * loads the sub module swf file for a window.
+		 * 
 		 * @param type
 		 */
 		private function loadWindowModul(type:int):Boolean
@@ -285,7 +289,9 @@ package as3.aeronaut
 					);
 			}
 		}
-		
+
+// TODO this function can be removed 
+// just put loadObject instead of the calls		
 		/**
 		 * ---------------------------------------------------------------------
 		 * loadObjectInWindow
@@ -302,17 +308,14 @@ package as3.aeronaut
 		{
 			if( win == null )
 				return;
-				
+			
+			ICSWindow(win).loadObject( filename );
+/*			
 			if( win is ICSWindowPilot )
 			{
 				var objPilot:Pilot = new Pilot();
 				objPilot.loadFile(filename);
 				ICSWindowPilot(win).initFromObject(objPilot);
-				
-			} else if( win is ICSWindowSquad ) {
-				var objSquadron:Squadron = new Squadron();
-				objSquadron.loadFile(filename);
-				ICSWindowSquad(win).initFromObject(objSquadron);
 				
 			} else if( win is ICSWindowAircraft ) {
 				var objAircraft:Aircraft = new Aircraft();
@@ -329,11 +332,12 @@ package as3.aeronaut
 				objZeppelin.loadFile(filename);
 				ICSWindowZeppelin(win).initFromObject(objZeppelin);
 			} 
+*/
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * createNewObjectInActiveWindow
+		 * createNewObjectInWindow
 		 * ---------------------------------------------------------------------
 		 * creates a new empty object for the window
 		 *
@@ -343,17 +347,14 @@ package as3.aeronaut
 		{
 			if( win == null )
 				return;
-				
+			
+			ICSWindow(win).initNewObject();
+/*			
 			if( win is ICSWindowPilot )
 			{
 				var objPilot:Pilot = new Pilot();
 				objPilot.createNew();
 				ICSWindowPilot(win).initFromObject(objPilot);
-				
-			} else if( win is ICSWindowSquad ) {
-				var objSquadron:Squadron = new Squadron();
-				objSquadron.createNew();
-				ICSWindowSquad(win).initFromObject(objSquadron);
 				
 			} else if( win is ICSWindowAircraft ) {
 				var objAircraft:Aircraft = new Aircraft();
@@ -370,6 +371,7 @@ package as3.aeronaut
 				objZeppelin.createNew();
 				ICSWindowZeppelin(win).initFromObject(objZeppelin);
 			} 
+*/
 		}
 		
 		/**
@@ -599,6 +601,7 @@ package as3.aeronaut
 				}
 				win.visible = false;
 				this.myWindowContainer.removeChild(win);
+				win.dispose();
 			}
 			Globals.myToolbarBottom.updateToolbar();
 		}
