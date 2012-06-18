@@ -389,6 +389,10 @@ package as3.aeronaut.objects
 					if( sc.@hasHardcodedAbility == "true" ) 
 						hcode = true;
 					
+					var limit:Boolean = false;
+					if( sc.@countsToSCLimit == "true" ) 
+						limit = true;
+					
 					var ctype:Array =  sc.@costType.split(",");
 					var obj:SpecialCharacteristic = new SpecialCharacteristic(
 							sc.@ID, 
@@ -397,7 +401,8 @@ package as3.aeronaut.objects
 							ctype, 
 							Number(sc.@costChanges), 
 							Number(sc.@weightChanges), 
-							hcode
+							hcode,
+							limit
 						);
 					arr.push(obj);
 				}
@@ -432,6 +437,10 @@ package as3.aeronaut.objects
 					if( xml.@hasHardcodedAbility == "true" )
 						hcode = true;
 					
+					var limit:Boolean = false;
+					if( sc.@countsToSCLimit == "true" ) 
+						limit = true;
+					
 					var ctype:Array = xml.@costType.split(",");
 					obj = new SpecialCharacteristic(
 							xml.@ID, 
@@ -440,7 +449,8 @@ package as3.aeronaut.objects
 							ctype, 
 							Number(xml.@costChanges), 
 							Number(xml.@weightChanges), 
-							hcode
+							hcode,
+							limit
 						);
 				} else {
 					if( Console.isConsoleAvailable() )

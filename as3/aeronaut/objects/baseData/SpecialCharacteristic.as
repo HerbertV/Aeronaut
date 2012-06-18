@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2012 Herbert Veitengruber 
@@ -56,6 +56,8 @@ package as3.aeronaut.objects.baseData
 		
 		public var hasHardcodedAbility:Boolean;
 		
+		public var countsToLimit:Boolean;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -70,6 +72,7 @@ package as3.aeronaut.objects.baseData
 		 * @param cC cost changes
 		 * @param wC weight changes
 		 * @param hasHCA has hardcoded ability
+		 * @param limit if it counts to the 12-BTN limit or not
 		 */
 		public function SpecialCharacteristic(
 				id:String,
@@ -78,7 +81,8 @@ package as3.aeronaut.objects.baseData
 				cT:Array, 
 				cC:Number, 
 				wC:Number, 
-				hasHCA:Boolean 
+				hasHCA:Boolean,
+				limit:Boolean
 			)
 		{
 			myID = id;
@@ -91,6 +95,7 @@ package as3.aeronaut.objects.baseData
 			costChanges = cC;
 			weightChanges = wC;
 			hasHardcodedAbility = hasHCA;
+			countsToLimit = limit;
 		}
 		
 		// =====================================================================
