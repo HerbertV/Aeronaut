@@ -33,13 +33,6 @@ package as3.aeronaut
 	import as3.aeronaut.module.CSWindow;
 	import as3.aeronaut.module.ICSWindow;
 	import as3.aeronaut.module.ICSValidate;
-// TODO remove this
-/*
-	import as3.aeronaut.module.ICSWindowPilot;
-	import as3.aeronaut.module.ICSWindowAircraft;
-	import as3.aeronaut.module.ICSWindowLoadout;
-	import as3.aeronaut.module.ICSWindowZeppelin;
-*/
 	import as3.aeronaut.module.ICSToolbarBottom;
 	
 	import as3.aeronaut.print.IPrintable;
@@ -289,51 +282,6 @@ package as3.aeronaut
 					);
 			}
 		}
-
-// TODO this function can be removed 
-// just put loadObject instead of the calls		
-		/**
-		 * ---------------------------------------------------------------------
-		 * loadObjectInWindow
-		 * ---------------------------------------------------------------------
-		 * loads a file into a window
-		 *
-		 * @param win
-		 * @param filename
-		 */
-		private function loadObjectInWindow(
-				win:CSWindow,
-				filename:String
-			):void
-		{
-			if( win == null )
-				return;
-			
-			ICSWindow(win).loadObject( filename );
-/*			
-			if( win is ICSWindowPilot )
-			{
-				var objPilot:Pilot = new Pilot();
-				objPilot.loadFile(filename);
-				ICSWindowPilot(win).initFromObject(objPilot);
-				
-			} else if( win is ICSWindowAircraft ) {
-				var objAircraft:Aircraft = new Aircraft();
-				objAircraft.loadFile(filename);
-				ICSWindowAircraft(win).initFromObject(objAircraft);
-				
-			} else if( win is ICSWindowLoadout) {
-				var objLoadout:Loadout = new Loadout();
-				objLoadout.loadFile(filename);
-				ICSWindowLoadout(win).initFromObject(objLoadout);
-				
-			} else if( win is ICSWindowZeppelin ) {
-				var objZeppelin:Zeppelin = new Zeppelin();
-				objZeppelin.loadFile(filename);
-				ICSWindowZeppelin(win).initFromObject(objZeppelin);
-			} 
-*/
-		}
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -349,29 +297,6 @@ package as3.aeronaut
 				return;
 			
 			ICSWindow(win).initNewObject();
-/*			
-			if( win is ICSWindowPilot )
-			{
-				var objPilot:Pilot = new Pilot();
-				objPilot.createNew();
-				ICSWindowPilot(win).initFromObject(objPilot);
-				
-			} else if( win is ICSWindowAircraft ) {
-				var objAircraft:Aircraft = new Aircraft();
-				objAircraft.createNew();
-				ICSWindowAircraft(win).initFromObject(objAircraft);
-				
-			} else if( win is ICSWindowLoadout) {
-				var objLoadout:Loadout = new Loadout();
-				objLoadout.createNew();
-				ICSWindowLoadout(win).initFromObject(objLoadout);
-				
-			} else if( win is ICSWindowZeppelin ) {
-				var objZeppelin:Zeppelin = new Zeppelin();
-				objZeppelin.createNew();
-				ICSWindowZeppelin(win).initFromObject(objZeppelin);
-			} 
-*/
 		}
 		
 		/**
@@ -393,10 +318,7 @@ package as3.aeronaut
 			{
 				this.createNewObjectInWindow(newWin);
 			} else {
-				this.loadObjectInWindow(
-						newWin,
-						this.loadingWindowFilename
-					);
+				ICSWindow(newWin).loadObject( this.loadingWindowFilename );
 			}
 			this.minimizeActiveWindow();
 			this.activeWindow = newWin;
@@ -521,11 +443,8 @@ package as3.aeronaut
 			Globals.myCSProgressBar.init();
 			Globals.myCSProgressBar.setProgressTo(0, "loading ... ");
 			
-			this.loadObjectInWindow(
-					this.activeWindow,
-					filePath
-				);
-			
+			ICSWindow(this.activeWindow).loadObject( filePath );
+						
 			Globals.myCSProgressBar.setProgressTo(100, "loading finished");
 			Globals.myCSProgressBar.hide();;
 		}

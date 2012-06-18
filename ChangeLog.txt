@@ -15,7 +15,7 @@ Version - 1.0.0 WIP:
 - 	updated to Flashplayer 10.1 (encapsuled via Zinc)
 - 	updated to Zinc Version 3.0.24
 - 	updated to Console 2.0
-- 	Exe split up into Modules
--  	new Pinup handling (see readme.txt)
--	Lists are now scrollable via mouse wheel.
+- 	Exe split up into modules and complete code overhaul
+-  	new pinup handling (see readme.txt)
+-	optimized UI e.g. lists are now scrollable via mouse wheel.
 
