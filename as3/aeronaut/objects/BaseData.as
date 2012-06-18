@@ -438,7 +438,7 @@ package as3.aeronaut.objects
 						hcode = true;
 					
 					var limit:Boolean = false;
-					if( sc.@countsToSCLimit == "true" ) 
+					if( xml.@countsToSCLimit == "true" ) 
 						limit = true;
 					
 					var ctype:Array = xml.@costType.split(",");
