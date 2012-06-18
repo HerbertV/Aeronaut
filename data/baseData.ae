@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aeronaut XMLVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="aeronaut.xsd">
 	<baseData>
-		<preferences isDebugMode="true" debugLevel="2"/>
+		<!--
+			 debug level:
+				0 = OFF
+				1 = FULL
+				4 = INFO
+				5 = DEBUG
+				6 = WARNING
+				7 = ERROR
+				8  = FATAL_ERROR
+		-->
+		<preferences debugLevel="4"/>
 
 		<!-- ==================================== Companies ==================================== -->
 		<companies>
@@ -99,7 +109,7 @@
 			</company>
 			<company ID="C_024">
 				<shortName>TNCA</shortName>
-				<longName>National Aircraft Factory</longName>
+				<longName>Talleres Nacionales de Construcciones Aeronauticas</longName>
 			</company>
 			<company ID="C_025">
 				<shortName>De Havilland</shortName>
@@ -154,8 +164,8 @@
 				<longName>Houston Aircraft Company</longName>
 			</company>
 			<company ID="C_038">
-				<shortName>Rolls-Royce </shortName>
-				<longName>Rolls-Royce </longName>
+				<shortName>Rolls-Royce</shortName>
+				<longName>Rolls-Royce</longName>
 			</company>
 			<company ID="C_039">
 				<shortName>Aerotechnologies</shortName>
@@ -167,15 +177,17 @@
 			</company>
 			<company ID="C_041">
 				<shortName>Fairey</shortName>
-				<longName>Fairey Aviation Company Ltd</longName>
+				<longName>Fairey Aviation Company Ltd.</longName>
 			</company>			
 			<company ID="C_042">
 				<shortName>S.I.P.A.</shortName>
 				<longName>Société Industrielle Pour L'Aviation</longName>
 			</company>
-		
-			
-			
+			<company ID="C_043">
+				<shortName>Lockheed</shortName>
+				<longName>Lockheed Aircraft Company</longName>
+			</company>
+								
 		</companies>		
 		
 		
@@ -202,7 +214,7 @@
 				<country ID="CY_019" languageID="L_01" srcFlag="na_peoplescoll.jpg">Peoples Collective</country>
 				<country ID="CY_020" languageID="L_02" srcFlag="na_quebec.jpg">Republique de Quebec</country>
 				<country ID="CY_021" languageID="L_01" srcFlag="na_texas.jpg">Republic of Texas</country>
-				<country ID="CY_022" languageID="L_01" srcFlag="na_utha.jpg">Utha</country>
+				<country ID="CY_022" languageID="L_01" srcFlag="na_utha.jpg">Utah</country>
 				
 				<country ID="CY_023" languageID="L_11" srcFlag="">Independent Northern Andes Nation</country>
 
@@ -340,22 +352,22 @@
 					<longName>superior .50-caliber-cannon</longName>
 				</gun>
 				<gun ID="CAL_60_S" range="4" cal="60" weight="600"  price="1180">
-					<shortName>s  60</shortName>
+					<shortName>s 60</shortName>
 					<longName>superior .60-caliber-cannon</longName>
 				</gun>
 				<gun ID="CAL_70_S" range="3" cal="70" weight="850"  price="1800">
-					<shortName>s . 70</shortName>
+					<shortName>s 70</shortName>
 					<longName>superior .70-caliber-cannon</longName>
 				</gun>
 				
 				<!-- ==================================== Premium grade Guns ==================================== -->
 				<!-- price x4  -->
 				<gun ID="CAL_30_PG" range="7" cal="30" weight="150"  price="720">
-					<shortName>pg 30</shortName>
+					<shortName>p 30</shortName>
 					<longName>premium grade .30-caliber-MG</longName>
 				</gun>
 				<gun ID="CAL_40_PG" range="6" cal="40" weight="250"  price="1040">
-					<shortName>pg 40</shortName>
+					<shortName>p 40</shortName>
 					<longName>premium grade .40-caliber-MG</longName>
 				</gun>
 				<gun ID="CAL_50_PG" range="5" cal="50" weight="400"  price="1600">
@@ -363,34 +375,34 @@
 					<longName>premium grade .50-caliber-cannon</longName>
 				</gun>
 				<gun ID="CAL_60_PG" range="4" cal="60" weight="600"  price="2360">
-					<shortName>pg 60</shortName>
+					<shortName>p 60</shortName>
 					<longName>premium grade .60-caliber-cannon</longName>
 				</gun>
 				<gun ID="CAL_70_PG" range="3" cal="70" weight="850"  price="3600">
-					<shortName>pg 70</shortName>
+					<shortName>p 70</shortName>
 					<longName>premium grade .70-caliber-cannon</longName>
 				</gun>
 			
 				<!-- ==================================== Light weight Guns ==================================== -->
 				<!-- weight -20%  -->
 				<gun ID="CAL_30_LW" range="7" cal="30" weight="120"  price="720">
-					<shortName>lw 30</shortName>
+					<shortName>l 30</shortName>
 					<longName>light weight .30-caliber-MG</longName>
 				</gun>
 				<gun ID="CAL_40_LW" range="6" cal="40" weight="200"  price="1040">
-					<shortName>lw 40</shortName>
+					<shortName>l 40</shortName>
 					<longName>light weight .40-caliber-MG</longName>
 				</gun>
 				<gun ID="CAL_50_LW" range="5" cal="50" weight="320"  price="1600">
-					<shortName>lw 50</shortName>
+					<shortName>l 50</shortName>
 					<longName>light weight .50-caliber-cannon</longName>
 				</gun>
 				<gun ID="CAL_60_LW" range="4" cal="60" weight="480"  price="2360">
-					<shortName>lw 60</shortName>
+					<shortName>l 60</shortName>
 					<longName>light weight .60-caliber-cannon</longName>
 				</gun>
 				<gun ID="CAL_70_LW" range="3" cal="70" weight="680"  price="3600">
-					<shortName>lw 70</shortName>
+					<shortName>l 70</shortName>
 					<longName>light weight .70-caliber-cannon</longName>
 				</gun>
 			</guns>
@@ -544,7 +556,7 @@
 					<longName>Bomb (1000 lbs.)</longName>
 				</rocket>
 				
-				<!-- TODO spezialfall weil reload billiger kostet nur 100 pro schuss -->
+				<!-- TODO special reload is cheaper costs only 100 bucks per reload -->
 				<rocket type="reloadable" range="0" slots="1" usesPerSlot="2" ID="SmR" price="400">
 					<shortName>SmR</shortName>
 					<longName>Smoke</longName>
@@ -573,192 +585,206 @@
 		
 		<aircraftCharacteristics>
 
-			<specialCharacteristic ID="AC_001" groupID="nitro" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_001" groupID="" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false" countsToSCLimit="false" >
 				<name>Nitro Injectors</name>
 				<description></description>
 			</specialCharacteristic>
 						
-			<specialCharacteristic ID="AC_002" groupID="" costType="additional" weightChanges="50" costChanges="200" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_002" groupID="" costType="additional" weightChanges="50" costChanges="200" hasHardcodedAbility="false" countsToSCLimit="false" >
 				<name>Brake Chutes</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<!-- increases flight range? (geht auch von hand)  and unlock engine counter-->
-			<specialCharacteristic ID="AC_003" groupID="m_engine" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="true" >
+			<!-- increases flight range? is done by hand, but unlock engine numeric stepper -->
+			<specialCharacteristic ID="AC_003" groupID="m_engine" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="true" countsToSCLimit="true">
 				<name>Multiple Engines</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_004" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_004" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Superior Engine (-1)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_005" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="2.00" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_005" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="2.00" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Superior Engine (-2)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_006" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_006" groupID="engine_quality" costType="engine" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false"  countsToSCLimit="true" >
 				<name>Inferior Engine</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_007" groupID="pintlemount" costType="cockpit" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_007" groupID="pintlemount" costType="cockpit" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Pintle-Mount Guns</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<!-- ammolink checkbox freischalten -->
-			<specialCharacteristic ID="AC_008" groupID="linkedammo" costType="weapon" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="true" >
+			<!-- enable ammolink checkboxes -->
+			<specialCharacteristic ID="AC_008" groupID="linkedammo" costType="weapon" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="true"  countsToSCLimit="true">
 				<name>Linked Ammo Bins</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_009" groupID="stick" costType="airframe" weightChanges="0" costChanges="0.50" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_009" groupID="stick" costType="airframe" weightChanges="0" costChanges="0.50" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Light Stick</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_010" groupID="stick" costType="airframe" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_010" groupID="stick" costType="airframe" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Heavy Stick</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_011" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_011" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Poor Landing Gear (+1)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_012" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_012" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Poor Landing Gear (+2)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_013" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_013" groupID="landingGear" costType="airframe" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>No Landing Gear</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_014" groupID="zepHook" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_014" groupID="zepHook" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>No Zeppelin Hook</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_015" groupID="radio" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_015" groupID="radio" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>No Radio</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_016" groupID="range" costType="engine" weightChanges="0" costChanges="0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_016" groupID="range" costType="engine" weightChanges="0" costChanges="0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Superior Range (I)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_017" groupID="range" costType="engine" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_017" groupID="range" costType="engine" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Superior Range (II)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_018" groupID="range" costType="engine" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_018" groupID="range" costType="engine" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Inferior Range (I)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_019" groupID="range" costType="engine" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_019" groupID="range" costType="engine" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Inferior Range (II)</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_020" groupID="poorThrottle" costType="engine" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_020" groupID="poorThrottle" costType="engine" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Poor Throttle</name>
 				<description></description>
 			</specialCharacteristic>
 			
 			<!-- add Gs to left or right wing -->
 			<!-- only useable by single engine aircraft-->
-			<specialCharacteristic ID="AC_021" groupID="htengine" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="true" >
+			<specialCharacteristic ID="AC_021" groupID="htengine" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="true"  countsToSCLimit="true">
 				<name>High Torque Engine</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_022" groupID="flgear" costType="airframe" weightChanges="0" costChanges="0.30" hasHardcodedAbility="false" >
-				<name>Floating Gear</name>
+			<specialCharacteristic ID="AC_022" groupID="flgear" costType="airframe" weightChanges="0" costChanges="0.30" hasHardcodedAbility="false"  countsToSCLimit="true">
+				<name>Flotation Gear</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_023" groupID="cvisi" costType="cockpit" weightChanges="0" costChanges="0.50" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_023" groupID="cvisi" costType="cockpit" weightChanges="0" costChanges="0.50" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Improved Cockpit Visibility</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_024" groupID="cvisi" costType="cockpit" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_024" groupID="cvisi" costType="cockpit" weightChanges="0" costChanges="-0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Reduced Cockpit Visibility</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_025" groupID="crampedc" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_025" groupID="crampedc" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Cramped Cockpit</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_026" groupID="ssft" costType="engine" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_026" groupID="ssft" costType="engine" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Self Sealing Fuel Tanks</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_027" groupID="gcockpit" costType="cockpit" weightChanges="0" costChanges="2.00" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_027" groupID="gcockpit" costType="cockpit" weightChanges="0" costChanges="1.00" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>G-efficient Cockpit</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_028" groupID="abomber" costType="cockpit,airframe" weightChanges="0" costChanges="0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_028" groupID="abomber" costType="cockpit,airframe" weightChanges="0" costChanges="0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Accurate Bomber</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_029" groupID="poorstall" costType="airframe" weightChanges="0" costChanges="-0.25" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_029" groupID="poorstall" costType="airframe" weightChanges="0" costChanges="-0.25" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Poor Stall Speed</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_030" groupID="poorhighspeed" costType="airframe,engine" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_030" groupID="poorhighspeed" costType="airframe,engine" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Poor High-Speed Handling</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_031" groupID="poorman" costType="airframe" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_031" groupID="poorman" costType="airframe" weightChanges="0" costChanges="-0.15" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Poor Maneuverability</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<!-- firelink checkbox freischalten -->
-			<specialCharacteristic ID="AC_032" groupID="linkedfire" costType="weapon" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="true" >
+			<!-- enable  firelink checkboxes  -->
+			<specialCharacteristic ID="AC_032" groupID="linkedfire" costType="weapon" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="true"  countsToSCLimit="true">
 				<name>Fire-Linked Weapons</name>
 				<description></description>
 			</specialCharacteristic>
 
-			<specialCharacteristic ID="AC_033" groupID="dog" costType="cockpit" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_033" groupID="dog" costType="cockpit" weightChanges="0" costChanges="0.20" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Dog Basket</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_034" groupID="DtBail" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_034" groupID="DtBail" costType="cockpit" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Difficult to Bail</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_035" groupID="wodden" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_035" groupID="wodden" costType="airframe" weightChanges="0" costChanges="-0.10" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Wooden Airframe</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_036" groupID="eseat" costType="cockpit" weightChanges="0" costChanges="3.00" hasHardcodedAbility="false" >
+			<specialCharacteristic ID="AC_036" groupID="eseat" costType="cockpit" weightChanges="0" costChanges="2.00" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Ejector Seat</name>
 				<description></description>
 			</specialCharacteristic>
 			
-			
+			<specialCharacteristic ID="AC_037" groupID="" costType="additional" weightChanges="20" costChanges="650" hasHardcodedAbility="false"  countsToSCLimit="false">
+				<name>Nitro Injectors (4 pack)</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_038" groupID="turret" costType="additional" weightChanges="400" costChanges="300" hasHardcodedAbility="false"  countsToSCLimit="true">
+				<name>2nd Turret</name>
+				<description></description>
+			</specialCharacteristic>
+
+			<specialCharacteristic ID="AC_039" groupID="" costType="additional" weightChanges="320" costChanges="1400" hasHardcodedAbility="false"  countsToSCLimit="true">
+				<name>360° Turret</name>
+				<description></description>
+			</specialCharacteristic>
+
 		</aircraftCharacteristics>
 		
 	</baseData>
