@@ -151,7 +151,8 @@ package as3.aeronaut.module
 		 */
 		public function saveObject(fn:String):void
 		{
-			this.myObject.saveFile(fn);
+			if( this.myObject.saveFile(fn) )				
+				this.setSaved(true);
 		}
 		
 		/**

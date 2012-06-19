@@ -23,6 +23,7 @@ package as3.aeronaut.objects
 {
 	import mdm.*;
 	
+	import as3.aeronaut.Globals;
 	import as3.aeronaut.XMLProcessor;
 	
 	// =========================================================================
@@ -50,7 +51,7 @@ package as3.aeronaut.objects
 			var arr:Array = new Array();
 			var myFiles:Array = mdm.FileSystem.getFileList(
 					path, 
-					"*" + AE_EXT
+					"*" + Globals.AE_EXT
 				);
 			
 			for( var i:int=0; i<myFiles.length; i++ ) 

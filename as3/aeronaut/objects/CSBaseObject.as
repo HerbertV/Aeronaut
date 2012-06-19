@@ -73,14 +73,15 @@ package as3.aeronaut.objects
 		 * ---------------------------------------------------------------------
 		 *
 		 * @param filename 
+		 * @return
 		 */
-		public function saveFile(filename:String):void
+		public function saveFile(filename:String):Boolean
 		{
 			if( filename != null 
 					&& filename != "" ) 
 				this.myFilename = filename;
 			
-			XMLProcessor.saveXML(this.myXML, this.myFilename);
+			return XMLProcessor.saveXML(this.myXML, this.myFilename);
 		}
 		
 	}

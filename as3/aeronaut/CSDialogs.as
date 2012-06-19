@@ -171,7 +171,7 @@ package as3.aeronaut
 		{
 			return mdm.Dialogs.promptModal(
 					"Your current changes are not saved."
-						+ "\nAllChanges will be lost."
+						+ "\nAll changes will be lost if you proceed."
 						+ "\nContinue anyway?", 
 					"yesno", 
 					"alert"

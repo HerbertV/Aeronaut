@@ -38,7 +38,7 @@ package as3.aeronaut.module
 	// This class is a linked document class for "winZeppelin.swf"
 	// @see as3.aeronaut.objects.Zeppelin
 	//
-	// Window for crating/editing Squadrons.
+	// Window for crating/editing Zeppelin.
 
 // TODO
 	public class CSWindowZeppelin 
@@ -54,7 +54,7 @@ package as3.aeronaut.module
 		private var myObject:Zeppelin = null;
 		
 		// =====================================================================
-		// CSWindowSquad
+		// Constructor
 		// =====================================================================
 		public function CSWindowZeppelin()
 		{
@@ -129,7 +129,8 @@ package as3.aeronaut.module
 		 */
 		public function saveObject(fn:String):void
 		{
-			this.myObject.saveFile(fn);
+			if( this.myObject.saveFile(fn) )				
+				this.setSaved(true);
 		}
 		
 		/**
@@ -162,12 +163,14 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * initFromZeppelin
 		 * ---------------------------------------------------------------------
-		 * @see ICSWindowSquad
+		 * @see ICSWindowZeppelin
 		 * @param obj
 		 */
 		public function initFromZeppelin(obj:Zeppelin):void
 		{
+			this.setValid(true);
 			this.setSaved(true);
+			
 //TODO
 		}
 		

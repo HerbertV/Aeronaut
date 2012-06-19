@@ -53,7 +53,8 @@ package as3.aeronaut
 		 * ---------------------------------------------------------------------
 		 * loadXML
 		 * ---------------------------------------------------------------------
-		 * 
+		 * load xml via zinc FileSystem. returns null if loading failed.
+		 *
 		 * @param filename 			
 		 *
 		 * @return loaded xml
@@ -96,14 +97,18 @@ package as3.aeronaut
 		 * ---------------------------------------------------------------------
 		 * saveXML
 		 * ---------------------------------------------------------------------
-		 * 
+		 * save xml via zinc FileSystem. returns true if the save succeeded
+		 * and false if it failed. 
+		 *
 		 * @param xmldoc
 		 * @param filename
+		 *
+		 * @return
 		 */
 		public static function saveXML(
 				xmldoc:XML, 
 				filename:String
-			):void
+			):Boolean
 		{
 			try 
 			{
@@ -119,7 +124,7 @@ package as3.aeronaut
 						xmldoc.toXMLString()
 					);
 			}
-			catch (error:Error)
+			catch( error:Error )
 			{
 				Console.getInstance().writeln(
 							"IO Error while saving XML: ",
@@ -128,7 +133,10 @@ package as3.aeronaut
 								+ "<br>" + error.message
 						);
 				Console.getInstance().newLine();
+				
+				return false;
 			}
+			return true;
 		}
 		
 		/**
