@@ -112,6 +112,15 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getObject
+		 * ---------------------------------------------------------------------
+		 * returns the ICSBaseObject
+		 * @return
+		 */
+		function getObject():ICSBaseObject;
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * getFilename
 		 * ---------------------------------------------------------------------
 		 * returns the absolut path including the filename. 
