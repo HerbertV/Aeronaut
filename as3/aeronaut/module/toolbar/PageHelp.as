@@ -39,6 +39,7 @@ package as3.aeronaut.module.toolbar
 		
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
+	import as3.aeronaut.module.AbstractPage;
 	
 	// =========================================================================
 	// Class PageHelp

@@ -36,6 +36,8 @@ package as3.aeronaut.module.toolbar
 	import as3.aeronaut.module.CSToolbarBottom;
 	import as3.aeronaut.module.ICSToolbarBottom;
 	import as3.aeronaut.module.ICSWindowPilot;
+	import as3.aeronaut.module.AbstractPage;
+	
 	
 	// =========================================================================
 	// Class PagePilotEP
