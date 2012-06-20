@@ -18,4 +18,5 @@ Version - 1.0.0 WIP:
 - 	Exe split up into modules and complete code overhaul
 -  	new pinup handling (see readme.txt)
 -	optimized UI e.g. lists are now scrollable via mouse wheel.
+-	updated BaseData.ae with Oliver's "GSS-Bandit" corrections and extensions
 
