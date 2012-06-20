@@ -23,10 +23,15 @@ package as3.aeronaut.module
 {
 	import flash.display.MovieClip;
 	
+	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	
 	import as3.hv.core.net.ModuleLoader;
 	import as3.hv.components.progress.IProgressSymbol;
 	
 	import as3.aeronaut.Globals;
+	
 	
 	// =========================================================================
 	// CSWindowLoader
@@ -35,10 +40,7 @@ package as3.aeronaut.module
 	public class CSWindowLoader
 			extends ModuleLoader
 	{
-		import flash.events.Event;
-		import flash.events.IOErrorEvent;
-		import flash.events.ProgressEvent;
-	
+		
 		// =====================================================================
 		// Constructors
 		// =====================================================================
