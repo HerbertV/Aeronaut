@@ -172,7 +172,7 @@ package as3.aeronaut.gui
 		 */
 		override public function stepUp():void
 		{
-			var maxSubVal:int = Pilot.STAT_XPMATRIX[this.currentFullValue]/10;
+			var maxSubVal:int = Pilot.STAT_EPMATRIX[this.currentFullValue]/10;
 							
 			this.currentSubValue++;
 			if( this.currentSubValue >= maxSubVal )
@@ -195,7 +195,7 @@ package as3.aeronaut.gui
 			if( this.currentSubValue <= -1 )
 			{
 				this.currentFullValue--;
-				var maxSubVal:int = Pilot.STAT_XPMATRIX[this.currentFullValue]/10;
+				var maxSubVal:int = Pilot.STAT_EPMATRIX[this.currentFullValue]/10;
 				this.currentSubValue = maxSubVal -1 ;
 			}
 		}

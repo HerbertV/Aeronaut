@@ -51,12 +51,12 @@ package as3.aeronaut.objects
 		public static const TYPE_GUNNER:String = "copilotgunner";
 		public static const TYPE_NPC:String = "npc";
 		
-		public static const BASE_XP_HERO:int = 450;
-		public static const BASE_XP_SIDEKICK:int = 350;
-		public static const BASE_XP_OTHER:int = 0;
+		public static const BASE_EP_HERO:int = 450;
+		public static const BASE_EP_SIDEKICK:int = 350;
+		public static const BASE_EP_OTHER:int = 0;
 		
 		// xp cost for all stats sort by stat level
-		public static const STAT_XPMATRIX:Array = new Array(
+		public static const STAT_EPMATRIX:Array = new Array(
 				10,	// level 1
 				10,	// level 2
 				20, // level 3
@@ -121,7 +121,7 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<pilot type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_XP_HERO} currentXP={BASE_XP_HERO} bailOutBonus="0" linkedTo="">
+					<pilot type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_EP_HERO} currentXP={BASE_EP_HERO} bailOutBonus="0" linkedTo="">
 						<name>New Pilot</name>
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
 						<country ID=""/>
@@ -379,46 +379,46 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getTotalXP
+		 * getTotalEP
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getTotalXP():int 
+		public function getTotalEP():int 
 		{
 			return int(myXML.pilot.@totalXP);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setTotalXP
+		 * setTotalEP
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setTotalXP(val:int)
+		public function setTotalEP(val:int)
 		{
 			myXML.pilot.@totalXP = val;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getCurrentXP
+		 * getCurrentEP
 		 * ---------------------------------------------------------------------
 		 * xp that are free to spend.
 		 *
 		 * @return
 		 */
-		public function getCurrentXP():int 
+		public function getCurrentEP():int 
 		{
 			return int(myXML.pilot.@currentXP);
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setCurrentXP
+		 * setCurrentEP
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setCurrentXP(val:int)
+		public function setCurrentEP(val:int)
 		{
 			myXML.pilot.@currentXP = val;
 		}

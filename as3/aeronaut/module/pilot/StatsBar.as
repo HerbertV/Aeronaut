@@ -302,7 +302,7 @@ package as3.aeronaut.module.pilot
 		{
 			var ep:int = 0;
 			for( var i:int = from; i < to; i++ ) 
-				ep += Pilot.STAT_XPMATRIX[i];
+				ep += Pilot.STAT_EPMATRIX[i];
 			
 			return ep;			
 		}
