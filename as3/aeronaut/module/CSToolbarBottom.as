@@ -294,6 +294,7 @@ package as3.aeronaut.module
 				currentCO:int
 			):void
 		{
+			this.changeState(TBSTATE_ADDEP);
 			this.tbPagePilotEP.updateEPInfosFromPilot(
 					win,
 					mission,
