@@ -37,12 +37,10 @@ package as3.aeronaut
 	
 	import flash.events.*;
     
-	import flash.display.Loader;
-	import flash.net.URLRequest;
-	
 	import as3.hv.core.math.TrueRandom;
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
+	import as3.hv.core.net.ImageLoader;
 	
 	import as3.aeronaut.Globals;
 	
@@ -58,10 +56,11 @@ package as3.aeronaut
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		private var myPinupURLs:Array = new Array();
 		private var myPinupContainer:MovieClip;
 		private var maxCounter:int = 0;
-		private var currentLoader:Loader = null;
+		private var loadedCounter:int = 0;
+		
+		private var currentLoader:ImageLoader = null;
 		private var ductTape:Bitmap = null;
 		
 		
@@ -72,30 +71,6 @@ package as3.aeronaut
 		public function CSPinupManager(cont:MovieClip)
 		{
 			this.myPinupContainer = cont;
-			
-			var path:String = mdm.Application.path 
-					+ Globals.PATH_IMAGES
-					+ Globals.PATH_PINUP;
-			
-			var tapeFile:String = mdm.Application.path 
-					+ Globals.PATH_IMAGES
-					+ "gui\\ducttape.png";
-			
-			myPinupURLs = mdm.FileSystem.getFileList(
-					path, 
-					"*.png"
-				);
-			
-			// adjust pathes
-			for( var i:int = 0; i<myPinupURLs.length; i++ )
-				myPinupURLs[i] = path + myPinupURLs[i];
-				
-			this.maxCounter = this.myPinupURLs.length;
-			
-			// add ducttape image for button
-			myPinupURLs.push(tapeFile);
-			
-			
 		}
 		
 		// =====================================================================
@@ -110,13 +85,52 @@ package as3.aeronaut
 		 */
 		public function loadPinups():void
 		{
-			if( this.myPinupURLs.length > 0 ) 
+			Globals.myCSProgressBar.init();
+				
+			var path:String = mdm.Application.path 
+					+ Globals.PATH_IMAGES
+					+ Globals.PATH_PINUP;
+			
+			var tapeFile:String = mdm.Application.path 
+					+ Globals.PATH_IMAGES
+					+ "gui\\ducttape.png";
+			
+			var pinupList:Array = mdm.FileSystem.getFileList(
+					path, 
+					"*.png"
+				);
+			
+			if( pinupList.length == 0 )
 			{
-				Globals.myCSProgressBar.init();
-				this.setupNextLoad(
-						String(this.myPinupURLs.pop())
-					);
+				// no images found abort
+				if( Console.isConsoleAvailable() )
+					Console.getInstance().writeln(
+							"No Pinups found",
+							DebugLevel.WARNING
+						);
+				Globals.myCSProgressBar.hide();
+				return;
 			}
+			
+			// setup loader que
+			for( var i:int = 0; i<pinupList.length; i++ )
+			{
+				var tmp:ImageLoader = this.currentLoader;
+				this.currentLoader = new ImageLoader(
+						path + pinupList[i]
+					);
+				this.currentLoader.addNext(tmp);
+			}
+			
+			this.maxCounter = pinupList.length;
+			this.loadedCounter = 0;
+			
+			// add ducttape image for button
+			var tape:ImageLoader = new ImageLoader(tapeFile);
+			tape.addNext(this.currentLoader);
+			this.currentLoader = tape;
+			
+			this.loadNext();
 		}
 		
 		/**
@@ -126,18 +140,37 @@ package as3.aeronaut
 		 *
 		 * @param file
 		 */
-		private function setupNextLoad(file:String):void
+		private function loadNext():void
 		{
-			currentLoader = new Loader();
-			currentLoader.contentLoaderInfo.addEventListener(
+			// we are finished
+			if( currentLoader == null )
+			{
+				shufflePinups();
+				Globals.myCSProgressBar.setProgressTo(100,"");
+				Globals.myCSProgressBar.hide();
+				return;
+			}
+			// go to next
+			loadedCounter++;
+			var pro:int = int( 
+					((this.maxCounter - loadedCounter )
+						/this.maxCounter)*100 
+				);
+				
+			Globals.myCSProgressBar.setProgressTo(
+					pro,
+					"loading Pinups..."
+				);
+			
+			currentLoader.addEventListener(
 					Event.COMPLETE, 
 					loadCompleteHandler
 				);
-            currentLoader.contentLoaderInfo.addEventListener(
+            currentLoader.addEventListener(
 					IOErrorEvent.IO_ERROR, 
 					ioErrorHandler
 				);
-			currentLoader.load( new URLRequest(file) );
+			currentLoader.load();
 		}
 		
 		/**
@@ -340,32 +373,13 @@ package as3.aeronaut
 		{
 			// first one is ducttape
 			if( this.ductTape == null )
-				this.ductTape = Bitmap(currentLoader.content);
+				this.ductTape = this.currentLoader.getImage();
 			else
-				createPinup(Bitmap(currentLoader.content));
+				createPinup(this.currentLoader.getImage());
 			
-			if( this.myPinupURLs.length > 0 )
-			{
-				// go to next
-				var pro:int = int( 
-						((this.maxCounter - this.myPinupURLs.length )
-							/this.maxCounter)*100 
-					);
-				
-				Globals.myCSProgressBar.setProgressTo(
-						pro,
-						"loading Pinups..."
-					);
-				this.setupNextLoad(
-						String(this.myPinupURLs.pop())
-					);
-			} else {
-				// finished
-				shufflePinups();
-				Globals.myCSProgressBar.setProgressTo(100,"");
-				Globals.myCSProgressBar.hide();
-			}
-        }
+			this.currentLoader = ImageLoader(this.currentLoader.getNext()); 
+			this.loadNext();
+		}
 
 		/**
 		 * ---------------------------------------------------------------------
@@ -376,12 +390,11 @@ package as3.aeronaut
 		 */
 		private function ioErrorHandler(e:IOErrorEvent):void 
 		{
-			if( Console.isConsoleAvailable() )
-				Console.getInstance().writeln(
-						"IO Error while loading Pinup: ",
-						DebugLevel.ERROR,
-						e.toString()
-					);
+			if( this.ductTape != null )
+			{
+				this.currentLoader = ImageLoader(this.currentLoader.getNext()); 
+				this.loadNext();
+			}
 		}
 
 	}

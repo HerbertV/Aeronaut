@@ -159,9 +159,12 @@ package as3.aeronaut
 				default:
 					return false;
 			}
-			
-			this.myWindowLoader = new CSWindowLoader(this.myWindowContainer);
-			this.myWindowLoader.loadFile(filename);
+// TODO add next			
+			this.myWindowLoader = new CSWindowLoader(
+					filename,
+					this.myWindowContainer
+				);
+			this.myWindowLoader.load();
 			
 			return true;
 		}
@@ -312,7 +315,10 @@ package as3.aeronaut
 			var newWin:CSWindow = CSWindow(this.myWindowLoader.getModule());
 			
 			if( newWin == null ) 
+			{
+				openWindowError(null);
 				return;
+			}
 			
 			if( this.loadingWindowFilename == null )
 			{

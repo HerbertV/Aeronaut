@@ -82,7 +82,11 @@ package as3.aeronaut.module.toolbar
 		{
 			this.myProgressSymbol = proSym;
 			
-			this.myHelpLoader = new HTMLLoader(this.myHTMLText);
+			this.myHelpLoader = new HTMLLoader(
+					"",
+					"HelpLoader",
+					this.myHTMLText
+				);
 			
 			this.myHTMLText.addEventListener(
 					TextEvent.LINK, 

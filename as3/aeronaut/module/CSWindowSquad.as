@@ -93,7 +93,6 @@ package as3.aeronaut.module
 		{
 			super.init();
 			
-			this.myLoader = new ImageLoader();
 			this.setSaved(true);
 			this.setStyle(CSStyle.BLACK);
 			
@@ -115,7 +114,10 @@ package as3.aeronaut.module
 		 */
 		override public function dispose():void
 		{
-			this.myLoader.dispose();
+			if( this.myLoader != null )
+				this.myLoader.dispose();
+			
+			this.myLoader = null;
 			
 			while( this.form.movLogoContainer.numChildren > 0 ) 
 				this.form.movLogoContainer.removeChildAt(0);
@@ -322,12 +324,13 @@ package as3.aeronaut.module
 			if( this.form.lblLogo.text == "" )
 				return;
 			
-			myLoader.loadFile(
+			this.myLoader = new ImageLoader(
 					mdm.Application.path 
 						+ Globals.PATH_IMAGES 
 						+ Globals.PATH_SQUADRON 
 						+ this.form.lblLogo.text 
 				);
+			myLoader.load();
 			
 			myLoader.addEventListener(
 					Event.COMPLETE, 
@@ -392,6 +395,9 @@ package as3.aeronaut.module
 			var bmp:Bitmap = this.myLoader.getImage();
 			bmp = BitmapHelper.resizeBitmap(bmp, 120, 120, true);
 			this.form.movLogoContainer.addChild(bmp);
+			
+			this.myLoader.dispose();
+			this.myLoader = null;
 		}
 		
 	}

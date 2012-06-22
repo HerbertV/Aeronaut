@@ -32,7 +32,6 @@ package as3.aeronaut.module
 	
 	import as3.aeronaut.Globals;
 	
-	
 	// =========================================================================
 	// CSWindowLoader
 	// =========================================================================
@@ -48,16 +47,22 @@ package as3.aeronaut.module
 		/**
 		 * Constructor		
 		 *
+		 * @param file
 		 * @param target
 		 */
-		public function CSWindowLoader(target:MovieClip)
+		public function CSWindowLoader(
+				file:String,
+				target:MovieClip
+			)
 		{
 			// all window's need to be compiled with the same version
 			// as our root fla, we simply use the Globals.version 
 			// application version) to enshure this.
 			super(
+				  	file,
 					target,
-					Globals.version
+					Globals.version,
+					"CSWindowLoader"
 				);
 		}
 		
@@ -67,15 +72,15 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * loadFile
+		 * load
 		 * ---------------------------------------------------------------------
 		 * overridden to init the progressbar 
 		 *
 		 * @param file filename with relative/absolute path
 		 */
-		override public function loadFile(file:String)
+		override public function load():void
 		{
-			super.loadFile(file);
+			super.load();
 			
 			Globals.myCSProgressBar.init();
 		}
