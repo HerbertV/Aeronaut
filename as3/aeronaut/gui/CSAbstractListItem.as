@@ -25,6 +25,10 @@ package as3.aeronaut.gui
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+	
 	import as3.hv.components.tooltip.ITooltip;
 	import as3.aeronaut.Globals;
 	
@@ -86,9 +90,8 @@ package as3.aeronaut.gui
 			this.myLabel.text = lbl;
 			this.myID = id;
 			this.isRemoveable = removeable;
-			
 			this.btnRemove.setActive(this.isRemoveable);
-			
+
 			if( this.isRemoveable ) 
 				this.btnRemove.setupTooltip(
 						Globals.myTooltip,

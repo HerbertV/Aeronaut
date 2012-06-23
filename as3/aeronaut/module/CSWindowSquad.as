@@ -370,8 +370,6 @@ package as3.aeronaut.module
 				
 			Globals.lastSelectedImportDir = srcDir;
 				
-			var exists:Boolean = mdm.FileSystem.fileExists(destFile);
-				
 			if( !CSDialogs.fileExitsNotOrOverwrite(destFile) )  
 				return;
 			
