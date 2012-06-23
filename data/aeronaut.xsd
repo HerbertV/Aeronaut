@@ -570,7 +570,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 							<xs:element name="gunpoints">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="gunpoint" minOccurs="0" maxOccurs="8">
+										<xs:element name="gunpoint" minOccurs="0" maxOccurs="10">
 											<xs:annotation>
 												<xs:documentation>gunID = ID from basedata</xs:documentation>
 											</xs:annotation>
@@ -627,6 +627,10 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 														<xs:restriction base="xs:string">
 															<xs:enumeration value="front"/>
 															<xs:enumeration value="rear"/>
+															<xs:enumeration value="left"/>
+															<xs:enumeration value="right"/>
+															<xs:enumeration value="dorsal"/>
+															<xs:enumeration value="ventra"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:attribute>
@@ -634,6 +638,16 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="bombbay" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="cargo" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence/>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="armor">
@@ -644,6 +658,10 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 									<xs:attribute name="starboardwingLeading" type="xs:int" use="required"/>
 									<xs:attribute name="starboardwingTrailing" type="xs:int" use="required"/>
 									<xs:attribute name="tail" type="xs:int" use="required"/>
+									<xs:attribute name="portBow" type="xs:int" use="optional"/>
+									<xs:attribute name="portStern" type="xs:int" use="optional"/>
+									<xs:attribute name="starboardBow" type="xs:int" use="optional"/>
+									<xs:attribute name="starboardStern" type="xs:int" use="optional"/>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="description" type="xs:string" minOccurs="0"/>
@@ -654,7 +672,10 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 									<xs:enumeration value="fighter"/>
 									<xs:enumeration value="heavyFighter"/>
 									<xs:enumeration value="hoplite"/>
-									<xs:enumeration value="bomber"/>
+									<xs:enumeration value="heavyBomber"/>
+									<xs:enumeration value="lightBomber"/>
+									<xs:enumeration value="heavyCargo"/>
+									<xs:enumeration value="lightCargo"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:attribute>

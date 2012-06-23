@@ -51,6 +51,7 @@ package as3.aeronaut.objects
 		// =====================================================================
 		private var myLoadoutFile:String = "";
 		private var myPilotFile:String = "";
+// TODO new handling for additional crew 
 		private var myGunnerFile:String = "";
 		private var freeWeight:int = 0;
 				
@@ -91,6 +92,7 @@ package as3.aeronaut.objects
 		 */
 		public function createNew():void
 		{
+//TODO bombbays and cargo
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
@@ -740,6 +742,110 @@ package as3.aeronaut.objects
 		public function setArmorPWL(val:int)
 		{
 			myXML..armor.@portwingLeading = val;
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * getArmorPB
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @return
+		 */
+		public function getArmorPB():int 
+		{
+			if( myXML..armor.@portBow != null ) 
+				return int(myXML..armor.@portBow);
+			return 0;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setArmorPB
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @param val
+		 */
+		public function setArmorPB(val:int)
+		{
+			myXML..armor.@portBow = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getArmorPS
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @return
+		 */
+		public function getArmorPS():int 
+		{
+			if( myXML..armor.@portStern != null ) 
+				return int(myXML..armor.@portStern);
+			return 0;
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * setArmorPS
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @param val
+		 */
+		public function setArmorPS(val:int)
+		{
+			myXML..armor.@portStern = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getArmorSB
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @return
+		 */
+		public function getArmorSB():int 
+		{
+			if( myXML..armor.@starboardBow != null ) 
+				return int(myXML..armor.@starboardBow);
+			return 0;
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * setArmorSB
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @param val
+		 */
+		public function setArmorSB(val:int)
+		{
+			myXML..armor.@starboardBow = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getArmorSS
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @return
+		 */
+		public function getArmorSS():int 
+		{
+			if( myXML..armor.@starboardStern != null ) 
+				return int(myXML..armor.@starboardStern);
+			return 0;
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * setArmorSS
+		 * ---------------------------------------------------------------------
+		 * bombers and cargoplanes only
+		 * @param val
+		 */
+		public function setArmorSS(val:int)
+		{
+			myXML..armor.@starboardStern = val;
 		}
 		
 		/**
