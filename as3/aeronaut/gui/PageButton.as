@@ -22,26 +22,17 @@
 package as3.aeronaut.gui
 {
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
+	
+	import flash.geom.ColorTransform;
+	
+	import as3.aeronaut.Globals;
 	
 	// =========================================================================
-	// CSButtonStyled
+	// Class PageButton
 	// =========================================================================
-	// Basic Button class 
-	// is linked to styled Buttons inside the fla's library.
-	// supports ITooltip 
+	// Class for all page switich buttons
 	//
-	// The Button needs following sub mc's:
-	// - black_normal
-	// - black_inactive
-	// - black_rollover
-	// - black_click
-	// - white_normal
-	// - white_inactive
-	// - white_rollover
-	// - white_click
-	//
-	public class CSButtonStyled 
+	public class PageButton 
 			extends CSAbstractButton 
 			implements ICSStyleable
 	{
@@ -51,10 +42,15 @@ package as3.aeronaut.gui
 		// default style is black
 		protected var myStyle:int = CSStyle.BLACK;
 		
+		protected var myController:PageButtonController;
+		protected var pageNumber:uint;
+		
+		protected var isSelected:Boolean = false;
+		
 		// =====================================================================
 		// Contructor
 		// =====================================================================
-		public function CSButtonStyled()
+		public function PageButton()
 		{
 			super();
 		}
@@ -67,9 +63,36 @@ package as3.aeronaut.gui
 		 * ---------------------------------------------------------------------
 		 * setStyle
 		 * ---------------------------------------------------------------------
-		 * @param s
+		 * @param c PageButtonController
+		 * @param pageNum 0-n
 		 */
-		public function setStyle(s:int):void 
+		public function setController(
+				c:PageButtonController,
+				pageNum:uint
+			):void
+		{
+			this.myController = c;
+			this.pageNumber = pageNum;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getPageNumber
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getPageNumber():uint
+		{
+			return this.pageNumber;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setStyle
+		 * ---------------------------------------------------------------------
+		 * @param s CSStyle
+		 */
+		public function setStyle(s:int):void
 		{
 			this.myStyle = s;
 			this.updateView();
@@ -77,49 +100,68 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * setSelected
+		 * ---------------------------------------------------------------------
+		 * @param sel
+		 */
+		public function setSelected(sel:Boolean):void
+		{
+			this.isSelected = sel;
+			this.updateView();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getIsSelected
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getIsSelected():Boolean 
+		{
+			return this.isSelected;
+		}
+		/**
+		 * ---------------------------------------------------------------------
 		 * updateView
 		 * ---------------------------------------------------------------------
 		 */
 		override public function updateView():void
 		{
-			this.black_normal.visible = false;
-			this.black_inactive.visible = false;
-			this.black_rollover.visible = false;
-			this.black_click.visible = false;
-			
-			this.white_normal.visible = false;
-			this.white_inactive.visible = false;
-			this.white_rollover.visible = false;
-			this.white_click.visible = false;
+			var colorTransform:ColorTransform = this.transform.colorTransform;
 			
 			if( this.myStyle == CSStyle.BLACK ) 
 			{
+				colorTransform.color = 0x000000;
+			
 				if( !this.isActive )
 				{
-					this.black_inactive.visible = true;
+					colorTransform.color = 0x333333;
+				} else if( this.isSelected ) {
+					colorTransform.color = 0x660000;
 				} else if( this.isClick ) {
-					this.black_click.visible = true;
+					colorTransform.color = 0xFF0000;
 				} else if( this.isRollover ) {
-					this.black_rollover.visible = true;
-				} else {
-					this.black_normal.visible = true;
-				}
-				return;
+					colorTransform.color = 0xFF0000;
+				} 
 			}
+			
 			if( this.myStyle == CSStyle.WHITE ) 
 			{
-				if( !this.isActive ) {
-					this.white_inactive.visible = true;
+				colorTransform.color = 0xFFFFFF;
+				
+				if( !this.isActive ) 
+				{
+					colorTransform.color = 0xCCCCCC;
+				} else if( this.isSelected ) {
+					colorTransform.color = 0x660000;
 				} else if( this.isClick ) {
-					this.white_click.visible = true;
+					colorTransform.color = 0xFF0000;
 				} else if( this.isRollover ) {
-					this.white_rollover.visible = true;
-				} else {
-					this.white_normal.visible = true;
-				}
-				return;
+					colorTransform.color = 0xFF0000;
+				} 
 			}
+			this.transform.colorTransform = colorTransform; 
 		}
-		
+	
 	}
 }

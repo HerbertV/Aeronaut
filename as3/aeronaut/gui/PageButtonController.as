@@ -21,42 +21,28 @@
  */
 package as3.aeronaut.gui
 {
-	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
 	// =========================================================================
-	// CSButtonStyled
+	// PageButtonController
 	// =========================================================================
-	// Basic Button class 
-	// is linked to styled Buttons inside the fla's library.
-	// supports ITooltip 
+	// to controll the page switching
 	//
-	// The Button needs following sub mc's:
-	// - black_normal
-	// - black_inactive
-	// - black_rollover
-	// - black_click
-	// - white_normal
-	// - white_inactive
-	// - white_rollover
-	// - white_click
-	//
-	public class CSButtonStyled 
-			extends CSAbstractButton 
-			implements ICSStyleable
+	public class PageButtonController
 	{
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		// default style is black
-		protected var myStyle:int = CSStyle.BLACK;
-		
+		private var buttons:Array = new Array();
+		private var pages:Array = new Array();
+		private var activePage:uint = 0;
+	
 		// =====================================================================
 		// Contructor
 		// =====================================================================
-		public function CSButtonStyled()
+		public function PageButtonController()
 		{
-			super();
+			
 		}
 		
 		// =====================================================================
@@ -65,60 +51,70 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setStyle
+		 * getActivePage
 		 * ---------------------------------------------------------------------
-		 * @param s
+		 * @return
 		 */
-		public function setStyle(s:int):void 
+		public function getActivePage():uint 
 		{
-			this.myStyle = s;
-			this.updateView();
+			return this.activePage;
 		}
-		
+	
 		/**
 		 * ---------------------------------------------------------------------
-		 * updateView
+		 * setActivePage
 		 * ---------------------------------------------------------------------
+		 * @param idx
 		 */
-		override public function updateView():void
+		public function setActivePage(idx:uint):void
 		{
-			this.black_normal.visible = false;
-			this.black_inactive.visible = false;
-			this.black_rollover.visible = false;
-			this.black_click.visible = false;
-			
-			this.white_normal.visible = false;
-			this.white_inactive.visible = false;
-			this.white_rollover.visible = false;
-			this.white_click.visible = false;
-			
-			if( this.myStyle == CSStyle.BLACK ) 
-			{
-				if( !this.isActive )
-				{
-					this.black_inactive.visible = true;
-				} else if( this.isClick ) {
-					this.black_click.visible = true;
-				} else if( this.isRollover ) {
-					this.black_rollover.visible = true;
-				} else {
-					this.black_normal.visible = true;
-				}
+			if( idx == 	this.activePage
+					|| idx >= this.myMembers.length )
 				return;
-			}
-			if( this.myStyle == CSStyle.WHITE ) 
-			{
-				if( !this.isActive ) {
-					this.white_inactive.visible = true;
-				} else if( this.isClick ) {
-					this.white_click.visible = true;
-				} else if( this.isRollover ) {
-					this.white_rollover.visible = true;
-				} else {
-					this.white_normal.visible = true;
-				}
+			
+			for( var i:int=0; i<this.pages.length; i++ )
+				AbstractPage(this.pages[i]).hidePage();
+			
+			PageButton(this.buttons[this.activePage]).setSelected(false);	
+			PageButton(this.buttons[idx]).setSelected(true);	
+			AbstractPage(this.pages[idx]).showPage();
+		}
+	
+		/**
+		 * ---------------------------------------------------------------------
+		 * addPage
+		 * ---------------------------------------------------------------------
+		 * adds a page/button pair to the controller.
+		 *
+		 * @param btn
+		 * @param page
+		 */
+		public function addPage(
+				btn:PageButton,
+				page:AbstractPage
+			):void
+		{
+			this.buttons.push(btn);
+			this.pages.push(page);
+			
+			btn.setController(this,this.buttons.length-1);
+			btn.addEventListener(MouseEvent.MOUSE_DOWN,clickHandler);
+		}
+	
+		/**
+		 * ---------------------------------------------------------------------
+		 * clickHandler
+		 * ---------------------------------------------------------------------
+		 * @param e 
+		 */
+		private function clickHandler(e:MouseEvent):void
+		{
+			var btn:PageButton = PageButton(e.currentTarget);
+			
+			if( !btn.getIsActive() )
 				return;
-			}
+				
+			this.setActivePage(btn.getPageNumber);
 		}
 		
 	}

@@ -26,17 +26,11 @@ package as3.aeronaut.module
 	import flash.display.MovieClip;
 	import flash.display.Bitmap;
 
-// TODO clean up imports when finished	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.IOErrorEvent;
 	
 	import as3.hv.core.utils.BitmapHelper;
 	import as3.hv.core.net.ImageLoader;
-	
-//TODO remove if no longer needed	
-	import as3.hv.core.console.Console;
-	import as3.hv.core.console.DebugLevel;
 		
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
