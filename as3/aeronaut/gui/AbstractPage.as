@@ -19,12 +19,11 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package as3.aeronaut.module
+package as3.aeronaut.gui
 {
 	import flash.display.MovieClip;
 	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.gui.*;
 	
 	// =========================================================================
 	// Class AbstractPage
