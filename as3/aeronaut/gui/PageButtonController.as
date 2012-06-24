@@ -23,6 +23,10 @@ package as3.aeronaut.gui
 {
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+		
 	// =========================================================================
 	// PageButtonController
 	// =========================================================================
@@ -35,7 +39,7 @@ package as3.aeronaut.gui
 		// =====================================================================
 		private var buttons:Array = new Array();
 		private var pages:Array = new Array();
-		private var activePage:uint = 0;
+		private var activePage:int = -1;
 	
 		// =====================================================================
 		// Contructor
@@ -69,15 +73,19 @@ package as3.aeronaut.gui
 		public function setActivePage(idx:uint):void
 		{
 			if( idx == 	this.activePage
-					|| idx >= this.myMembers.length )
+					|| idx >= this.pages.length )
 				return;
-			
+
 			for( var i:int=0; i<this.pages.length; i++ )
 				AbstractPage(this.pages[i]).hidePage();
 			
-			PageButton(this.buttons[this.activePage]).setSelected(false);	
+			if( this.activePage != -1 )
+				PageButton(this.buttons[this.activePage]).setSelected(false);	
+			
 			PageButton(this.buttons[idx]).setSelected(true);	
 			AbstractPage(this.pages[idx]).showPage();
+			
+			this.activePage = idx;
 		}
 	
 		/**
@@ -100,7 +108,11 @@ package as3.aeronaut.gui
 			btn.setController(this,this.buttons.length-1);
 			btn.addEventListener(MouseEvent.MOUSE_DOWN,clickHandler);
 		}
-	
+		
+		// =====================================================================
+		// Event Handler
+		// =====================================================================
+		
 		/**
 		 * ---------------------------------------------------------------------
 		 * clickHandler
@@ -114,7 +126,7 @@ package as3.aeronaut.gui
 			if( !btn.getIsActive() )
 				return;
 				
-			this.setActivePage(btn.getPageNumber);
+			this.setActivePage(btn.getPageNumber());
 		}
 		
 	}
