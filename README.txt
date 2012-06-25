@@ -47,6 +47,13 @@ ________              ___   ____     Crimson Skies      __             ________
 		-> Enables/Disables the Numeric Stepper for the engine count
 
 --------------------------------------------------------------------------------
+	Aircraft Blueprints:
+--------------------------------------------------------------------------------
+	Now you can now import blueprints. Imported blueprints are placed 
+	inside "images\aircrafts\blueprints" folder. 
+	You will find also a draft for the drafts folder.
+	
+--------------------------------------------------------------------------------
 	Pinup Easter Egg:
 --------------------------------------------------------------------------------
 	I removed the pinup swf files from the previous version.

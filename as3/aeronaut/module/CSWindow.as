@@ -215,7 +215,7 @@ package as3.aeronaut.module
 		 * @param tf
 		 * @param valid
 		 */
-		protected function setTextFieldValid(
+		public function setTextFieldValid(
 				tf:TextField, 
 				valid:Boolean
 			):void

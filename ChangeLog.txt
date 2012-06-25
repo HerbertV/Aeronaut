@@ -19,4 +19,5 @@ Version - 1.0.0 WIP:
 -  	new pinup handling (see readme.txt)
 -	optimized UI e.g. lists are now scrollable via mouse wheel.
 -	updated BaseData.ae with Oliver's "GSS-Bandit" corrections and extensions
+-	Blueprints now loaded and displayed inside Aircraft Window
 
