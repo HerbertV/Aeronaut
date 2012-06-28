@@ -308,7 +308,7 @@ package as3.aeronaut.module
 			this.form.page2.dispose();
 			this.form.page3.dispose();
 			this.form.page4.dispose();
-// TODO page 5
+// TODO page 5 for Z&B
 			
 			super.dispose();
 		}
@@ -414,65 +414,9 @@ package as3.aeronaut.module
 			this.form.numStepHeight.setValue(int(arrH[0]),int(arrH[1]));
 //TODO move to page
 /*			
-			this.form.page1.numStepCrew.setValue(this.myObject.getCrewCount());
-			
-			this.form.page2.numStepRocketSlots.setValue(this.myObject.getRocketSlotCount());
-			this.recalcRocketHardpoints();
+			this.form.page4.numStepCrew.setValue(this.myObject.getCrewCount());
 			
 			
-			
-			// GUN 1
-			this.initGunpointFromObject(1, this.form.page2.pdGun1, this.form.page2.rbtnGun1AmmoLinked, this.form.page2.numStepGun1Ammo, 
-												this.form.page2.rbtnGun1FireLinked, this.form.page2.numStepGun1Fire, this.form.page2.rbtnGun1Turret);
-		
-			// GUN 2
-			this.initGunpointFromObject(2, this.form.page2.pdGun2, this.form.page2.rbtnGun2AmmoLinked, this.form.page2.numStepGun2Ammo, 
-												this.form.page2.rbtnGun2FireLinked, this.form.page2.numStepGun2Fire, this.form.page2.rbtnGun2Turret);
-		
-			// GUN 3
-			this.initGunpointFromObject(3, this.form.page2.pdGun3, this.form.page2.rbtnGun3AmmoLinked, this.form.page2.numStepGun3Ammo, 
-												this.form.page2.rbtnGun3FireLinked, this.form.page2.numStepGun3Fire, this.form.page2.rbtnGun3Turret);
-		
-			// GUN 4
-			this.initGunpointFromObject(4, this.form.page2.pdGun4, this.form.page2.rbtnGun4AmmoLinked, this.form.page2.numStepGun4Ammo, 
-												this.form.page2.rbtnGun4FireLinked, this.form.page2.numStepGun4Fire, this.form.page2.rbtnGun4Turret);
-		
-			// GUN 5
-			this.initGunpointFromObject(5, this.form.page2.pdGun5, this.form.page2.rbtnGun5AmmoLinked, this.form.page2.numStepGun5Ammo, 
-												this.form.page2.rbtnGun5FireLinked, this.form.page2.numStepGun5Fire, this.form.page2.rbtnGun5Turret);
-		
-			// GUN 6
-			this.initGunpointFromObject(6, this.form.page2.pdGun6, this.form.page2.rbtnGun6AmmoLinked, this.form.page2.numStepGun6Ammo, 
-												this.form.page2.rbtnGun6FireLinked, this.form.page2.numStepGun6Fire, this.form.page2.rbtnGun6Turret);
-		
-			// GUN 7
-			this.initGunpointFromObject(7, this.form.page2.pdGun7, this.form.page2.rbtnGun7AmmoLinked, this.form.page2.numStepGun7Ammo, 
-												this.form.page2.rbtnGun7FireLinked, this.form.page2.numStepGun7Fire, this.form.page2.rbtnGun7Turret);
-		
-			// GUN 8
-			this.initGunpointFromObject(8, this.form.page2.pdGun8, this.form.page2.rbtnGun8AmmoLinked, this.form.page2.numStepGun8Ammo, 
-												this.form.page2.rbtnGun8FireLinked, this.form.page2.numStepGun8Fire, this.form.page2.rbtnGun8Turret);
-		
-			
-			//TURRETS
-			var turrets:Array = this.myObject.getTurrets();
-			if (turrets.length > 0) {
-				// im augenblick gibts maximal eine turret
-				this.form.page2.rbtnHasTurrets.setSelected(true);
-				
-				this.form.page2.rbtnGun1Turret.setActive(true);
-				this.form.page2.rbtnGun2Turret.setActive(true);
-				this.form.page2.rbtnGun3Turret.setActive(true);
-				this.form.page2.rbtnGun4Turret.setActive(true);
-				this.form.page2.rbtnGun5Turret.setActive(true);
-				this.form.page2.rbtnGun6Turret.setActive(true);
-				this.form.page2.rbtnGun7Turret.setActive(true);
-				this.form.page2.rbtnGun8Turret.setActive(true);
-				
-			} else {
-				this.form.page2.rbtnHasTurrets.setSelected(false);
-			}
-			this.recalcWeapons();
 */			
 			this.calcEngineCost();
 			this.calcAirframeCost();
@@ -538,6 +482,7 @@ package as3.aeronaut.module
 				);
 			
 			this.myObject = this.form.page1.updateObjectFromWindow();
+			this.myObject = this.form.page2.updateObjectFromWindow();
 			this.myObject = this.form.page3.updateObjectFromWindow();
 //TODO add other pages
 		}
@@ -1045,21 +990,14 @@ package as3.aeronaut.module
 			}
 			// special characteristics
 			this.form.page1.init(this);
+			// weapons
+			this.form.page2.init(this);
 			//armor
 			this.form.page3.init(this);
 // TODO init other pages
 			
 //TODO move to pages
 /*			
-			
-			this.form.page2.pdGun5.setActive(true);
-			this.form.page2.pdGun6.setActive(true);
-			this.form.page2.pdGun7.setActive(true);
-			this.form.page2.pdGun8.setActive(true);
-			
-			this.form.page2.rbtnHasTurrets.setActive(false);
-			this.form.page2.rbtnHasTurrets.setSelected(false);
-			
 			
 			if (currFrame == "fighter") {
 				this.form.page1.numStepCrew.setupSteps(1,2,1,1);
@@ -1070,29 +1008,15 @@ package as3.aeronaut.module
 			} else if (currFrame == "heavyFighter") {
 				this.form.page1.numStepCrew.setupSteps(1,2,2,1);
 				
-				this.form.page2.rbtnHasTurrets.setActive(true);
-				
 				this.form.page1.pdGunner.setActive(true);
 				
 			} else if (currFrame == "hoplite") {
 				this.form.page1.numStepCrew.setupSteps(1,2,1,1);
 				
-				
-				// nur 4 guns
-				this.form.page2.pdGun5.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-				this.form.page2.pdGun5.setActive(false);
-				this.form.page2.pdGun6.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-				this.form.page2.pdGun6.setActive(false);
-				this.form.page2.pdGun7.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-				this.form.page2.pdGun7.setActive(false);
-				this.form.page2.pdGun8.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-				this.form.page2.pdGun8.setActive(false);
-				
 				this.form.page1.pdGunner.setActive(false);
 				this.form.page1.pdGunner.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
 				
-				this.recalcWeapons();
-			
+				
 			}
 			this.calcCockpitCost();
 */			
@@ -1141,8 +1065,8 @@ package as3.aeronaut.module
 			
 			// for free sc
 			this.form.page1.init(this);
-//TODO  init page 2			
-			//this.calcRocketHardpoints();
+			// for rocket Hardpoints
+			this.form.page2.init(this);
 				
 			this.calcBaseTargetWeights();
 			this.calcMaxSpeedWeight();
@@ -1206,211 +1130,14 @@ package as3.aeronaut.module
 		}
 		
 		
-		
-		
-		
-/*		
-// TODO page 2		
-		private function initPage2()
-		{
-			//this.form.page2.
-			var i:int=0;
-			
-			this.form.page2.rbtnGun1Turret.setActive(false);
-			this.form.page2.rbtnGun1FireLinked.setActive(false);
-			this.form.page2.rbtnGun1AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun2Turret.setActive(false);
-			this.form.page2.rbtnGun2FireLinked.setActive(false);
-			this.form.page2.rbtnGun2AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun3Turret.setActive(false);
-			this.form.page2.rbtnGun3FireLinked.setActive(false);
-			this.form.page2.rbtnGun3AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun4Turret.setActive(false);
-			this.form.page2.rbtnGun4FireLinked.setActive(false);
-			this.form.page2.rbtnGun4AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun5Turret.setActive(false);
-			this.form.page2.rbtnGun5FireLinked.setActive(false);
-			this.form.page2.rbtnGun5AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun6Turret.setActive(false);
-			this.form.page2.rbtnGun6FireLinked.setActive(false);
-			this.form.page2.rbtnGun6AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun7Turret.setActive(false);
-			this.form.page2.rbtnGun7FireLinked.setActive(false);
-			this.form.page2.rbtnGun7AmmoLinked.setActive(false);
-			
-			this.form.page2.rbtnGun8Turret.setActive(false);
-			this.form.page2.rbtnGun8FireLinked.setActive(false);
-			this.form.page2.rbtnGun8AmmoLinked.setActive(false);
-			
-			this.form.page2.numStepRocketSlots.setupSteps(1,8,1,1);
-			
-			this.form.page2.pdLoadout.setMaxVisibleItems(6);
-						
-			this.form.page2.pdGun1.setMaxVisibleItems(8);
-			this.form.page2.pdGun1.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun2.setMaxVisibleItems(8);
-			this.form.page2.pdGun2.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun3.setMaxVisibleItems(8);
-			this.form.page2.pdGun3.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun4.setMaxVisibleItems(8);
-			this.form.page2.pdGun4.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun5.setMaxVisibleItems(8);
-			this.form.page2.pdGun5.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun6.setMaxVisibleItems(8);
-			this.form.page2.pdGun6.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun7.setMaxVisibleItems(8);
-			this.form.page2.pdGun7.setEmptySelectionText("empty",true);
-			this.form.page2.pdGun8.setMaxVisibleItems(6);
-			this.form.page2.pdGun8.setEmptySelectionText("empty",true);
-			
-			var arrGuns:Array = Globals.myBaseData.getGuns();
-			for (i=0; i < arrGuns.length; i++) {
-				this.form.page2.pdGun1.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun2.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun3.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun4.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun5.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun6.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun7.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-				this.form.page2.pdGun8.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
-			}
-			
-			this.form.page2.numStepGun1Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun1Fire.setActive(false);
-			this.form.page2.numStepGun2Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun2Fire.setActive(false);
-			this.form.page2.numStepGun3Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun3Fire.setActive(false);
-			this.form.page2.numStepGun4Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun4Fire.setActive(false);
-			this.form.page2.numStepGun5Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun5Fire.setActive(false);
-			this.form.page2.numStepGun6Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun6Fire.setActive(false);
-			this.form.page2.numStepGun7Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun7Fire.setActive(false);
-			this.form.page2.numStepGun8Fire.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun8Fire.setActive(false);
-			
-			this.form.page2.numStepGun1Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun1Ammo.setActive(false);
-			this.form.page2.numStepGun2Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun2Ammo.setActive(false);
-			this.form.page2.numStepGun3Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun3Ammo.setActive(false);
-			this.form.page2.numStepGun4Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun4Ammo.setActive(false);
-			this.form.page2.numStepGun5Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun5Ammo.setActive(false);
-			this.form.page2.numStepGun6Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun6Ammo.setActive(false);
-			this.form.page2.numStepGun7Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun7Ammo.setActive(false);
-			this.form.page2.numStepGun8Ammo.setupSteps(0,8,0,1);
-			this.form.page2.numStepGun8Ammo.setActive(false);
-			
-			
-			
-			
-		}
-		*/
-		
+	
 		private function initEventHandler() 
 		{
-			// braucht man doch net
+			// braucht man doch net ?? 
 			//this.numStepEngine.addEventListener(MouseEvent.MOUSE_DOWN, engineCountChangedHandler); 
-			
-//TODO Page 2
-			/*
-			this.form.page2.rbtnHasTurrets.addEventListener(MouseEvent.MOUSE_DOWN, hasTurretsChangedHandler,false,0,true);
-			
-			this.form.page2.numStepRocketSlots.addEventListener(MouseEvent.MOUSE_DOWN, rocketSlotsChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun1Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun1FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun1AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun1.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun2Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun2FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun2AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun2.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun3Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun3FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun3AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun3.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun4Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun4FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun4AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun4.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun5Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun5FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun5AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun5.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun6Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun6FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun6AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun6.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun7Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun7FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun7AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun7.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			
-			this.form.page2.rbtnGun8Turret.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun8FireLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.rbtnGun8AmmoLinked.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-			this.form.page2.pdGun8.addEventListener(MouseEvent.MOUSE_DOWN, gunChangedHandler,false,0,true); 
-*/
-			
-/* TODO
-			this.numStepCrew.setStyle(CSStyle.WHITE);
-*/
 		}
 		
-/*				
-		// -------------------------------------------------
-		// initGunpointFromObject
-		// -------------------------------------------------
-		// wird von initFromObject aufgerufen
-		private function initGunpointFromObject(gpnum:int, pdGun:CSPullDown, 
-												rbtnAmmo:CSRadioButton, numSAmmo:CSNumStepperInteger, 
-												rbtnFire:CSRadioButton, numSFire:CSNumStepperInteger, rbtnTurret:CSRadioButton)
-		{
-			var gp:Gunpoint = this.myObject.getGunpoint(gpnum);
-			//erst löschen
-			pdGun.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-			//jetzt setzen
-			pdGun.setActiveSelectionItem(gp.gunID);
-			if (gp.firelinkGroup > 0) {
-				rbtnFire.setSelected(true);
-			} else {
-				rbtnFire.setSelected(false);
-			}
-			numSFire.setValue(gp.firelinkGroup);
-			if (gp.ammolinkGroup > 0) {
-				rbtnAmmo.setSelected(true);
-			} else {
-				rbtnAmmo.setSelected(false);
-			}
-			numSAmmo.setValue(gp.ammolinkGroup);
-			if (gp.direction == Gunpoint.DIR_TURRET) {
-				rbtnTurret.setSelected(true);
-			} else {
-				rbtnTurret.setSelected(false);
-			}
-		}
-*/		
+
 		
 /*		
 		// -------------------------------------------------
@@ -1643,279 +1370,8 @@ package as3.aeronaut.module
 		}
 		
 		
-		
-		
-		
-		
-		
-		
-	
-		
-		// ----------------------------------------------------------
-		// recalcWeapons
-		// ----------------------------------------------------------
-		// gewichte preise, etc 
-		// nur keine raketen!!!!!
-// TODO page 2
-/*
-		private function recalcWeapons()
-		{
-			//var gp:Gunpoint = null;
-			var gunid:String = "";
-			
-			// resetten
-			this.intWeaponWeight = 0;
-			this.intWeaponCost = 0;
-			
-			// gun 1
-			gunid = this.form.page2.pdGun1.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun1AmmoLinked, this.form.page2.numStepGun1Ammo,
-							this.form.page2.rbtnGun1FireLinked, this.form.page2.numStepGun1Fire, this.form.page2.rbtnGun1Turret, this.form.page2.lblGun1Weight);
-			
-			// gun 2
-			gunid = this.form.page2.pdGun2.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun2AmmoLinked, this.form.page2.numStepGun2Ammo,
-							this.form.page2.rbtnGun2FireLinked, this.form.page2.numStepGun2Fire, this.form.page2.rbtnGun2Turret, this.form.page2.lblGun2Weight);
-			
-			// gun 3
-			gunid = this.form.page2.pdGun3.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun3AmmoLinked, this.form.page2.numStepGun3Ammo, 
-							this.form.page2.rbtnGun3FireLinked, this.form.page2.numStepGun3Fire, this.form.page2.rbtnGun3Turret, this.form.page2.lblGun3Weight);
-			
-			// gun 4
-			gunid = this.form.page2.pdGun4.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun4AmmoLinked, this.form.page2.numStepGun4Ammo, 
-							this.form.page2.rbtnGun4FireLinked, this.form.page2.numStepGun4Fire, this.form.page2.rbtnGun4Turret, this.form.page2.lblGun4Weight);
-			
-			// gun 5
-			gunid = this.form.page2.pdGun5.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun5AmmoLinked, this.form.page2.numStepGun5Ammo,
-							this.form.page2.rbtnGun5FireLinked, this.form.page2.numStepGun5Fire, this.form.page2.rbtnGun5Turret, this.form.page2.lblGun5Weight);
-			
-			// gun 6
-			gunid = this.form.page2.pdGun6.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun6AmmoLinked, this.form.page2.numStepGun6Ammo, 
-							this.form.page2.rbtnGun6FireLinked, this.form.page2.numStepGun6Fire, this.form.page2.rbtnGun6Turret, this.form.page2.lblGun6Weight);
-			
-			// gun 7
-			gunid = this.form.page2.pdGun7.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun7AmmoLinked, this.form.page2.numStepGun7Ammo, 
-							this.form.page2.rbtnGun7FireLinked, this.form.page2.numStepGun7Fire, this.form.page2.rbtnGun7Turret, this.form.page2.lblGun7Weight);
-			
-			// gun 8
-			gunid = this.form.page2.pdGun8.getIDForCurrentSelection();
-			this.calcWeapon(gunid, this.form.page2.rbtnGun8AmmoLinked, this.form.page2.numStepGun8Ammo, 
-							this.form.page2.rbtnGun8FireLinked, this.form.page2.numStepGun8Fire, this.form.page2.rbtnGun8Turret, this.form.page2.lblGun8Weight);
-			
-			
-			
-			// Turret basisgewicht 400lbs
-			if (this.form.page2.rbtnHasTurrets.getIsSelected() ) {
-				this.intWeaponWeight = this.intWeaponWeight + 400;
-			}
-			
-			// labels updaten
-// USE CSFormatter			
-			
-//			this.form.lblCostWeapon.text = this.createDollarString(this.intHardpointCost + this.intWeaponCost);
-//			this.form.page2.lblWeaponWeight.text = this.createLbsString(this.intWeaponWeight);
-			
-		}
-*/		
-		// ----------------------------------------------------------
-		// calcWeapon
-		// ----------------------------------------------------------
-		// wird von recalcWeapons() verwendet
-//TODO page 2
-/*
-		private function calcWeapon(gunid:String, 
-									rbtnAmmoL:CSRadioButton, numSAmmo:CSNumStepperInteger, 
-									rbtnFireL:CSRadioButton, numSFire:CSNumStepperInteger, 
-									rbtnTurret:CSRadioButton, lblWeight:TextField) 
-		{
-			var gun:Gun = null;
-			var modCost:Number = 0.00;
-			var gunWeight:int = 0;
-			var gunCost:int = 0;
-			
-			if (gunid != CSPullDown.ID_EMPTYSELECTION) {
-				gun = Globals.myBaseData.getGun(gunid);
-				gunWeight = gun.weight;
-				gunCost = gun.price;
-				
-				if (rbtnAmmoL.getIsSelected() == true) {
-					modCost = Globals.myBaseData.getSpecialCharacteristic(BaseData.HCID_SC_LINKEDAMMO).costChanges;
-					numSAmmo.setActive(true);
-					if (numSAmmo.getValue() == 0) {
-						numSAmmo.setValue(1);
-					}
-				} else {
-					numSAmmo.setActive(false);
-					numSAmmo.setValue(0);
-				}
-				
-				if (rbtnFireL.getIsSelected() == true) {
-					modCost = modCost + Globals.myBaseData.getSpecialCharacteristic(BaseData.HCID_SC_LINKEDFIRE).costChanges;
-					numSFire.setActive(true);
-					if (numSFire.getValue() == 0) {
-						numSFire.setValue(1);
-					}
-				} else {
-					numSFire.setActive(false);
-					numSFire.setValue(0);
-				}
-				if (rbtnTurret.getIsSelected() == true) {
-					gunWeight = gunWeight + (gun.weight /2);
-					modCost = modCost + 0.50;
-				}
-				gunCost = gunCost + int(gun.price * modCost);
-			} 
-			this.intWeaponCost = this.intWeaponCost + gunCost;
-			this.intWeaponWeight = this.intWeaponWeight + gunWeight;
-			
-// USE CSFormatter			
-//			lblWeight.text = this.createLbsString(gunWeight);
-		}
-*/		
-		
-		
-		// ----------------------------------------------------------
-		// recalcRocketHardpoints
-		// ----------------------------------------------------------
-		// anzahl der slots und frei werdendes gewicht
-// TODO page 2		
-/*		
-		private function recalcRocketHardpoints()
-		{
-			var currBTN:int = this.form.numStepBaseTarget.getValue();
-			var currFrame:String = this.rbgFrame.getValue();
-			var maxRHP:int = 0;
-			var currRHP:int = this.form.page2.numStepRocketSlots.getValue();
-			
-			if (currFrame == "fighter" || currFrame == "heavyFighter") {
-				maxRHP = 11 - currBTN;
-			
-			} else if (currFrame == "hoplite") {
-				maxRHP = 11 - currBTN;
-				if (maxRHP > 4 ){
-					maxRHP = 4;
-				}	
-			}
-			
-			
-			if (currRHP > maxRHP) {
-				currRHP = maxRHP;
-			}
-			
-			this.form.page2.numStepRocketSlots.setupSteps(0,maxRHP,currRHP,1);
-			
-			//aus der RuleConfig lesen
-			var weightPerSlot:int = Globals.myRuleConfigs.getRocketHardpointMassreduction();
-			this.intHardpointWeight =  (maxRHP - currRHP) * weightPerSlot;
-// USE CSFormatter			
 
-//			this.form.page2.lblHardpointWeight.text =  this.createLbsString(this.intHardpointWeight);
-			
-			this.intHardpointCost = currRHP *50;
-			
-// USE CSFormatter			
-//			this.form.lblCostWeapon.text = this.createDollarString(this.intHardpointCost + this.intWeaponCost);
-			
-			
-		}
-*/		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-// TODO move to page 2		
-/*		
-		private function updateTurretRadioButtons()
-		{
-			if (this.form.page2.rbtnHasTurrets.getIsSelected() == true ) 
-			{
-				this.form.page2.rbtnGun1Turret.setActive(true);
-				this.form.page2.rbtnGun2Turret.setActive(true);
-				this.form.page2.rbtnGun3Turret.setActive(true);
-				this.form.page2.rbtnGun4Turret.setActive(true);
-				this.form.page2.rbtnGun5Turret.setActive(true);
-				this.form.page2.rbtnGun6Turret.setActive(true);
-				this.form.page2.rbtnGun7Turret.setActive(true);
-				this.form.page2.rbtnGun8Turret.setActive(true);
-				
-			} else {
-				this.form.page2.rbtnGun1Turret.setActive(false);
-				this.form.page2.rbtnGun1Turret.setSelected(false);
-				this.form.page2.rbtnGun2Turret.setActive(false);
-				this.form.page2.rbtnGun2Turret.setSelected(false);
-				this.form.page2.rbtnGun3Turret.setActive(false);
-				this.form.page2.rbtnGun3Turret.setSelected(false);
-				this.form.page2.rbtnGun4Turret.setActive(false);
-				this.form.page2.rbtnGun4Turret.setSelected(false);
-				this.form.page2.rbtnGun5Turret.setActive(false);
-				this.form.page2.rbtnGun5Turret.setSelected(false);
-				this.form.page2.rbtnGun6Turret.setActive(false);
-				this.form.page2.rbtnGun6Turret.setSelected(false);
-				this.form.page2.rbtnGun7Turret.setActive(false);
-				this.form.page2.rbtnGun7Turret.setSelected(false);
-				this.form.page2.rbtnGun8Turret.setActive(false);
-				this.form.page2.rbtnGun8Turret.setSelected(false);
-				
-			}
-		}
-		
-		
-		
-		// TODO move page 2		
-		private function hasTurretsChangedHandler(evtObj:MouseEvent):void
-		{
-			if (this.form.page2.rbtnHasTurrets.getIsActive() == true) {
-				this.updateTurretRadioButtons();				
-				this.recalcWeapons();
-				
-				this.calcFreeWeight();
-				this.calcCompleteCost();
-				
-				this.setSaved(false);
-				
-				
-			}
-			
-		}
-		// TODO move to page 2		
-		private function rocketSlotsChangedHandler(evtObj:MouseEvent):void
-		{
-			this.recalcRocketHardpoints();
-			this.recalcWeapons();
-			this.updateFreeWeight();
-			this.calcCompleteCost();
-			this.setSaved(false);
-			
-			
-			
-			
-		}
-		
-		
-// TODO move page 2		
-		private function gunChangedHandler(evtObj:MouseEvent):void
-		{
-			this.recalcWeapons();
-			this.updateFreeWeight();
-			this.calcCompleteCost();
-			this.setSaved(false);
-			
-			
-			
-			
-		}
-*/		
 		
 	
 	}
