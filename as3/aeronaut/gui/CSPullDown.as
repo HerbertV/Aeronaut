@@ -525,7 +525,12 @@ package as3.aeronaut.gui
 				return;
 				
 			this.isOpen = !this.isOpen;
-			this.switchPullDownList();	
+			this.switchPullDownList();
+			
+			this.parent.setChildIndex(
+					this,
+					this.parent.numChildren-1
+				);
 		}
 		
 		/**
