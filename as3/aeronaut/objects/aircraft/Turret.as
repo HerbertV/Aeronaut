@@ -30,9 +30,18 @@ package as3.aeronaut.objects.aircraft
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		
+		//nose
 		public static const DIR_FRONT = "front";
-		public static const DIR_REAR = "rear";
+		//aft
+		public static const DIR_REAR = "rear"; 
+		//left side
+		public static const DIR_REAR = "left"; 
+		//right side
+		public static const DIR_REAR = "right"; 
+		//top
+		public static const DIR_REAR = "dorsal"; 
+		//bottom
+		public static const DIR_REAR = "ventral"; 
 		
 		// =====================================================================
 		// Varianbles

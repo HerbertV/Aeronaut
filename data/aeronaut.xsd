@@ -214,6 +214,24 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="aircraftConfigs">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="frameDefaults" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>to config default values for specific frame type</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="frameType" type="aircraftFrames" use="required"/>
+									<xs:attribute name="minBaseTarget" type="xs:int" use="required"/>
+									<xs:attribute name="maxBaseTarget" type="xs:int" use="required"/>
+									<xs:attribute name="hasWings" type="xs:boolean" use="required"/>
+									<xs:attribute name="hasBows" type="xs:boolean" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="ruleConfigs">
 					<xs:annotation>
 						<xs:documentation>ruleConfigs.ae file some settings can be altered from within the option panel.</xs:documentation>
@@ -630,7 +648,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 															<xs:enumeration value="left"/>
 															<xs:enumeration value="right"/>
 															<xs:enumeration value="dorsal"/>
-															<xs:enumeration value="ventra"/>
+															<xs:enumeration value="ventral"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:attribute>
@@ -666,29 +684,8 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 							</xs:element>
 							<xs:element name="description" type="xs:string" minOccurs="0"/>
 						</xs:sequence>
-						<xs:attribute name="frameType" use="required">
-							<xs:simpleType>
-								<xs:restriction base="xs:string">
-									<xs:enumeration value="fighter"/>
-									<xs:enumeration value="heavyFighter"/>
-									<xs:enumeration value="hoplite"/>
-									<xs:enumeration value="heavyBomber"/>
-									<xs:enumeration value="lightBomber"/>
-									<xs:enumeration value="heavyCargo"/>
-									<xs:enumeration value="lightCargo"/>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:attribute>
-						<xs:attribute name="PropType" use="required">
-							<xs:simpleType>
-								<xs:restriction base="xs:string">
-									<xs:enumeration value="tractor"/>
-									<xs:enumeration value="pusher"/>
-									<xs:enumeration value="double"/>
-									<xs:enumeration value="hoplite"/>
-								</xs:restriction>
-							</xs:simpleType>
-						</xs:attribute>
+						<xs:attribute name="frameType" type="aircraftFrames" use="required"/>
+						<xs:attribute name="PropType" type="aircraftProp" use="required"/>
 						<xs:attribute name="baseTarget" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
@@ -759,6 +756,25 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 	<xs:simpleType name="url">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[a-zA-Z0-9\.]+/*[a-zA-Z0-9/\\%_.]*\?*[a-zA-Z0-9/\\%_.=&amp;]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="aircraftFrames">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fighter"/>
+			<xs:enumeration value="heavyFighter"/>
+			<xs:enumeration value="hoplite"/>
+			<xs:enumeration value="heavyBomber"/>
+			<xs:enumeration value="lightBomber"/>
+			<xs:enumeration value="heavyCargo"/>
+			<xs:enumeration value="lightCargo"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="aircraftProp">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="tractor"/>
+			<xs:enumeration value="pusher"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="hoplite"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
