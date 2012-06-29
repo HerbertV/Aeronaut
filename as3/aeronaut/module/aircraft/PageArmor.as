@@ -24,9 +24,6 @@ package as3.aeronaut.module.aircraft
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.gui.*;
@@ -77,49 +74,37 @@ package as3.aeronaut.module.aircraft
 			this.numStepArmorSS.setupSteps(0, 80, 0, 10);
 			this.numStepArmorTail.setupSteps(0, 80, 0, 10);
 			
-			this.numStepArmorComplete.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			
-			this.numStepArmorNose.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				);  
-			this.numStepArmorPWL.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorPWT.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorPB.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorPS.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorSWL.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorSWT.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorSB.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.numStepArmorComplete.setValueChangedCallback(
 					armorChangedHandler
 				);
-			this.numStepArmorSB.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.numStepArmorNose.setValueChangedCallback(
 					armorChangedHandler
 				);
-			this.numStepArmorTail.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.numStepArmorPWL.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorPWT.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorPB.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorPS.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorSWL.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorSWT.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorSB.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorSS.setValueChangedCallback(
+					armorChangedHandler
+				);
+			this.numStepArmorTail.setValueChangedCallback(
 					armorChangedHandler
 				);
 		}
@@ -144,37 +129,53 @@ package as3.aeronaut.module.aircraft
 			
 			
 			this.numStepArmorPWL.setActive(true);
+			this.numStepArmorPWL.BG_white.alpha = 1.0;
 			this.numStepArmorPWT.setActive(true);
+			this.numStepArmorPWT.BG_white.alpha = 1.0;
 			this.numStepArmorPB.setActive(true);
+			this.numStepArmorPB.BG_white.alpha = 1.0;
 			this.numStepArmorPS.setActive(true);
+			this.numStepArmorPS.BG_white.alpha = 1.0;
 			this.numStepArmorSWL.setActive(true);
+			this.numStepArmorSWL.BG_white.alpha = 1.0;
 			this.numStepArmorSWT.setActive(true);
+			this.numStepArmorSWT.BG_white.alpha = 1.0;
 			this.numStepArmorSB.setActive(true);
+			this.numStepArmorSB.BG_white.alpha = 1.0;
 			this.numStepArmorSS.setActive(true);
-			
+			this.numStepArmorSS.BG_white.alpha = 1.0;
+				
 			if( frame == "fighter" 
 					|| frame == "heavyFighter"
 					|| frame == "hoplite" )
 			{
 				this.numStepArmorPB.setActive(false);
+				this.numStepArmorPB.BG_white.alpha = 0.3;
 				this.numStepArmorPB.setValue(0);
 				this.numStepArmorPS.setActive(false);
+				this.numStepArmorPS.BG_white.alpha = 0.3;
 				this.numStepArmorPS.setValue(0);
 				this.numStepArmorSB.setActive(false);
+				this.numStepArmorSB.BG_white.alpha = 0.3;
 				this.numStepArmorSB.setValue(0);
 				this.numStepArmorSS.setActive(false);
+				this.numStepArmorSS.BG_white.alpha = 0.3;
 				this.numStepArmorSS.setValue(0);
 			}
 			
 			if( frame == "hoplite" )
 			{
 				this.numStepArmorPWL.setActive(false);
+				this.numStepArmorPWL.BG_white.alpha = 0.3;
 				this.numStepArmorPWL.setValue(0);
 				this.numStepArmorPWT.setActive(false);
+				this.numStepArmorPWT.BG_white.alpha = 0.3;
 				this.numStepArmorPWT.setValue(0);
 				this.numStepArmorSWL.setActive(false);
+				this.numStepArmorSWL.BG_white.alpha = 0.3;
 				this.numStepArmorSWL.setValue(0);
 				this.numStepArmorSWT.setActive(false);
+				this.numStepArmorSWT.BG_white.alpha = 0.3;
 				this.numStepArmorSWT.setValue(0);
 			}
 
@@ -211,51 +212,7 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function dispose():void
 		{
-			this.numStepArmorComplete.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
 			
-			this.numStepArmorNose.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				);  
-			this.numStepArmorPWL.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorPWT.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorPB.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorPS.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorSWL.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorSWT.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				); 
-			this.numStepArmorSB.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				);
-			this.numStepArmorSB.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				);
-			this.numStepArmorTail.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					armorChangedHandler
-				);
 		}
 		
 		/**
@@ -392,9 +349,9 @@ package as3.aeronaut.module.aircraft
 		 * ---------------------------------------------------------------------
 		 * armorChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param e 
+		 * @param o 
 		 */
-		private function armorChangedHandler(e:MouseEvent):void
+		private function armorChangedHandler(e:Object):void
 		{
 			this.recalc();
 			

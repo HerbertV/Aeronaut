@@ -543,6 +543,7 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 						<xs:attribute name="totalXP" type="xs:int" use="required"/>
 						<xs:attribute name="bailOutBonus" type="xs:int" use="required"/>
 						<xs:attribute name="linkedTo" type="xs:string" use="required"/>
+						<xs:attribute name="lostConstitutionEP" type="xs:int" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="aircraft">
