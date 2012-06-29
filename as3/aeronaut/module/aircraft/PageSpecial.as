@@ -539,6 +539,7 @@ package as3.aeronaut.module.aircraft
 			):void
 		{
 			var item:ListItem150 = new ListItem150();
+			item.setStyle(CSStyle.WHITE);
 			item.setupBaseParams(
 					id,
 					name,
