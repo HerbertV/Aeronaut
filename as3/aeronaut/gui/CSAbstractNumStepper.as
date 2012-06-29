@@ -49,11 +49,15 @@ package as3.aeronaut.gui
 		
 		protected var isActive:Boolean = true;
 		
+		protected var isAutoStepActive:Boolean = true;
 		protected var autoStepDelay:int = 5;
 		protected var autoStepDelayCounter:int = 0;
 		
 		protected var isUpArrowPressed:Boolean = false;
 		protected var isDownArrowPressed:Boolean = false;
+		
+		protected var callbackFunction:Function = null;
+		protected var callbackObject:Object = null;
 		
 		// =====================================================================
 		// Constructor
@@ -253,6 +257,41 @@ package as3.aeronaut.gui
 			throw new Error("Abstract function needs override!");
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setValueChangedCallback
+		 * ---------------------------------------------------------------------
+		 * is called every time the value changed. 
+		 * Called only if stepper is active.
+		 * Called by clicks and EnterFrame Event (if auto stepper is active)
+		 *
+		 * function myFunc(o:Object):void
+		 *
+		 * @param f
+		 * @param o (optional)
+		 */
+		public function setValueChangedCallback(
+				f:Function,
+				o:Object=null
+			):void
+		{
+			this.callbackFunction = f;
+			this.callbackObject = o;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setAutoStepActive
+		 * ---------------------------------------------------------------------
+		 * if active the value autmaticly changes when a stepper button
+		 * is hold down.
+		 *
+		 * @param active
+		 */
+		public function setAutoStepActive(active:Boolean):void
+		{
+			this.isAutoStepActive = active;
+		}
 		
 		// =====================================================================
 		// Event Handler
@@ -268,6 +307,9 @@ package as3.aeronaut.gui
 		 */
 		protected function enterFrameHandler(e:Event):void
 		{
+			if( !this.isAutoStepActive )
+				return;
+				
 			// nothing pressed
 			if( !this.isUpArrowPressed 
 					&& !this.isDownArrowPressed )
@@ -288,6 +330,8 @@ package as3.aeronaut.gui
 				{
 					this.stepUp();
 					this.updateTextField();
+					if( callbackFunction != null )
+						this.callbackFunction(callbackObject);
 				} else {
 					this.isUpArrowPressed = false;
 				}
@@ -299,6 +343,8 @@ package as3.aeronaut.gui
 				{
 					this.stepDown();
 					this.updateTextField();
+					if( callbackFunction != null )
+						this.callbackFunction(callbackObject);
 				} else {
 					this.isDownArrowPressed = false;
 				}
@@ -323,7 +369,9 @@ package as3.aeronaut.gui
 			
 			this.stepUp();
 			this.updateTextField();
-			
+			if( callbackFunction != null )
+				this.callbackFunction(callbackObject);
+						
 			this.isUpArrowPressed = true;
 			this.autoStepDelayCounter = 0;
 			
@@ -359,6 +407,8 @@ package as3.aeronaut.gui
 			
 			this.stepDown();
 			this.updateTextField();
+			if( callbackFunction != null )
+				this.callbackFunction(callbackObject);
 			
 			this.isDownArrowPressed = true;
 			this.autoStepDelayCounter = 0;
