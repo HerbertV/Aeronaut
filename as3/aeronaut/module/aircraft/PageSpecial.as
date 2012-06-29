@@ -484,7 +484,7 @@ package as3.aeronaut.module.aircraft
 			this.winAircraft.form.lblCostAdditional.text = 
 					CSFormatter.formatDollar(this.intAdditionalCost);
 			this.lblAdditionalWeight.text = 
-					CSFormatter.formatDollar(this.intAdditionalWeight);
+					CSFormatter.formatLbs(this.intAdditionalWeight);
 			this.lblAirframeCostMod.text = String(fAirframeMod);
 			this.lblCockpitCostMod.text = String(fCockpitMod);
 			this.lblEngineCostMod.text = String(fEngineMod);

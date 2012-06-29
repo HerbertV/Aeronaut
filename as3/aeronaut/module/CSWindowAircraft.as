@@ -235,20 +235,20 @@ package as3.aeronaut.module
 			rbgProp.addMember(this.form.rbtnPropHoplite,"hoplite");
 			rbgProp.addMember(this.form.rbtnPropDouble,"double");
 			
-			this.form.numStepBaseTarget.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.form.numStepBaseTarget.setAutoStepActive(false);
+			this.form.numStepBaseTarget.setValueChangedCallback(
 					baseTargetChangedHandler
 				);
-			this.form.numStepSpeed.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.form.numStepSpeed.setAutoStepActive(false);
+			this.form.numStepSpeed.setValueChangedCallback(
 					maxSpeedChangedHandler
 				); 
-			this.form.numStepGs.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.form.numStepGs.setAutoStepActive(false);
+			this.form.numStepGs.setValueChangedCallback(
 					maxGChangedHandler
 				); 
-			this.form.numStepAccel.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.form.numStepAccel.setAutoStepActive(false);
+			this.form.numStepAccel.setValueChangedCallback(
 					maxAccelChangedHandler
 				); 
 			
@@ -287,23 +287,6 @@ package as3.aeronaut.module
 		 */
 		override public function dispose():void
 		{
-			this.form.numStepBaseTarget.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					baseTargetChangedHandler
-				);
-			this.form.numStepSpeed.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					maxSpeedChangedHandler
-				); 
-			this.form.numStepGs.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					maxGChangedHandler
-				); 
-			this.form.numStepAccel.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					maxAccelChangedHandler
-				); 
-			
 			this.form.page1.dispose();
 			this.form.page2.dispose();
 			this.form.page3.dispose();
@@ -497,7 +480,7 @@ package as3.aeronaut.module
 		{
 			
 //TODO filter loadout list by plane. issue 6
-//TODO  move code into pages
+
 /*
 			var i:int=0;
 			
@@ -510,7 +493,7 @@ package as3.aeronaut.module
 				this.form.page2.pdLoadout.addSelectionItem(arrFLLoadout[i].viewname,arrFLLoadout[i].filename); 
 				
 			}
-			
+//TODO  move code into page 4			
 			// PILOT und GUNNNER
 			this.form.page1.pdPilot.clearSelectionItemList();
 			this.form.page1.pdGunner.clearSelectionItemList();
@@ -932,6 +915,13 @@ package as3.aeronaut.module
 					+ this.intEngineCost 
 					+ this.intAirframeCost 
 					+ this.intCockpitCost;
+			
+			// update Labels
+			this.form.lblCostWeapon.text = CSFormatter.formatDollar(
+					this.form.page2.getHardpointCost()
+						+ this.form.page2.getWeaponCost()
+				);
+				
 			this.form.lblCostComplete.text = CSFormatter.formatDollar(compCost);
 		}
 				
@@ -1056,13 +1046,10 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * baseTargetChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param e
+		 * @param o
 		 */
-		private function baseTargetChangedHandler(e:MouseEvent):void
+		private function baseTargetChangedHandler(o:Object):void
 		{
-			if( !this.form.numStepBaseTarget.getIsActive() )
-				return;
-			
 			// for free sc
 			this.form.page1.init(this);
 			// for rocket Hardpoints
@@ -1082,13 +1069,10 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * maxSpeedChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param e
+		 * @param o
 		 */
-		private function maxSpeedChangedHandler(e:MouseEvent):void
+		private function maxSpeedChangedHandler(o:Object):void
 		{
-			if( !this.form.numStepSpeed.getIsActive() ) 
-				return;
-			
 			this.calcMaxSpeedWeight();
 			this.calcFreeWeight();
 			this.calcCompleteCost();
@@ -1099,13 +1083,10 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * maxGChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param e
+		 * @param o
 		 */
-		private function maxGChangedHandler(e:MouseEvent):void
+		private function maxGChangedHandler(o:Object):void
 		{
-			if( !this.form.numStepGs.getIsActive() )
-				return;
-				
 			this.calcMaxGWeight();
 			this.calcFreeWeight();
 			this.calcCompleteCost();
@@ -1116,13 +1097,10 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * maxAccelChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param e
+		 * @param o
 		 */
-		private function maxAccelChangedHandler(e:MouseEvent):void
+		private function maxAccelChangedHandler(o:Object):void
 		{
-			if( !this.form.numStepAccel.getIsActive() ) 
-				return;
-				
 			this.calcMaxAccelWeight();
 			this.calcFreeWeight();
 			this.calcCompleteCost();
@@ -1133,7 +1111,7 @@ package as3.aeronaut.module
 	
 		private function initEventHandler() 
 		{
-			// braucht man doch net ?? 
+			// do we need this
 			//this.numStepEngine.addEventListener(MouseEvent.MOUSE_DOWN, engineCountChangedHandler); 
 		}
 		
@@ -1162,217 +1140,10 @@ package as3.aeronaut.module
 		
 			this.myObject.setCrewCount(this.form.page1.numStepCrew.getValue());
 			
-			this.myObject.setRocketSlotCount(this.form.page2.numStepRocketSlots.getValue());
-			
-			
-			// GUN 1
-			this.updateObjectsGunpointFromWindow(1, this.form.page2.pdGun1.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun1Ammo, this.form.page2.numStepGun1Fire, this.form.page2.rbtnGun1Turret);
-			
-			// GUN 2
-			this.updateObjectsGunpointFromWindow(2, this.form.page2.pdGun2.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun2Ammo, this.form.page2.numStepGun2Fire, this.form.page2.rbtnGun2Turret);
-			
-			// GUN 3
-			this.updateObjectsGunpointFromWindow(3, this.form.page2.pdGun3.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun3Ammo, this.form.page2.numStepGun3Fire, this.form.page2.rbtnGun3Turret);
-			
-			// GUN 4
-			this.updateObjectsGunpointFromWindow(4, this.form.page2.pdGun4.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun4Ammo, this.form.page2.numStepGun4Fire, this.form.page2.rbtnGun4Turret);
-			
-			// GUN 5
-			this.updateObjectsGunpointFromWindow(5, this.form.page2.pdGun5.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun5Ammo, this.form.page2.numStepGun5Fire, this.form.page2.rbtnGun5Turret);
-			
-			// GUN 6
-			this.updateObjectsGunpointFromWindow(6, this.form.page2.pdGun6.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun6Ammo, this.form.page2.numStepGun6Fire, this.form.page2.rbtnGun6Turret);
-			
-			// GUN 7
-			this.updateObjectsGunpointFromWindow(7, this.form.page2.pdGun7.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun7Ammo, this.form.page2.numStepGun7Fire, this.form.page2.rbtnGun7Turret);
-			
-			// GUN 8
-			this.updateObjectsGunpointFromWindow(8, this.form.page2.pdGun8.getIDForCurrentSelection(), 
-							this.form.page2.numStepGun8Ammo, this.form.page2.numStepGun8Fire, this.form.page2.rbtnGun8Turret);
-			
-			//TURRETS
-			var arrTur:Array = new Array();
-			if (this.form.page2.rbtnHasTurrets.getIsSelected() ) {
-				// gibt ja nur eine bis jetzt
-				arrTur.push(new Turret(Turret.DIR_FRONT));
-			}
-			this.myObject.setTurrets(arrTur);
 			
 		}
 */		
 		
-		// -------------------------------------------------
-		// updateObjectsGunpointFromWindow
-		// -------------------------------------------------
-		// wird von updateObjectFromWindow aufgerufen
-//TODO move page2
-		/*
-		private function updateObjectsGunpointFromWindow(gpnum:int, gunid:String,  
-								numSAmmo:CSNumStepperInteger, numSFire:CSNumStepperInteger, rbtnTurret:CSRadioButton)
-		{
-			var gp:Gunpoint = null;
-			
-			if (gunid == CSPullDown.ID_EMPTYSELECTION) {
-				gunid = "";
-			}
-			gp = new Gunpoint(gpnum,gunid);
-			gp.firelinkGroup = numSFire.getValue();
-			gp.ammolinkGroup = numSAmmo.getValue();
-			if (rbtnTurret.getIsSelected()){
-				gp.direction = Gunpoint.DIR_TURRET;
-			} else {
-				gp.direction = Gunpoint.DIR_FORWARD;
-			}
-			this.myObject.setGunpoint(gp);
-		}
-		*/
 		
-		
-		// -----------------------------------------------
-		// updateGUIBySpecialCharacteristics
-		// -----------------------------------------------
-		// hier werden die GUI Elemente die mit einer Special Characteristik verknüpft sind 
-		// ein- bzw angeschalten.
-		private function updateGUIBySpecialCharacteristics()
-		{
-			
-/*			
-			// -----------------------------------------------
-			// Linked Ammo Bins
-			// -----------------------------------------------
-// TODO move this to weapons page			
-			if (arrSC.indexOf(BaseData.HCID_SC_LINKEDAMMO) != -1) {
-				this.form.page2.rbtnGun1AmmoLinked.setActive(true);
-				this.form.page2.rbtnGun2AmmoLinked.setActive(true);
-				this.form.page2.rbtnGun3AmmoLinked.setActive(true);
-				this.form.page2.rbtnGun4AmmoLinked.setActive(true);
-				
-				if (rbgFrame.getValue() != "hoplite") {
-					this.form.page2.rbtnGun5AmmoLinked.setActive(true);
-					this.form.page2.rbtnGun6AmmoLinked.setActive(true);
-					this.form.page2.rbtnGun7AmmoLinked.setActive(true);
-					this.form.page2.rbtnGun8AmmoLinked.setActive(true);
-				}
-			} else  {
-				this.form.page2.rbtnGun1AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun1AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun1Ammo.setActive(false);
-				this.form.page2.numStepGun1Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun2AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun2AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun2Ammo.setActive(false);
-				this.form.page2.numStepGun2Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun3AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun3AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun3Ammo.setActive(false);
-				this.form.page2.numStepGun3Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun4AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun4AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun4Ammo.setActive(false);
-				this.form.page2.numStepGun4Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun5AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun5AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun5Ammo.setActive(false);
-				this.form.page2.numStepGun5Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun6AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun6AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun6Ammo.setActive(false);
-				this.form.page2.numStepGun6Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun7AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun7AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun7Ammo.setActive(false);
-				this.form.page2.numStepGun7Ammo.setValue(0);
-				
-				this.form.page2.rbtnGun8AmmoLinked.setActive(false);
-				this.form.page2.rbtnGun8AmmoLinked.setSelected(false);
-				this.form.page2.numStepGun8Ammo.setActive(false);
-				this.form.page2.numStepGun8Ammo.setValue(0);
-				
-			}
-			
-			// -----------------------------------------------
-			// Fire Linked
-			// -----------------------------------------------
-			if (arrSC.indexOf(BaseData.HCID_SC_LINKEDFIRE) != -1) {
-				this.form.page2.rbtnGun1FireLinked.setActive(true);
-				this.form.page2.rbtnGun2FireLinked.setActive(true);
-				this.form.page2.rbtnGun3FireLinked.setActive(true);
-				this.form.page2.rbtnGun4FireLinked.setActive(true);
-				
-				if (rbgFrame.getValue() != "hoplite") {
-					this.form.page2.rbtnGun5FireLinked.setActive(true);
-					this.form.page2.rbtnGun6FireLinked.setActive(true);
-					this.form.page2.rbtnGun7FireLinked.setActive(true);
-					this.form.page2.rbtnGun8FireLinked.setActive(true);
-				}
-			} else  {
-				this.form.page2.rbtnGun1FireLinked.setActive(false);
-				this.form.page2.rbtnGun1FireLinked.setSelected(false);
-				this.form.page2.numStepGun1Fire.setActive(false);
-				this.form.page2.numStepGun1Fire.setValue(0);
-				
-				this.form.page2.rbtnGun2FireLinked.setActive(false);
-				this.form.page2.rbtnGun2FireLinked.setSelected(false);
-				this.form.page2.numStepGun2Fire.setActive(false);
-				this.form.page2.numStepGun2Fire.setValue(0);
-				
-				this.form.page2.rbtnGun3FireLinked.setActive(false);
-				this.form.page2.rbtnGun3FireLinked.setSelected(false);
-				this.form.page2.numStepGun3Fire.setActive(false);
-				this.form.page2.numStepGun3Fire.setValue(0);
-				
-				this.form.page2.rbtnGun4FireLinked.setActive(false);
-				this.form.page2.rbtnGun4FireLinked.setSelected(false);
-				this.form.page2.numStepGun4Fire.setActive(false);
-				this.form.page2.numStepGun4Fire.setValue(0);
-				
-				this.form.page2.rbtnGun5FireLinked.setActive(false);
-				this.form.page2.rbtnGun5FireLinked.setSelected(false);
-				this.form.page2.numStepGun5Fire.setActive(false);
-				this.form.page2.numStepGun5Fire.setValue(0);
-				
-				this.form.page2.rbtnGun6FireLinked.setActive(false);
-				this.form.page2.rbtnGun6FireLinked.setSelected(false);
-				this.form.page2.numStepGun6Fire.setActive(false);
-				this.form.page2.numStepGun6Fire.setValue(0);
-				
-				this.form.page2.rbtnGun7FireLinked.setActive(false);
-				this.form.page2.rbtnGun7FireLinked.setSelected(false);
-				this.form.page2.numStepGun7Fire.setActive(false);
-				this.form.page2.numStepGun7Fire.setValue(0);
-				
-				this.form.page2.rbtnGun8FireLinked.setActive(false);
-				this.form.page2.rbtnGun8FireLinked.setSelected(false);
-				this.form.page2.numStepGun8Fire.setActive(false);
-				this.form.page2.numStepGun8Fire.setValue(0);
-				
-			}
-			
-			*/
-			
-			// ===========================================================
-			// HIGH Torque wird erst im Print sheet berechnet
-			
-			
-		}
-		
-		
-
-		
-		
-	
 	}
 }
