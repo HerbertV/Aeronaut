@@ -23,7 +23,7 @@ package as3.aeronaut.module.pilot
 {
 	import flash.display.MovieClip;
 	
-	import flash.events.MouseEvent;
+	import as3.aeronaut.Globals;
 	
 	import as3.aeronaut.gui.CSNumStepperInteger;
 	import as3.aeronaut.gui.CSNumStepperQuickDraw;
@@ -58,29 +58,22 @@ package as3.aeronaut.module.pilot
 		{
 			super();
 			
-			
-			this.numStepNT.addEventListener(
-					MouseEvent.MOUSE_DOWN,
+			this.numStepNT.setValueChangedCallback(
 					stepperChangedHandler
 				);
-			this.numStepSS.addEventListener(
-					MouseEvent.MOUSE_DOWN,
+			this.numStepSS.setValueChangedCallback(
 					stepperChangedHandler
 				);
-			this.numStepDE.addEventListener(
-					MouseEvent.MOUSE_DOWN,
+			this.numStepDE.setValueChangedCallback(
 					stepperChangedHandler
 				);
-			this.numStepSH.addEventListener(
-					MouseEvent.MOUSE_DOWN,
+			this.numStepSH.setValueChangedCallback(
 					stepperChangedHandler
 				);
-			this.numStepCO.addEventListener(
-					MouseEvent.MOUSE_DOWN, 
+			this.numStepCO.setValueChangedCallback(
 					stepperChangedHandler
 				);
-			this.numStepQD.addEventListener(
-					MouseEvent.MOUSE_DOWN,
+			this.numStepQD.setValueChangedCallback(
 					stepperChangedHandler
 				);
 		}
@@ -103,33 +96,48 @@ package as3.aeronaut.module.pilot
 			this.winPilot = win;
 			
 			var pilotType:String = this.winPilot.getPilotType();
+			var max:int = 10;
+			
+			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
+				max = 11;
 			
 			if( pilotType == Pilot.TYPE_GUNNER) 
 			{
 // TODO  if linked to is implemented use other pilot stats -1 
-				this.initStatStepper(this.numStepNT, 0, false);
-				this.initStatStepper(this.numStepSS, 0, false);
-				this.initStatStepper(this.numStepDE, 0, false);
-				this.initStatStepper(this.numStepSH, 0, false);
-				this.initStatStepper(this.numStepCO, 0, false);
+				this.numStepNT.setupSteps(0, max, 0, 1);
+				this.numStepNT.setActive(false);
+				this.numStepSS.setupSteps(0, max, 0, 1);
+				this.numStepSS.setActive(false);
+				this.numStepDE.setupSteps(0, max, 0, 1);
+				this.numStepDE.setActive(false);
+				this.numStepSH.setupSteps(0, max, 0, 1);
+				this.numStepSH.setActive(false);
+				this.numStepCO.setupSteps(0, max, 0, 1);
+				this.numStepCO.setActive(false);
 				
-				this.numStepQD.setupSteps(0, 0, 11, 0, 0);
+				this.numStepQD.setupSteps(0, 0, max, 0, 0);
 				this.numStepQD.setActive(false);
 				
 			} else {
 				var obj:Pilot = Pilot(this.winPilot.getObject());
 				
-				this.initStatStepper(this.numStepNT, obj.getNaturalTouch(), true);
-				this.initStatStepper(this.numStepSS, obj.getSixthSense(), true);
-				this.initStatStepper(this.numStepDE, obj.getDeadEye(), true);
-				this.initStatStepper(this.numStepSH, obj.getSteadyHand(), true);
-				this.initStatStepper(this.numStepCO, obj.getConstitution(), true);
+				this.initActiveStatStepper(this.numStepNT, obj.getNaturalTouch(), max);
+				this.initActiveStatStepper(this.numStepSS, obj.getSixthSense(), max);
+				this.initActiveStatStepper(this.numStepDE, obj.getDeadEye(), max);
+				this.initActiveStatStepper(this.numStepSH, obj.getSteadyHand(), max);
+				this.initActiveStatStepper(this.numStepCO, obj.getConstitution(), max);
+				
+				this.numStepNT.setActive(true);
+				this.numStepSS.setActive(true);
+				this.numStepDE.setActive(true);
+				this.numStepSH.setActive(true);
+				this.numStepCO.setActive(true);
 				
 				var arrQD:Array = obj.getQuickDraw();
 				if (arrQD[0] == 0) {
-					this.numStepQD.setupSteps(0,0,11 ,1,arrQD[1]);
+					this.numStepQD.setupSteps(1,0,max ,1,arrQD[1]);
 				} else {
-					this.numStepQD.setupSteps(arrQD[0],arrQD[1],11 ,arrQD[0],arrQD[1]);
+					this.numStepQD.setupSteps(arrQD[0],arrQD[1],max ,arrQD[0],arrQD[1]);
 				}
 				this.numStepQD.setActive(true);
 			}
@@ -143,31 +151,6 @@ package as3.aeronaut.module.pilot
 		public function dispose():void
 		{	
 			this.winPilot = null;
-			
-			this.numStepNT.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					stepperChangedHandler
-				);
-			this.numStepSS.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					stepperChangedHandler
-				);
-			this.numStepDE.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					stepperChangedHandler
-				);
-			this.numStepSH.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					stepperChangedHandler
-				);
-			this.numStepCO.removeEventListener(
-					MouseEvent.MOUSE_DOWN, 
-					stepperChangedHandler
-				);
-			this.numStepQD.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					stepperChangedHandler
-				);
 		}
 		
 		/**
@@ -187,31 +170,62 @@ package as3.aeronaut.module.pilot
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * initStatStepper
+		 * initActiveStatStepper
 		 * ---------------------------------------------------------------------
 		 * 
 		 * @param statStepper
-		 * @param min
-		 * @param active
+		 * @param min 
+		 * @param current 
+		 * @param max 10 or 11
 		 */
-		public function initStatStepper(
+		public function initActiveStatStepper(
 				statStepper:CSNumStepperInteger, 
-				min:uint,
-				active:Boolean
+				current:uint,
+				max:uint
 			):void
 		{
-			var curr:uint = min;
-			if( min == 0 )
+			var min:uint = current;
+			
+			if( current == 0 )
 			{
-				curr = 1;
+				current = 1;
+				min = 1;
 				if( statStepper.name == "numStepCO" )
-					curr = 3;
+				{
+					current = 3;
+					min = 3;
+				}
 			}
+			
 			if( this.winPilot.getPilotType() ==  Pilot.TYPE_NPC )
 				min = 0;
 			
-			statStepper.setupSteps(min,11 ,curr,1);
-			statStepper.setActive(active);
+			statStepper.setupSteps(min, max, current, 1);
+			statStepper.setActive(true);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateCOLost
+		 * ---------------------------------------------------------------------
+		 * 
+		 * @param lost 
+		 */
+		public function updateCOLost(lost:int):void
+		{
+			var obj:Pilot = Pilot(this.winPilot.getObject());
+			var max:int = 10;
+			
+			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
+				max = 11;
+			
+			this.numStepCO.setupSteps(
+					(obj.getConstitution() - lost),
+					max, 
+					(this.numStepCO.getValue() - lost),
+					1
+				);
+				
 		}
 		
 		/**
@@ -238,6 +252,72 @@ package as3.aeronaut.module.pilot
 				);
 				
 			return obj;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * hasElevenStat
+		 * ---------------------------------------------------------------------
+		 * returns true if one stat is 11
+		 *
+		 * @return
+		 */
+		public function hasElevenStat():Boolean
+		{
+			if( this.numStepNT.getValue() > 10 )
+				return true;
+			
+			if( this.numStepSS.getValue() > 10 )
+				return true;
+				
+			if( this.numStepDE.getValue() > 10 )
+				return true;
+				
+			if( this.numStepSH.getValue() > 10 )
+				return true;
+				
+			if( this.numStepCO.getValue() > 10 )
+				return true;
+				
+			if( this.numStepQD.getFullPoints() > 10 )
+				return true;
+			
+			return false;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * hasToMuchElevenStats
+		 * ---------------------------------------------------------------------
+		 * returns true if more than one stat is 11
+		 *
+		 * @return
+		 */
+		public function hasToMuchElevenStats():Boolean
+		{
+			var count:uint = 0;
+			if( this.numStepNT.getValue() > 10 )
+				count++;
+			
+			if( this.numStepSS.getValue() > 10 )
+				count++;
+				
+			if( this.numStepDE.getValue() > 10 )
+				count++;
+				
+			if( this.numStepSH.getValue() > 10 )
+				count++;
+				
+			if( this.numStepCO.getValue() > 10 )
+				count++;
+				
+			if( this.numStepQD.getFullPoints() > 10 )
+				count++;
+			
+			if( count > 1 )
+				return true;
+				
+			return false;
 		}
 		
 		/**
@@ -318,11 +398,8 @@ package as3.aeronaut.module.pilot
 		 * 
 		 * @param e
 		 */
-		private function stepperChangedHandler(e:MouseEvent):void
+		private function stepperChangedHandler(o:Object):void
 		{
-			if( !e.currentTarget.getIsActive() )
-				return;
-			
 			this.calcEP();
 			this.winPilot.calcEP();
 			this.winPilot.validateForm();

@@ -301,7 +301,7 @@ package as3.aeronaut.module.toolbar
 			if( this.rbtn3rdKill.getIsSelected() )
 				kills++;
 			
-			kills += this.numStepAdditionalKills.getCurrentValue();
+			kills += this.numStepAdditionalKills.getValue();
 			
 			// send updates to window
 			this.linkedPilotWindow.updateNewEPAndMissionStuff(

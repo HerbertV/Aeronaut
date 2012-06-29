@@ -31,7 +31,7 @@ package as3.aeronaut.module
 	
 	import as3.hv.core.utils.BitmapHelper;
 	import as3.hv.core.net.ImageLoader;
-		
+	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
 	import as3.aeronaut.CSDialogs;
@@ -339,6 +339,7 @@ package as3.aeronaut.module
 		{
 			this.setValid(true);
 			this.setSaved(true);
+			this.setTextFieldValid(this.form.lblCurrentEP, true);
 			
 			this.myObject = obj;
 			
@@ -462,17 +463,26 @@ package as3.aeronaut.module
 			//Experience
 			intTotalEP += newEP;
 			intCurrentEP += newEP;
-			this.calcEP();
-
-// TODO maybe add a coLost var int StatsBar.
-// possible bug for Wrong EP Calculation			
+			
 			// CO update
-			this.form.myStatsBar.initStatStepper(
-					this.form.myStatsBar.numStepCO, 
-					this.myObject.getConstitution() - coLost, 
-					this.form.myStatsBar.numStepCO.getCurrentValue() - coLost, 
-					true
-				);
+			if( coLost > 0 )
+			{
+				this.form.myStatsBar.updateCOLost( coLost );
+				var co:int = this.myObject.getConstitution()
+				var lostep:int = 0;
+				var from:int = co - coLost;
+				var to:int = co;
+				
+				for( var i:int = from; i < to; i++ ) 
+					lostep += Pilot.STAT_EPMATRIX[i];
+				
+				this.myObject.setLostConstitutionEP(
+						this.myObject.getLostConstitutionEP() 
+							+ lostep 
+					);
+				this.myObject.setConstitution(co-coLost);
+			}
+			this.calcEP();
 			
 			this.intMissionCount = mission;
 			this.intKillCount += kills;
@@ -547,7 +557,7 @@ package as3.aeronaut.module
 			
 			this.myObject = this.form.myStatsBar.updateObjectFromWindow();
 			this.myObject = this.form.myFeatBox.updateObjectFromWindow();
-			this.myObject = this.form.myLanuageBox.updateObjectFromWindow();
+			this.myObject = this.form.myLanguageBox.updateObjectFromWindow();
 			
 			this.myObject.setDescription(
 					this.form.myDescriptionBox.txtDescription.text
@@ -719,6 +729,18 @@ TODO
 				valid = false;
 			
 			this.setTextFieldValid(this.form.lblCurrentEP, valid);
+			
+			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
+			{
+				// the eleven checks
+				if( this.form.myStatsBar.hasElevenStat() 
+						&& !this.form.myFeatBox.hasAceOfAces() )
+					valid = false;
+				
+				if( this.form.myStatsBar.hasToMuchElevenStats() )
+					valid = false;
+			}
+			
 			this.setValid(valid);
 		}
 		
@@ -963,7 +985,7 @@ TODO
 			Globals.myToolbarBottom.updateEPInfosFromPilot(
 					this, 
 					this.intMissionCount, 
-					this.form.numStepCO.getCurrentValue()
+					this.form.myStatsBar.numStepCO.getValue()
 				);
 		}
 		

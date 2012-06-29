@@ -29,6 +29,7 @@ package as3.aeronaut.module.pilot
 	
 	import as3.aeronaut.gui.*;
 	
+	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.pilot.LearnedFeat;
@@ -207,6 +208,26 @@ package as3.aeronaut.module.pilot
 			obj.setLearnedFeats(arrLF);
 			
 			return obj;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * hasAceOfAces
+		 * ---------------------------------------------------------------------
+		 * returns true if pilot has the ace of aces feat
+		 *
+		 * @return
+		 */
+		public function hasAceOfAces():Boolean 
+		{
+			if( !Globals.myRuleConfigs.getIsPilotFeatsActive() )
+				return false;
+				
+			var arrFeatIDs:Array = this.listFeat.getItemIDs();
+			if( arrFeatIDs.indexOf(BaseData.HCID_F_ACEOFACES) > -1 )
+				return true;
+				
+			return false;
 		}
 		
 		/**

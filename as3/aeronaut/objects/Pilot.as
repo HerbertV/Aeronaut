@@ -121,7 +121,7 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<pilot type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_EP_HERO} currentXP={BASE_EP_HERO} bailOutBonus="0" linkedTo="">
+					<pilot type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_EP_HERO} currentXP={BASE_EP_HERO} bailOutBonus="0" linkedTo="" lostConstitutionEP="0">
 						<name>New Pilot</name>
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
 						<country ID=""/>
@@ -376,6 +376,32 @@ package as3.aeronaut.objects
 		{
 			myXML.pilot.@quickDraw = String(val+","+subval);
 		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLostConstitutionEP
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLostConstitutionEP():int 
+		{
+			if ( myXML.pilot.@lostConstitutionEP ==  myXML.pilot.@nonexistingattribute )
+				return 0;
+			
+			return int(myXML.pilot.@lostConstitutionEP);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setLostConstitutionEP
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setLostConstitutionEP(val:int)
+		{
+			myXML.pilot.@lostConstitutionEP = val;
+		}
+		
 		
 		/**
 		 * ---------------------------------------------------------------------

@@ -48,6 +48,8 @@ package as3.aeronaut.objects
 		public static const HCID_SC_HIGHTORQUE:String = "AC_021";
 		public static const HCID_SC_LINKEDFIRE:String = "AC_032";
 		
+		public static const HCID_F_ACEOFACES:String = "F_01";
+		
 		// =====================================================================
 		// Variables
 		// =====================================================================
