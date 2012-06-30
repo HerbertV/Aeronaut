@@ -58,7 +58,7 @@ package as3.aeronaut.gui
 			this.tabEnabled = false;
 			
 			this.addEventListener(MouseEvent.MOUSE_OVER, overHandler);
-			this.addEventListener(MouseEvent.MOUSE_OUT, outHandler);
+			//this.addEventListener(MouseEvent.MOUSE_OUT, outHandler);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, downHandler);
 			this.addEventListener(MouseEvent.MOUSE_UP, upHandler);
 		}
@@ -143,6 +143,9 @@ package as3.aeronaut.gui
 				//showTooltip(delayShow:int=0,delayHide:int=-1)
 				this.myTooltip.showTooltip(2,5);
 			}
+			
+			this.stage.addEventListener(MouseEvent.MOUSE_OUT, outHandler);
+			
 		}
 		
 		/**
@@ -153,11 +156,14 @@ package as3.aeronaut.gui
 		 */
 		protected function outHandler(e:MouseEvent):void
 		{
+			this.isClick = false;
 			this.isRollover = false;
 			this.updateView();
 			
 			if( myTooltip != null ) 
 				this.myTooltip.hide();
+				
+			this.stage.removeEventListener(MouseEvent.MOUSE_OUT, outHandler);	
 		}
 		
 		/**
