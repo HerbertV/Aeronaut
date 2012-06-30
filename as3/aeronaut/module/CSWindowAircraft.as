@@ -395,12 +395,7 @@ package as3.aeronaut.module
 			this.form.numStepLength.setValue(int(arrL[0]),int(arrL[1]));
 			var arrH:Array = this.myObject.getHeight();
 			this.form.numStepHeight.setValue(int(arrH[0]),int(arrH[1]));
-//TODO move to page
-/*			
-			this.form.page4.numStepCrew.setValue(this.myObject.getCrewCount());
-			
-			
-*/			
+	
 			this.calcEngineCost();
 			this.calcAirframeCost();
 			this.calcCockpitCost();
@@ -467,7 +462,8 @@ package as3.aeronaut.module
 			this.myObject = this.form.page1.updateObjectFromWindow();
 			this.myObject = this.form.page2.updateObjectFromWindow();
 			this.myObject = this.form.page3.updateObjectFromWindow();
-//TODO add other pages
+			this.myObject = this.form.page4.updateObjectFromWindow();
+//TODO add page 5
 		}
 		
 		/**
@@ -493,23 +489,9 @@ package as3.aeronaut.module
 				this.form.page2.pdLoadout.addSelectionItem(arrFLLoadout[i].viewname,arrFLLoadout[i].filename); 
 				
 			}
-//TODO  move code into page 4			
-			// PILOT und GUNNNER
-			this.form.page1.pdPilot.clearSelectionItemList();
-			this.form.page1.pdGunner.clearSelectionItemList();
-			this.form.page1.pdPilot.setEmptySelectionText("",true);
-			this.form.page1.pdGunner.setEmptySelectionText("",true);
-			
-			var arrFLPilots:Array = Globals.generateFileList(Globals.PATH_DATA+Globals.PATH_PILOT);
-																																							  
-			for (i=0; i< arrFLPilots.length; i++) {
-				this.form.page1.pdPilot.addSelectionItem(arrFLPilots[i].viewname,arrFLPilots[i].filename); 
-				this.form.page1.pdGunner.addSelectionItem(arrFLPilots[i].viewname,arrFLPilots[i].filename); 
-			}
 */
+			this.form.page4.updateDirLists();
 		}
-		
-		
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -984,32 +966,9 @@ package as3.aeronaut.module
 			this.form.page2.init(this);
 			//armor
 			this.form.page3.init(this);
-// TODO init other pages
-			
-//TODO move to pages
-/*			
-			
-			if (currFrame == "fighter") {
-				this.form.page1.numStepCrew.setupSteps(1,2,1,1);
-				
-				this.form.page1.pdGunner.setActive(false);
-				this.form.page1.pdGunner.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-			
-			} else if (currFrame == "heavyFighter") {
-				this.form.page1.numStepCrew.setupSteps(1,2,2,1);
-				
-				this.form.page1.pdGunner.setActive(true);
-				
-			} else if (currFrame == "hoplite") {
-				this.form.page1.numStepCrew.setupSteps(1,2,1,1);
-				
-				this.form.page1.pdGunner.setActive(false);
-				this.form.page1.pdGunner.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-				
-				
-			}
-			this.calcCockpitCost();
-*/			
+			//crew
+			this.form.page4.init(this);
+// TODO init page 5			
 		}
 		
 		// =====================================================================
@@ -1106,44 +1065,6 @@ package as3.aeronaut.module
 			this.calcCompleteCost();
 			this.setSaved(false);
 		}
-		
-		
 	
-		private function initEventHandler() 
-		{
-			// do we need this
-			//this.numStepEngine.addEventListener(MouseEvent.MOUSE_DOWN, engineCountChangedHandler); 
-		}
-		
-
-		
-/*		
-		// -------------------------------------------------
-		// updateObjectFromWindow
-		// -------------------------------------------------
-		// bevor man speichert und druckt aufrufen
-		// dann wird das XML aktuallisiert
-		public function updateObjectFromWindow():void
-		{
-			
-//TODO move to pages			
-			if (this.form.page1.pdPilot.getIDForCurrentSelection() != CSPullDown.ID_EMPTYSELECTION) {
-				this.myObject.setPilotFile(this.form.page1.pdPilot.getIDForCurrentSelection());
-			} else {
-				this.myObject.setPilotFile("");
-			}
-			if (this.form.page1.pdGunner.getIDForCurrentSelection() != CSPullDown.ID_EMPTYSELECTION) {
-				this.myObject.setGunnerFile(this.form.page1.pdGunner.getIDForCurrentSelection());
-			} else {
-				this.myObject.setGunnerFile("");
-			}
-		
-			this.myObject.setCrewCount(this.form.page1.numStepCrew.getValue());
-			
-			
-		}
-*/		
-		
-		
 	}
 }
