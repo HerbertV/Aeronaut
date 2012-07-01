@@ -31,6 +31,10 @@ package as3.aeronaut.gui
 	import fl.transitions.TweenEvent;
  	import fl.transitions.easing.*;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+	
 	// =========================================================================
 	// CSPullDown
 	// =========================================================================
@@ -42,7 +46,7 @@ package as3.aeronaut.gui
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const POS0_CONTAINER:int = 32;
+		public static const POS0_CONTAINER:int = 2; //32;
 		public static const ID_EMPTYSELECTION:String = "!THISISEMPTY!";
 		
 		// =====================================================================
@@ -78,11 +82,8 @@ package as3.aeronaut.gui
 		{
 			super();
 			
-			//this.BG_black.visible = false;
 			this.BG_white.visible = false;
 			this.frame_white.visible = false;
-			//this.frame_black.visible = false;
-			
 			this.txtValue.text = "";
 			this.switchPullDownList();
 			
@@ -94,25 +95,23 @@ package as3.aeronaut.gui
 					MouseEvent.MOUSE_WHEEL, 
 					onMouseWheelEvent
 				);
-			
 			this.btnOpen.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					openPullDownHandler
 				);
-			
-			this.sbtnTop.addEventListener(
+			this.maskedList.sbtnTop.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					scrollTopHandler
 				);
-			this.sbtnOneUp.addEventListener(
+			this.maskedList.sbtnOneUp.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					scrollOneUpHandler
 				);
-			this.sbtnOneDown.addEventListener(
+			this.maskedList.sbtnOneDown.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					scrollOneDownHandler
 				);
-			this.sbtnBottom.addEventListener(
+			this.maskedList.sbtnBottom.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					scrollBottomHandler
 				);
@@ -135,7 +134,7 @@ package as3.aeronaut.gui
 					+ ", selectionItems="
 					+ selectionItems.length
 					+ ", containerItems=" 
-					+ containerItems.numChildren;
+					+ maskedList.containerItems.numChildren;
 			
 			for( var i:int=0; i<selectionIDs.length; i++) 
 				str += "\n - "+ selectionIDs[i];
@@ -152,13 +151,14 @@ package as3.aeronaut.gui
 		public function setStyle(s:int):void 
 		{
 			this.myStyle = s;
+			
 			this.updateView();
 			
 			this.btnOpen.setStyle(s);
-			this.sbtnTop.setStyle(s);
-			this.sbtnOneUp.setStyle(s);
-			this.sbtnOneDown.setStyle(s);
-			this.sbtnBottom.setStyle(s);
+			this.maskedList.sbtnTop.setStyle(s);
+			this.maskedList.sbtnOneUp.setStyle(s);
+			this.maskedList.sbtnOneDown.setStyle(s);
+			this.maskedList.sbtnBottom.setStyle(s);
 			
 			for( var i:uint = 0; i< this.selectionItems.length; i++ )
 				selectionItems[i].setStyle(s);
@@ -199,6 +199,7 @@ package as3.aeronaut.gui
 				id:String
 			):void
 		{
+
 			var newitem:CSPullDownSelectionItem = new CSPullDownSelectionItem();
 			
 			newitem.setStyle(this.myStyle);
@@ -212,7 +213,7 @@ package as3.aeronaut.gui
 					clickItemHandler
 				);
 			
-			this.containerItems.addChild(newitem);
+			this.maskedList.containerItems.addChild(newitem);
 			this.selectionItems.push(newitem);
 			this.selectionIDs.push(id);
 			
@@ -240,8 +241,8 @@ package as3.aeronaut.gui
 			this.selectionItems = new Array();
 			this.selectionIDs = new Array();
 			
-			while( this.containerItems.numChildren > 0 )
-				this.containerItems.removeChildAt(0);
+			while( this.maskedList.containerItems.numChildren > 0 )
+				this.maskedList.containerItems.removeChildAt(0);
 		}
 		
 		/**
@@ -332,10 +333,13 @@ package as3.aeronaut.gui
 		 */
 		public function updateView():void
 		{
+			
 			this.BG_black.visible = false;
 			this.BG_white.visible = false;
 			this.frame_white.visible = false;
 			this.frame_black.visible = false;
+			this.maskedList.BG_open_white.visible = false;
+			this.maskedList.BG_open_black.visible = false;
 			
 			this.frame_black.alpha = 1.0;
 			this.frame_white.alpha = 1.0;
@@ -344,7 +348,8 @@ package as3.aeronaut.gui
 			{
 				this.BG_black.visible = true;
 				this.frame_black.visible = true;
-				
+				this.maskedList.BG_open_black.visible = true;
+			
 				if( !this.isActive ) 
 				{
 					this.txtValue.textColor = 0xB1B1B1;
@@ -358,6 +363,7 @@ package as3.aeronaut.gui
 			{
 				this.BG_white.visible = true;
 				this.frame_white.visible = true;
+				this.maskedList.BG_open_white.visible = true;
 			
 				if ( !this.isActive )
 				{
@@ -377,35 +383,17 @@ package as3.aeronaut.gui
 		 */
 		private function switchPullDownList()
 		{
-			this.BG_open_white.visible = false;
-			this.BG_open_black.visible = false;
-			this.sbtnTop.visible = false;
-			this.sbtnOneUp.visible = false;
-			this.sbtnOneDown.visible = false;
-			this.sbtnBottom.visible = false;
-			
-			this.containerItems.visible = false;
-			
+			this.maskedList.visible = false;
+				
 			if( this.isOpen ) 
 			{
-				this.sbtnTop.visible = true;
-				this.sbtnOneUp.visible = true;
-				this.sbtnOneDown.visible = true;
-				this.sbtnBottom.visible = true;
-				this.containerItems.visible = true;
-				
-				if( this.myStyle == CSStyle.BLACK )
-				{
-					this.BG_open_black.visible = true;
-				} else if( this.myStyle == CSStyle.WHITE ) {
-					this.BG_open_white.visible = true;
-				}
+				this.maskedList.visible = true;
 				this.updateScrollButtons();
 				this.resizeSelectionMask();
 				
-			} else if (this.myContainerTween != null) {
+			} else if( this.myContainerTween != null ) {
 				this.myContainerTween.stop();
-				this.containerItems.y = POS0_CONTAINER;
+				this.maskedList.containerItems.y = POS0_CONTAINER;
 				this.targetPosContainer = POS0_CONTAINER;
 			}
 		}
@@ -417,6 +405,7 @@ package as3.aeronaut.gui
 		 */
 		private function resizeSelectionMask()
 		{
+			
 			var currHeight:int = 0;
 			var offset:int = 1;
 			
@@ -426,20 +415,24 @@ package as3.aeronaut.gui
 			} else {
 				currHeight = this.maxVisibleItems * itemHeight + offset;
 			}
-			
-			this.BG_open_white.height = currHeight;
-			this.BG_open_black.height = currHeight;
+			this.maskedList.BG_open_white.height = currHeight;
+			this.maskedList.BG_open_black.height = currHeight;
 			this.contVisibleHeight = currHeight;
-			this.myMask.height = currHeight +2;
-			this.sbtnBottom.y = 32 + currHeight - this.sbtnBottom.height;
-			this.sbtnOneDown.y = this.sbtnBottom.y - 30;
+			this.maskedList.myMask.height = currHeight - 1;
+			this.maskedList.sbtnBottom.y = currHeight - this.maskedList.sbtnBottom.height;
+			this.maskedList.sbtnOneDown.y = this.maskedList.sbtnBottom.y - 30;
 			
 			if( currHeight < 120 ) 
 			{
-				this.sbtnTop.visible = false;
-				this.sbtnOneUp.visible = false;
-				this.sbtnOneDown.visible = false;
-				this.sbtnBottom.visible = false;
+				this.maskedList.sbtnTop.visible = false;
+				this.maskedList.sbtnOneUp.visible = false;
+				this.maskedList.sbtnOneDown.visible = false;
+				this.maskedList.sbtnBottom.visible = false;
+			} else {
+				this.maskedList.sbtnTop.visible = true;
+				this.maskedList.sbtnOneUp.visible = true;
+				this.maskedList.sbtnOneDown.visible = true;
+				this.maskedList.sbtnBottom.visible = true;
 			}
 		}
 		
@@ -451,25 +444,25 @@ package as3.aeronaut.gui
 		private function updateScrollButtons()
 		{
 			var maxPos:int = POS0_CONTAINER 
-					- this.containerItems.height 
+					- this.maskedList.containerItems.height 
 					+ this.contVisibleHeight;
 				
 			if( this.targetPosContainer >= POS0_CONTAINER ) 
 			{
-				this.sbtnTop.setActive(false);
-				this.sbtnOneUp.setActive(false);
+				this.maskedList.sbtnTop.setActive(false);
+				this.maskedList.sbtnOneUp.setActive(false);
 			} else {
-				this.sbtnTop.setActive(true);
-				this.sbtnOneUp.setActive(true);
+				this.maskedList.sbtnTop.setActive(true);
+				this.maskedList.sbtnOneUp.setActive(true);
 			}
 			
 			if( this.targetPosContainer <= maxPos )
 			{
-				this.sbtnOneDown.setActive(false);
-				this.sbtnBottom.setActive(false);
+				this.maskedList.sbtnOneDown.setActive(false);
+				this.maskedList.sbtnBottom.setActive(false);
 			} else {
-				this.sbtnOneDown.setActive(true);
-				this.sbtnBottom.setActive(true);
+				this.maskedList.sbtnOneDown.setActive(true);
+				this.maskedList.sbtnBottom.setActive(true);
 			}
 		}
 		
@@ -491,25 +484,25 @@ package as3.aeronaut.gui
 			
 			if( !this.isOpen )
 				return;
-				
+			
 			var maxPos:int = POS0_CONTAINER 
-					- this.containerItems.height 
+					- this.maskedList.containerItems.height 
 					+ this.contVisibleHeight;
 			
 			// update current position
-			this.containerItems.y += e.delta * scrollWheelSpeed;
+			this.maskedList.containerItems.y += e.delta * scrollWheelSpeed;
 			
 			// limit scrolling
-			if( this.containerItems.y > POS0_CONTAINER 
+			if( this.maskedList.containerItems.y > POS0_CONTAINER 
 					&& e.delta > 0)
-				this.containerItems.y = POS0_CONTAINER;
+				this.maskedList.containerItems.y = POS0_CONTAINER;
 			
-			if( (this.containerItems.y - this.itemHeight ) < maxPos 
+			if( (this.maskedList.containerItems.y - this.itemHeight ) < maxPos 
 					&& e.delta < 0 ) 
-				this.containerItems.y = maxPos;
+				this.maskedList.containerItems.y = maxPos;
 			
 			// update scrollbuttons
-			this.targetPosContainer = this.containerItems.y;
+			this.targetPosContainer = this.maskedList.containerItems.y;
 			this.updateScrollButtons();
 		}
 		
@@ -598,10 +591,10 @@ package as3.aeronaut.gui
 				
 			this.targetPosContainer = POS0_CONTAINER;
 			this.myContainerTween = new Tween(
-					this.containerItems, 
+					this.maskedList.containerItems, 
 					"y", 
 					Regular.easeOut, 
-					this.containerItems.y, 
+					this.maskedList.containerItems.y, 
 					this.targetPosContainer, 
 					1.0, 
 					true
@@ -626,7 +619,6 @@ package as3.aeronaut.gui
 			if( this.myContainerTween != null )
 				this.myContainerTween.stop();
 				
-				
 			if( (this.targetPosContainer + this.itemHeight ) < POS0_CONTAINER )
 			{
 				this.targetPosContainer = this.targetPosContainer + this.itemHeight;
@@ -635,10 +627,10 @@ package as3.aeronaut.gui
 			}
 				
 			this.myContainerTween = new Tween(
-					this.containerItems, 
+					this.maskedList.containerItems, 
 					"y", 
 					None.easeIn, 
-					this.containerItems.y, 
+					this.maskedList.containerItems.y, 
 					this.targetPosContainer, 
 					0.4, 
 					true
@@ -664,7 +656,7 @@ package as3.aeronaut.gui
 				this.myContainerTween.stop();
 				
 			var maxPos:int = POS0_CONTAINER 
-					- this.containerItems.height 
+					- this.maskedList.containerItems.height 
 					+ this.contVisibleHeight;
 			
 			if( (this.targetPosContainer - this.itemHeight ) > maxPos )
@@ -675,10 +667,10 @@ package as3.aeronaut.gui
 			}
 				
 			this.myContainerTween = new Tween(
-					this.containerItems, 
+					this.maskedList.containerItems, 
 					"y", 
 					None.easeIn, 
-					this.containerItems.y, 
+					this.maskedList.containerItems.y, 
 					this.targetPosContainer, 
 					0.4, 
 					true
@@ -704,14 +696,14 @@ package as3.aeronaut.gui
 				this.myContainerTween.stop();
 				
 			this.targetPosContainer = POS0_CONTAINER
-					- this.containerItems.height 
+					- this.maskedList.containerItems.height 
 					+ this.contVisibleHeight;
 					
 			this.myContainerTween = new Tween(
-					this.containerItems, 
+					this.maskedList.containerItems, 
 					"y", 
 					Regular.easeOut, 
-					this.containerItems.y, 
+					this.maskedList.containerItems.y, 
 					this.targetPosContainer, 
 					1.0, 
 					true
