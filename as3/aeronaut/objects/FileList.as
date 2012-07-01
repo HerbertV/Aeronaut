@@ -80,5 +80,66 @@ package as3.aeronaut.objects
 			return arr;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * generateFilteredLoadouts
+		 * ---------------------------------------------------------------------
+		 * generates an array of FileListElements. Filtered for Aircrafts.
+		 *
+		 * @param path 			
+		 * @param filterFile
+		 *
+		 * @returns				array of files
+		 */
+		public static function generateFilteredLoadouts(
+				path:String,
+				filterFile:String
+			):Array
+		{
+			path = mdm.Application.path + path;
+			
+			if( filterFile.lastIndexOf("\\") > -1 )
+			{
+				filterFile = filterFile.substring(
+						(filterFile.lastIndexOf("\\")+1),
+						filterFile.length
+					);
+			}
+			
+			var arr:Array = new Array();
+			var myFiles:Array = mdm.FileSystem.getFileList(
+					path, 
+					"*" + Globals.AE_EXT
+				);
+			
+			for( var i:int=0; i<myFiles.length; i++ ) 
+			{
+				var loadedxml:XML = XMLProcessor.loadXML(path + myFiles[i]);
+				
+				if( loadedxml != null ) 
+				{
+					if( XMLProcessor.checkDoc(loadedxml) ) 
+					{
+						if( loadedxml.loadout.@srcAircraft == filterFile )
+						{
+							var fle:FileListElement = new FileListElement(
+									myFiles[i],
+									loadedxml..name[0]
+								);
+							arr.push(fle);
+						}
+					}
+				}
+			}
+			
+			if( arr.length > 1 ) 
+				arr.sortOn(
+						"viewname",
+						Array.CASEINSENSITIVE
+					);
+			
+			return arr;
+		}
+		
 	}
 }

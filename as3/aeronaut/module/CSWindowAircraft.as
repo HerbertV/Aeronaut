@@ -33,6 +33,7 @@ package as3.aeronaut.module
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
 	
+	import as3.aeronaut.objects.FileList;
 	import as3.aeronaut.objects.Aircraft;	
 	import as3.aeronaut.objects.aircraft.*;
 	import as3.aeronaut.objects.ICSBaseObject;
@@ -276,7 +277,6 @@ package as3.aeronaut.module
 			this.form.numStepLength.setupSteps(10 ,100 ,20, 0);
 			this.form.numStepHeight.setupSteps(5 ,30 ,10, 6);
 //			
-			this.updateDirLists();
 		}
 		
 		/**
@@ -401,6 +401,8 @@ package as3.aeronaut.module
 			this.calcCockpitCost();
 			this.calcFreeWeight();
 			this.calcCompleteCost();
+			
+			this.updateDirLists();
 		}
 		
 		/**
@@ -474,22 +476,27 @@ package as3.aeronaut.module
 		 */
 		public function updateDirLists():void
 		{
+			this.form.pdLoadout.clearSelectionItemList();
+			this.form.pdLoadout.setEmptySelectionText("",true);
 			
-//TODO filter loadout list by plane. issue 6
-
-/*
-			var i:int=0;
-			
-			this.form.page2.pdLoadout.clearSelectionItemList();
-			this.form.page2.pdLoadout.setEmptySelectionText("",true);
-			
-			var arrFLLoadout:Array = Globals.generateFileList(Globals.PATH_DATA+Globals.PATH_LOADOUT);
-																																							  
-			for (i=0; i< arrFLLoadout.length; i++) {
-				this.form.page2.pdLoadout.addSelectionItem(arrFLLoadout[i].viewname,arrFLLoadout[i].filename); 
-				
+			// loadout can only shown if we have a filename
+			if( this.myObject != null )
+			{
+				if( this.myObject.getFilename() != "" )
+				{
+					var arrFLLoadout:Array = FileList.generateFilteredLoadouts(
+							Globals.PATH_DATA + Globals.PATH_LOADOUT,
+							this.getFilename()
+						);
+																																									  
+					for( var i:int=0; i< arrFLLoadout.length; i++ ) 
+						this.form.pdLoadout.addSelectionItem(
+								arrFLLoadout[i].viewname,
+								arrFLLoadout[i].filename
+							);
+				}
 			}
-*/
+			
 			this.form.page4.updateDirLists();
 		}
 		
