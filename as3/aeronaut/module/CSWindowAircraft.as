@@ -58,61 +58,6 @@ package as3.aeronaut.module
 			extends CSWindow 
 			implements ICSWindowAircraft, ICSValidate, IPrintable
 	{
-		// =====================================================================
-		// Constants
-		// =====================================================================
-		public static const MAXSPEED_WEIGHT_MATRIX:Array = new Array(
-				new Array(700,1800,3300,5200,7500), // BTN1
-				new Array(540,1440,2700,4320,6300), // BTN2
-				new Array(400,1120,2160,3520,5200), // BTN3
-				new Array(280,840,1680,2800,4200), // BTN4
-				new Array(180,600,1260,2160,3300), // BTN5
-				new Array(100,400,900,1600,2500), // BTN6
-				new Array(40,240,600,1120,1800), // BTN7
-				new Array(30,120,360,720,1200), // BTN8
-				new Array(20,60,180,400,700), // BTN9
-				new Array(10,25,60,160,300) // BTN10
-			);
-		
-		public static const MAXG_WEIGHT_MATRIX:Array = new Array(
-				new Array(1100,2400,3900,5600,7500), // BTN1
-				new Array(900,1980,3240,4680,6300), // BTN2
-				new Array(720,1600,2640,3840,5200), // BTN3
-				new Array(560,1260,2100,3080,4200), // BTN4
-				new Array(420,960,1620,2400,3300), // BTN5
-				new Array(300,700,1200,1800,2500), // BTN6
-				new Array(200,480,840,1280,1800), // BTN7
-				new Array(120,300,540,840,1200), // BTN8
-				new Array(60,160,300,480,700), // BTN9
-				new Array(20,60,120,200,300) // BTN10
-			);
-		
-		public static const MAXACCEL_WEIGHT_MATRIX:Array = new Array(
-				new Array(1100,1200,1300), // BTN1
-				new Array(900,990,1080), // BTN2
-				new Array(720,800,880), // BTN3
-				new Array(560,630,700), // BTN4
-				new Array(420,480,540), // BTN5
-				new Array(300,350,400), // BTN6
-				new Array(200,240,280), // BTN7
-				new Array(120,150,180), // BTN8
-				new Array(20,50,105), // BTN9
-				new Array(10,20,45) // BTN10
-			);
-		
-		// first val is Loaded Weight and second val is payload
-		public static const BTN_WEIGHT_MATRIX:Array = new Array(
-				new Array(14500,10000), // BTN1
-				new Array(13250,9000), // BTN2
-				new Array(12000,8000), // BTN3
-				new Array(10750,7000), // BTN4
-				new Array(9500,6000), // BTN5
-				new Array(8250,5000), // BTN6
-				new Array(7000,4000), // BTN7
-				new Array(5750,3000), // BTN8
-				new Array(4500,2000), // BTN9
-				new Array(3250,1000) // BTN10
-			);
 		
 		// =====================================================================
 		// Variables
@@ -746,8 +691,8 @@ package as3.aeronaut.module
 		{
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			
-			this.intLoadedWeight = BTN_WEIGHT_MATRIX[currBTN-1][0];
-			this.intPayload = BTN_WEIGHT_MATRIX[currBTN-1][1];
+			this.intLoadedWeight = Aircraft.BTN_WEIGHT_MATRIX[currBTN-1][0];
+			this.intPayload = Aircraft.BTN_WEIGHT_MATRIX[currBTN-1][1];
 			
 			this.form.lblPayload.text = CSFormatter.formatLbs(intPayload);
 			this.form.lblLoadedWeight.text = CSFormatter.formatLbs(intLoadedWeight);
@@ -764,7 +709,7 @@ package as3.aeronaut.module
 		{
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var speed:int = this.form.numStepSpeed.getValue();
-			intMaxSpeedWeight = MAXSPEED_WEIGHT_MATRIX[currBTN-1][speed-1];
+			intMaxSpeedWeight = Aircraft.MAXSPEED_WEIGHT_MATRIX[currBTN-1][speed-1];
 			
 			this.form.lblWeightSpeed.text = CSFormatter.formatLbs(intMaxSpeedWeight);
 			this.form.lblSpeedMPH.text =  (speed * 50 +100) +" mph";
@@ -781,7 +726,7 @@ package as3.aeronaut.module
 		{
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var gs:int = this.form.numStepGs.getValue();
-			intMaxGWeight = MAXG_WEIGHT_MATRIX[currBTN-1][gs-1];
+			intMaxGWeight = Aircraft.MAXG_WEIGHT_MATRIX[currBTN-1][gs-1];
 			
 			this.form.lblWeightGs.text = CSFormatter.formatLbs(intMaxGWeight);
 			
@@ -797,7 +742,7 @@ package as3.aeronaut.module
 		{
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var accel:int = this.form.numStepAccel.getValue();
-			intMaxAccelWeight = MAXACCEL_WEIGHT_MATRIX[currBTN-1][accel-1];
+			intMaxAccelWeight = Aircraft.MAXACCEL_WEIGHT_MATRIX[currBTN-1][accel-1];
 			
 			this.form.lblWeightAccel.text = CSFormatter.formatLbs(intMaxAccelWeight);
 			this.form.lblAccelFPSS.text = (int(10 *accel * 32.8000)/10) +" fps/s";
