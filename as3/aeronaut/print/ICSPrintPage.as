@@ -21,24 +21,29 @@
  */
 package as3.aeronaut.print
 {
-	import as3.aeronaut.objects.Zeppelin;
+	import as3.aeronaut.objects.ICSBaseObject;
 	
 	// =========================================================================
-	// ICSSheetZeppelin
+	// ICSPrintPage
 	// =========================================================================
-	// interface for a Zeppelin sheet
+	// @see CSAbstractPrintPage
+	//
+	// Base interface for all CSAbstractPrintPage's.
+	// Your subclass needs to extend CSAbstractPrintPage and 
+	// implement a sub-interface of ICSPrintPage.
 	// 
-	public interface ICSSheetZeppelin
-			extends ICSSheet
+	public interface ICSPrintPage
 	{
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromZeppelin
+		 * initFromObject
 		 * ---------------------------------------------------------------------
 		 * set the object.
 		 *
 		 * @param obj
 		 */
-		function initFromZeppelin(obj:Zeppelin):void;
+		function initFromObject(obj:ICSBaseObject):void;
+		
+		
 	}
 }

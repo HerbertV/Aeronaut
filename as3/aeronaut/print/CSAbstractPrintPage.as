@@ -21,24 +21,35 @@
  */
 package as3.aeronaut.print
 {
-	import as3.aeronaut.objects.Zeppelin;
+	import flash.display.MovieClip;
+	
 	
 	// =========================================================================
-	// ICSSheetZeppelin
+	// Class CSAbstractPrintPage
 	// =========================================================================
-	// interface for a Zeppelin sheet
-	// 
-	public interface ICSSheetZeppelin
-			extends ICSSheet
+	// Abstract base class for all print pages
+	//
+	public class CSAbstractPrintPage
+			extends MovieClip
 	{
-		/**
-		 * ---------------------------------------------------------------------
-		 * initFromZeppelin
-		 * ---------------------------------------------------------------------
-		 * set the object.
-		 *
-		 * @param obj
-		 */
-		function initFromZeppelin(obj:Zeppelin):void;
+		// =====================================================================
+		// Variables
+		// =====================================================================
+		
+		
+		// =====================================================================
+		// Constructor
+		// =====================================================================
+		public function CSAbstractPrintPage()
+		{
+			super();
+		}
+		
+		// =====================================================================
+		// Functions
+		// =====================================================================
+		
+		
+	
 	}
 }

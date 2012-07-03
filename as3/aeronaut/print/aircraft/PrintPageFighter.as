@@ -19,43 +19,67 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package as3.aeronaut.print
+package as3.aeronaut.print.aircraft
 {
-	import flash.display.MovieClip;
-	
-	import as3.aeronaut.Globals;
-	
-	import as3.hv.core.net.AbstractModule;
+	import as3.aeronaut.print.CSAbstractPrintPage;
+	import as3.aeronaut.print.ICSPrintPageAircraft;
+		
+	import as3.aeronaut.objects.Aircraft;
+	import as3.aeronaut.objects.ICSBaseObject;
 	
 	// =========================================================================
-	// Class CSAbstractSheet
+	// Class PrintPageFighter
 	// =========================================================================
-	// Abstract base class for all document linked print sheets.
-	// extends AbstractModule
+	// Library Symbol linked class for Fighters
 	//
-	public class CSAbstractSheet
-			extends AbstractModule 
+	public class PrintPageFighter
+			extends CSAbstractPrintPage
+			implements ICSPrintPageAircraft
 	{
-	
 		// =====================================================================
 		// Variables
 		// =====================================================================
+		private var myObject:Aircraft;
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function CSAbstractSheet()
+		public function PrintPageFighter()
 		{
 			super();
-			this.moduleVersion = Globals.version;
 		}
 		
 		// =====================================================================
 		// Functions
 		// =====================================================================
 		
-		// TODO
+		/**
+		 * ---------------------------------------------------------------------
+		 * initFromObject
+		 * ---------------------------------------------------------------------
+		 * @see ICSPrintPage
+		 *
+		 * @param obj
+		 */
+		function initFromObject(obj:ICSBaseObject):void
+		{
+			this.initFromAircraft(Aircraft(obj));
+		}
 		
-	
+		/**
+		 * ---------------------------------------------------------------------
+		 * initFromAircraft
+		 * ---------------------------------------------------------------------
+		 * @see ICSPrintPageAircraft
+		 *
+		 * @param obj
+		 */
+		function initFromAircraft(obj:Aircraft):void
+		{
+			this.myObject = obj;
+			
+			//TODO
+		}
+		
 	}
 }

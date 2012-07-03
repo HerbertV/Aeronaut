@@ -21,24 +21,24 @@
  */
 package as3.aeronaut.print
 {
-	import as3.aeronaut.objects.Zeppelin;
+	import as3.aeronaut.objects.Aircraft;
 	
 	// =========================================================================
-	// ICSSheetZeppelin
+	// ICSPrintPageAircraft
 	// =========================================================================
-	// interface for a Zeppelin sheet
+	// interface for an Aircraft page
 	// 
-	public interface ICSSheetZeppelin
-			extends ICSSheet
+	public interface ICSPrintPageAircraft
+			extends ICSPrintPage
 	{
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromZeppelin
+		 * initFromAircraft
 		 * ---------------------------------------------------------------------
 		 * set the object.
 		 *
 		 * @param obj
 		 */
-		function initFromZeppelin(obj:Zeppelin):void;
+		function initFromAircraft(obj:Aircraft):void;
 	}
 }
