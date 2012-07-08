@@ -28,7 +28,7 @@ package as3.aeronaut.print
 	
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.Aircraft;
-	
+	import as3.aeronaut.objects.Pilot;
 	
 	// =========================================================================
 	// Class SheetAircraft
@@ -78,12 +78,20 @@ package as3.aeronaut.print
 		
 		private var myObject:Aircraft;
 		
+		// main pilot which is used for stats and aicraft name 
+		private var pilot:Pilot;
+		
+		// all other Gunners, Co-Pilots etc
+		private var crew:Array;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
 		public function SheetAircraft()
 		{
 			super();
+			
+			crew = new Array();
 		}
 
 		// =====================================================================
@@ -118,22 +126,24 @@ package as3.aeronaut.print
 			var frame:String = obj.getFrameType();
 			var page:ICSPrintPageAircraft;
 			
+			this.loadCrew();
+			
 			if( frame == "fighter" ) 
 			{
 				page = new PageFighter();
-				page.initFromObject(obj);
+				page.initFromAircraft(obj);
 				page.setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyFighter" ) {
 				page = new PageHeavyFighter();
-				page.initFromObject(obj);
+				page.initFromAircraft(obj);
 				page.setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "hoplite" ) {
 				page = new PageFighter();
-				page.initFromObject(obj);
+				page.initFromAircraft(obj);
 				page.setSheet(this);
 				this.pages.push(page);
 				
@@ -166,6 +176,60 @@ package as3.aeronaut.print
 			return true;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * loadCrew
+		 * ---------------------------------------------------------------------
+		 */
+		public function loadCrew():void
+		{
+			if( this.myObject.getPilotFile() != "") 
+			{
+				
+				this.pilot = new Pilot();
+				this.pilot.load(
+						mdm.Application.path 
+							+ Globals.PATH_DATA 
+							+ Globals.PATH_PILOT 
+							+ obj.getPilotFile()
+					);
+				
+// TODO this needs to be changed for bombers				
+				if( this.myObject.getGunnerFile() != "") 
+				{
+					var gunner:Pilot = new Pilot();
+					gunner.load(
+							mdm.Application.path 
+								+ Globals.PATH_DATA
+								+ Globals.PATH_PILOT 
+								+ obj.getGunnerFile()
+						);
+					this.crew.push(gunner);
+				}
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getPilot
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getPilot():Pilot
+		{
+			return this.pilot;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCrew
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getCrew():Array
+		{
+			return this.crew;
+		}
 		
 	}
 }
