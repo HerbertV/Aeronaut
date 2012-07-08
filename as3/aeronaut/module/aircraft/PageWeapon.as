@@ -277,6 +277,7 @@ package as3.aeronaut.module.aircraft
 		public function updateObjectFromWindow():Aircraft
 		{
 			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
+			var gpWithTurrets:Array = new Array();
 			
 			obj.setRocketSlotCount(this.numStepRocketSlots.getValue());
 			
@@ -294,19 +295,44 @@ package as3.aeronaut.module.aircraft
 				if( CSRadioButton(gunrow["rbtnGunNTurret"]).getIsSelected() )
 				{
 					gp.direction = Gunpoint.DIR_TURRET;
+					gpWithTurrets.push(i);
 				} else {
 					gp.direction = Gunpoint.DIR_FORWARD;
 				}
 				obj.setGunpoint(gp);
 			
 			}
-//TODO front/rear turrets
 //TODO bomber turrets
 			//TURRETS
 			var arrTur:Array = new Array();
 			if( this.rbtnHasTurrets.getIsSelected() ) 
 			{
-				arrTur.push(new Turret(Turret.DIR_FRONT));
+				var t:Turret;
+				// front turret
+				if( gpWithTurrets.indexOf(1) > -1 
+						|| gpWithTurrets.indexOf(2) > -1 )
+				{
+					t = new Turret(Turret.DIR_FRONT);
+					if( gpWithTurrets.indexOf(1) > -1 )
+						t.linkedGuns.push(1);
+					if( gpWithTurrets.indexOf(2) > -1 )
+						t.linkedGuns.push(2);
+					
+					arrTur.push(t);
+				}
+//TODO  Adjust this for bombers
+				// rear turret
+				if( gpWithTurrets.indexOf(7) > -1 
+						|| gpWithTurrets.indexOf(8) > -1 )
+				{
+					t = new Turret(Turret.DIR_REAR);
+					if( gpWithTurrets.indexOf(7) > -1 )
+						t.linkedGuns.push(7);
+					if( gpWithTurrets.indexOf(8) > -1 )
+						t.linkedGuns.push(8);
+					
+					arrTur.push(t);
+				}
 			}
 			obj.setTurrets(arrTur);
 			return obj;
