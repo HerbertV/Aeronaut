@@ -30,6 +30,7 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.print.SheetAircraft;
 			
 	import as3.aeronaut.objects.Aircraft;
+	import as3.aeronaut.objects.aircraft.Turret;
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.SpecialCharacteristic;
@@ -106,6 +107,7 @@ package as3.aeronaut.print.aircraft
 			// Frame 
 			this.lblFrameType.text = "Fighter";
 			//Prop
+			var usedProp:String = obj.getPropType();
 			if (usedProp == "tractor") {
 				this.lblPropType.text = "Tractor";
 			} else if (usedProp == "pusher") {
