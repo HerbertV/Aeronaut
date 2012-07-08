@@ -30,6 +30,8 @@ package as3.aeronaut.print
 	import as3.aeronaut.objects.Aircraft;
 	import as3.aeronaut.objects.Pilot;
 	
+	import as3.aeronaut.Globals;
+	
 	// =========================================================================
 	// Class SheetAircraft
 	// =========================================================================
@@ -132,19 +134,19 @@ package as3.aeronaut.print
 			{
 				page = new PageFighter();
 				page.initFromAircraft(obj);
-				page.setSheet(this);
+				CSAbstractPrintPage(page).setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyFighter" ) {
 				page = new PageHeavyFighter();
 				page.initFromAircraft(obj);
-				page.setSheet(this);
+				CSAbstractPrintPage(page).setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "hoplite" ) {
 				page = new PageFighter();
 				page.initFromAircraft(obj);
-				page.setSheet(this);
+				CSAbstractPrintPage(page).setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyBomber" ) {
@@ -187,22 +189,22 @@ package as3.aeronaut.print
 			{
 				
 				this.pilot = new Pilot();
-				this.pilot.load(
+				this.pilot.loadFile(
 						mdm.Application.path 
 							+ Globals.PATH_DATA 
 							+ Globals.PATH_PILOT 
-							+ obj.getPilotFile()
+							+ this.myObject.getPilotFile()
 					);
 				
 // TODO this needs to be changed for bombers				
 				if( this.myObject.getGunnerFile() != "") 
 				{
 					var gunner:Pilot = new Pilot();
-					gunner.load(
+					gunner.loadFile(
 							mdm.Application.path 
 								+ Globals.PATH_DATA
 								+ Globals.PATH_PILOT 
-								+ obj.getGunnerFile()
+								+ this.myObject.getGunnerFile()
 						);
 					this.crew.push(gunner);
 				}

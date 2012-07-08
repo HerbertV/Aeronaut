@@ -12,6 +12,7 @@
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
  * @version: 1.0.0
+
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2012 Herbert Veitengruber 
@@ -19,29 +20,30 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package as3.aeronaut.print
+package as3.aeronaut.print.aircraft
 {
-	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.text.TextField;
 	
+	import as3.aeronaut.objects.Aircraft;
 	
 	// =========================================================================
-	// Class CSAbstractPrintPage
+	// Class SpriteWeapons
 	// =========================================================================
-	// Abstract base class for all print pages
+	// Base classe for Guns, Rockets and Bombs Loadout
 	//
-	public class CSAbstractPrintPage
-			extends MovieClip
+	public class SpriteWeapons
+			extends Sprite
 	{
+	
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		protected var mySheet:CSAbstractSheet;
-		
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function CSAbstractPrintPage()
+		public function SpriteWeapons()
 		{
 			super();
 		}
@@ -52,25 +54,14 @@ package as3.aeronaut.print
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getSheet
+		 * initFromAircraft
 		 * ---------------------------------------------------------------------
-		 * @return
+		 * @param obj
 		 */
-		public function getSheet():CSAbstractSheet
+		public function initFromAircraft(obj:Aircraft):void
 		{
-			return mySheet;
+			throw new Error("SpriteWeapons initFromAircraft is abstract");
 		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * setSheet
-		 * ---------------------------------------------------------------------
-		 * @param s
-		 */
-		public function setSheet(s:CSAbstractSheet):void
-		{
-			this.mySheet = s;
-		}
-			
+				
 	}
 }
