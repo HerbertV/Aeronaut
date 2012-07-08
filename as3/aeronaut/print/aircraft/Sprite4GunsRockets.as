@@ -33,7 +33,7 @@ package as3.aeronaut.print.aircraft
 	// only 4 Guns and Rockets (for e.g. Autogyro)
 	//
 	public class Sprite4GunsRockets
-			extends Sprite
+			extends SpriteWeapons
 	{
 	
 		// =====================================================================

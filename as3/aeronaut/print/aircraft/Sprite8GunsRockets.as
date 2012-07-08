@@ -33,7 +33,7 @@ package as3.aeronaut.print.aircraft
 	// 8 Guns and Rockets (for fighters and heavy fighters)
 	//
 	public class Sprite8GunsRockets
-			extends Sprite
+			extends SpriteWeapons
 	{
 	
 		// =====================================================================
