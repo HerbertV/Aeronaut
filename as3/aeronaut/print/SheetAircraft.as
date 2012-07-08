@@ -24,11 +24,14 @@ package as3.aeronaut.print
 	// MDM ZINC Lib
 	import mdm.*;
 
+	import flash.display.Sprite;
+	
 	import as3.aeronaut.print.aircraft.*;
 	
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.Aircraft;
 	import as3.aeronaut.objects.Pilot;
+	import as3.aeronaut.objects.Squadron;
 	
 	import as3.aeronaut.Globals;
 	
@@ -47,32 +50,22 @@ package as3.aeronaut.print
 		// =====================================================================
 		public static const ARMORLINE_HEIGHT:int = 8;
 		
-		// raster offsets
-// TODO clean this up		
-		public static const OFFSET_X_PWL:Number = 39.0;
-		public static const OFFSET_Y_PWL:Number = 468.5;
+		// armor section with armour row offsets
+		public static const PWL:Object = { id: "pwl", isfront:true, x: 39.0, y: 468.5 };
+		public static const NOSE:Object = { id: "nose", isfront:true, x: 145.0, y: 404.5 };
+		public static const SWL:Object = { id: "swl", isfront:true, x: 250.5, y: 468.5 };
+		public static const PWT:Object = { id: "pwt", isfront:false, x: 39.0, y: 532.0 };
+		public static const TAIL:Object = { id: "tail", isfront:false, x: 145.0, y: 571.5 };
+		public static const TAIL_TURRET:Object = { id: "tt", isfront:false, x: 145.0, y: 587.5 };
+		public static const SWT:Object = { id: "swt", isfront:false, x: 250.5, y: 532.0 };
 		
-		public static const OFFSET_X_NOSE:Number = 145.0;
-		public static const OFFSET_Y_NOSE:Number = 404.5;
+// TODO
+// also we need to adjust the pwl,swl,pwt,swt if it is a large plane
+		public static const PB:Object = { id: "pb", isfront:true, x: 0.0, y: 0 };
+		public static const PS:Object = { id: "ps", isfront:false, x: 0.0, y: 0 };
+		public static const SB:Object = { id: "sb", isfront:true, x: 0.0, y: 0 };
+		public static const SS:Object = { id: "ss", isfront:false, x: 0.0, y: 0 };
 		
-		public static const OFFSET_X_SWL:Number = 250.5;
-
-		public static const OFFSET_Y_SWL:Number = 468.5;
-		
-		public static const OFFSET_X_PWT:Number = 39.0;
-		public static const OFFSET_Y_PWT:Number = 532.0;
-		
-		public static const OFFSET_X_TAIL:Number = 145.0;
-		public static const OFFSET_Y_TAIL:Number = 571.5;
-		
-		public static const OFFSET_X_TAILTURRET:Number = 145.0;
-
-		public static const OFFSET_Y_TAILTURRET:Number = 587.5;
-		
-		public static const OFFSET_X_SWT:Number = 250.5;
-		public static const OFFSET_Y_SWT:Number = 532.0;
-		
-// TODO Bomber wing sections
 		
 		// =====================================================================
 		// Variables
@@ -82,9 +75,11 @@ package as3.aeronaut.print
 		
 		// main pilot which is used for stats and aicraft name 
 		private var pilot:Pilot;
-		
 		// all other Gunners, Co-Pilots etc
 		private var crew:Array;
+		// we use the squadron from the pilot
+		private var squad:Squadron;
+				
 		
 		// =====================================================================
 		// Constructor
@@ -196,6 +191,17 @@ package as3.aeronaut.print
 							+ this.myObject.getPilotFile()
 					);
 				
+				if( this.pilot.getSquadronID() != "" )
+				{
+					this.squad = new Squadron();
+					this.squad.loadFile(
+							mdm.Application.path 
+								+ Globals.PATH_DATA
+								+ Globals.PATH_SQUADRON 
+								+ this.pilot.getSquadronID()
+						);
+				}
+				
 // TODO this needs to be changed for bombers				
 				if( this.myObject.getGunnerFile() != "") 
 				{
@@ -231,6 +237,93 @@ package as3.aeronaut.print
 		public function getCrew():Array
 		{
 			return this.crew;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadron
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getSquadron():Squadron
+		{
+			return this.squad;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * addArmorLines
+		 * ---------------------------------------------------------------------
+		 * @param count
+		 * @param section
+		 * @param target
+		 */
+		public function addArmorLines(
+				count:int, 
+				section:Object,
+				target:Sprite
+			):void 
+		{
+			var lines:int = count/10;
+			var movLine:Sprite = null;
+			var movEnd:Sprite = null;
+			
+			for( var i:int = 0; i < lines; i++ ) 
+			{
+				movLine = new SpriteSingleArmorLine();
+				movLine.x = section.x; 
+				
+				if( section.isFront == true ) 
+				{
+					movLine.y = section.y - ( i * ARMORLINE_HEIGHT );
+				} else {
+					movLine.y = section.y + ( i * ARMORLINE_HEIGHT );
+				}
+				target.addChild(movLine);
+			}
+			
+			// Legend
+			if( section.id == "pwl" )
+			{
+				movEnd = new SpriteLegendPWL();
+				
+			} else if( section.id == "pwt" ) {
+				movEnd = new SpriteLegendPWT();
+				
+			} else if( section.id == "nose" ) {
+				movEnd = new SpriteLegendNose();
+				
+			} else if( section.id == "tail" 
+					|| section.id == "tt" ) {
+				movEnd = new SpriteLegendTail();
+				
+			} else if( section.id == "swl" ) {
+				movEnd = new SpriteLegendSWL();
+				
+			} else if( section.id == "swt" ) {
+				movEnd = new SpriteLegendSWT();
+				
+			} else if( section.id == "pb" ) {
+				movEnd = new SpriteLegendPB();
+				
+			} else if( section.id == "ps" ) {
+				movEnd = new SpriteLegendPS();
+				
+			} else if( section.id == "sb" ) {
+				movEnd = new SpriteLegendSB();
+				
+			} else if( section.id == "ss" ) {
+				movEnd = new SpriteLegendSS();
+			}
+			
+			if( section.isFront == true ) 
+			{
+				movEnd.y = section.y - ((lines-1) * ARMORLINE_HEIGHT);
+			} else {
+				movEnd.y = section.y + (lines * ARMORLINE_HEIGHT);
+			}
+			movEnd.x = section.x;
+			target.addChild(movEnd);
 		}
 		
 	}
