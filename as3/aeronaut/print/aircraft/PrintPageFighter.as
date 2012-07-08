@@ -21,6 +21,10 @@
  */
 package as3.aeronaut.print.aircraft
 {
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
+	import flash.text.TextField;
+	
 	import as3.aeronaut.print.CSAbstractPrintPage;
 	import as3.aeronaut.print.ICSPrintPageAircraft;
 		
@@ -61,7 +65,7 @@ package as3.aeronaut.print.aircraft
 		 *
 		 * @param obj
 		 */
-		function initFromObject(obj:ICSBaseObject):void
+		public function initFromObject(obj:ICSBaseObject):void
 		{
 			this.initFromAircraft(Aircraft(obj));
 		}
@@ -74,7 +78,7 @@ package as3.aeronaut.print.aircraft
 		 *
 		 * @param obj
 		 */
-		function initFromAircraft(obj:Aircraft):void
+		public function initFromAircraft(obj:Aircraft):void
 		{
 			this.myObject = obj;
 			
