@@ -122,16 +122,19 @@ package as3.aeronaut.print
 			{
 				page = new PageFighter();
 				page.initFromObject(obj);
+				page.setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyFighter" ) {
 				page = new PageHeavyFighter();
 				page.initFromObject(obj);
+				page.setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "hoplite" ) {
 				page = new PageFighter();
 				page.initFromObject(obj);
+				page.setSheet(this);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyBomber" ) {
