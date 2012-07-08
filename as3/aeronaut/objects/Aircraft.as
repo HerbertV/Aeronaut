@@ -1082,5 +1082,40 @@ package as3.aeronaut.objects
 			myXML.aircraft.@srcFoto = val;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * calcHighTorqueMods
+		 * ---------------------------------------------------------------------
+		 * @param btn
+		 * @param speed
+		 * @param accel
+		 *
+		 * @param return [0] = left [1] = right
+		 */
+		static public function calcHighTorqueMods(
+				btn:int, 
+				speed:int, 
+				accel:int
+			):Array
+		{
+			var arr:Array = Array[0,0];
+			var engineWeight:int = 
+					Aircraft.MAXSPEED_WEIGHT_MATRIX[btn-1][speed-1];
+			engineWeight += 
+					Aircraft.MAXACCEL_WEIGHT_MATRIX[btn-1][accel-1];
+					
+			var payload:int = Aircraft.BTN_WEIGHT_MATRIX[btn-1][1];
+			// engineWeight >= 0.25 * payload => leftGMod = 1;
+			// engineWeight >= 0.33 * payload => leftGMod = 1 uns rightGmod = -1;
+			if( engineWeight >= int(payload/3) ) 
+			{
+				arr[0] = 1;
+				arr[1] = -1;
+			} else if( engineWeight >= int(payload/4) ) {
+				arr[0] = 1;
+			}
+			return arr;
+		}
+		
 	}
 }
