@@ -21,38 +21,66 @@
  */
 package as3.aeronaut.print
 {
-	import flash.display.MovieClip;
+	// MDM ZINC Lib
+	import mdm.*;
+
+	import as3.aeronaut.print.aircraft.*;
 	
-	import as3.aeronaut.Globals;
+	import as3.aeronaut.objects.ICSBaseObject;
+	import as3.aeronaut.objects.Aircraft;
 	
-	import as3.hv.core.net.AbstractModule;
 	
 	// =========================================================================
-	// Class CSAbstractSheet
+	// Class SheetAircraft
 	// =========================================================================
-	// Abstract base class for all document linked print sheets.
-	// extends AbstractModule
+	// 
 	//
-	public class CSAbstractSheet
-			extends AbstractModule 
+	public class SheetAircraft 
+			extends CSAbstractSheet
+			implements ICSSheetAircraft
 	{
-	
+		
 		// =====================================================================
-		// Variables
+		// Constants
 		// =====================================================================
+		public static const ARMORLINE_HEIGHT:int = 8;
+		
+		// raster offsets
+		public static const OFFSET_X_PWL:Number = 39.0;
+		public static const OFFSET_Y_PWL:Number = 468.5;
+		
+		public static const OFFSET_X_NOSE:Number = 145.0;
+		public static const OFFSET_Y_NOSE:Number = 404.5;
+		
+		public static const OFFSET_X_SWL:Number = 250.5;
+		public static const OFFSET_Y_SWL:Number = 468.5;
+		
+		public static const OFFSET_X_PWT:Number = 39.0;
+		public static const OFFSET_Y_PWT:Number = 532.0;
+		
+		public static const OFFSET_X_TAIL:Number = 145.0;
+		public static const OFFSET_Y_TAIL:Number = 571.5;
+		
+		public static const OFFSET_X_TAILTURRET:Number = 145.0;
+		public static const OFFSET_Y_TAILTURRET:Number = 587.5;
+		
+		public static const OFFSET_X_SWT:Number = 250.5;
+		public static const OFFSET_Y_SWT:Number = 532.0;
+		
+// TODO Bomber wing sections
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function CSAbstractSheet()
+		public function SheetAircraft()
 		{
 			super();
-			this.moduleVersion = Globals.version;
 		}
-		
+
 		// =====================================================================
 		// Functions
 		// =====================================================================
+		
 		
 	}
 }
