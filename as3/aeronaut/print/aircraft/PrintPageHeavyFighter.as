@@ -34,6 +34,8 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.SpecialCharacteristic;
+	import as3.aeronaut.objects.Pilot;
+	import as3.aeronaut.objects.Squadron;
 	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
@@ -129,12 +131,67 @@ package as3.aeronaut.print.aircraft
 					SheetAircraft(this.mySheet).getLoadout() 
 				);
 			
-			// TODO
-			/*
-			this.setupPilot();
-			*/
-			
+			this.initPilot();
 			this.initArmor();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * initPilot
+		 * ---------------------------------------------------------------------
+		 */
+		private function initPilot()
+		{
+			var pilot:Pilot = SheetAircraft(this.mySheet).getPilot();
+			
+			if( pilot == null )
+			{
+				this.lblPilotName.text = "";
+				this.lblSquadName.text = "";
+				this.lblAircraftName.text = "";
+				this.lblNT.htmlText = "";
+				this.lblSS.htmlText = "";
+				this.lblDE.htmlText = "";
+				this.lblSH.htmlText = "";
+				this.lblCO.htmlText = "";
+				this.lblQD.htmlText = "";
+				return;
+			}
+			
+			this.lblAircraftName.text = pilot.getPlanename();
+				
+			this.lblNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
+			this.lblSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
+			this.lblDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
+			this.lblSH.htmlText = "<b>" + pilot.getSteadyHand() + "</b>";
+			this.lblCO.htmlText = "<b>" + pilot.getConstitution() + "</b>";
+				
+			var strQD:String = "<b>"+ pilot.getQuickDraw()[0];
+			if( pilot.getQuickDraw()[1] > 0 ) 
+				strQD = strQD + "." + pilot.getQuickDraw()[1];
+				
+			strQD = strQD + "</b>";
+			this.lblQD.htmlText = strQD;
+			
+			var gunner:Pilot = null;
+			if( SheetAircraft(this.mySheet).getCrew().length > 0 )
+				gunner = Pilot(SheetAircraft(this.mySheet).getCrew()[0]);
+			
+			this.lblPilotName.text = pilot.getName();
+		
+			if( gunner != null ) {
+				this.lblPilotName.appendText("\nCo-pilot: " + gunner.getName());  
+			} else {
+				this.lblPilotName.y = 89;
+			}
+			
+			var squad:Squadron = SheetAircraft(this.mySheet).getSquadron();
+			if( squad != null ) 
+			{
+				this.lblSquadName.text = squad.getName();
+			} else {
+				this.lblSquadName.text = "";
+			}
 		}
 		
 		/**
