@@ -116,12 +116,12 @@ package as3.aeronaut.print.aircraft
 			this.initMaxSpeed();
 			this.initAccel();
 			
+			this.myWeapons.initFromAircraft(obj);
+			
 			// TODO
 			/*
 			this.setupPilot();
-			this.setupWeaponsAndLoadout();
 			*/
-			
 			SheetAircraft(this.mySheet).addArmorLines(
 					obj.getArmorNose(), 
 					SheetAircraft.NOSE,

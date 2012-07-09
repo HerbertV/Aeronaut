@@ -32,6 +32,7 @@ package as3.aeronaut.print
 	import as3.aeronaut.objects.Aircraft;
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.Squadron;
+	import as3.aeronaut.objects.Loadout;
 	
 	import as3.aeronaut.Globals;
 	
@@ -79,7 +80,8 @@ package as3.aeronaut.print
 		private var crew:Array;
 		// we use the squadron from the pilot
 		private var squad:Squadron;
-				
+		// loadout		
+		private var loadout:Loadout;		
 		
 		// =====================================================================
 		// Constructor
@@ -124,6 +126,7 @@ package as3.aeronaut.print
 			var page:ICSPrintPageAircraft;
 			
 			this.loadCrew();
+			this.loadLoadout();
 			
 			if( frame == "fighter" ) 
 			{
@@ -177,8 +180,9 @@ package as3.aeronaut.print
 		 * ---------------------------------------------------------------------
 		 * loadCrew
 		 * ---------------------------------------------------------------------
+		 * loads crew (pilots) and squadfiles.
 		 */
-		public function loadCrew():void
+		private function loadCrew():void
 		{
 			if( this.myObject.getPilotFile() != "") 
 			{
@@ -219,6 +223,25 @@ package as3.aeronaut.print
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * loadLoadout
+		 * ---------------------------------------------------------------------
+		 */
+		private function loadLoadout():void
+		{
+			if( this.myObject.getLoadoutFile() == "" ) 
+				return;
+				
+			this.loadout = new Loadout();
+			this.loadout.loadFile(
+					mdm.Application.path 
+						+ Globals.PATH_DATA 
+						+ Globals.PATH_LOADOUT
+						+ this.myObject.getLoadoutFile()
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * getPilot
 		 * ---------------------------------------------------------------------
 		 * @return
@@ -248,6 +271,17 @@ package as3.aeronaut.print
 		public function getSquadron():Squadron
 		{
 			return this.squad;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLoadout
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLoadout():Loadout
+		{
+			return this.loadout;
 		}
 		
 		/**
