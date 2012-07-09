@@ -134,5 +134,64 @@ package as3.aeronaut.print.aircraft
 					currAmmo.shortName;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setupRocket
+		 * ---------------------------------------------------------------------
+		 * @param slotnum
+		 * @param loadout
+		 */
+		protected function setupRocket(
+				slotnum:uint,
+				loadout:Loadout
+			):void
+		{
+			var arrRL:Array = loadout.getRocketLoadoutsBySlot(slotnum);
+			var lblType:TextField = 
+				TextField(this.getChildByName("lblSlot" + slotnum + "Type"));
+			var lblRange:TextField = 
+				TextField(this.getChildByName("lblSlot" + slotnum + "Range"));
+				
+			if( arrRL.length == 0 ) 
+			{
+				lblType.htmlText = "";
+				lblRange.htmlText = "";
+				return;
+			}
+			
+			// vertical center
+			if( arrRL.length < 3 )
+				lblType.y = lblType.y + 4;
+			
+			var currRocket:Rocket = null;
+			var typeText:String = "";
+			var rangeText:String = "";
+			var maxCharsPerLine:int = 8;
+			var charCounter = 0;
+			
+			for( var i:int = 0; i < arrRL.length; i++ )
+			{
+				currRocket = Globals.myBaseData.getRocket(arrRL[i].rocketID);
+				charCounter += currRocket.shortName.length;
+				if( i==1 || i==3 )
+				{
+					for( var j:int = 0; j < (maxCharsPerLine-charCounter); j++ ) 
+						typeText += " ";
+					
+					rangeText = rangeText + "      ";
+					charCounter = 0;
+					
+				} else if( i==2 ) {
+					typeText = typeText+ "<br/>";
+					rangeText = rangeText + "<br/>";
+				}
+				typeText += currRocket.shortName;
+				rangeText += String(currRocket.range);
+			}
+			
+			lblType.htmlText = "<b>"+typeText+"</b>";
+			lblRange.htmlText = "<b>"+rangeText+"</b>";
+		}
+		
 	}
 }

@@ -69,7 +69,10 @@ package as3.aeronaut.print.aircraft
 					"<b>" + aircraft.getRocketSlotCount() + "</b>";
 			
 			for( var i:int = 1; i < 5; i++ )
+			{
 				this.setupGun(i,aircraft,loadout);
+				this.setupRocket(i,loadout);
+			}
 		}
 				
 	}
