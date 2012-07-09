@@ -26,6 +26,7 @@ package as3.aeronaut.print.aircraft
 	import flash.text.TextField;
 	
 	import as3.aeronaut.objects.Aircraft;
+	import as3.aeronaut.objects.Loadout;
 	
 	// =========================================================================
 	// Class Sprite8GunsRockets
@@ -54,13 +55,21 @@ package as3.aeronaut.print.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromAircraft
+		 * init
 		 * ---------------------------------------------------------------------
-		 * @param obj
+		 * @param aircraft
+		 * @param loadout
 		 */
-		override public function initFromAircraft(obj:Aircraft):void
+		override public function init(
+				aircraft:Aircraft,
+				loadout:Loadout
+			):void
 		{
-			// TODO
+			this.lblHardpoints.htmlText = 
+					"<b>" + aircraft.getRocketSlotCount() + "</b>";
+			
+			for( var i:int = 1; i < 9; i++ )
+				this.setupGun(i,aircraft,loadout);
 		}
 				
 	}

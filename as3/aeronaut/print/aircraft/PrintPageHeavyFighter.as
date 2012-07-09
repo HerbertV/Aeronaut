@@ -124,7 +124,10 @@ package as3.aeronaut.print.aircraft
 			this.initMaxSpeed();
 			this.initAccel();
 			
-			this.myWeapons.initFromAircraft(obj);
+			this.myWeapons.init(
+					obj, 
+					SheetAircraft(this.mySheet).getLoadout() 
+				);
 			
 			// TODO
 			/*

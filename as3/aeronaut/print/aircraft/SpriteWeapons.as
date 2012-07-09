@@ -12,7 +12,6 @@
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
  * @version: 1.0.0
-
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2012 Herbert Veitengruber 
@@ -26,7 +25,15 @@ package as3.aeronaut.print.aircraft
 	import flash.text.TextField;
 	
 	import as3.aeronaut.objects.Aircraft;
+	import as3.aeronaut.objects.aircraft.*;
+	import as3.aeronaut.objects.Loadout;
+	import as3.aeronaut.objects.loadout.*;
+	import as3.aeronaut.objects.baseData.Gun;
+	import as3.aeronaut.objects.baseData.Ammunition;
+	import as3.aeronaut.objects.baseData.Rocket;
 	
+	import as3.aeronaut.Globals;
+		
 	// =========================================================================
 	// Class SpriteWeapons
 	// =========================================================================
@@ -54,14 +61,78 @@ package as3.aeronaut.print.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * initFromAircraft
+		 * init
 		 * ---------------------------------------------------------------------
-		 * @param obj
+		 * @param aircraft
+		 * @param loadout
 		 */
-		public function initFromAircraft(obj:Aircraft):void
+		public function init(
+				aircraft:Aircraft,
+				loadout:Loadout
+			):void
 		{
-			throw new Error("SpriteWeapons initFromAircraft is abstract");
+			throw new Error("SpriteWeapons init is abstract");
 		}
-				
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setupGun
+		 * ---------------------------------------------------------------------
+		 * @param gpnum
+		 * @param aircraft
+		 * @param loadout
+		 */
+		protected function setupGun(
+				gpnum:uint,
+				aircraft:Aircraft,
+				loadout:Loadout
+			):void
+		{
+			var currGP:Gunpoint = aircraft.getGunpoint(gpnum);
+			
+			if( currGP.gunID == "" ) 
+			{
+				TextField(this.getChildByName("lblLinked"+gpnum)).text = "";
+				TextField(this.getChildByName("lblTurret"+gpnum)).text = "";
+				TextField(this.getChildByName("lblCal"+gpnum)).htmlText = "";
+				TextField(this.getChildByName("lblRange"+gpnum)).text = "";
+				TextField(this.getChildByName("lblAmmo"+gpnum)).text = "";
+				return;
+			}
+			
+			var currGun:Gun = Globals.myBaseData.getGun(currGP.gunID);
+			var linkedtext:String = "";
+			
+// TODO changes for bombers			
+			if( currGP.direction == Gunpoint.DIR_TURRET ) 
+				TextField(this.getChildByName("lblTurret"+gpnum)).text = "T";
+			
+			if( currGP.firelinkGroup > 0 )
+				linkedtext = "F"+currGP.firelinkGroup;
+			
+			if( currGP.ammolinkGroup > 0 )
+				linkedtext += " A"+currGP.ammolinkGroup;
+			
+			TextField(this.getChildByName("lblLinked"+gpnum)).text = linkedtext;
+			TextField(this.getChildByName("lblCal"+gpnum)).htmlText = 
+					"<b>" + currGun.shortName + "</b>";
+			TextField(this.getChildByName("lblRange"+gpnum)).text = 
+					String(currGun.range);
+			
+			if( loadout == null 
+					|| loadout.getGunAmmo(gpnum) == null )
+			{
+				TextField(this.getChildByName("lblAmmo"+gpnum)).text = "";
+				return;
+			}
+			
+			var currAmmo:Ammunition = Globals.myBaseData.getAmmunition(
+					loadout.getGunAmmo(gpnum).ammoID
+				);
+			
+			TextField(this.getChildByName("lblAmmo"+gpnum)).text = 
+					currAmmo.shortName;
+		}
+		
 	}
 }
