@@ -43,9 +43,7 @@ package as3.aeronaut.module
 	import as3.aeronaut.module.aircraft.*;
 	
 	import as3.aeronaut.print.IPrintable;
-//TODO
-	//import as3.aeronaut.print.SheetAircraft;
-	//import as3.aeronaut.print.SheetAircraftFlavor;
+	import as3.aeronaut.print.PrintManager;
 	
 	// =========================================================================
 	// CSWindowAircraft
@@ -538,24 +536,14 @@ package as3.aeronaut.module
 		 */
 		public function printMe():void
 		{
-//TODO Legacy code
-/*			
 			this.updateObjectFromWindow();
 			
-			Globals.myCSProgressBar.init("printing ...");
-			var printSheet:SheetAircraft = new SheetAircraft();
-			printSheet.initFromObject(this.myObject);
+			Globals.myPrintManager.addSheet("printAircraft.swf",this.myObject);
+			Globals.myPrintManager.printNow();
 			
-			if (Globals.myRuleConfigs.getIsPrintingAircraftFlavorSheet() == true) {
-				
-				var flavorSheet:SheetAircraftFlavor = printSheet.initFlavorSheet(this.myObject, this.myBlueprintLoader, this.myNoseartLoader);
-				if (flavorSheet != null) {
-					flavorSheet.x = -1000;
-					this.stage.addChild(flavorSheet);
-				}
-			}
+//TODO Legacy code
+/*			
 			
-			Globals.myCSProgressBar.setProgressTo(50);
 			// Erst ausserhlb des sichtbaren bereichs hinzufügen
 			// sonst klappt das drucken nicht
 			// danach wieder removen
@@ -565,13 +553,7 @@ package as3.aeronaut.module
 			this.stage.removeChild(printSheet);
 			printSheet = null;
 			
-			if (flavorSheet != null) {
-				this.stage.removeChild(flavorSheet);
-				flavorSheet = null;
-			}
 			
-			Globals.myCSProgressBar.setProgressTo(100);
-			Globals.myCSProgressBar.visible = false;
 */
 		}
 		

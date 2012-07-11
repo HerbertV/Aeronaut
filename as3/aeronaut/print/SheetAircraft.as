@@ -36,6 +36,10 @@ package as3.aeronaut.print
 	
 	import as3.aeronaut.Globals;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+	
 	// =========================================================================
 	// Class SheetAircraft
 	// =========================================================================
@@ -89,7 +93,6 @@ package as3.aeronaut.print
 		public function SheetAircraft()
 		{
 			super();
-			
 			crew = new Array();
 		}
 
@@ -131,20 +134,20 @@ package as3.aeronaut.print
 			if( frame == "fighter" ) 
 			{
 				page = new PageFighter();
-				page.initFromAircraft(obj);
 				CSAbstractPrintPage(page).setSheet(this);
+				page.initFromAircraft(obj);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyFighter" ) {
 				page = new PageHeavyFighter();
-				page.initFromAircraft(obj);
 				CSAbstractPrintPage(page).setSheet(this);
+				page.initFromAircraft(obj);
 				this.pages.push(page);
 				
 			} else if( frame == "hoplite" ) {
 				page = new PageFighter();
-				page.initFromAircraft(obj);
 				CSAbstractPrintPage(page).setSheet(this);
+				page.initFromAircraft(obj);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyBomber" ) {
@@ -171,8 +174,6 @@ package as3.aeronaut.print
 			if( this.pages.length == 0 )
 				return false;
 				
-			
-			// TODO 
 			return true;
 		}
 		
@@ -352,7 +353,7 @@ package as3.aeronaut.print
 			
 			if( section.isFront == true ) 
 			{
-				movEnd.y = section.y - ((lines-1) * ARMORLINE_HEIGHT);
+				movEnd.y = section.y - ((lines) * ARMORLINE_HEIGHT);
 			} else {
 				movEnd.y = section.y + (lines * ARMORLINE_HEIGHT);
 			}

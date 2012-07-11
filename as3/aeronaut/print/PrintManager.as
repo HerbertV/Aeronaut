@@ -23,6 +23,9 @@ package as3.aeronaut.print
 {
 	import mdm.*;
 	
+	import flash.utils.describeType;
+	import as3.hv.core.utils.StringHelper;
+	
 	import flash.display.Sprite;
 	import flash.display.MovieClip;
 	
@@ -41,8 +44,6 @@ package as3.aeronaut.print
 	
 	import as3.aeronaut.objects.ICSBaseObject;
 	
-	import as3.aeronaut.print.CSAbstractSheet;
-	import as3.aeronaut.print.ICSPrintPage;
 	
 	// =========================================================================
 	// Class PrintManager
@@ -262,7 +263,17 @@ package as3.aeronaut.print
 
 			return true;
 		}
-	
+		
+		// =====================================================================
+		// Event Handler
+		// =====================================================================
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * sheetLoaded
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
 		private function sheetLoaded(e:Event):void
 		{
 			var sheet:ICSSheet = ICSSheet(this.loader.getModule());

@@ -1098,7 +1098,7 @@ package as3.aeronaut.objects
 				accel:int
 			):Array
 		{
-			var arr:Array = Array[0,0];
+			var arr:Array = new Array(int(0),int(0));
 			var engineWeight:int = 
 					Aircraft.MAXSPEED_WEIGHT_MATRIX[btn-1][speed-1];
 			engineWeight += 

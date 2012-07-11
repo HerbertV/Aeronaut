@@ -146,18 +146,20 @@ package as3.aeronaut.print.aircraft
 				loadout:Loadout
 			):void
 		{
-			var arrRL:Array = loadout.getRocketLoadoutsBySlot(slotnum);
 			var lblType:TextField = 
 				TextField(this.getChildByName("lblSlot" + slotnum + "Type"));
 			var lblRange:TextField = 
 				TextField(this.getChildByName("lblSlot" + slotnum + "Range"));
 				
-			if( arrRL.length == 0 ) 
-			{
-				lblType.htmlText = "";
-				lblRange.htmlText = "";
+			lblType.htmlText = "";
+			lblRange.htmlText = "";
+			
+			if( loadout == null ) 
 				return;
-			}
+			
+			var arrRL:Array = loadout.getRocketLoadoutsBySlot(slotnum);
+			if( arrRL.length == 0 )
+				return;
 			
 			// vertical center
 			if( arrRL.length < 3 )

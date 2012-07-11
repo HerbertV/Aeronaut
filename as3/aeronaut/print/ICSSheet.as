@@ -44,15 +44,5 @@ package as3.aeronaut.print
 		 */
 		function initFromObject(obj:ICSBaseObject):void;
 		
-		/**
-		 * ---------------------------------------------------------------------
-		 * isReady
-		 * ---------------------------------------------------------------------
-		 * returns true if the object was fully parsed and 
-		 * all additional data was loaded.
-		 *
-		 * @return
-		 */
-		function isReady():Boolean;
 	}
 }
