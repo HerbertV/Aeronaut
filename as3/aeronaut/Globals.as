@@ -35,6 +35,8 @@ package as3.aeronaut
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.RuleConfigs;
 	
+	import as3.aeronaut.print.PrintManager;
+	
 	// =========================================================================
 	// Class Globals
 	// =========================================================================
@@ -98,7 +100,7 @@ package as3.aeronaut
 		// manager
 		public static var myWindowManager:CSWindowManager = null;
 		public static var myPinupManager:CSPinupManager = null;
-		
+		public static var myPrintManager:PrintManager = null;
 		// objects
 		public static var myBaseData:BaseData = null;
 		public static var myRuleConfigs:RuleConfigs = null;
