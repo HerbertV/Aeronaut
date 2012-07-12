@@ -145,7 +145,7 @@ package as3.aeronaut.print
 				this.pages.push(page);
 				
 			} else if( frame == "hoplite" ) {
-				page = new PageFighter();
+				page = new PageAutogyro();
 				CSAbstractPrintPage(page).setSheet(this);
 				page.initFromAircraft(obj);
 				this.pages.push(page);
