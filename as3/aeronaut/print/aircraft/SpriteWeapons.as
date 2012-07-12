@@ -103,10 +103,14 @@ package as3.aeronaut.print.aircraft
 			var currGun:Gun = Globals.myBaseData.getGun(currGP.gunID);
 			var linkedtext:String = "";
 			
-// TODO changes for bombers			
-			if( currGP.direction == Gunpoint.DIR_TURRET ) 
+
+			if( currGP.direction == Gunpoint.DIR_TURRET )
+			{
+// TODO changes for bombers
 				TextField(this.getChildByName("lblTurret"+gpnum)).text = "T";
-			
+			} else {
+				TextField(this.getChildByName("lblTurret"+gpnum)).text = "";
+			}
 			if( currGP.firelinkGroup > 0 )
 				linkedtext = "F"+currGP.firelinkGroup;
 			

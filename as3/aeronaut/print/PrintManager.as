@@ -240,6 +240,8 @@ package as3.aeronaut.print
 					for each( page in sheet.getPages() )
 					{
 						page.x = -1000;
+						// move page from the container to the stage.
+						// printAsBitmap works only if our page is on stage
 						this.printContainer.stage.addChild(page);
 						try 
 						{
@@ -261,6 +263,7 @@ package as3.aeronaut.print
 				if( pageCount > 0 ) 
 					pj.send();
 					
+				// remove pages	
 				for each( sheet in this.arrSheets )
 					for each( page in sheet.getPages() )
 						this.printContainer.stage.removeChild(page);

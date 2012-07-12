@@ -187,7 +187,6 @@ package as3.aeronaut.print
 		{
 			if( this.myObject.getPilotFile() != "") 
 			{
-				
 				this.pilot = new Pilot();
 				this.pilot.loadFile(
 						mdm.Application.path 
