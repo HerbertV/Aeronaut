@@ -308,7 +308,7 @@ package as3.aeronaut.print
 				movLine = new SpriteSingleArmorLine();
 				movLine.x = section.x; 
 				
-				if( section.isFront == true ) 
+				if( section.isfront == true ) 
 				{
 					movLine.y = section.y - ( i * ARMORLINE_HEIGHT );
 				} else {
@@ -351,9 +351,9 @@ package as3.aeronaut.print
 				movEnd = new SpriteLegendSS();
 			}
 			
-			if( section.isFront == true ) 
+			if( section.isfront == true ) 
 			{
-				movEnd.y = section.y - ((lines) * ARMORLINE_HEIGHT);
+				movEnd.y = section.y - ((lines-1) * ARMORLINE_HEIGHT);
 			} else {
 				movEnd.y = section.y + (lines * ARMORLINE_HEIGHT);
 			}

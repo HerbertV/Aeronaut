@@ -245,7 +245,7 @@ package as3.aeronaut.print.aircraft
 			
 			var arrSC:Array = this.myObject.getSpecialCharacteristics();
 			var specialObj:SpecialCharacteristic = null;
-			var gmods:Array = Array[0,0];
+			var gmods:Array = new Array(int(0),int(0));
 			
 			for( var i:int=0; i< arrSC.length; i++ ) 
 			{
