@@ -58,7 +58,6 @@ package as3.aeronaut.print
 		// static singleton instance 
 		private static var myInstance:PrintManager = new PrintManager();
 		
-		private var pjOptions:PrintJobOptions = null;
 		private var pageRect:Rectangle = null;
 		private var pageCount:uint = 0;
 		
@@ -123,10 +122,6 @@ package as3.aeronaut.print
 			
 			if( rect == null )
 				this.pageRect = new Rectangle(15,15,560,780);
-			
-			var pjOptions = new PrintJobOptions();
-			//is needed for alpha transparency.
-			pjOptions.printAsBitmap = true;
 			
 			if( Console.isConsoleAvailable() )
 			{
@@ -198,6 +193,9 @@ package as3.aeronaut.print
 		private function initPrintJob():Boolean
 		{
 			var pj:PrintJob = new PrintJob();
+			var pjOptions = new PrintJobOptions();
+			//is needed for alpha transparency.
+			pjOptions.printAsBitmap = true;
 			
 			if( pj.start() ) 
 			{ 
@@ -233,11 +231,16 @@ package as3.aeronaut.print
 				}
 				pageRect = new Rectangle(offsetX, offsetY, neededWidth, neededHeight);
 				
+				var sheet:CSAbstractSheet;
+				var page:Sprite;
+				 
 				// add pages to job
-				for each( var sheet:CSAbstractSheet in this.arrSheets )
+				for each( sheet in this.arrSheets )
 				{
-					for each( var page:Sprite in sheet.getPages() )
+					for each( page in sheet.getPages() )
 					{
+						page.x = -1000;
+						this.printContainer.stage.addChild(page);
 						try 
 						{
 							pj.addPage(page,pageRect,pjOptions);
@@ -257,10 +260,16 @@ package as3.aeronaut.print
 				
 				if( pageCount > 0 ) 
 					pj.send();
+					
+				for each( sheet in this.arrSheets )
+					for each( page in sheet.getPages() )
+						this.printContainer.stage.removeChild(page);
 			}
 			
-// TODO remove sheet from this.printContainer		
-
+			this.arrSheets = new Array();
+		 	this.arrSheetFiles = new Array();
+			this.arrObjects = new Array();
+		
 			return true;
 		}
 		
