@@ -36,10 +36,6 @@ package as3.aeronaut.print
 	
 	import as3.aeronaut.Globals;
 	
-	import as3.hv.core.console.Console;
-	import as3.hv.core.console.DebugLevel;
-	
-	
 	// =========================================================================
 	// Class SheetAircraft
 	// =========================================================================
@@ -70,7 +66,6 @@ package as3.aeronaut.print
 		public static const PS:Object = { id: "ps", isfront:false, x: 0.0, y: 0 };
 		public static const SB:Object = { id: "sb", isfront:true, x: 0.0, y: 0 };
 		public static const SS:Object = { id: "ss", isfront:false, x: 0.0, y: 0 };
-		
 		
 		// =====================================================================
 		// Variables
@@ -131,6 +126,7 @@ package as3.aeronaut.print
 			this.loadCrew();
 			this.loadLoadout();
 			
+// TODO also add flavor sheet if it is selected			
 			if( frame == "fighter" ) 
 			{
 				page = new PageFighter();
