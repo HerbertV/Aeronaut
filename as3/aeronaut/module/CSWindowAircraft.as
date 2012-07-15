@@ -540,21 +540,6 @@ package as3.aeronaut.module
 			
 			Globals.myPrintManager.addSheet("printAircraft.swf",this.myObject);
 			Globals.myPrintManager.printNow();
-			
-//TODO Legacy code
-/*			
-			
-			// Erst ausserhlb des sichtbaren bereichs hinzufügen
-			// sonst klappt das drucken nicht
-			// danach wieder removen
-			printSheet.x = -1000;
-			this.stage.addChild(printSheet);
-			printSheet.printNow();
-			this.stage.removeChild(printSheet);
-			printSheet = null;
-			
-			
-*/
 		}
 		
 		/**

@@ -23,6 +23,7 @@ package as3.aeronaut.print.aircraft
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.display.Bitmap;
 	import flash.text.TextField;
 	
 	import as3.aeronaut.print.CSAbstractPrintPage;
@@ -38,6 +39,8 @@ package as3.aeronaut.print.aircraft
 	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
+	
+	import as3.hv.core.utils.BitmapHelper;
 	
 	// =========================================================================
 	// Class PrintPageAutogyro
@@ -191,6 +194,21 @@ package as3.aeronaut.print.aircraft
 			if( squad != null ) 
 			{
 				this.lblSquadName.text = squad.getName();
+				
+				if( SheetAircraft(this.mySheet).getSquadLogo() != null )
+				{
+					var logo:Bitmap = SheetAircraft(this.mySheet).getSquadLogo();
+					logo = BitmapHelper.resizeBitmap(
+							logo, 
+							SheetAircraft.SQUADLOGO_WIDTH, 
+							SheetAircraft.SQUADLOGO_HEIGHT, 
+							false
+						);
+					
+					logo.x -= logo.width/2;
+					logo.y -= logo.height/2;
+					this.containerSquadLogo.addChild(logo);
+				}
 			} else {
 				this.lblSquadName.text = "";
 			}

@@ -25,6 +25,8 @@ package as3.aeronaut.print
 	import mdm.*;
 
 	import flash.display.Sprite;
+	import flash.display.Bitmap;
+	import flash.events.Event;
 	
 	import as3.aeronaut.print.aircraft.*;
 	
@@ -35,6 +37,8 @@ package as3.aeronaut.print
 	import as3.aeronaut.objects.Loadout;
 	
 	import as3.aeronaut.Globals;
+	
+	import as3.hv.core.net.ImageLoader;
 	
 	// =========================================================================
 	// Class SheetAircraft
@@ -49,6 +53,9 @@ package as3.aeronaut.print
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const SQUADLOGO_WIDTH:int = 150;
+		public static const SQUADLOGO_HEIGHT:int = 40;
+	
 		public static const ARMORLINE_HEIGHT:int = 8;
 		
 		// armor section with armour row offsets
@@ -79,8 +86,12 @@ package as3.aeronaut.print
 		private var crew:Array;
 		// we use the squadron from the pilot
 		private var squad:Squadron;
+		private var squadLogo:Bitmap;
+		
 		// loadout		
 		private var loadout:Loadout;		
+		
+		private var loader:ImageLoader;
 		
 		// =====================================================================
 		// Constructor
@@ -120,30 +131,49 @@ package as3.aeronaut.print
 		{
 			this.myObject = obj;
 			
-			var frame:String = obj.getFrameType();
-			var page:ICSPrintPageAircraft;
-			
 			this.loadCrew();
 			this.loadLoadout();
+			
+			if( this.loader != null )
+			{
+				this.loader.addEventListener(
+						Event.COMPLETE, 
+						imageLoadedHandler
+					);
+				this.loader.load();
+			} else {
+				this.initPages();
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * initPages
+		 * ---------------------------------------------------------------------
+		 */
+		private function initPages():void
+		{
+			var frame:String = this.myObject.getFrameType();
+			var page:ICSPrintPageAircraft;
 			
 // TODO also add flavor sheet if it is selected			
 			if( frame == "fighter" ) 
 			{
 				page = new PageFighter();
 				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(obj);
+				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyFighter" ) {
 				page = new PageHeavyFighter();
 				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(obj);
+				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
 			} else if( frame == "hoplite" ) {
 				page = new PageAutogyro();
 				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(obj);
+				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
 			} else if( frame == "heavyBomber" ) {
@@ -169,7 +199,10 @@ package as3.aeronaut.print
 		{
 			if( this.pages.length == 0 )
 				return false;
-				
+			
+			if( this.loader != null )
+				return false;
+			
 			return true;
 		}
 		
@@ -200,7 +233,19 @@ package as3.aeronaut.print
 								+ Globals.PATH_SQUADRON 
 								+ this.pilot.getSquadronID()
 						);
-// TODO Load  Squad Logo
+					
+					if( squad.getSrcLogo() != "" )
+					{
+						var l:ImageLoader = new ImageLoader(
+								mdm.Application.path 
+									+ Globals.PATH_IMAGES
+									+ Globals.PATH_SQUADRON
+									+ squad.getSrcLogo(),
+								"SquadLogoLoader"	
+							);
+						l.addNext(this.loader);
+						this.loader = l;
+					}
 				}
 				
 // TODO this needs to be changed for bombers				
@@ -268,6 +313,20 @@ package as3.aeronaut.print
 		public function getSquadron():Squadron
 		{
 			return this.squad;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadLogo
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getSquadLogo():Bitmap
+		{
+			if( this.squadLogo == null )
+				return null;
+				
+			return new Bitmap(this.squadLogo.bitmapData.clone());
 		}
 		
 		/**
@@ -355,6 +414,42 @@ package as3.aeronaut.print
 			}
 			movEnd.x = section.x;
 			target.addChild(movEnd);
+		}
+		
+		// =====================================================================
+		// Event Handler
+		// =====================================================================
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * imageLoadedHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function imageLoadedHandler(e:Event):void
+		{
+			var current:ImageLoader = ImageLoader(e.currentTarget);
+			var bmp:Bitmap = current.getImage();
+			bmp.smoothing = true;
+
+			if( current.getName() == "SquadLogoLoader" ) {
+				this.squadLogo = bmp;
+			}
+			var nl:ImageLoader = ImageLoader( current.getNext() );
+			current.dispose();
+			this.loader = nl;
+
+			if( this.loader == null )
+			{
+				this.initPages();
+				return;
+			}
+			this.loader.addEventListener(
+					Event.COMPLETE, 
+					imageLoadedHandler
+				);
+			
+			this.loader.load();
 		}
 		
 	}

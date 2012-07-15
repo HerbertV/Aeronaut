@@ -38,7 +38,6 @@ package as3.aeronaut.print
 	
 	import as3.aeronaut.Globals;
 	
-	import as3.hv.core.utils.BitmapHelper;
 	import as3.hv.core.net.ImageLoader;
 	
 	// =========================================================================
@@ -61,7 +60,7 @@ package as3.aeronaut.print
 		public static const FLAG_HEIGHT:int = 50;
 		
 		public static const SQUADLOGO_WIDTH:int = 150;
-		public static const SQUADLOGO_HEIGHT:int = 70;
+		public static const SQUADLOGO_HEIGHT:int = 60;
 	
 		
 		// =====================================================================
