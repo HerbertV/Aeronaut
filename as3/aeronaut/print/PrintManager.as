@@ -27,7 +27,10 @@ package as3.aeronaut.print
 	import flash.display.MovieClip;
 	
 	import flash.geom.Rectangle;
+	
 	import flash.events.Event;
+	import flash.events.IEventDispatcher;
+	import flash.events.EventDispatcher;
 	
 	import flash.printing.*;
 	
@@ -47,12 +50,15 @@ package as3.aeronaut.print
 	// handles the printing que
 	//
 	public class PrintManager
+			implements IEventDispatcher
 	{
 		// =====================================================================
 		// Variables
 		// =====================================================================
 		// static singleton instance 
 		private static var myInstance:PrintManager = new PrintManager();
+		
+		private var dispatcher:EventDispatcher;
 		
 		private var pageRect:Rectangle = null;
 		private var pageCount:uint = 0;
@@ -113,6 +119,8 @@ package as3.aeronaut.print
 				rect:Rectangle=null
 			):void
 		{
+			this.dispatcher = new EventDispatcher(this);
+			
 			this.pageRect = rect;
 			this.printContainer = container;
 			
@@ -173,8 +181,9 @@ package as3.aeronaut.print
 				l.addEventListener(Event.COMPLETE,sheetLoaded);
 				this.loader = l;
 			}
+			if( this.loader != null )
+				this.loader.load();
 			
-			this.loader.load();
 		}
 		
 		/**
@@ -291,14 +300,105 @@ package as3.aeronaut.print
 			
 			this.loader = CSWindowLoader(this.loader.getNext());
 			
-			if( this.loader != null )
-			{
+			if( this.loader != null ) 
 				this.loader.load();
-			} else {
-//TODO start enter frame listener and wait until all sheets are ready
-				this.initPrintJob();
-			}
-			
 		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * waitHandler
+		 * ---------------------------------------------------------------------
+		 * wait until all resources are loaded and all sheets are ready
+		 *
+		 * @param e
+		 */
+		public function waitHandler(e:Event):void
+		{
+			if( this.arrSheets.length == 0 )
+				return;
+			
+			for( var i:int = 0; i < this.arrSheets.length; i++ )
+				if( !this.arrSheets[i].isReady() )
+					return;
+			
+			this.initPrintJob();
+		}
+		
+		// =====================================================================
+		// IEventDispatcher functions
+		// =====================================================================
+		// redirect all to dispatcher
+		//
+		// @see flash.events.IEventDispatcher
+		// @see flash.events.EventDispatcher
+		/**
+		 * ---------------------------------------------------------------------
+		 * addEventListener
+		 * ---------------------------------------------------------------------
+		 */
+		final public function addEventListener(
+				type:String, 
+				listener:Function, 
+				useCapture:Boolean = false, 
+				priority:int = 0, 
+				useWeakReference:Boolean = false
+			):void
+		{
+        	dispatcher.addEventListener(
+					type, 
+					listener, 
+					useCapture, 
+					priority
+				);
+		}
+			   
+		/**
+		 * ---------------------------------------------------------------------
+		 * dispatchEvent
+		 * ---------------------------------------------------------------------
+		 */
+		final public function dispatchEvent(evt:Event):Boolean
+		{
+			return dispatcher.dispatchEvent(evt);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * hasEventListener
+		 * ---------------------------------------------------------------------
+		 */
+		final public function hasEventListener(type:String):Boolean
+		{
+			return dispatcher.hasEventListener(type);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * removeEventListener
+		 * ---------------------------------------------------------------------
+		 */
+		final public function removeEventListener(
+				type:String, 
+				listener:Function, 
+				useCapture:Boolean = false
+			):void
+		{
+			dispatcher.removeEventListener(
+					type, 
+					listener, 
+					useCapture
+				);
+		}
+					   
+		/**
+		 * ---------------------------------------------------------------------
+		 * willTrigger
+		 * ---------------------------------------------------------------------
+		 */
+		final public function willTrigger(type:String):Boolean 
+		{
+			return dispatcher.willTrigger(type);
+		}
+		
 	}
 }

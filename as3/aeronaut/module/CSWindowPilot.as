@@ -692,28 +692,9 @@ package as3.aeronaut.module
 		public function printMe():void 
 		{
 			this.updateObjectFromWindow();
-/*
-TODO
-	this is legacy code
-			Globals.myCSProgressBar.init("printing ...");
-			var printSheet:SheetPilot = new SheetPilot();
-			//printSheet.initFromObject(this.myObject);
 			
-			// Die bilder liegen bereits im loader vor und müssen nur noch übergeben werden.
-			printSheet.initFromObject(this.myObject,myFotoLoader,myFlagLoader,mySquadLogoLoader);
-			
-			Globals.myCSProgressBar.setProgressTo(50);
-			// Erst ausserhalb des sichtbaren bereichs hinzufügen
-			// sonst klappt das drucken nicht
-			// danach wieder removen
-			printSheet.x = -1000;
-			this.stage.addChild(printSheet);
-			printSheet.printNow();
-			this.stage.removeChild(printSheet);
-			printSheet = null;
-			Globals.myCSProgressBar.setProgressTo(100);
-			Globals.myCSProgressBar.visible = false;
-*/
+			Globals.myPrintManager.addSheet("printPilot.swf",this.myObject);
+			Globals.myPrintManager.printNow();
 		}
 		
 		/**

@@ -37,6 +37,9 @@ package as3.aeronaut.print.pilot
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSFormatter;
 	
+	import as3.hv.core.utils.BitmapHelper;
+	
+	
 	// =========================================================================
 	// Class PrintPagePilot
 	// =========================================================================
@@ -93,15 +96,52 @@ package as3.aeronaut.print.pilot
 			if( squad != null )
 			{
 				this.lblSquadName.text = squad.getName();
-// TODO add logo movPrintLogoContainer
+				if( SheetPilot(this.mySheet).getSquadLogo() != null )
+				{
+					var logo:Bitmap = SheetPilot(this.mySheet).getSquadLogo();
+					logo = BitmapHelper.resizeBitmap(
+							logo, 
+							SheetPilot.SQUADLOGO_WIDTH, 
+							SheetPilot.SQUADLOGO_HEIGHT, 
+							false
+						);
+					
+					logo.x -= logo.width/2;
+					logo.y -= logo.height/2;
+					this.movPrintLogoContainer.addChild(logo);
+				}
 			} else {
 				this.lblSquadName.text = "";
 			}
 			
 			this.lblNationality.text = Globals.myBaseData.getCountry(obj.getCountryID()).myName;
-// TODO flag movPrintFlagContainer
-// TODO foto movPrintFotoContainer
-						
+			
+			if( SheetPilot(this.mySheet).getFlag() != null )
+			{
+				var flag:Bitmap = SheetPilot(this.mySheet).getFlag();
+				flag = BitmapHelper.resizeBitmap(
+						flag, 
+						SheetPilot.FLAG_WIDTH, 
+						SheetPilot.FLAG_HEIGHT, 
+						false
+					);
+				flag.x -= flag.width/2;
+				flag.y -= flag.height/2;
+				this.movPrintFlagContainer.addChild(flag);
+			}
+			
+			if( SheetPilot(this.mySheet).getFoto() != null )
+			{
+				var foto:Bitmap = SheetPilot(this.mySheet).getFoto();
+				foto = BitmapHelper.resizeBitmap(
+						foto, 
+						SheetPilot.FOTO_WIDTH, 
+						SheetPilot.FOTO_HEIGHT, 
+						true
+					);
+				this.movPrintFotoContainer.addChild(foto);
+			}
+				
 			if( obj.getType() != Pilot.TYPE_GUNNER ) 
 			{
 				this.lblNT.htmlText = "<b>"+obj.getNaturalTouch()+"</b>";

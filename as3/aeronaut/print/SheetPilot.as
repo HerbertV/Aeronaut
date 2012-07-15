@@ -25,14 +25,21 @@ package as3.aeronaut.print
 	import mdm.*;
 
 	import flash.display.Sprite;
+	import flash.display.Bitmap;
+	import flash.events.Event;
 	
 	import as3.aeronaut.print.pilot.*;
 	
+	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.Squadron;
+	import as3.aeronaut.objects.baseData.Country;
 	
 	import as3.aeronaut.Globals;
+	
+	import as3.hv.core.utils.BitmapHelper;
+	import as3.hv.core.net.ImageLoader;
 	
 	// =========================================================================
 	// Class SheetPilot
@@ -50,11 +57,11 @@ package as3.aeronaut.print
 		public static const FOTO_WIDTH:int = 104;
 		public static const FOTO_HEIGHT:int = 128;
 		
-		public static const FLAG_WIDTH:int = 55;
-		public static const FLAG_HEIGHT:int = 35;
+		public static const FLAG_WIDTH:int = 100;
+		public static const FLAG_HEIGHT:int = 50;
 		
-		public static const SQUADLOGO_WIDTH:int = 35;
-		public static const SQUADLOGO_HEIGHT:int = 35;
+		public static const SQUADLOGO_WIDTH:int = 150;
+		public static const SQUADLOGO_HEIGHT:int = 70;
 	
 		
 		// =====================================================================
@@ -63,6 +70,13 @@ package as3.aeronaut.print
 		
 		private var myObject:Pilot;
 		private var squad:Squadron;
+		
+		private var loader:ImageLoader;
+		
+		private var foto:Bitmap;
+		private var squadLogo:Bitmap;
+		private var flag:Bitmap;
+		
 		
 		// =====================================================================
 		// Constructor
@@ -103,13 +117,61 @@ package as3.aeronaut.print
 			
 			this.loadSquadron();
 
-// TODO load images (squad logo and nation flag and foto)
+			var l:ImageLoader;
+			if( obj.getSrcFoto() != "" )
+			{
+				l = new ImageLoader(
+						mdm.Application.path 
+							+ Globals.PATH_IMAGES
+							+ Globals.PATH_PILOT
+							+ obj.getSrcFoto(),
+						"FotoLoader"	
+					);
+				l.addNext(this.loader);
+				this.loader = l;
+			}
 			
+			if( obj.getCountryID() != "" )
+			{
+				var c:Country = Globals.myBaseData.getCountry(obj.getCountryID());
+				if( c.srcFlag != "" )
+				{
+					l = new ImageLoader(
+							mdm.Application.path 
+								+ Globals.PATH_IMAGES
+								+ Globals.PATH_NATION
+								+ c.srcFlag,
+							"FlagLoader"
+						);
+					l.addNext(this.loader);
+					this.loader = l;
+				}
+			}
+			
+			if( this.loader != null )
+			{
+				this.loader.addEventListener(
+						Event.COMPLETE, 
+						imageLoadedHandler
+					);
+				this.loader.load();
+			} else {
+				this.initPages();
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * initPages
+		 * ---------------------------------------------------------------------
+		 */
+		private function initPages():void
+		{
 			var page:ICSPrintPagePilot;
 			
 			page = new PagePilot();
 			CSAbstractPrintPage(page).setSheet(this);
-			page.initFromPilot(obj);
+			page.initFromPilot(this.myObject);
 			this.pages.push(page);
 		}
 		
@@ -125,7 +187,10 @@ package as3.aeronaut.print
 		{
 			if( this.pages.length == 0 )
 				return false;
-				
+			
+			if( this.loader != null )
+				return false;
+			
 			return true;
 		}
 		
@@ -146,6 +211,19 @@ package as3.aeronaut.print
 						+ Globals.PATH_SQUADRON 
 						+ this.myObject.getSquadronID()
 				);
+			
+			if( squad.getSrcLogo() != "" )
+			{
+				var l:ImageLoader = new ImageLoader(
+						mdm.Application.path 
+							+ Globals.PATH_IMAGES
+							+ Globals.PATH_SQUADRON
+							+ squad.getSrcLogo(),
+						"SquadLogoLoader"	
+					);
+				l.addNext(this.loader);
+				this.loader = l;
+			}
 		}
 		
 		/**
@@ -157,6 +235,91 @@ package as3.aeronaut.print
 		public function getSquadron():Squadron
 		{
 			return this.squad;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getFoto
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getFoto():Bitmap
+		{
+			if( this.foto == null )
+				return null;
+				
+			return new Bitmap(this.foto.bitmapData.clone());
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getFlag
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getFlag():Bitmap
+		{
+			if( this.flag == null )
+				return null;
+				
+			return new Bitmap(this.flag.bitmapData.clone());
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadLogo
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getSquadLogo():Bitmap
+		{
+			if( this.squadLogo == null )
+				return null;
+				
+			return new Bitmap(this.squadLogo.bitmapData.clone());
+		}
+		
+		// =====================================================================
+		// Event Handler
+		// =====================================================================
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * imageLoadedHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function imageLoadedHandler(e:Event):void
+		{
+			var current:ImageLoader = ImageLoader(e.currentTarget);
+			var bmp:Bitmap = current.getImage();
+			bmp.smoothing = true;
+
+			if( current.getName() == "FotoLoader" )
+			{
+				this.foto = bmp;
+			
+			} else if( current.getName() == "FlagLoader" ) {
+				this.flag = bmp;
+			
+			} else if( current.getName() == "SquadLogoLoader" ) {
+				this.squadLogo = bmp;
+			}
+			var nl:ImageLoader = ImageLoader( current.getNext() );
+			current.dispose();
+			this.loader = nl;
+
+			if( this.loader == null )
+			{
+				this.initPages();
+				return;
+			}
+			this.loader.addEventListener(
+					Event.COMPLETE, 
+					imageLoadedHandler
+				);
+			
+			this.loader.load();
 		}
 		
 	}
