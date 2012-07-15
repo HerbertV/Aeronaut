@@ -62,7 +62,6 @@ package as3.aeronaut.print
 		// =====================================================================
 		
 		private var myObject:Pilot;
-		// we use the squadron from the pilot
 		private var squad:Squadron;
 		
 		// =====================================================================
@@ -104,7 +103,7 @@ package as3.aeronaut.print
 			
 			this.loadSquadron();
 
-// TODO load images
+// TODO load images (squad logo and nation flag and foto)
 			
 			var page:ICSPrintPagePilot;
 			

@@ -200,6 +200,7 @@ package as3.aeronaut.print
 								+ Globals.PATH_SQUADRON 
 								+ this.pilot.getSquadronID()
 						);
+// TODO Load  Squad Logo
 				}
 				
 // TODO this needs to be changed for bombers				

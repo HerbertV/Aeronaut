@@ -23,9 +23,6 @@ package as3.aeronaut.print
 {
 	import mdm.*;
 	
-	import flash.utils.describeType;
-	import as3.hv.core.utils.StringHelper;
-	
 	import flash.display.Sprite;
 	import flash.display.MovieClip;
 	
@@ -43,8 +40,7 @@ package as3.aeronaut.print
 	import as3.aeronaut.Globals;
 	
 	import as3.aeronaut.objects.ICSBaseObject;
-	
-	
+		
 	// =========================================================================
 	// Class PrintManager
 	// =========================================================================
@@ -299,6 +295,7 @@ package as3.aeronaut.print
 			{
 				this.loader.load();
 			} else {
+//TODO start enter frame listener and wait until all sheets are ready
 				this.initPrintJob();
 			}
 			
