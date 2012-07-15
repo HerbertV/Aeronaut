@@ -20,4 +20,5 @@ Version - 1.0.0 WIP:
 -	optimized UI e.g. lists are now scrollable via mouse wheel.
 -	updated BaseData.ae with Oliver's "GSS-Bandit" corrections and extensions
 -	Blueprints now loaded and displayed inside Aircraft Window
+-	Some tweaks in the print sheets
 
