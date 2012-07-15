@@ -7,7 +7,9 @@ ________              ___   ____     Crimson Skies      __             ________
 	for the out-of-print CRIMSON SKIES boardgame by created FASA. 
  
 	Inspired by Scott Janssens' CADET. 
+	
 	Visit: http://www.foxforcefive.de/cs/
+	Aeronaut is Open Source: http://github.com/HerbertV/Aeronaut/
 
 ================================================================================
 	Version 1.0.0
