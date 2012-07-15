@@ -400,33 +400,45 @@ package as3.aeronaut
 		 * ---------------------------------------------------------------------
 		 * saveActiveWindow
 		 * ---------------------------------------------------------------------
+		 * 
+		 * @param saveAs 
+		 *			true = save as
+		 *			false = save and auto overwrite
 		 */
-		public function saveActiveWindow():void
+		public function saveActiveWindow(saveAs:Boolean):void
 		{
 			if( this.activeWindow == null )
 				return;
 			
-			Globals.myCSProgressBar.init();
-			Globals.myCSProgressBar.setProgressTo(0,"saving ...");
-			
 			var iwin:ICSWindow = ICSWindow(this.activeWindow);
 			iwin.updateObjectFromWindow();
 			
-			var filePath:String = CSDialogs.selectSaveAE(iwin);
+			var filePath:String = iwin.getFilename();
+			
+			if( saveAs )
+				filePath = CSDialogs.selectSaveAE(iwin);
 			
 			if( filePath == "false" )
 				return;
 			
-			if( CSDialogs.fileExitsNotOrOverwrite(filePath) )
+			var exitsNotOrOverwrite:Boolean = true;
+			
+			if( saveAs )
+				exitsNotOrOverwrite = CSDialogs.fileExitsNotOrOverwrite(filePath);
+			
+			if( exitsNotOrOverwrite )
 			{
+				Globals.myCSProgressBar.init();
 				Globals.myCSProgressBar.setProgressTo(33,"saving ...");
+				
 				iwin.saveObject(filePath);
 				Globals.myCSProgressBar.setProgressTo(66,"saving ...");
 				this.updateDirListsInOpenWindows();
-			}
+				Globals.myToolbarBottom.updateToolbar();
 				
-			Globals.myCSProgressBar.setProgressTo(100, "saving finished.");
-			Globals.myCSProgressBar.hide();
+				Globals.myCSProgressBar.setProgressTo(100, "saving finished.");
+				Globals.myCSProgressBar.hide();
+			}
 		}
 		
 		/**
@@ -450,6 +462,7 @@ package as3.aeronaut
 			Globals.myCSProgressBar.setProgressTo(0, "loading ... ");
 			
 			ICSWindow(this.activeWindow).loadObject( filePath );
+			Globals.myToolbarBottom.updateToolbar();
 						
 			Globals.myCSProgressBar.setProgressTo(100, "loading finished");
 			Globals.myCSProgressBar.hide();;

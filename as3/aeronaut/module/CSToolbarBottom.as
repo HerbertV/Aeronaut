@@ -141,6 +141,17 @@ package as3.aeronaut.module
 					clickSaveHandler
 				);
 			
+			this.btnSaveAs.setupTooltip(
+					Globals.myTooltip,
+					"Save As..."
+				);
+			this.btnSaveAs.setActive(false);
+			this.btnSaveAs.addEventListener(
+					MouseEvent.MOUSE_DOWN, 
+					clickSaveAsHandler
+				);
+			
+			
 			this.btnDelete.setupTooltip(
 					Globals.myTooltip,
 					"Delete <i>(CTRL+D)</i>"
@@ -365,7 +376,15 @@ package as3.aeronaut.module
 			{
 				this.btnNew.setActive(true);
 				this.btnOpen.setActive(true);
-				this.btnSave.setActive(true);
+				
+				if( ICSWindow(Globals.myWindowManager.getActiveWindow()).getFilename() != "" )
+				{
+					this.btnSave.setActive(true);
+				} else {
+					this.btnSave.setActive(false);
+				}
+				this.btnSaveAs.setActive(true);
+				
 				if( Globals.myWindowManager.getActiveWindow() is IPrintable )
 				{ 
 					this.btnPrint.setActive(true);
@@ -377,6 +396,7 @@ package as3.aeronaut.module
 				this.btnNew.setActive(false);
 				this.btnOpen.setActive(true);
 				this.btnSave.setActive(false);
+				this.btnSaveAs.setActive(false);
 				this.btnPrint.setActive(false);
 			}
 		}
@@ -441,9 +461,28 @@ package as3.aeronaut.module
 		 */
 		private function clickSaveHandler(e:MouseEvent):void
 		{
+			if( !this.btnSave.getIsActive() )
+				return;
+				
 			if( Globals.myWindowManager.isActiveWindowValid() )
 			{
-				Globals.myWindowManager.saveActiveWindow();
+				Globals.myWindowManager.saveActiveWindow(false);
+			} else {
+				CSDialogs.onlyValidSave();
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * clickSaveAsHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function clickSaveAsHandler(e:MouseEvent):void
+		{
+			if( Globals.myWindowManager.isActiveWindowValid() )
+			{
+				Globals.myWindowManager.saveActiveWindow(true);
 			} else {
 				CSDialogs.onlyValidSave();
 			}
