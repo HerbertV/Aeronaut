@@ -1105,7 +1105,7 @@ package as3.aeronaut.module
 		{
 			var selectedFile:String = CSDialogs.selectImportImage("Pilot Foto");
 			
-			if( selectedFile != "false" ) 
+			if( selectedFile == "false" ) 
 				return;
 				
 			var srcDir = selectedFile.substring(
