@@ -160,7 +160,7 @@
 	
 	<i>Special Characteristic Tag:</i><br>
 	<span class="Code">
-	&lt;specialCharacteristic ID="AC_001" groupID="nitro" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false"&gt;<br>
+	&lt;specialCharacteristic ID="AC_001" groupID="nitro" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false" countsToSCLimit="true"&gt;<br>
 		&lt;name&gt;Nitro Injectors&lt;/name&gt;<br>
 		&lt;description&gt;&lt;/description&gt;<br>
 	&lt;/specialCharacteristic&gt;<br>
@@ -171,6 +171,7 @@
 	The attribute "costType" can be additional, engine, airframe, cockpit, armor, weapon or a comma seperated list of engine, airframe, cockpit, armor and weapon.
 	The attribute "weightChanges" till now only absolute values are possible, but percent values will be enabled with a future update. 
 	The attribute "costChanges" can be absolute or percent. Absolute if costType is additional all other weights are in percent.
+	The attribute "countsToSCLimit" if it is true, the characteristic counts to the limit.
 	The "descripton" tag is not used so far.
 	
 	
