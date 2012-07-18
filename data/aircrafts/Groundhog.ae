@@ -1,6 +1,6 @@
 <aeronaut XMLVersion="1.0">
   
-  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="1" accelRate="1" maxSpeed="2" maxGs="1" decelRate="2" engineCount="2" crewCount="2">
+  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="1" accelRate="1" maxSpeed="2" maxGs="1" decelRate="2" engineCount="2" crewCount="2" srcFoto="">
     
     <name>AZ2 Groundhog</name>
     
@@ -39,10 +39,10 @@
     
     <turrets>
       
-      <turret direction="front" linkedGuns=""/>
+      <turret direction="front" linkedGuns="1,2"/>
     </turrets>
     
-    <armor starboardwingTrailing="70" tail="60" portwingTrailing="70" starboardwingLeading="80" nose="80" portwingLeading="80"/>
+    <armor starboardwingTrailing="70" tail="60" portwingTrailing="70" starboardwingLeading="80" nose="80" portwingLeading="80" portBow="0" portStern="0" starboardBow="0" starboardStern="0"/>
     
   </aircraft>
   
