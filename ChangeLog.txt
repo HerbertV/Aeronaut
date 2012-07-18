@@ -4,10 +4,10 @@ ________              ___   ____     Crimson Skies      __             ________
        \______\----/_/ |_/___/_/  \___/_//_/\_,_/\_,_/\__/----/______/
 
 ================================================================================
-Change Log -- Version 1.0.0 WIP
+Change Log -- Version 1.0.0
 ================================================================================
 
-Version - 1.0.0 WIP: 
+Version - 1.0.0: 
 --------------------------------------------------------------------------------
 - 	Bugfixes and Tests for Windows 7
 	You need admin rights for the first launch. 
@@ -21,4 +21,5 @@ Version - 1.0.0 WIP:
 -	updated BaseData.ae with Oliver's "GSS-Bandit" corrections and extensions
 -	Blueprints now loaded and displayed inside Aircraft Window
 -	Some tweaks in the print sheets
-
+-	Some changes for Zeppelin & Bombers are already included but are disabled.
+- 	Aircraft: Bandit has now a turret (7&8)

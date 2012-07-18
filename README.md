@@ -15,12 +15,4 @@
 For more information visit:
 
 * [FoxForceFive.de](http://www.foxforcefive.de/cs/)
-* [Crimson Skies @ Boardgame Geek](http://boardgamegeek.com/boardgame/3855/crimson-skies)
-
------------------------------------
-
-### Progress
-
-* Revise all sources from 0.9.4
-* Making swf modules for all Windows
-* Releasing version 1.0.0
+* [Github wiki](http://github.com/HerbertV/Aeronaut/wiki)

@@ -9,7 +9,9 @@ ________              ___   ____     Crimson Skies      __             ________
 	Inspired by Scott Janssens' CADET. 
 	
 	Visit: http://www.foxforcefive.de/cs/
-	Aeronaut is Open Source: http://github.com/HerbertV/Aeronaut/
+	
+	Aeronaut is Licensed under MIT License
+	Sources: http://github.com/HerbertV/Aeronaut/
 
 ================================================================================
 	Version 1.0.0
@@ -32,8 +34,13 @@ ________              ___   ____     Crimson Skies      __             ________
 --------------------------------------------------------------------------------
 	Known Issues:
 --------------------------------------------------------------------------------
-- 	Linked-To Dropdown is not working.
-
+	With Windows 7 you need admin rights for the first launch. 
+	Otherwise the file association does not work.
+	This is not a bug but a security reason.
+	
+	see github issues:
+	http://github.com/HerbertV/Aeronaut/issues
+	
 --------------------------------------------------------------------------------
 	Hardcoded Stuff:
 --------------------------------------------------------------------------------
