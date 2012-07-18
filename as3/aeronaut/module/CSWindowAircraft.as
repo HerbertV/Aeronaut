@@ -309,18 +309,20 @@ package as3.aeronaut.module
 			rbgFrame.setValue(this.myObject.getFrameType());
 			rbgProp.setValue(this.myObject.getPropType());
 			this.lastFrameType = this.myObject.getFrameType();
-			this.updateGUIByFrameType();
-
+			
 			// STATS
 			this.form.numStepBaseTarget.setValue(this.myObject.getBaseTarget());
-			this.calcBaseTargetWeights();
 			this.form.numStepSpeed.setValue(this.myObject.getMaxSpeed());
-			this.calcMaxSpeedWeight();
 			this.form.numStepGs.setValue(this.myObject.getMaxGs());
-			this.calcMaxGWeight();
 			this.form.numStepAccel.setValue(this.myObject.getAccelRate());
-			this.calcMaxAccelWeight();
 			this.form.numStepDecel.setValue(this.myObject.getDecelRate());
+			// this also updates the pages
+			this.updateGUIByFrameType();
+
+			this.calcBaseTargetWeights();
+			this.calcMaxSpeedWeight();
+			this.calcMaxGWeight();
+			this.calcMaxAccelWeight();
 			
 			this.form.pdManufacturer.clearSelection();
 			if( this.myObject.getManufacturerID() != "" ) 
