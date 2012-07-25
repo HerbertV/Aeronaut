@@ -837,7 +837,8 @@ package as3.aeronaut.module
 		{
 			var currFrame:String = rbgFrame.getValue();
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
-						
+			var currGs:int = this.form.numStepGs.getValue();
+			
 			if( currFrame == "fighter" )
 			{
 				this.form.rbtnPropTractor.setActive(true);
@@ -850,9 +851,6 @@ package as3.aeronaut.module
 				if( currBTN < 5 ) 
 					currBTN = 5;
 				
-				this.form.numStepBaseTarget.setupSteps(5,10,currBTN,1);
-				this.form.numStepGs.setupSteps(1,5,1,1);
-				
 			} else if( currFrame == "heavyFighter" ) {
 				this.form.rbtnPropTractor.setActive(true);
 				this.form.rbtnPropPusher.setActive(true);
@@ -863,10 +861,7 @@ package as3.aeronaut.module
 			
 				if( currBTN > 6 )
 					currBTN = 6;
-				
-				this.form.numStepBaseTarget.setupSteps(1,6,currBTN,1);
-				this.form.numStepGs.setupSteps(1,5,1,1);
-				
+			
 			} else if( currFrame == "hoplite" ) {
 				this.form.rbtnPropTractor.setActive(false);
 				this.form.rbtnPropPusher.setActive(false);
@@ -878,9 +873,11 @@ package as3.aeronaut.module
 				if( currBTN < 6 ) 
 					currBTN = 6;
 				
-				this.form.numStepBaseTarget.setupSteps(6,10,currBTN,1);
-				this.form.numStepGs.setupSteps(5,5,5,1);
+				currGs = 5;
 			}
+			this.form.numStepBaseTarget.setupSteps(5,10,currBTN,1);
+			this.form.numStepGs.setupSteps(1,5,currGs,1);
+				
 			// special characteristics
 			this.form.page1.init(this);
 			// weapons

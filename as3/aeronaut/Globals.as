@@ -85,7 +85,7 @@ package as3.aeronaut
 		// =====================================================================
 		
 		//programm version
-		public static var version:String = "1.0.0";
+		public static var version:String = "1.0.1";
 		//Progress bar
 		public static var myCSProgressBar:IProgressSymbol = null;
 		// Tooltip

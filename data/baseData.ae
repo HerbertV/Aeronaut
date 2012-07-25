@@ -769,7 +769,8 @@
 				<name>Ejector Seat</name>
 				<description></description>
 			</specialCharacteristic>
-			
+		
+<!-- TODO -->		
 			<specialCharacteristic ID="AC_037" groupID="" costType="additional" weightChanges="20" costChanges="650" hasHardcodedAbility="false"  countsToSCLimit="false">
 				<name>Nitro Injectors (4 pack)</name>
 				<description></description>
@@ -782,6 +783,11 @@
 
 			<specialCharacteristic ID="AC_039" groupID="" costType="additional" weightChanges="320" costChanges="1400" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>360° Turret</name>
+				<description></description>
+			</specialCharacteristic>
+<!-- for patrick  as a test --> 
+			<specialCharacteristic ID="AC_040" groupID="zepHook" costType="additional" weightChanges="0" costChanges="0" hasHardcodedAbility="false"  countsToSCLimit="true">
+				<name>Parasite Fighter</name>
 				<description></description>
 			</specialCharacteristic>
 
