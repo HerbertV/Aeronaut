@@ -333,7 +333,10 @@ package as3.aeronaut.module.pilot
 			
 			if( pilotType != Pilot.TYPE_HERO 
 					&& pilotType != Pilot.TYPE_SIDEKICK )
+			{
+				this.winPilot.setStatsEP(0);
 				return;
+			}
 			
 			ep += calcEPForStat(
 					obj.getNaturalTouch(), 

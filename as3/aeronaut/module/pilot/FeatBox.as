@@ -238,13 +238,18 @@ package as3.aeronaut.module.pilot
 		public function calcEP():void
 		{
 			if( !Globals.myRuleConfigs.getIsPilotFeatsActive() )
+			{
+				this.winPilot.setFeatEP(0);
 				return;
+			}
 			
 			var pilotType:String = this.winPilot.getPilotType();
 			if( pilotType != Pilot.TYPE_HERO 
 					&& pilotType != Pilot.TYPE_SIDEKICK )
+			{
+				this.winPilot.setFeatEP(0);
 				return;
-			
+			}
 			var obj:Pilot = Pilot(this.winPilot.getObject());
 			var feat:Feat = null;
 			var learnedfeat:LearnedFeat = null;
