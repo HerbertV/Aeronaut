@@ -37,7 +37,6 @@ package as3.aeronaut.module.toolbar
 	import as3.aeronaut.module.ICSToolbarBottom;
 	import as3.aeronaut.module.ICSWindowPilot;
 	
-	
 	// =========================================================================
 	// Class PagePilotEP
 	// =========================================================================
@@ -360,6 +359,35 @@ package as3.aeronaut.module.toolbar
 		 */
 		private function textInputHandler(e:TextEvent):void
 		{
+			var numExp:RegExp = /[0-9]/;
+            // default handling gets the new digit after
+			// updateNewEp was called so we need to handle 
+			// the complete input by our selfs.
+			e.preventDefault();  
+
+			var targetField:TextField = (e.target as TextField);
+			
+			if( !numExp.test(e.text) )
+				return;
+				
+			if( targetField.text.length >= 3 )
+			{
+				targetField.text = targetField.text.substring(0,3); 
+				return;
+			}
+			if( targetField.text == "0" )
+			{
+				targetField.text = e.text;
+			} else {
+				var lastcaret:int = targetField.caretIndex;
+				var txtlen:int = targetField.text.length;
+				var beforeCaret:String = targetField.text.substring(0,lastcaret);
+				var afterCaret:String = targetField.text.substring(lastcaret,txtlen);
+				
+				targetField.text = beforeCaret + e.text + afterCaret;
+				targetField.setSelection(lastcaret+1,lastcaret+1);
+			}
+			
 			this.updateNewEP();
 		}
 		
