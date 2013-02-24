@@ -698,7 +698,7 @@ package as3.aeronaut.module
 			}
 			
 			// gunpoints and ammunition
-			for( var gnum:int = 1; gnum < 8; gnum++ )
+			for( var gnum:int = 1; gnum < 9; gnum++ )
 			{
 				var currGP:Gunpoint = this.myAircraft.getGunpoint(gnum);
 				
@@ -758,7 +758,7 @@ package as3.aeronaut.module
 		{
 			this.intAmmoCost = 0;
 			
-			for( var gnum:int = 1; gnum < 8; gnum++ )
+			for( var gnum:int = 1; gnum < 9; gnum++ )
 			{
 				var id:String = this.getAmmoPullDown(gnum).getIDForCurrentSelection();
 				if( id != CSPullDown.ID_EMPTYSELECTION ) 
