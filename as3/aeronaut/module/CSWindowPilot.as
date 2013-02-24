@@ -196,8 +196,10 @@ package as3.aeronaut.module
 			rbgGender.addMember(this.form.rbtnGenderFemale,"female");
 			
 			//appearance
-			this.form.numStepHeight.setupSteps(1, 7, 5, 11)
+			this.form.numStepHeight.setupSteps(1, 7, 5, 11);
+			this.form.numStepHeight.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepWeight.setupSteps(1, 300, 176, 1);
+			this.form.numStepWeight.setupTooltip(Globals.myTooltip,"");
 			this.form.txtAircraftName.text = "";
 			this.form.txtEyeColor.text = "";
 			this.form.txtHairColor.text = "";

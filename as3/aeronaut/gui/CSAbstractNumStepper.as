@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2012 Herbert Veitengruber 
@@ -25,6 +25,9 @@ package as3.aeronaut.gui
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.text.TextField;
+	
+	import as3.hv.components.tooltip.ITooltip;
+	
 	
 	// =========================================================================
 	// CSAbstractNumStepper
@@ -59,6 +62,9 @@ package as3.aeronaut.gui
 		protected var callbackFunction:Function = null;
 		protected var callbackObject:Object = null;
 		
+		protected var tooltipText:String = "";
+		protected var myTooltip:ITooltip = null;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -84,6 +90,12 @@ package as3.aeronaut.gui
 			this.buttons.btnDown.addEventListener(
 					MouseEvent.MOUSE_UP, 
 					releaseDownHandler
+				);
+			
+			// for possible tooltip
+			this.txtValue.addEventListener(
+					MouseEvent.MOUSE_OVER,
+					overHandler
 				);
 			
 			//for autostepper
@@ -135,6 +147,22 @@ package as3.aeronaut.gui
 		public function getIsActive():Boolean 
 		{
 			return this.isActive;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setupTooltip
+		 * ---------------------------------------------------------------------
+		 * @param tt
+		 * @param txt
+		 */
+		public function setupTooltip(
+				tt:ITooltip, 
+				txt:String
+			):void
+		{
+			this.myTooltip = tt;
+			this.tooltipText = txt;
 		}
 		
 		/**
@@ -207,6 +235,7 @@ package as3.aeronaut.gui
 		 * updateTextField
 		 * ---------------------------------------------------------------------
 		 * files the text field with the new value
+		 * if you want to use a tooltip with dynamic text update it here, too.
 		 */
 		protected function updateTextField():void
 		{
@@ -426,6 +455,47 @@ package as3.aeronaut.gui
 		protected function releaseDownHandler(e:MouseEvent):void
 		{
 			this.isDownArrowPressed = false;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * overHandler
+		 * ---------------------------------------------------------------------
+		 * just for Tooltip handling
+		 *
+		 * @param e MouseEvent
+		 */
+		protected function overHandler(e:MouseEvent):void
+		{
+			if( !this.isActive )
+				return;
+				
+			if( this.myTooltip != null 
+					&& this.tooltipText != "" ) 
+			{
+				this.myTooltip.setLabel(tooltipText)
+				//showTooltip(delayShow:int=0,delayHide:int=-1)
+				this.myTooltip.showTooltip(1,5);
+			}
+			
+			this.stage.addEventListener(MouseEvent.MOUSE_OUT, outHandler);
+			
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * outHandler
+		 * ---------------------------------------------------------------------
+		 * just for Tooltip handling
+		 *
+		 * @param e MouseEvent
+		 */
+		protected function outHandler(e:MouseEvent):void
+		{
+			if( myTooltip != null ) 
+				this.myTooltip.hide();
+				
+			this.stage.removeEventListener(MouseEvent.MOUSE_OUT, outHandler);	
 		}
 	}
 

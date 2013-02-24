@@ -213,12 +213,18 @@ package as3.aeronaut.module
 				
 // TODO maybe this needs changes for bombers			
 			this.form.numStepServiceCeiling.setupSteps(5000 ,50000 ,5000, 500);
+			this.form.numStepServiceCeiling.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepRange.setupSteps(50 ,2000 ,50, 25);
+			this.form.numStepRange.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepEngine.setupSteps(1,8,1,1);
 			this.form.numStepEngine.setActive(false);
 			this.form.numStepWingSpan.setupSteps(10 ,100 ,25, 0);
+			this.form.numStepWingSpan.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepLength.setupSteps(10 ,100 ,20, 0);
+			this.form.numStepLength.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepHeight.setupSteps(5 ,30 ,10, 6);
+			this.form.numStepHeight.setupTooltip(Globals.myTooltip,"");
+			
 //			
 		}
 		

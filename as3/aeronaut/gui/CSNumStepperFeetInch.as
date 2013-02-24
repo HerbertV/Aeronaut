@@ -148,6 +148,7 @@ package as3.aeronaut.gui
 		 * updateTextField
 		 * ---------------------------------------------------------------------
 		 * fills the text field with the new value
+		 * also updates the tooltip
 		 */
 		override protected function updateTextField():void
 		{
@@ -155,6 +156,12 @@ package as3.aeronaut.gui
 					this.currentFeet,
 					this.currentInch
 				);
+			
+			var cm:Number = CSFormatter.convertFeetInch2Cm(
+					this.currentFeet,
+					this.currentInch
+				);
+			this.tooltipText = CSFormatter.formatCm(cm);
 		}
 		
 		/**

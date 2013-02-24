@@ -58,7 +58,6 @@ package as3.aeronaut.gui
 			this.tabEnabled = false;
 			
 			this.addEventListener(MouseEvent.MOUSE_OVER, overHandler);
-			//this.addEventListener(MouseEvent.MOUSE_OUT, outHandler);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, downHandler);
 			this.addEventListener(MouseEvent.MOUSE_UP, upHandler);
 		}

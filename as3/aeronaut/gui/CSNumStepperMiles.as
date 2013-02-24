@@ -113,10 +113,14 @@ package as3.aeronaut.gui
 		 * updateTextField
 		 * ---------------------------------------------------------------------
 		 * fills the text field with the new value
+		 * also updates the tooltip
 		 */
 		override protected function updateTextField():void
 		{
 			this.txtValue.text = CSFormatter.formatMiles(this.currentValue);
+			
+			var km:Number = CSFormatter.convertMiles2Km(this.currentValue);
+			this.tooltipText = CSFormatter.formatKm(km);
 		}
 		
 		/**
