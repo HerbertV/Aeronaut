@@ -211,6 +211,37 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
+							<xs:element name="squadrons">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="squadronType" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="name" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="size" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="squadronPriority" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="name" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="squardronCharacteristic" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="name" type="xs:string"/>
+												</xs:sequence>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -227,6 +258,31 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 									<xs:attribute name="maxBaseTarget" type="xs:int" use="required"/>
 									<xs:attribute name="hasWings" type="xs:boolean" use="required"/>
 									<xs:attribute name="hasBows" type="xs:boolean" use="required"/>
+									<xs:attribute name="minSpeed" type="xs:int" use="required"/>
+									<xs:attribute name="maxSpeed" type="xs:int" use="required"/>
+									<xs:attribute name="minGs" type="xs:int" use="required"/>
+									<xs:attribute name="maxGs" type="xs:int" use="required"/>
+									<xs:attribute name="minAccel" type="xs:int" use="required"/>
+									<xs:attribute name="maxAccel" type="xs:int" use="required"/>
+									<xs:attribute name="minDecel" type="xs:int" use="required"/>
+									<xs:attribute name="maxDecel" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="baseTargetMatrix">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="baseTargetDefaults" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>baseTargetNumber is 1-10 for normal aircrafts. an 1(-1) to 1(-6) for bombers and cargos. payload is in ZnB the weight class </xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="baseTargetNumber" type="xs:string" use="required"/>
+												<xs:attribute name="loadedWeight" type="xs:int" use="required"/>
+												<xs:attribute name="payload" type="xs:int" use="required"/>
+												<xs:attribute name="cost" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -354,8 +410,44 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="name"/>
+							<xs:element name="priorityList" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="squadronPriority" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="rank" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="A"/>
+															<xs:enumeration value="B"/>
+															<xs:enumeration value="C"/>
+															<xs:enumeration value="D"/>
+															<xs:enumeration value="E"/>
+															<xs:enumeration value="F"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="characteristicList" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="squardronCharacteristic" minOccurs="0" maxOccurs="2">
+											<xs:complexType>
+												<xs:attribute name="ID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="srcLogo" type="url" use="optional"/>
+						<xs:attribute name="typeID" type="xs:string" use="optional"/>
+						<xs:attribute name="honorLevel" type="xs:int" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="loadout">
