@@ -857,6 +857,8 @@ package as3.aeronaut.module
 				if( currBTN < 5 ) 
 					currBTN = 5;
 				
+				this.form.numStepBaseTarget.setupSteps(5,10,currBTN,1);
+				
 			} else if( currFrame == "heavyFighter" ) {
 				this.form.rbtnPropTractor.setActive(true);
 				this.form.rbtnPropPusher.setActive(true);
@@ -867,6 +869,8 @@ package as3.aeronaut.module
 			
 				if( currBTN > 6 )
 					currBTN = 6;
+				
+				this.form.numStepBaseTarget.setupSteps(1,6,currBTN,1);
 			
 			} else if( currFrame == "hoplite" ) {
 				this.form.rbtnPropTractor.setActive(false);
@@ -879,9 +883,10 @@ package as3.aeronaut.module
 				if( currBTN < 6 ) 
 					currBTN = 6;
 				
+				this.form.numStepBaseTarget.setupSteps(6,10,currBTN,1);
+			
 				currGs = 5;
 			}
-			this.form.numStepBaseTarget.setupSteps(5,10,currBTN,1);
 			this.form.numStepGs.setupSteps(1,5,currGs,1);
 				
 			// special characteristics

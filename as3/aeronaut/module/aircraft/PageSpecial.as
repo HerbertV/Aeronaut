@@ -80,6 +80,7 @@ package as3.aeronaut.module.aircraft
 		
 		private var myBlueprintLoader:ImageLoader = null;
 		private var srcBlueprint:String = "";
+		private var loadedBlueprintSrc:String = "";
 				
 		// =====================================================================
 		// Constructor
@@ -166,7 +167,8 @@ package as3.aeronaut.module.aircraft
 			this.lblSCFree.text = String(this.scFree);
 			
 			// blueprint
-			if( obj.getSrcFoto() != null ) {
+			if( obj.getSrcFoto() != null ) 
+			{
 				this.srcBlueprint = obj.getSrcFoto();
 			} else {
 				this.srcBlueprint = "";
@@ -498,22 +500,25 @@ package as3.aeronaut.module.aircraft
 		 */
 		private function loadBlueprint():void
 		{
-			// cleanup
-			while( this.winAircraft.form.blueprintContainer.numChildren > 0 ) 
-				this.winAircraft.form.blueprintContainer.removeChildAt(0);
-			
 			var src:String = this.srcBlueprint;
 			if( src == "" )
 				src = "default.jpg";
 			
-			this.myBlueprintLoader = new ImageLoader(
-					mdm.Application.path
-						+ Globals.PATH_IMAGES
-						+ Globals.PATH_AIRCRAFT 
-						+ Globals.PATH_BLUEPRINT
-						+ src
-				);
+			src = mdm.Application.path
+					+ Globals.PATH_IMAGES
+					+ Globals.PATH_AIRCRAFT 
+					+ Globals.PATH_BLUEPRINT
+					+ src;
+						
+			// prevent multiple reloads during frame changes
+			if( src == this.loadedBlueprintSrc )
+				return;
 			
+			// cleanup
+			while( this.winAircraft.form.blueprintContainer.numChildren > 0 ) 
+				this.winAircraft.form.blueprintContainer.removeChildAt(0);
+			
+			this.myBlueprintLoader = new ImageLoader( src );
 			this.myBlueprintLoader.addEventListener(
 					Event.COMPLETE, 
 					blueprintLoadedHandler
@@ -523,7 +528,7 @@ package as3.aeronaut.module.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * createLanguageItem
+		 * createSCItem
 		 * ---------------------------------------------------------------------
 		 * create a new listitem and adds it to the list
 		 *
@@ -612,6 +617,8 @@ package as3.aeronaut.module.aircraft
 					BLUEPRINT_HEIGHT, 
 					true
 				);
+			// store to prevent unnecessary reloading
+			this.loadedBlueprintSrc = this.myBlueprintLoader.getFilename();
 			this.winAircraft.form.blueprintContainer.addChild(bmp);
 		}
 		
