@@ -90,7 +90,7 @@ package as3.aeronaut
 			{
 				str = temp.substr(i,1) + str;
 				j++;
-				if( j == 3 && (i-1) >= 0 )
+				if( j == 3 && (i-1) >= 0 && temp.substr((i-1),1) != "-" )
 				{
 					str = seperator + str;
 					j = 0;
