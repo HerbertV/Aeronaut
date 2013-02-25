@@ -545,7 +545,9 @@ package as3.aeronaut.module
 		public function printMe():void
 		{
 			this.updateObjectFromWindow();
-			
+
+// TODO add case for printBomberCargo.swf
+
 			Globals.myPrintManager.addSheet("printAircraft.swf",this.myObject);
 			Globals.myPrintManager.printNow();
 		}

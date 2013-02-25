@@ -27,7 +27,7 @@
 							</xs:element>
 							<xs:element name="companies">
 								<xs:annotation>
-									<xs:documentation>e.g. aircraft an zeppelin manufactures</xs:documentation>
+									<xs:documentation>e.g. aircraft and zeppelin manufactures</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
@@ -246,40 +246,174 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="aircraftConfigs">
+					<xs:annotation>
+						<xs:documentation>aircraftConfigs.ae file</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="frameDefaults" maxOccurs="unbounded">
+							<xs:element name="baseTargetMatrix">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="baseTarget" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>indexID is the reference for aircrafts and frame defaults. 
+
+BTN is 1-10 for normal aircrafts. and 1 to 1(-6) for bombers and cargos. 
+
+loadedWeight is the free weight in lbs.
+
+payload is in ZnB the weight class in libs.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="indexID" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="BTN" type="xs:string" use="required"/>
+												<xs:attribute name="loadedWeight" type="xs:int" use="required"/>
+												<xs:attribute name="payload" type="xs:int" use="required"/>
+												<xs:attribute name="cost" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="maxSpeedMatrix">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="maxSpeed" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="speed" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="5"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="btnID" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="weight" type="xs:int" use="required"/>
+												<xs:attribute name="cost" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="maxGMatrix">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="maxGForce" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="g" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="5"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="btnID" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="weight" type="xs:int" use="required"/>
+												<xs:attribute name="cost" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="maxAccelerationMatrix">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="maxAcceleration" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="accel" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="5"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="btnID" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="weight" type="xs:int" use="required"/>
+												<xs:attribute name="cost" type="xs:int" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="frames">
 								<xs:annotation>
 									<xs:documentation>to config default values for specific frame type</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:attribute name="frameType" type="aircraftFrames" use="required"/>
-									<xs:attribute name="minBaseTarget" type="xs:int" use="required"/>
-									<xs:attribute name="maxBaseTarget" type="xs:int" use="required"/>
-									<xs:attribute name="hasWings" type="xs:boolean" use="required"/>
-									<xs:attribute name="hasBows" type="xs:boolean" use="required"/>
-									<xs:attribute name="minSpeed" type="xs:int" use="required"/>
-									<xs:attribute name="maxSpeed" type="xs:int" use="required"/>
-									<xs:attribute name="minGs" type="xs:int" use="required"/>
-									<xs:attribute name="maxGs" type="xs:int" use="required"/>
-									<xs:attribute name="minAccel" type="xs:int" use="required"/>
-									<xs:attribute name="maxAccel" type="xs:int" use="required"/>
-									<xs:attribute name="minDecel" type="xs:int" use="required"/>
-									<xs:attribute name="maxDecel" type="xs:int" use="required"/>
-								</xs:complexType>
-							</xs:element>
-							<xs:element name="baseTargetMatrix">
-								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="baseTargetDefaults" maxOccurs="unbounded">
+										<xs:element name="frameDef" maxOccurs="unbounded">
 											<xs:annotation>
-												<xs:documentation>baseTargetNumber is 1-10 for normal aircrafts. an 1(-1) to 1(-6) for bombers and cargos. payload is in ZnB the weight class </xs:documentation>
+												<xs:documentation>allowsTurrets:
+0 = no 
+1 = may have 
+2 = only turrets allowed</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="baseTargetNumber" type="xs:string" use="required"/>
-												<xs:attribute name="loadedWeight" type="xs:int" use="required"/>
-												<xs:attribute name="payload" type="xs:int" use="required"/>
-												<xs:attribute name="cost" type="xs:int" use="required"/>
+												<xs:sequence>
+													<xs:element name="allowedProp" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="propType" type="aircraftProps" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="turretDirections" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>linkedGuns = Gun point numbers as CSV Array</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="direction" type="turretDirections" use="required"/>
+															<xs:attribute name="linkedGuns" type="xs:string" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="frameType" type="aircraftFrames" use="required"/>
+												<xs:attribute name="minBaseTarget" type="xs:int" use="required"/>
+												<xs:attribute name="maxBaseTarget" type="xs:int" use="required"/>
+												<xs:attribute name="hasWings" type="xs:boolean" use="required"/>
+												<xs:attribute name="hasBows" type="xs:boolean" use="required"/>
+												<xs:attribute name="minSpeed" type="xs:int" use="required"/>
+												<xs:attribute name="maxSpeed" type="xs:int" use="required"/>
+												<xs:attribute name="minGs" type="xs:int" use="required"/>
+												<xs:attribute name="maxGs" type="xs:int" use="required"/>
+												<xs:attribute name="minAccel" type="xs:int" use="required"/>
+												<xs:attribute name="maxAccel" type="xs:int" use="required"/>
+												<xs:attribute name="minDecel" type="xs:int" use="required"/>
+												<xs:attribute name="maxDecel" type="xs:int" use="required"/>
+												<xs:attribute name="maxGuns" type="xs:int" use="required"/>
+												<xs:attribute name="allowsTurrets" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="0"/>
+															<xs:maxInclusive value="2"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
@@ -333,6 +467,10 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="aircraftCostCalculation">
+								<xs:annotation>
+									<xs:documentation>obsolete!
+no longer needed if aircraftConfigs is implemented</xs:documentation>
+								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="ruleACC" minOccurs="0" maxOccurs="unbounded">
@@ -407,6 +545,9 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="squadron">
+					<xs:annotation>
+						<xs:documentation>for any squadron ae file</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="name"/>
@@ -451,6 +592,9 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="loadout">
+					<xs:annotation>
+						<xs:documentation>for any loadout ae file</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="name" type="xs:string"/>
@@ -640,7 +784,7 @@ countsToSCLimit = most characteristics count to the 12-BTN limit if not this fla
 				</xs:element>
 				<xs:element name="aircraft">
 					<xs:annotation>
-						<xs:documentation>all aircrafts </xs:documentation>
+						<xs:documentation>for any aircraft ae file</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -733,18 +877,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 												<xs:documentation>linkedGuns = Gun point numbers as CSV Array</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="direction" use="required">
-													<xs:simpleType>
-														<xs:restriction base="xs:string">
-															<xs:enumeration value="front"/>
-															<xs:enumeration value="rear"/>
-															<xs:enumeration value="left"/>
-															<xs:enumeration value="right"/>
-															<xs:enumeration value="dorsal"/>
-															<xs:enumeration value="ventral"/>
-														</xs:restriction>
-													</xs:simpleType>
-												</xs:attribute>
+												<xs:attribute name="direction" type="turretDirections" use="required"/>
 												<xs:attribute name="linkedGuns" type="xs:string" use="required"/>
 											</xs:complexType>
 										</xs:element>
@@ -778,7 +911,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 							<xs:element name="description" type="xs:string" minOccurs="0"/>
 						</xs:sequence>
 						<xs:attribute name="frameType" type="aircraftFrames" use="required"/>
-						<xs:attribute name="PropType" type="aircraftProp" use="required"/>
+						<xs:attribute name="PropType" type="aircraftProps" use="required"/>
 						<xs:attribute name="baseTarget" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
@@ -862,12 +995,22 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 			<xs:enumeration value="lightCargo"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="aircraftProp">
+	<xs:simpleType name="aircraftProps">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="tractor"/>
 			<xs:enumeration value="pusher"/>
 			<xs:enumeration value="double"/>
 			<xs:enumeration value="hoplite"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="turretDirections">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="front"/>
+			<xs:enumeration value="rear"/>
+			<xs:enumeration value="left"/>
+			<xs:enumeration value="right"/>
+			<xs:enumeration value="dorsal"/>
+			<xs:enumeration value="ventral"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

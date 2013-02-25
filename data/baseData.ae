@@ -792,6 +792,12 @@
 			</specialCharacteristic>
 
 		</aircraftCharacteristics>
+
+		<squadrons>
+
+<!-- TODO see new ZnB Unit rules -->
+		
+		</squadrons>
 		
 	</baseData>
 </aeronaut>

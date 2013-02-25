@@ -45,7 +45,8 @@ package as3.aeronaut.objects
 		// Constants
 		// =====================================================================
 		public static const BASE_TAG:String = "aircraft";
-		
+
+// TODO move all matrices to AircraftConfig		
 		public static const MAXSPEED_WEIGHT_MATRIX:Array = new Array(
 				new Array(700,1800,3300,5200,7500), // BTN1
 				new Array(540,1440,2700,4320,6300), // BTN2
@@ -1106,7 +1107,7 @@ package as3.aeronaut.objects
 					
 			var payload:int = Aircraft.BTN_WEIGHT_MATRIX[btn-1][1];
 			// engineWeight >= 0.25 * payload => leftGMod = 1;
-			// engineWeight >= 0.33 * payload => leftGMod = 1 uns rightGmod = -1;
+			// engineWeight >= 0.33 * payload => leftGMod = 1 and rightGmod = -1;
 			if( engineWeight >= int(payload/3) ) 
 			{
 				arr[0] = 1;
