@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aeronaut XMLVersion="1.0" xsi:noNamespaceSchemaLocation="aeronaut.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<aircraftConfigs>
+<!--  
+===================================================================================
+			BTN MATRIX
+===================================================================================
+-->	
+		<baseTargetMatrix>	
+<!-- TODO custom ff5 frame costs -->		
+<!-- 
+===================================================================================
+			BTN 1-10: fighter, heavy fighter, autogyros 
+===================================================================================
+-->
+			<baseTarget indexID="1"  BTN="1" loadedWeight="14500" payload="10000" cost="0" />
+			<baseTarget indexID="2"  BTN="2" loadedWeight="13250" payload="9000" cost="500" />
+			<baseTarget indexID="3"  BTN="3" loadedWeight="12000" payload="8000" cost="1000" />
+			<baseTarget indexID="4"  BTN="4" loadedWeight="10750" payload="7000" cost="1500" />
+			<baseTarget indexID="5"  BTN="5" loadedWeight="9500" payload="6000" cost="2000" />
+			<baseTarget indexID="6"  BTN="6" loadedWeight="8250" payload="5000" cost="2500" />
+			<baseTarget indexID="7"  BTN="7" loadedWeight="7000" payload="4000" cost="3000" />
+			<baseTarget indexID="8"  BTN="8" loadedWeight="5750" payload="3000" cost="3500" />
+			<baseTarget indexID="9"  BTN="9" loadedWeight="4500" payload="2000" cost="4500" />
+			<baseTarget indexID="10"  BTN="10" loadedWeight="3250" payload="1000" cost="5000" />
+<!-- 
+===================================================================================
+			BTN 1 - (-6): bombers and cargos 
+===================================================================================
+-->
+<!-- light -->
+			<baseTarget indexID="11"  BTN="1" loadedWeight="27000" payload="20000" cost="5000" />
+			<baseTarget indexID="12"  BTN="1" loadedWeight="33250" payload="25000" cost="5500" />
+			<baseTarget indexID="13"  BTN="1(-1)" loadedWeight="39500" payload="30000" cost="6000" />
+			<baseTarget indexID="14"  BTN="1(-1)" loadedWeight="45750" payload="35000" cost="6500" />
+			<baseTarget indexID="15"  BTN="1(-2)" loadedWeight="52000" payload="40000" cost="7000" />
+			<baseTarget indexID="16"  BTN="1(-2)" loadedWeight="58250" payload="45000" cost="7500" />
+			<baseTarget indexID="17"  BTN="1(-3)" loadedWeight="64500" payload="50000" cost="8000" />
+			<baseTarget indexID="18"  BTN="1(-3)" loadedWeight="70750" payload="55000" cost="8500" />
+<!-- heavy -->
+			<baseTarget indexID="19"  BTN="1(-4)" loadedWeight="77000" payload="60000" cost="9000" />
+			<baseTarget indexID="20"  BTN="1(-4)" loadedWeight="83250" payload="65000" cost="10000" />
+			<baseTarget indexID="21"  BTN="1(-5)" loadedWeight="89500" payload="70000" cost="11000" />
+			<baseTarget indexID="22"  BTN="1(-5)" loadedWeight="95750" payload="75000" cost="12000" />
+			<baseTarget indexID="23"  BTN="1(-6)" loadedWeight="102000" payload="80000" cost="13000" />
+		</baseTargetMatrix>
+
+<!--  
+===================================================================================
+			MAX SPEED MATRIX
+===================================================================================
+-->
+		<maxSpeedMatrix>
+			<maxSpeed btnID="1" speed="1"  weight="700" cost="470" />
+			<maxSpeed btnID="1" speed="2"  weight="1800" cost="940" />
+			<maxSpeed btnID="1" speed="3"  weight="3300" cost="1410" />
+			<maxSpeed btnID="1" speed="4"  weight="5200" cost="1880" />
+			<maxSpeed btnID="1" speed="5"  weight="7500" cost="2350" />
+			
+			<maxSpeed btnID="2" speed="1"  weight="540" cost="470" />
+			<maxSpeed btnID="2" speed="2"  weight="1440" cost="940" />
+			<maxSpeed btnID="2" speed="3"  weight="2700" cost="1410" />
+			<maxSpeed btnID="2" speed="4"  weight="4320" cost="1880" />
+			<maxSpeed btnID="2" speed="5"  weight="6300" cost="2350" />
+		
+			<maxSpeed btnID="3" speed="1"  weight="400" cost="470" />
+			<maxSpeed btnID="3" speed="2"  weight="1120" cost="940" />
+			<maxSpeed btnID="3" speed="3"  weight="2160" cost="1410" />
+			<maxSpeed btnID="3" speed="4"  weight="3520" cost="1880" />
+			<maxSpeed btnID="3" speed="5"  weight="5200" cost="2350" />
+			
+			<maxSpeed btnID="4" speed="1"  weight="280" cost="470" />
+			<maxSpeed btnID="4" speed="2"  weight="840" cost="940" />
+			<maxSpeed btnID="4" speed="3"  weight="1680" cost="1410" />
+			<maxSpeed btnID="4" speed="4"  weight="2800" cost="1880" />
+			<maxSpeed btnID="4" speed="5"  weight="4200" cost="2350" />
+			
+			<maxSpeed btnID="5" speed="1"  weight="180" cost="470" />
+			<maxSpeed btnID="5" speed="2"  weight="600" cost="940" />
+			<maxSpeed btnID="5" speed="3"  weight="1260" cost="1410" />
+			<maxSpeed btnID="5" speed="4"  weight="2160" cost="1880" />
+			<maxSpeed btnID="5" speed="5"  weight="3300" cost="2350" />
+		
+			<maxSpeed btnID="6" speed="1"  weight="100" cost="470" />
+			<maxSpeed btnID="6" speed="2"  weight="400" cost="940" />
+			<maxSpeed btnID="6" speed="3"  weight="900" cost="1410" />
+			<maxSpeed btnID="6" speed="4"  weight="1600" cost="1880" />
+			<maxSpeed btnID="6" speed="5"  weight="2500" cost="2350" />
+			
+			<maxSpeed btnID="7" speed="1"  weight="40" cost="470" />
+			<maxSpeed btnID="7" speed="2"  weight="240" cost="940" />
+			<maxSpeed btnID="7" speed="3"  weight="600" cost="1410" />
+			<maxSpeed btnID="7" speed="4"  weight="1120" cost="1880" />
+			<maxSpeed btnID="7" speed="5"  weight="1800" cost="2350" />
+			
+			<maxSpeed btnID="8" speed="1"  weight="30" cost="470" />
+			<maxSpeed btnID="8" speed="2"  weight="120" cost="940" />
+			<maxSpeed btnID="8" speed="3"  weight="360" cost="1410" />
+			<maxSpeed btnID="8" speed="4"  weight="720" cost="1880" />
+			<maxSpeed btnID="8" speed="5"  weight="1200" cost="2350" />
+			
+			<maxSpeed btnID="9" speed="1"  weight="20" cost="470" />
+			<maxSpeed btnID="9" speed="2"  weight="60" cost="940" />
+			<maxSpeed btnID="9" speed="3"  weight="180" cost="1410" />
+			<maxSpeed btnID="9" speed="4"  weight="400" cost="1880" />
+			<maxSpeed btnID="9" speed="5"  weight="700" cost="2350" />
+			
+			<maxSpeed btnID="10" speed="1"  weight="10" cost="470" />
+			<maxSpeed btnID="10" speed="2"  weight="25" cost="940" />
+			<maxSpeed btnID="10" speed="3"  weight="60" cost="1410" />
+			<maxSpeed btnID="10" speed="4"  weight="160" cost="1880" />
+			<maxSpeed btnID="10" speed="5"  weight="300" cost="2350" />
+			
+			<maxSpeed btnID="11" speed="1"  weight="1400" cost="1160" />
+			<maxSpeed btnID="11" speed="2"  weight="3600" cost="2320" />
+			<maxSpeed btnID="11" speed="3"  weight="6600" cost="3480" />
+			
+			<maxSpeed btnID="12" speed="1"  weight="2000" cost="1630" />
+			<maxSpeed btnID="12" speed="2"  weight="4500" cost="3260" />
+			<maxSpeed btnID="12" speed="3"  weight="8500" cost="4890" />	
+			
+			<maxSpeed btnID="13" speed="1"  weight="2700" cost="2100" />
+			<maxSpeed btnID="13" speed="2"  weight="5700" cost="4200" />
+			<maxSpeed btnID="13" speed="3"  weight="10500" cost="6300" />
+			
+			<maxSpeed btnID="14" speed="1"  weight="3500" cost="2570" />
+			<maxSpeed btnID="14" speed="2"  weight="6650" cost="5140" />
+			<maxSpeed btnID="14" speed="3"  weight="12600" cost="7710" />
+			
+			<maxSpeed btnID="15" speed="1"  weight="4400" cost="3040" />
+			<maxSpeed btnID="15" speed="2"  weight="8000" cost="6080" />
+			<maxSpeed btnID="15" speed="3"  weight="14800" cost="9120" />
+			
+			<maxSpeed btnID="16" speed="1"  weight="5400" cost="3510" />
+			<maxSpeed btnID="16" speed="2"  weight="9450" cost="7020" />
+			<maxSpeed btnID="16" speed="3"  weight="17100" cost="10530" />
+			
+			<maxSpeed btnID="17" speed="1"  weight="6500" cost="3980" />
+			<maxSpeed btnID="17" speed="2"  weight="11000" cost="7960" />
+			<maxSpeed btnID="17" speed="3"  weight="19500" cost="11940" />
+			
+			<maxSpeed btnID="18" speed="1"  weight="7700" cost="4450" />
+			<maxSpeed btnID="18" speed="2"  weight="12650" cost="8900" />
+			<maxSpeed btnID="18" speed="3"  weight="21450" cost="13350" />
+			
+			<maxSpeed btnID="19" speed="1"  weight="9000" cost="4920" />
+			<maxSpeed btnID="19" speed="2"  weight="13800" cost="9840" />
+			
+			<maxSpeed btnID="20" speed="1"  weight="10400" cost="5390" />
+			<maxSpeed btnID="20" speed="2"  weight="14950" cost="10780" />
+			
+			<maxSpeed btnID="21" speed="1"  weight="11900" cost="5860" />
+			<maxSpeed btnID="21" speed="2"  weight="16800" cost="11720" />
+			
+			<maxSpeed btnID="22" speed="1"  weight="13500" cost="6330" />
+			<maxSpeed btnID="22" speed="2"  weight="18000" cost="12660" />
+			
+			<maxSpeed btnID="23" speed="1"  weight="14400" cost="6330" />
+			<maxSpeed btnID="23" speed="2"  weight="19200" cost="13600" />
+
+		</maxSpeedMatrix>
+		
+<!--  
+===================================================================================
+			MAX G MATRIX
+===================================================================================
+-->
+		<maxGMatrix>
+			<maxGForce btnID="1" g="1" weight="1100" cost="510" />
+			<maxGForce btnID="1" g="2" weight="2400" cost="1020" />
+			<maxGForce btnID="1" g="3" weight="3900" cost="1530" />
+			<maxGForce btnID="1" g="4" weight="5600" cost="2040" />
+			<maxGForce btnID="1" g="5" weight="7500" cost="2550" />
+			
+			<maxGForce btnID="2" g="1" weight="900" cost="510" />
+			<maxGForce btnID="2" g="2" weight="1980" cost="1020" />
+			<maxGForce btnID="2" g="3" weight="3240" cost="1530" />
+			<maxGForce btnID="2" g="4" weight="4680" cost="2040" />
+			<maxGForce btnID="2" g="5" weight="6300" cost="2550" />
+			
+			<maxGForce btnID="3" g="1" weight="720" cost="510" />
+			<maxGForce btnID="3" g="2" weight="1600" cost="1020" />
+			<maxGForce btnID="3" g="3" weight="2640" cost="1530" />
+			<maxGForce btnID="3" g="4" weight="3840" cost="2040" />
+			<maxGForce btnID="3" g="5" weight="5200" cost="2550" />
+			
+			<maxGForce btnID="4" g="1" weight="560" cost="510" />
+			<maxGForce btnID="4" g="2" weight="1260" cost="1020" />
+			<maxGForce btnID="4" g="3" weight="2100" cost="1530" />
+			<maxGForce btnID="4" g="4" weight="3080" cost="2040" />
+			<maxGForce btnID="4" g="5" weight="4200" cost="2550" />
+			
+			<maxGForce btnID="5" g="1" weight="420" cost="510" />
+			<maxGForce btnID="5" g="2" weight="960" cost="1020" />
+			<maxGForce btnID="5" g="3" weight="1620" cost="1530" />
+			<maxGForce btnID="5" g="4" weight="2400" cost="2040" />
+			<maxGForce btnID="5" g="5" weight="3300" cost="2550" />
+			
+			<maxGForce btnID="6" g="1" weight="300" cost="510" />
+			<maxGForce btnID="6" g="2" weight="700" cost="1020" />
+			<maxGForce btnID="6" g="3" weight="1200" cost="1530" />
+			<maxGForce btnID="6" g="4" weight="1800" cost="2040" />
+			<maxGForce btnID="6" g="5" weight="2500" cost="2550" />
+			
+			<maxGForce btnID="7" g="1" weight="200" cost="510" />
+			<maxGForce btnID="7" g="2" weight="480" cost="1020" />
+			<maxGForce btnID="7" g="3" weight="840" cost="1530" />
+			<maxGForce btnID="7" g="4" weight="1280" cost="2040" />
+			<maxGForce btnID="7" g="5" weight="1800" cost="2550" />
+			
+			<maxGForce btnID="8" g="1" weight="120" cost="510" />
+			<maxGForce btnID="8" g="2" weight="300" cost="1020" />
+			<maxGForce btnID="8" g="3" weight="540" cost="1530" />
+			<maxGForce btnID="8" g="4" weight="840" cost="2040" />
+			<maxGForce btnID="8" g="5" weight="1200" cost="2550" />
+			
+			<maxGForce btnID="9" g="1" weight="60" cost="510" />
+			<maxGForce btnID="9" g="2" weight="160" cost="1020" />
+			<maxGForce btnID="9" g="3" weight="300" cost="1530" />
+			<maxGForce btnID="9" g="4" weight="480" cost="2040" />
+			<maxGForce btnID="9" g="5" weight="700" cost="2550" />
+			
+			<maxGForce btnID="10" g="1" weight="20" cost="510" />
+			<maxGForce btnID="10" g="2" weight="60" cost="1020" />
+			<maxGForce btnID="10" g="3" weight="120" cost="1530" />
+			<maxGForce btnID="10" g="4" weight="200" cost="2040" />
+			<maxGForce btnID="10" g="5" weight="300" cost="2550" />
+			
+			<maxGForce btnID="11" g="1" weight="2400" cost="1260" />
+			<maxGForce btnID="11" g="2" weight="5000" cost="2520" />
+			
+			<maxGForce btnID="12" g="1" weight="3250" cost="1770" />
+			<maxGForce btnID="12" g="2" weight="6250" cost="3540" />
+			
+			<maxGForce btnID="13" g="1" weight="4200" cost="2280" />
+			<maxGForce btnID="13" g="2" weight="7800" cost="4560" />
+			
+			<maxGForce btnID="14" g="1" weight="5250" cost="2790" />
+			<maxGForce btnID="14" g="2" weight="9100" cost="5580" />
+			
+			<maxGForce btnID="15" g="1" weight="6400" cost="3300" />
+			<maxGForce btnID="15" g="2" weight="10800" cost="6600" />
+			
+			<maxGForce btnID="16" g="1" weight="7650" cost="3810" />
+			<maxGForce btnID="16" g="2" weight="12150" cost="7620" />
+			
+			<maxGForce btnID="17" g="1" weight="9000" cost="4320" />
+			<maxGForce btnID="17" g="2" weight="14000" cost="8640" />
+			
+			<maxGForce btnID="18" g="1" weight="10450" cost="4830" />
+			<maxGForce btnID="18" g="2" weight="15400" cost="9660" />
+			
+			<maxGForce btnID="19" g="1" weight="12000" cost="5340" />
+			<maxGForce btnID="20" g="1" weight="13000" cost="5850" />
+			<maxGForce btnID="21" g="1" weight="14000" cost="6360" />
+			<maxGForce btnID="22" g="1" weight="15000" cost="6870" />
+			<maxGForce btnID="23" g="1" weight="16000" cost="7380" />
+			
+		</maxGMatrix>
+
+<!--  
+===================================================================================
+			MAX ACCEL MATRIX
+===================================================================================
+-->
+		<maxAccelerationMatrix>
+			<maxAcceleration btnID="1" accel="1" weight="1100"  cost="250" />
+			<maxAcceleration btnID="1" accel="2" weight="1200"  cost="500" />
+			<maxAcceleration btnID="1" accel="3" weight="1300"  cost="750" />
+			
+			<maxAcceleration btnID="2" accel="1" weight="900"  cost="250" />
+			<maxAcceleration btnID="2" accel="2" weight="990"  cost="500" />
+			<maxAcceleration btnID="2" accel="3" weight="1080"  cost="750" />
+			
+			<maxAcceleration btnID="3" accel="1" weight="720"  cost="250" />
+			<maxAcceleration btnID="3" accel="2" weight="800"  cost="500" />
+			<maxAcceleration btnID="3" accel="3" weight="880"  cost="750" />
+			
+			<maxAcceleration btnID="4" accel="1" weight="560"  cost="250" />
+			<maxAcceleration btnID="4" accel="2" weight="630"  cost="500" />
+			<maxAcceleration btnID="4" accel="3" weight="700"  cost="750" />
+			
+			<maxAcceleration btnID="5" accel="1" weight="420"  cost="250" />
+			<maxAcceleration btnID="5" accel="2" weight="480"  cost="500" />
+			<maxAcceleration btnID="5" accel="3" weight="540"  cost="750" />
+			
+			<maxAcceleration btnID="6" accel="1" weight="300"  cost="250" />
+			<maxAcceleration btnID="6" accel="2" weight="350"  cost="500" />
+			<maxAcceleration btnID="6" accel="3" weight="400"  cost="750" />
+			
+			<maxAcceleration btnID="7" accel="1" weight="200"  cost="250" />
+			<maxAcceleration btnID="7" accel="2" weight="240"  cost="500" />
+			<maxAcceleration btnID="7" accel="3" weight="280"  cost="750" />
+			
+			<maxAcceleration btnID="8" accel="1" weight="120"  cost="250" />
+			<maxAcceleration btnID="8" accel="2" weight="150"  cost="500" />
+			<maxAcceleration btnID="8" accel="3" weight="180"  cost="750" />
+
+			<maxAcceleration btnID="9" accel="1" weight="20"  cost="250" />
+			<maxAcceleration btnID="9" accel="2" weight="50"  cost="500" />
+			<maxAcceleration btnID="9" accel="3" weight="105"  cost="750" />
+
+			<maxAcceleration btnID="10" accel="1" weight="10"  cost="250" />
+			<maxAcceleration btnID="10" accel="2" weight="20"  cost="500" />
+			<maxAcceleration btnID="10" accel="3" weight="45"  cost="750" />
+
+			<maxAcceleration btnID="11" accel="1" weight="1400"  cost="450" />
+			<maxAcceleration btnID="11" accel="2" weight="4000"  cost="450" />
+			
+			<maxAcceleration btnID="12" accel="1" weight="2000"  cost="450" />
+			<maxAcceleration btnID="12" accel="2" weight="5500"  cost="450" />
+			
+			<maxAcceleration btnID="13" accel="1" weight="4200"  cost="450" />
+			<maxAcceleration btnID="13" accel="2" weight="5500"  cost="450" />
+			
+			<maxAcceleration btnID="14" accel="1" weight="5250"  cost="450" />
+			<maxAcceleration btnID="14" accel="2" weight="5600"  cost="450" />
+			
+			<maxAcceleration btnID="15" accel="1" weight="6400"  cost="450" />
+			<maxAcceleration btnID="15" accel="2" weight="6800"  cost="450" />
+			
+			<maxAcceleration btnID="16" accel="1" weight="7650"  cost="450" />
+			<maxAcceleration btnID="16" accel="2" weight="8100"  cost="450" />
+			
+			<maxAcceleration btnID="17" accel="1" weight="9000"  cost="450" />
+			<maxAcceleration btnID="17" accel="2" weight="9500"  cost="450" />
+			
+			<maxAcceleration btnID="18" accel="1" weight="10450"  cost="450" />
+			<maxAcceleration btnID="18" accel="2" weight="11000"  cost="450" />
+			
+			<maxAcceleration btnID="19" accel="1" weight="9000"  cost="450" />
+			<maxAcceleration btnID="20" accel="1" weight="10400"  cost="450" />
+			<maxAcceleration btnID="21" accel="1" weight="11900"  cost="450" />
+			<maxAcceleration btnID="22" accel="1" weight="13500"  cost="450" />
+			<maxAcceleration btnID="23" accel="1" weight="14400"  cost="450" />
+	
+		</maxAccelerationMatrix>
+
+<!--  
+===================================================================================
+			FRAME DEFINITIONS
+===================================================================================
+-->		
+		<frames>
+<!-- 
+allowsTurrets:
+0 = no 
+1 = may have 
+2 = only turrets allowed
+-->
+			<frameDef frameType="fighter"
+					minBaseTarget="5" maxBaseTarget="10"
+					minSpeed="1" maxSpeed="5"
+					minGs="1" maxGs="5"
+					minAccel="1" maxAccel="3"
+					minDecel="2"	maxDecel="2"
+					hasWings="true"
+					hasBows="false" 
+					maxGuns="8"
+					allowsTurrets="0"
+				>
+					<allowedProp propType="pusher"/>
+					<allowedProp propType="tractor"/>
+			</frameDef>
+				
+			<frameDef frameType="heavyFighter"
+					minBaseTarget="1" maxBaseTarget="6"
+					minSpeed="1" maxSpeed="5"
+					minGs="1" maxGs="5"
+					minAccel="1" maxAccel="3"
+					minDecel="2"	maxDecel="2"
+					hasWings="true"
+					hasBows="false" 
+					maxGuns="8"
+					allowsTurrets="1"
+				>
+					<allowedProp propType="pusher"/>
+					<allowedProp propType="tractor"/>
+			</frameDef>
+				
+			<frameDef frameType="hoplite"
+					minBaseTarget="6" maxBaseTarget="10"
+					minSpeed="1" maxSpeed="5"
+					minGs="5" maxGs="5"
+					minAccel="1" maxAccel="3"
+					minDecel="2"	maxDecel="2"
+					hasWings="false"
+					hasBows="false" 
+					maxGuns="4"
+					allowsTurrets="0"
+				>
+					<allowedProp propType="hoplite"/>
+			</frameDef>
+			
+			<frameDef frameType="lightBomber"
+					minBaseTarget="11" maxBaseTarget="18"
+					minSpeed="1" maxSpeed="3"
+					minGs="1" maxGs="2"
+					minAccel="1" maxAccel="2"
+					minDecel="2"	maxDecel="2"
+					hasWings="true"
+					hasBows="true" 
+					maxGuns="4"
+					allowsTurrets="2"
+				>
+					<allowedProp propType="pusher"/>
+					<allowedProp propType="tractor"/>
+			</frameDef>
+			
+			<frameDef frameType="heavyBomber"
+					minBaseTarget="19" maxBaseTarget="23"
+					minSpeed="1" maxSpeed="2"
+					minGs="1" maxGs="1"
+					minAccel="1" maxAccel="1"
+					minDecel="2"	maxDecel="2"
+					hasWings="true"
+					hasBows="true" 
+					maxGuns="10"
+					allowsTurrets="2"
+				>
+					<allowedProp propType="pusher"/>
+					<allowedProp propType="tractor"/>
+			</frameDef>
+			
+			 <frameDef frameType="lightCargo"
+					minBaseTarget="11" maxBaseTarget="18"
+					minSpeed="1" maxSpeed="3"
+					minGs="1" maxGs="2"
+					minAccel="1" maxAccel="2"
+					minDecel="2"	maxDecel="2"
+					hasWings="true"
+					hasBows="true" 
+					maxGuns="0"
+					allowsTurrets="0"
+				>
+					<allowedProp propType="pusher"/>
+					<allowedProp propType="tractor"/>
+			</frameDef>
+			
+			<frameDef frameType="heavyCargo"
+					minBaseTarget="19" maxBaseTarget="23"
+					minSpeed="1" maxSpeed="2"
+					minGs="1" maxGs="1"
+					minAccel="1" maxAccel="1"
+					minDecel="2"	maxDecel="2"
+					hasWings="true"
+					hasBows="true" 
+					maxGuns="0"
+					allowsTurrets="0"
+				>
+					<allowedProp propType="pusher"/>
+					<allowedProp propType="tractor"/>
+			</frameDef>
+		</frames>
+
+	</aircraftConfigs>
+</aeronaut>

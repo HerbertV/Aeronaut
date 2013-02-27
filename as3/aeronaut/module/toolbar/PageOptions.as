@@ -75,16 +75,6 @@ package as3.aeronaut.module.toolbar
 					this.rbtnCustomRocketHPMass,
 					RuleConfigs.USE_CUSTOM
 				);
-						
-			this.rbgAircraftCost = new CSRadioButtonGroup();
-			this.rbgAircraftCost.addMember(
-					this.rbtnOfficialAircraftCost,
-					RuleConfigs.USE_OFFICIAL
-				);
-			this.rbgAircraftCost.addMember(
-					this.rbtnCustomAircraftCost,
-					RuleConfigs.USE_CUSTOM
-				);
 			
 			this.btnSaveSettings.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
@@ -110,9 +100,6 @@ package as3.aeronaut.module.toolbar
 			
 			this.rbgRocketHPMass.setValue(
 					Globals.myRuleConfigs.usesRuleRocketHardpointMassreduction()
-				);
-			this.rbgAircraftCost.setValue(
-					Globals.myRuleConfigs.usesRuleAirframeCost()
 				);
 			
 			this.rbtnPrintAircraftFlavorSheet.setSelected(
@@ -142,9 +129,7 @@ package as3.aeronaut.module.toolbar
 			Globals.myRuleConfigs.useRuleRocketHardpointMassreduction(
 					this.rbgRocketHPMass.getValue()
 				);
-			Globals.myRuleConfigs.useRuleAirframeCost(
-					this.rbgAircraftCost.getValue()
-				);
+			
 			Globals.myRuleConfigs.setPrintingAircraftFlavorSheet(
 					this.rbtnPrintAircraftFlavorSheet.getIsSelected()
 				);

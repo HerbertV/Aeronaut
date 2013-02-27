@@ -118,7 +118,7 @@ package as3.aeronaut.objects
 		public function getIsPrintingAircraftFlavorSheet():Boolean
 		{
 			if( ready )
-				if( this.myXML.genericSettings.printAircraftFlavorSheet.@doPrint == "true" ) 
+				if( this.myXML..genericSettings.printAircraftFlavorSheet.@doPrint == "true" ) 
 					return true;
 			
 			return false;
@@ -137,9 +137,9 @@ package as3.aeronaut.objects
 			{
 				if( val == true )
 				{
-					this.myXML.genericSettings.printAircraftFlavorSheet.@doPrint = "true";
+					this.myXML..genericSettings.printAircraftFlavorSheet.@doPrint = "true";
 				} else {
-					this.myXML.genericSettings.printAircraftFlavorSheet.@doPrint = "false";
+					this.myXML..genericSettings.printAircraftFlavorSheet.@doPrint = "false";
 				}
 				this.settingsChanged = true;
 			} 
@@ -265,114 +265,6 @@ package as3.aeronaut.objects
 		public function usesRuleRocketHardpointMassreduction():String
 		{
 			return this.myXML.ruleConfigs.modifiedRocketHardpoints.@useRule;
-		}
-	
-		/**
-		 * ---------------------------------------------------------------------
-		 * getAirframeCost
-		 * ---------------------------------------------------------------------
-		 * <aircraftCostCalculation useRule="official">
-		 *		<ruleACC type="official">
-		 *			<accFormular condition="heavyFighter" 
-		 *					calcParameter="BTN" calcOperator="-" 
-		 *					calcValue="1" calcDollarMultiplier="500"/> 
-		 *			<accFormular condition="fighter"  
-		 *					calcParameter="BTN" calcOperator="-" 
-		 *					calcValue="1" calcDollarMultiplier="500"/> 
-		 *			<accFormular condition="hoplite" 
-		 *					calcParameter="BTN" calcOperator="-" 
-		 *					calcValue="1" calcDollarMultiplier="500"/> 
-		 *			<accFormular condition="bomber" 
-		 *					calcParameter="BTN" calcOperator="-" 
-		 *					calcValue="1" calcDollarMultiplier="500"/> 
-		 *		</ruleACC>
-		 *	</aircraftCostCalculation>
-		 *	
-		 * @param btn Base Target Number
-		 * @param frameType
-		 *
-		 * @return the costs in dollar
-		 */
-		public function getAirframeCost(
-				btn:int, 
-				frameType:String
-			):int 
-		{
-			if( ready ) 
-			{
-				var useRule:String = this.myXML.ruleConfigs.aircraftCostCalculation.@useRule;
-				var xml:XMLList = this.myXML..ruleACC.(@type == useRule);
-				
-				for each (var accf:XML in xml..accFormular) 
-				{
-					if (accf.@condition == frameType) {
-						return this.accFormularCalculation(accf,btn);
-					}
-				}
-			}
-			return 0;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * useRuleAirframeCost
-		 * ---------------------------------------------------------------------
-		 *	
-		 * @param val
-		 */
-		public function useRuleAirframeCost(val:String)
-		{
-			if( !ready )
-				return;
-				
-			this.myXML.ruleConfigs.aircraftCostCalculation.@useRule  = val;
-			this.settingsChanged = true;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * usesRuleAirframeCost
-		 * ---------------------------------------------------------------------
-		 *	
-		 * @return
-		 */
-		public function usesRuleAirframeCost():String
-		{
-			if( !ready )
-				return "";
-				
-			return this.myXML.ruleConfigs.aircraftCostCalculation.@useRule;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * accFormularCalculation
-		 * ---------------------------------------------------------------------
-		 * @param accf formula xml tag
-		 * @param btn BaseTarget Number
-		 * @return
-		 */
-		private function accFormularCalculation(
-				accf:XML, 
-				btn:int
-			):int
-		{
-			var cost:int = 0;
-			var calcPara:String = accf.@calcParameter;
-			var calcOp:String = accf.@calcOperator;
-			var calcVal:int = accf.@calcValue;
-			var calcMulti:int = accf.@calcDollarMultiplier;
-			
-			if( calcPara == "-BTN" ) 
-				btn = btn * -1;
-			
-			if( calcOp == "+" )
-				cost = (btn + calcVal)*calcMulti;
-			
-			if( calcOp == "-" )
-				cost = (btn - calcVal)*calcMulti;
-		
-			return cost;
 		}
 	
 	}

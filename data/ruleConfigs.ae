@@ -7,23 +7,7 @@
       <ruleMRHP type="official" massReduction="-10"/>
       <ruleMRHP type="custom" massReduction="-135"/>
     </modifiedRocketHardpoints>
-    <aircraftCostCalculation useRule="official">
-      <ruleACC type="official">
-        <accFormular condition="heavyFighter" calcParameter="BTN" calcOperator="-" calcValue="1" calcDollarMultiplier="500"/>
-        <accFormular condition="fighter" calcParameter="BTN" calcOperator="-" calcValue="1" calcDollarMultiplier="500"/>
-        <accFormular condition="hoplite" calcParameter="BTN" calcOperator="-" calcValue="1" calcDollarMultiplier="500"/>
-        <accFormular condition="bomber" calcParameter="BTN" calcOperator="-" calcValue="1" calcDollarMultiplier="500"/>
-      </ruleACC>
-      <ruleACC type="custom">
-        <accFormular condition="heavyFighter" calcParameter="-BTN" calcOperator="+" calcValue="10" calcDollarMultiplier="500"/>
-        <accFormular condition="fighter" calcParameter="BTN" calcOperator="+" calcValue="1" calcDollarMultiplier="500"/>
-        <accFormular condition="hoplite" calcParameter="BTN" calcOperator="-" calcValue="1" calcDollarMultiplier="500"/>
-      </ruleACC>
-    </aircraftCostCalculation>
     <activatePilotFeats active="true"/>
     <activateMaxCharacteristicCheck active="true"/>
   </ruleConfigs>
-  <genericSettings>
-    <printAircraftFlavorSheet doPrint="true"/>
-  </genericSettings>
 </aeronaut>
