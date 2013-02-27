@@ -130,14 +130,11 @@ package as3.aeronaut.module
 			this.pbtnController.addPage(this.form.btnPage2,this.form.page2);
 			this.pbtnController.addPage(this.form.btnPage3,this.form.page3);
 			this.pbtnController.addPage(this.form.btnPage4,this.form.page4);
-// TODO add when bombers and cargoplanes ready			
+// TODO activate when ready			
 			//this.pbtnController.addPage(this.form.btnPage5,this.form.page5);
 			this.pbtnController.setActivePage(0);			
 			
 			this.form.txtName.text = "";
-			
-// TODO remove when bombers and cargoplanes ready
-			this.form.btnPage5.setActive(false);
 			
 // TODO remove when we have a solution
 			this.form.rbtnPropDouble.setActive(false);
@@ -201,9 +198,8 @@ package as3.aeronaut.module
 			this.form.numStepAccel.setValueChangedCallback(
 					maxAccelChangedHandler
 				); 
-// TODO just a test
-// replace it with aircraft configs
-			var arrList:Array = new Array("1", "2", "3","4","5","6","7","8","9","10");
+
+			var arrList:Array = Globals.myAircraftConfigs.getBTNList();
 			this.form.numStepBaseTarget.setListOffset(1);
 			this.form.numStepBaseTarget.setupSteps(1,10,1,arrList);
 			this.form.numStepSpeed.setupSteps(1,5,1,1);
@@ -675,6 +671,14 @@ package as3.aeronaut.module
 		 */
 		private function calcBaseTargetWeights():void
 		{
+// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+			
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			
 			this.intLoadedWeight = Aircraft.BTN_WEIGHT_MATRIX[currBTN-1][0];
@@ -693,6 +697,14 @@ package as3.aeronaut.module
 		 */
 		private function calcMaxSpeedWeight():void
 		{
+			// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+				
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var speed:int = this.form.numStepSpeed.getValue();
 			intMaxSpeedWeight = Aircraft.MAXSPEED_WEIGHT_MATRIX[currBTN-1][speed-1];
@@ -710,6 +722,14 @@ package as3.aeronaut.module
 		 */
 		private function calcMaxGWeight():void
 		{
+			// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+				
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var gs:int = this.form.numStepGs.getValue();
 			intMaxGWeight = Aircraft.MAXG_WEIGHT_MATRIX[currBTN-1][gs-1];
@@ -726,6 +746,14 @@ package as3.aeronaut.module
 		 */
 		private function calcMaxAccelWeight():void
 		{
+			// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+				
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var accel:int = this.form.numStepAccel.getValue();
 			intMaxAccelWeight = Aircraft.MAXACCEL_WEIGHT_MATRIX[currBTN-1][accel-1];
@@ -743,6 +771,14 @@ package as3.aeronaut.module
 		 */
 		public function calcFreeWeight():void
 		{
+			// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+				
 			this.intFreeWeight = this.intPayload 
 					- this.intMaxSpeedWeight 
 					- this.intMaxGWeight 
@@ -764,6 +800,14 @@ package as3.aeronaut.module
 		 */
 		public function calcEngineCost():void
 		{
+			// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+				
 			this.intEngineCost = (this.form.numStepSpeed.getValue() *470) 
 					+ (this.form.numStepAccel.getValue() *250);
 			
@@ -784,6 +828,14 @@ package as3.aeronaut.module
 		 */
 		public function calcAirframeCost():void
 		{
+			// TODO test remove if finished			
+			var currFrame:String = rbgFrame.getValue();
+			if( currFrame == "heavyBomber" 
+					|| currFrame == "lightBomber" 
+					|| currFrame == "heavyCargo" 
+					|| currFrame == "lightCargo" )
+				return;
+				
 			// official rule hadrcoded 
 			// this.intAirframeCost = ((this.numStepBaseTarget.getValue()-1)*500)  + (this.numStepGs.getValue() *510);
 			
@@ -792,6 +844,7 @@ package as3.aeronaut.module
 			var frm:String = this.rbgFrame.getValue();
 			var gs:int = this.form.numStepGs.getValue();
 			
+// TODO obsolete remove when aircraft configs is finished 			
 			this.intAirframeCost = (gs * 510) +
 					Globals.myRuleConfigs.getAirframeCost(btn, frm) 
 			
@@ -855,10 +908,7 @@ package as3.aeronaut.module
 			var currFrame:String = rbgFrame.getValue();
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var currGs:int = this.form.numStepGs.getValue();
-			
-			// TODO just a test
-// replace it with aircraft configs
-			var arrListBTN:Array = new Array("1", "2", "3","4","5","6","7","8","9","10");
+			var arrListBTN:Array = Globals.myAircraftConfigs.getBTNList();
 			
 			if( currFrame == "fighter" )
 			{
@@ -901,6 +951,9 @@ package as3.aeronaut.module
 				this.form.numStepBaseTarget.setupSteps(6,10,currBTN,arrListBTN);
 			
 				currGs = 5;
+			} else {
+				// TODO just a test for bombers/cargso
+				this.form.numStepBaseTarget.setupSteps(11,23,11,arrListBTN);
 			}
 	// TODO add bombers/cargos too		
 			

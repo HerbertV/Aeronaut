@@ -87,6 +87,27 @@ package as3.aeronaut.objects
 			return ready;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBTNList
+		 * ---------------------------------------------------------------------
+		 * 
+		 * @return Array of BTN strings
+		 */
+		public function getBTNList():Array
+		{
+			var arr:Array = new Array();
+
+			if( ready )
+			{
+				for each( var xml:XML in myXML..baseTarget ) 
+				{
+					var btn:String =  xml.@BTN;
+					arr.push(btn);
+				}
+			}
+			return arr;
+		}
 		
 		
 	}
