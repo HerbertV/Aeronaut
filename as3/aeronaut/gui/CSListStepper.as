@@ -26,15 +26,12 @@ package as3.aeronaut.gui
 	import flash.events.Event;
 	import flash.text.TextField;
 	
-	import as3.aeronaut.CSFormatter;
-	
 	// =========================================================================
-	// CSNumStepperLbs
+	// CSObjectStepper
 	// =========================================================================
-	// a integer based stepper which formats it's output for lbs:
-	// e.g. 5,000 lbs
+	// a stepper that works with a list which is stepped through by an index.
 	//
-	public class CSNumStepperLbs 
+	public class CSListStepper
 			extends CSAbstractNumStepper
 	{
 		// =====================================================================
@@ -45,11 +42,14 @@ package as3.aeronaut.gui
 		
 		protected var stepValue:int = 1;
 		protected var currentValue:int = 0;
+		protected var listOffset:int = 0;
+		
+		protected var arrList:Array = new Array();
 		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function CSNumStepperLbs()
+		public function CSListStepper()
 		{
 			super();
 		}
@@ -60,13 +60,34 @@ package as3.aeronaut.gui
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * setListOffset
+		 * ---------------------------------------------------------------------
+		 * sets an offset for the list that is added for getValue()
+		 * and subtracted in setValue()
+		 *
+		 * important: 
+		 * the function needs to be called before the 
+		 * first call of setupSteps or get/set value
+		 *
+		 * @param val
+		 */
+		public function setListOffset(val:int):void
+		{
+			this.listOffset = val;
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * getValue
 		 * ---------------------------------------------------------------------
+		 * returns the index of the list incl. offset
+		 *
 		 * @return
 		 */
 		public function getValue():int
 		{
-			return this.currentValue;
+			return this.currentValue + this.listOffset;
 		}
 		
 		/**
@@ -77,7 +98,7 @@ package as3.aeronaut.gui
 		 */
 		public function setValue(val:int):void
 		{
-			this.currentValue = val;
+			this.currentValue = val - this.listOffset;
 			
 			this.updateTextField();
 			this.toggleStepButtons();
@@ -90,37 +111,42 @@ package as3.aeronaut.gui
 		 * @param min
 		 * @param max
 		 * @param start
-		 * @param step
+		 * @param valueList
 		 */
 		public function setupSteps(
 				min:int, 
 				max:int, 
 				start:int,
-				step:int=1
+				valueList:Array
 			):void
 		{
-			this.minValue = min;
-			this.maxValue = max;
-			this.currentValue = start;
-			this.stepValue = step;
+			this.arrList = valueList;
+			this.minValue = min - this.listOffset;
+			this.maxValue = max - this.listOffset;
+			this.currentValue = start - this.listOffset;
 			
 			this.updateTextField();
 			this.toggleStepButtons();
 		}
-		
+			
 		/**
 		 * ---------------------------------------------------------------------
 		 * updateTextField
 		 * ---------------------------------------------------------------------
-		 * fills the text field with the new value
-		 * also updates the tooltip
+		 * fills the text field with the new value from the list
 		 */
 		override protected function updateTextField():void
 		{
-			this.txtValue.text = CSFormatter.formatLbs(this.currentValue);
+			if( this.arrList == null )
+				return;
 			
-			var kg:Number = CSFormatter.convertLbs2Kg(this.currentValue);
-			this.tooltipText = CSFormatter.formatKg(kg);
+			if( this.currentValue >= this.arrList.length )
+			{
+				this.txtValue.text = "n.a.";
+				return;
+			}
+			
+			this.txtValue.text = String( this.arrList[this.currentValue] );
 		}
 		
 		/**

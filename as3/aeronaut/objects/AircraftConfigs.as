@@ -21,45 +21,73 @@
  */
 package as3.aeronaut.objects
 {
+	// MDM ZINC Lib
+	import mdm.*;
+	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+	import as3.aeronaut.Globals;
+	import as3.aeronaut.XMLProcessor;
+		
+	import as3.aeronaut.objects.baseData.*;
+	
 	// =========================================================================
-	// FileListElement
+	// AircraftConfigs
 	// =========================================================================
-	// 
-	public class FileListElement
+	// object for aircraftConfigs.ae
+	// read only
+	public class AircraftConfigs
 	{
+		// =====================================================================
+		// Constants
+		// =====================================================================
+		
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		public var filename:String;
-		public var viewname:String;
-		
+		private var ready:Boolean = false;
+		private var myXML:XML = new XML();
+				
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function FileListElement(
-				f:String, 
-				v:String
-			)
+		public function AircraftConfigs()
 		{
-			filename = f;
-			viewname = v;
+			var file:String = mdm.Application.path 
+					+ Globals.PATH_DATA 
+					+ "aircraftConfigs" 
+					+ Globals.AE_EXT;
+			this.myXML = XMLProcessor.loadXML(file);
+			
+			if( this.myXML == null ) 
+				return;
+			
+			if( XMLProcessor.checkDoc(this.myXML) == false ) 
+				return;
+			
+			ready = true;
+			
+			
 		}
-	
+		
 		// =====================================================================
 		// Functions
 		// =====================================================================
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * toString
+		 * isReady
 		 * ---------------------------------------------------------------------
 		 *
-		 * @return Object as string
+		 * @return
 		 */
-		public function toString():String
+		public function isReady():Boolean
 		{
-			return "FileListElement ["+filename+", "+viewname+" ]";
+			return ready;
 		}
-	
+		
+		
+		
 	}
 }

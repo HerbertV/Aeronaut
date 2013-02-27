@@ -11,10 +11,10 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2009-2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2013 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
@@ -33,6 +33,7 @@ package as3.aeronaut
 	import as3.aeronaut.module.ICSToolbarBottom;
 	
 	import as3.aeronaut.objects.BaseData;
+	import as3.aeronaut.objects.AircraftConfigs;
 	import as3.aeronaut.objects.RuleConfigs;
 	
 	import as3.aeronaut.print.PrintManager;
@@ -85,7 +86,7 @@ package as3.aeronaut
 		// =====================================================================
 		
 		//programm version
-		public static var version:String = "1.0.2";
+		public static var version:String = "1.1.0-alpha01";
 		//Progress bar
 		public static var myCSProgressBar:IProgressSymbol = null;
 		// Tooltip
@@ -103,6 +104,7 @@ package as3.aeronaut
 		public static var myPrintManager:PrintManager = null;
 		// objects
 		public static var myBaseData:BaseData = null;
+		public static var myAircraftConfigs:AircraftConfigs = null;
 		public static var myRuleConfigs:RuleConfigs = null;
 			
 		public static var lastSelectedImportDir:String = "";

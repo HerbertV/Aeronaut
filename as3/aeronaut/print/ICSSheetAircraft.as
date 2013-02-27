@@ -1,4 +1,4 @@
-/*
+﻿/*
  *    ___   ____                        __  
  *   / _ | / __/______  ___  ___ ___ __/ /_ 
  *  / __ |/ _// __/ _ \/ _ \/ _ `/ // / __/ 
@@ -14,7 +14,7 @@
  * @version: 1.0.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2009-2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2013 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php

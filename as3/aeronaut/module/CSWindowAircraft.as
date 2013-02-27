@@ -14,7 +14,7 @@
  * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2009-2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2013 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
@@ -137,10 +137,6 @@ package as3.aeronaut.module
 			this.form.txtName.text = "";
 			
 // TODO remove when bombers and cargoplanes ready
-			this.form.rbtnFrameHeavyBomber.setActive(false);
-			this.form.rbtnFrameLightBomber.setActive(false);
-			this.form.rbtnFrameHeavyCargo.setActive(false);
-			this.form.rbtnFrameLightCargo.setActive(false);
 			this.form.btnPage5.setActive(false);
 			
 // TODO remove when we have a solution
@@ -166,13 +162,23 @@ package as3.aeronaut.module
 					MouseEvent.MOUSE_DOWN,
 					frameTypeChangedHandler
 				);
-// TODO add when bombers and cargoplanes ready
-/*
 			this.form.rbtnFrameHeavyBomber.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					frameTypeChangedHandler
 				);
-*/	
+			this.form.rbtnFrameLightBomber.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					frameTypeChangedHandler
+				);
+			this.form.rbtnFrameHeavyCargo.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					frameTypeChangedHandler
+				);
+			this.form.rbtnFrameLightCargo.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					frameTypeChangedHandler
+				);
+
 			rbgProp = new CSRadioButtonGroup();
 			rbgProp.addMember(this.form.rbtnPropTractor,"tractor");
 			rbgProp.addMember(this.form.rbtnPropPusher,"pusher");
@@ -195,8 +201,11 @@ package as3.aeronaut.module
 			this.form.numStepAccel.setValueChangedCallback(
 					maxAccelChangedHandler
 				); 
-			
-			this.form.numStepBaseTarget.setupSteps(1,10,1,1);
+// TODO just a test
+// replace it with aircraft configs
+			var arrList:Array = new Array("1", "2", "3","4","5","6","7","8","9","10");
+			this.form.numStepBaseTarget.setListOffset(1);
+			this.form.numStepBaseTarget.setupSteps(1,10,1,arrList);
 			this.form.numStepSpeed.setupSteps(1,5,1,1);
 			this.form.numStepGs.setupSteps(1,5,1,1);
 			this.form.numStepAccel.setupSteps(1,3,1,1);
@@ -847,6 +856,10 @@ package as3.aeronaut.module
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			var currGs:int = this.form.numStepGs.getValue();
 			
+			// TODO just a test
+// replace it with aircraft configs
+			var arrListBTN:Array = new Array("1", "2", "3","4","5","6","7","8","9","10");
+			
 			if( currFrame == "fighter" )
 			{
 				this.form.rbtnPropTractor.setActive(true);
@@ -859,7 +872,7 @@ package as3.aeronaut.module
 				if( currBTN < 5 ) 
 					currBTN = 5;
 				
-				this.form.numStepBaseTarget.setupSteps(5,10,currBTN,1);
+				this.form.numStepBaseTarget.setupSteps(5,10,currBTN,arrListBTN);
 				
 			} else if( currFrame == "heavyFighter" ) {
 				this.form.rbtnPropTractor.setActive(true);
@@ -872,7 +885,7 @@ package as3.aeronaut.module
 				if( currBTN > 6 )
 					currBTN = 6;
 				
-				this.form.numStepBaseTarget.setupSteps(1,6,currBTN,1);
+				this.form.numStepBaseTarget.setupSteps(1,6,currBTN,arrListBTN);
 			
 			} else if( currFrame == "hoplite" ) {
 				this.form.rbtnPropTractor.setActive(false);
@@ -885,10 +898,12 @@ package as3.aeronaut.module
 				if( currBTN < 6 ) 
 					currBTN = 6;
 				
-				this.form.numStepBaseTarget.setupSteps(6,10,currBTN,1);
+				this.form.numStepBaseTarget.setupSteps(6,10,currBTN,arrListBTN);
 			
 				currGs = 5;
 			}
+	// TODO add bombers/cargos too		
+			
 			this.form.numStepGs.setupSteps(1,5,currGs,1);
 				
 			// special characteristics
