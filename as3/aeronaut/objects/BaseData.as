@@ -394,7 +394,7 @@ package as3.aeronaut.objects
 					var limit:Boolean = false;
 					if( sc.@countsToSCLimit == "true" ) 
 						limit = true;
-					
+// TODO change parsing for new sc structure					
 					var ctype:Array =  sc.@costType.split(",");
 					var obj:SpecialCharacteristic = new SpecialCharacteristic(
 							sc.@ID, 

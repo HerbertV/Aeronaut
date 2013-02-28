@@ -90,7 +90,7 @@ package as3.aeronaut.module.aircraft
 			super();
 			
 			this.pdSpecial.setEmptySelectionText("",false);
-			
+// TODO add filter by frame			
 			var arrSc:Array = Globals.myBaseData.getSpecialCharacteristics();
 			for( var i:int = 0; i < arrSc.length; i++ )
 				this.pdSpecial.addSelectionItem(
@@ -138,12 +138,13 @@ package as3.aeronaut.module.aircraft
 			
 			var obj:Aircraft =  Aircraft(this.winAircraft.getObject());
 			var objS:SpecialCharacteristic = null;
-			
 			var arrSC:Array =obj.getSpecialCharacteristics();
 			
 			this.listSpecial.clearList();
 			
-			this.scLimit = 12 - this.winAircraft.form.numStepBaseTarget.getValue();
+			this.scLimit = Globals.myAircraftConfigs.getBTNmaxSCByIndex(
+					this.winAircraft.form.numStepBaseTarget.getValue()
+				);
 			this.scFree = this.scLimit;
 			
 			for( var i:int = 0; i< arrSC.length; i++ ) 
@@ -324,6 +325,8 @@ package as3.aeronaut.module.aircraft
 		private function updateMultipleEngines():void
 		{
 			var arrSC:Array = this.listSpecial.getItemIDs()
+// TODO bombers and cargos always multiple engines 2 to 6 
+			
 			if( arrSC.indexOf(BaseData.HCID_SC_MULTIPLEENGINES) != -1 ) 
 			{
 				this.winAircraft.setMultipleEngines(true);
@@ -443,7 +446,7 @@ package as3.aeronaut.module.aircraft
 		public function recalc():void
 		{
 			var objSC:SpecialCharacteristic = null;
-			
+// TODO add new cost and weight types
 			this.intAdditionalCost = 0;
 			this.intAdditionalWeight = 0;
 			this.fAirframeMod = 0.00;

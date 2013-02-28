@@ -202,6 +202,36 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getBTNmaxSCByIndex
+		 * ---------------------------------------------------------------------
+		 * from baseTargetMatrix
+		 *
+		 * @param id indexID 
+		 * 
+		 * @return int the max special characterisics
+		 */
+		public function getBTNmaxSCByIndex(id:int):int
+		{
+			if( !ready ) 
+				return 0;
+			
+			var xml:XMLList =  myXML..baseTarget.(@indexID == id);
+			
+			if( xml != null ) 
+			{
+				return xml.@maxSC
+			} else {
+				if( Console.isConsoleAvailable() )
+					Console.getInstance().writeln(
+							"getBTNmaxSCByIndex:"+id+" not found!",
+							DebugLevel.ERROR
+						);
+			}
+			return 0;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * getMaxSpeedWeight
 		 * ---------------------------------------------------------------------
 		 * from maxSpeedMatrix

@@ -30,6 +30,7 @@ package as3.aeronaut.objects.baseData
 		// =====================================================================
 		// Constants
 		// =====================================================================
+// TODO extend for new types
 		public static const CT_AIRFRAME:String = "airframe";
 		public static const CT_COCKPIT:String = "cockpit";
 		public static const CT_ENGINE:String = "engine";
