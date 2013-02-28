@@ -146,6 +146,13 @@ shortName is used in the aircraft sheet</xs:documentation>
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="rocket" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>if slots = 0 then the bomb can only loaded in bombracks.
+
+Weight is used for all rockets/bombs that are placed in an bomb rack.
+
+toHitMod is used for bombers</xs:documentation>
+														</xs:annotation>
 														<xs:complexType>
 															<xs:sequence>
 																<xs:element name="shortName" type="xs:string"/>
@@ -166,6 +173,8 @@ shortName is used in the aircraft sheet</xs:documentation>
 															<xs:attribute name="usesPerSlot" type="xs:int" use="required"/>
 															<xs:attribute name="range" type="xs:int" use="required"/>
 															<xs:attribute name="price" type="xs:int" use="required"/>
+															<xs:attribute name="weight" type="xs:int" use="optional"/>
+															<xs:attribute name="toHitMod" type="xs:int" use="optional"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
@@ -179,31 +188,51 @@ shortName is used in the aircraft sheet</xs:documentation>
 									<xs:sequence>
 										<xs:element name="specialCharacteristic" minOccurs="0" maxOccurs="unbounded">
 											<xs:annotation>
-												<xs:documentation>costType as CSV Array may contain:
-"additional" "engine" "airframe" "cockpit" "armor" "weapon"
-
-costChanges in percent or fixed cost. fixed if additional all other costs are in percent
-
-weightChanges in percent or fixed weight. fixed if additional all other weights are in percent
-
-
-hasHardcodedAbility = some characteristics have hardcoded stuff then this attribute is true
+												<xs:documentation>hasHardcodedAbility = some characteristics have hardcoded stuff then this attribute is true
 
 groupID = there can only be one characteristic with the same groupid on an aircraft
- 
 
 countsToSCLimit = most characteristics count to the 12-BTN limit if not this flag is false      </xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
 												<xs:sequence>
 													<xs:element name="name" type="xs:string"/>
-													<xs:element name="description" type="xs:string"/>
+													<xs:element name="allowedFrame" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>defines which frametypes can use this characteristic</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="type" type="aircraftFrames" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="cost">
+														<xs:annotation>
+															<xs:documentation>costType as CSV Array may contain:
+"additional" "engine" "airframe" "cockpit" "armor" "weapon" "complete" "speed"
+
+costChanges in percent or fixed cost. fixed if additional all other costs are in percent</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="type" type="xs:string" use="required"/>
+															<xs:attribute name="changes" type="xs:float" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="weight">
+														<xs:annotation>
+															<xs:documentation>weightType as CSV Array may contain:
+"additional" "complete" 
+
+weightChanges in percent or fixed weight. fixed if additional all other weights are in percent</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="type" type="xs:string" use="required"/>
+															<xs:attribute name="changes" type="xs:float" use="required"/>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="description" type="xs:string" minOccurs="0"/>
 												</xs:sequence>
 												<xs:attribute name="ID" type="xs:string" use="required"/>
 												<xs:attribute name="groupID" type="xs:string" use="required"/>
-												<xs:attribute name="costType" type="xs:string" use="required"/>
-												<xs:attribute name="costChanges" type="xs:float" use="required"/>
-												<xs:attribute name="weightChanges" type="xs:float" use="required"/>
 												<xs:attribute name="hasHardcodedAbility" type="xs:boolean" use="required"/>
 												<xs:attribute name="countsToSCLimit" type="xs:boolean" use="required"/>
 											</xs:complexType>
@@ -262,7 +291,9 @@ BTN is 1-10 for normal aircrafts. and 1 to 1(-6) for bombers and cargos.
 
 loadedWeight is the free weight in lbs.
 
-payload is in ZnB the weight class in libs.</xs:documentation>
+payload is in ZnB the weight class in lbs.
+
+maxSC max special characteristics</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
 												<xs:attribute name="indexID" use="required">
@@ -276,6 +307,7 @@ payload is in ZnB the weight class in libs.</xs:documentation>
 												<xs:attribute name="loadedWeight" type="xs:int" use="required"/>
 												<xs:attribute name="payload" type="xs:int" use="required"/>
 												<xs:attribute name="cost" type="xs:int" use="required"/>
+												<xs:attribute name="maxSC" type="xs:int" use="required"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
