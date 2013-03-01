@@ -4,9 +4,17 @@ ________              ___   ____     Crimson Skies      __             ________
        \______\----/_/ |_/___/_/  \___/_//_/\_,_/\_,_/\__/----/______/
 
 ================================================================================
-Change Log -- Version 1.0.2
+Change Log -- Version 1.1.0 alpha 01
 ================================================================================
 for reference numbers see https://github.com/HerbertV/Aeronaut/issues
+
+
+Version - 1.1.0 alpha 01: 
+--------------------------------------------------------------------------------
+-	BTN, max speed, max Gs and max acceleration weights and cost
+	can be now configured via aircraftConfigs.ae. See issue #24
+	This allows more custom house rule setups.
+
 
 
 Version - 1.0.2: 
@@ -18,7 +26,7 @@ Version - 1.0.2:
 - 	Fixed Issue #14: Gun point 8 is activated now.
 - 	Fixed Issue #16: Gunners and NPC become no longer invalid.
 - 	Fixed Issue #17: RHP weight label is now formatted correct.
--   Fixed Issue #23: EP with textinputs are now updating as intended.
+-   	Fixed Issue #23: EP with textinputs are now updating as intended.
 -	Fixed Issue #18: Now all glyphs are included.
 
 
