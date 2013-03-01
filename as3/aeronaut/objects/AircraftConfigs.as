@@ -99,15 +99,46 @@ package as3.aeronaut.objects
 		{
 			var arr:Array = new Array();
 
-			if( ready )
+			if( !ready ) 
+				return arr;
+			
+			for each( var xml:XML in myXML..baseTarget ) 
 			{
-				for each( var xml:XML in myXML..baseTarget ) 
-				{
-					var btn:String = xml.@BTN;
-					arr.push(btn);
-				}
+				var btn:String = xml.@BTN;
+				arr.push(btn);
 			}
 			return arr;
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBTNByIndex
+		 * ---------------------------------------------------------------------
+		 * from baseTargetMatrix
+		 *
+		 * @param id indexID 
+		 *
+		 * @return BTN string
+		 */
+		public function getBTNByIndex(id:int):String
+		{
+			if( !ready ) 
+				return "0";
+			
+			var xml:XMLList =  myXML..baseTarget.(@indexID == id);
+			
+			if( xml != null ) 
+			{	
+				return xml.@BTN;
+			} else {
+				if( Console.isConsoleAvailable() )
+					Console.getInstance().writeln(
+							"getBTNByIndex:"+id+" not found!",
+							DebugLevel.ERROR
+						);
+			}
+			return "0";
 		}
 		
 		/**

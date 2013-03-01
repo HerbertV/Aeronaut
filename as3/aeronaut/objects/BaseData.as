@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -394,17 +394,31 @@ package as3.aeronaut.objects
 					var limit:Boolean = false;
 					if( sc.@countsToSCLimit == "true" ) 
 						limit = true;
-// TODO change parsing for new sc structure					
-					var ctype:Array =  sc.@costType.split(",");
+
+					var frames:Array = new Array();
+					
+					for each( var af:XML in sc.allowedFrame ) 
+						frames.push(af.@type);
+					
+					var ctype:Array = sc.cost.@type.split(",");
+					var wtype:Array = sc.weight.@type.split(",");
+					
+					var desc:String = "";
+					if( sc.hasOwnProperty("description") )
+						desc = sc.description.text().toString();
+					
 					var obj:SpecialCharacteristic = new SpecialCharacteristic(
 							sc.@ID, 
 							sc.name.text().toString(), 
 							sc.@groupID, 
+							frames,
 							ctype, 
-							Number(sc.@costChanges), 
-							Number(sc.@weightChanges), 
+							Number(sc.cost.@changes),
+							wtype,
+							Number(sc.weight.@changes), 
 							hcode,
-							limit
+							limit,
+							desc
 						);
 					arr.push(obj);
 				}
@@ -443,16 +457,29 @@ package as3.aeronaut.objects
 					if( xml.@countsToSCLimit == "true" ) 
 						limit = true;
 					
-					var ctype:Array = xml.@costType.split(",");
+					var frames:Array = new Array();
+					for each( var af:XML in xml.allowedFrame ) 
+						frames.push(af.@type);
+					
+					var ctype:Array = xml.cost.@type.split(",");
+					var wtype:Array = xml.weight.@type.split(",");
+					
+					var desc:String = "";
+					if( xml.hasOwnProperty("description") )
+						desc = xml.description.text().toString();
+					
 					obj = new SpecialCharacteristic(
 							xml.@ID, 
 							xml.name.text().toString(), 
 							xml.@groupID, 
+							frames,
 							ctype, 
-							Number(xml.@costChanges), 
-							Number(xml.@weightChanges), 
+							Number(xml.cost.@changes),
+							wtype,
+							Number(xml.weight.@changes), 
 							hcode,
-							limit
+							limit,
+							desc
 						);
 				} else {
 					if( Console.isConsoleAvailable() )
@@ -546,6 +573,14 @@ package as3.aeronaut.objects
 			{
 				for each( var rocket:XML in myXML..rocket ) 
 				{
+					var w:int = 0;
+					if( rocket.hasOwnProperty("@weight") )
+						w = rocket.@weight;
+						
+					var hit:int = 0;
+					if( rocket.hasOwnProperty("@toHitMod") )
+						hit = rocket.@toHitMod;
+						
 					var obj:Rocket = new Rocket(
 							rocket.@ID,
 							rocket.shortName.text().toString(), 
@@ -554,7 +589,9 @@ package as3.aeronaut.objects
 							rocket.@slots, 
 							rocket.@usesPerSlot, 
 							rocket.@range, 
-							rocket.@price 
+							rocket.@price,
+							w,
+							hit
 						);
 					arr.push(obj);
 				}
@@ -578,6 +615,14 @@ package as3.aeronaut.objects
 				var xml:XMLList =  myXML..rocket.(@ID == id);
 				if( xml != null )
 				{
+					var w:int = 0;
+					if( xml.hasOwnProperty("@weight") )
+						w = xml.@weight;
+						
+					var hit:int = 0;
+					if( xml.hasOwnProperty("@toHitMod") )
+						hit = xml.@toHitMod;
+						
 					obj = new Rocket(
 							xml.@ID,
 							xml.shortName.text().toString(), 
@@ -586,7 +631,9 @@ package as3.aeronaut.objects
 							xml.@slots, 
 							xml.@usesPerSlot, 
 							xml.@range, 
-							xml.@price 
+							xml.@price,
+							w, 
+							hit
 						);
 				} else {
 					if( Console.isConsoleAvailable() )
@@ -664,6 +711,9 @@ package as3.aeronaut.objects
 			}
 			return obj;
 		}
+		
+// TODO: accessing squadron objects		
+// TODO: needs new object classes.
 		
 	}
 }

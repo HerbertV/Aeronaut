@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -48,7 +48,11 @@ package as3.aeronaut.objects.baseData
 		public var usesPerSlot:int;
 		public var range:int;
 		public var price:int;
-		
+
+		public var weight:int;
+		public var toHitMod:int;
+
+
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -62,8 +66,10 @@ package as3.aeronaut.objects.baseData
 		 * @param t	type (see contants above)
 		 * @param s slot number
 		 * @param ups uses per slot
-		 * @param r rang in hexes
+		 * @param r range in hexes
 		 * @param p price in dollar
+		 * @param w weight in lbs
+		 * @param hit to hit mod
 		 */
 		public function Rocket(
 				id:String,
@@ -73,7 +79,9 @@ package as3.aeronaut.objects.baseData
 				s:int, 
 				ups:int, 
 				r:int, 
-				p:int 
+				p:int,
+				w:int,
+				hit:int
 			)
 		{
 			myID = id;
@@ -85,6 +93,8 @@ package as3.aeronaut.objects.baseData
 			usesPerSlot = ups;
 			range = r;
 			price = p;
+			weight = w;
+			toHitMod = hit;
 		}
 		
 		// =====================================================================
