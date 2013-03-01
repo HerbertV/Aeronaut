@@ -140,19 +140,23 @@
 	
 	<i>Rocket Tag:</i><br>
 	<span class="Code">
-	&lt;rocket type="rocket" range="4" slots="1" usesPerSlot="1" ID="AP" price="200"&gt;<br>
+	&lt;rocket type="rocket" range="4" slots="1" usesPerSlot="1" ID="AP" price="200" weight="100" toHitMod="0"&gt;<br>
 		&lt;shortName&gt;AP&lt;/shortName&gt;<br>
 		&lt;longName&gt;Armor Piercing&lt;/longName&gt;<br>
 	&lt;/rocket&gt;<br>
 	</span>
+	<br>
+	Changed with Version 1.1.0
 	<br>
 	Here you can add anything that is attachable to a rocket hardpoint.
 	The attribute "ID" has to be unique.	
 	The attribute "type" can be rocket, bomb, reloadable or fueltank.
 	The attribute "range" is the range in hexes.
 	The attributes "slots" and "usesPerSlot" describing the space a rocket needs. 
+	If slots is 0 the bomb can only loaded in a bombrack of a bomber.
 	The attribute "price" is the price in Dollar.
 	The "longName" tag is shown in the weapon list and the "shortName" tag is used in the print sheet.
+	The attributes "weight" and "toHitMod" are added for the new bomber rules. weight is in lbs.
 	<br>
 	<br>
 	<br>
@@ -160,22 +164,119 @@
 	
 	<i>Special Characteristic Tag:</i><br>
 	<span class="Code">
-	&lt;specialCharacteristic ID="AC_001" groupID="nitro" costType="additional" weightChanges="25" costChanges="750" hasHardcodedAbility="false" countsToSCLimit="true"&gt;<br>
+	&lt;specialCharacteristic ID="AC_001" groupID="nitro" hasHardcodedAbility="false" countsToSCLimit="true"&gt;<br>
 		&lt;name&gt;Nitro Injectors&lt;/name&gt;<br>
-		&lt;description&gt;&lt;/description&gt;<br>
+		&lt;allowedFrame type="" /&gt;<br>
+			1-n...<br>
+		&lt;cost type="" changes="" /&gt;<br>
+		&lt;weight type="" changes="" /&gt;<br>
+		
+		&lt;description&gt;&lt;/description&gt; (optional)<br>
 	&lt;/specialCharacteristic&gt;<br>
 	</span>
 	<br>
+	Changed with Version 1.1.0
+	<br>
 	The attribute "ID" has to be unique.	
-	The attribute "groupID" is not used so far.
-	The attribute "costType" can be additional, engine, airframe, cockpit, armor, weapon or a comma seperated list of engine, airframe, cockpit, armor and weapon.
-	The attribute "weightChanges" till now only absolute values are possible, but percent values will be enabled with a future update. 
-	The attribute "costChanges" can be absolute or percent. Absolute if costType is additional all other weights are in percent.
+	The attribute "groupID" if the field is empty you can add the characteristic multiple times. If a groupID is set only one element of the same id can be added to an aircraft.
+	The attribute "hasHardcodedAbility" marks SCs that have hardcoded functions inside Aeronaut.
 	The attribute "countsToSCLimit" if it is true, the characteristic counts to the limit.
-	The "descripton" tag is not used so far.
+	<br>
+	The tag "allowedFrame" is added 1-n times. each tag defines a frametype that can have this SC. 
+	<br>
+	The tag "cost" defines cost type and cost changes.
+	Allowed types are additional, complete, speed, engine, airframe, cockpit, armor, weapon or a comma seperated list of these types.
+	If the type is additional the changes attribute is read as absolute value all other types affect the cost changes of
+	the category in percent.
+	<br>
+	The tag "weight" defines weight type and weight changes.
+	Allowed types are additional or complete
+	If the type is additional the changes attribute is read as absolute value all other types affect the weight changes of
+	the category in percent.
+	<br>
+	The "descripton" tag is not used so far and is now optional.
+	<br>
+	<br>
+	<br>
 	
+	<i>Squadrons:</i><br>
+	<br> TODO Since Version 1.1.0 not implemented yet.
 	
+	<br>
+	<br>
+	<br>
 	
+</p>
+<br><br>
+<p class="Text" align="justify">
+	<b>Editing AircraftConfigs.ae</b>
+	<br>
+	<br>
+	This file was added with Version 1.1.0.
+	The "aircraftConfigs.ae" file defines the different matrices for calculating costs and weights of an aircraft.
+	Also it defines the frame types what is allowed and what not.
+	So now every aspect of basic costs and weight can be customized for house rules.
+	<br>
+	<br>
+	
+	<i>Base Target Matrix:</i><br>
+	<span class="Code">
+	&lt;baseTarget indexID="1"  BTN="1" loadedWeight="14500" payload="10000" cost="0"  maxSC="11" /&gt;
+	</span>
+	TODO
+	<br>
+	<br>
+	<br>
+	
+	<i>Max Speed Matrix:</i><br>
+	<span class="Code">
+	&lt;maxSpeed btnID="1" speed="1"  weight="700" cost="470" /&gt;
+	</span>
+	TODO
+	<br>
+	<br>
+	<br>
+	
+	<i>Max Gs Matrix:</i><br>
+	<span class="Code">
+	&lt;maxGForce btnID="1" g="1" weight="1100" cost="510" /&gt;
+	</span>
+	TODO
+	<br>
+	<br>
+	<br>
+	
+	<i>Max Acceleration Matrix:</i><br>
+	<span class="Code">
+	&lt;maxAcceleration btnID="1" accel="1" weight="1100"  cost="250" /&gt;
+	</span>
+	TODO
+	<br>
+	<br>
+	<br>
+	
+	<i>Frame Definition Tag:</i><br>
+	<span class="Code">
+	&lt;frameDef frameType="fighter" minBaseTarget="5" maxBaseTarget="10" minSpeed="1" maxSpeed="5" minGs="1" maxGs="5" minAccel="1" maxAccel="3" minDecel="2"	maxDecel="2" hasWings="true" hasBows="false"  maxGuns="8" allowsTurrets="0"
+			&gt;<br>
+				&lt;allowedProp propType="pusher"/&gt;<br>
+					1-n ...<br>
+	&lt;/frameDef&gt;<br>
+	</span>
+	First you can't add new frame types by your own yet, but modify the exiting ones.
+	The attribute "allowsTurrets" can be 0,1 or 2:<br>
+		0 = no <br>
+		1 = may have <br> 
+		2 = only turrets allowed <br>
+		
+		TODO
+	<br>
+	<br>
+	<br>
+</p>
+<br>
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a>		
 </p>
 <br><br>
 
