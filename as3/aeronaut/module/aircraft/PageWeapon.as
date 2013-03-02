@@ -731,9 +731,20 @@ package as3.aeronaut.module.aircraft
 			var maxRHP:int = 11 - currBTN;
 			var currRHP:int = this.numStepRocketSlots.getValue();
 			
-			if( frame == "hoplite" )
+			if( frame == FrameDefinition.FT_AUTOGYRO )
+			{
 				if( maxRHP > 4 )
 					maxRHP = 4;
+			}
+			
+			if( frame == FrameDefinition.FT_HEAVY_BOMBER
+			   		|| frame == FrameDefinition.FT_LIGHT_BOMBER
+			   		|| frame == FrameDefinition.FT_HEAVY_CARGO
+			   		|| frame == FrameDefinition.FT_LIGHT_CARGO
+			   )
+			{
+				maxRHP = 0;
+			}
 			
 			if( currRHP > maxRHP ) 
 				currRHP = maxRHP;
