@@ -162,7 +162,8 @@ package as3.aeronaut.gui
 			if( myTooltip != null ) 
 				this.myTooltip.hide();
 				
-			this.stage.removeEventListener(MouseEvent.MOUSE_OUT, outHandler);	
+			if( this.stage != null ) 
+				this.stage.removeEventListener(MouseEvent.MOUSE_OUT, outHandler);	
 		}
 		
 		/**
@@ -181,6 +182,9 @@ package as3.aeronaut.gui
 				
 			if( this.myTooltip != null ) 
 				this.myTooltip.hide();
+				
+			if( this.stage != null ) 
+				this.stage.removeEventListener(MouseEvent.MOUSE_OUT, outHandler);		
 		}
 		
 		/**

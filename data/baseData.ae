@@ -627,7 +627,7 @@
 		
 		<aircraftCharacteristics>
 
-			<specialCharacteristic ID="AC_001" groupID=""  hasHardcodedAbility="false" countsToSCLimit="false" >
+			<specialCharacteristic ID="AC_001" groupID="nitro"  hasHardcodedAbility="true" countsToSCLimit="false" >
 				<name>Nitro Injectors</name>
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
@@ -1006,13 +1006,13 @@
 				<weight type="additional" changes="0" />
 			</specialCharacteristic>
 		
-			<specialCharacteristic ID="AC_037" groupID="" hasHardcodedAbility="false"  countsToSCLimit="false">
+			<specialCharacteristic ID="AC_037" groupID="nitro" hasHardcodedAbility="true"  countsToSCLimit="false">
 				<name>Nitro Injectors (4 pack)</name>
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
 				<allowedFrame type="hoplite" />
-				<cost type="additional" changes="20" />
-				<weight type="additional" changes="650" />
+				<cost type="additional" changes="650" />
+				<weight type="additional" changes="20" />
 			</specialCharacteristic>
 
 			<specialCharacteristic ID="AC_038" groupID="zepHook" hasHardcodedAbility="false"  countsToSCLimit="true">

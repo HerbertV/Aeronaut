@@ -265,9 +265,15 @@ package as3.aeronaut.print.aircraft
 			var specialObj:SpecialCharacteristic = null;
 			var gmods:Array = new Array(int(0),int(0));
 			
+			this.boxNitro.visible = false;
+			
 			for( var i:int=0; i< arrSC.length; i++ ) 
 			{
 				specialObj = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]);
+				
+				if( specialObj.myID == BaseData.HCID_SC_NITRO5
+				   		|| specialObj.myID == BaseData.HCID_SC_NITRO4 ) 
+					this.boxNitro.visible = true;
 				
 				if( specialObj.myID == BaseData.HCID_SC_HIGHTORQUE ) 
 				{

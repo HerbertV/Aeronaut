@@ -30,6 +30,8 @@ package as3.aeronaut.module.aircraft
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
 	import as3.hv.core.net.ImageLoader;
 	import as3.hv.core.utils.BitmapHelper;
 	
@@ -227,13 +229,13 @@ package as3.aeronaut.module.aircraft
 				sc = Globals.myBaseData.getSpecialCharacteristic(arrSC[i])
 				if( sc.groupID != "" ) 
 				{
-					if( arrFoundSCGroups.indexOf(groupID) == -1 )
+					if( arrFoundSCGroups.indexOf(sc.groupID) == -1 )
 					{
 						// everything is valid
-						arrFoundSCGroups.push(groupID);
-					} else if( arrInvalidSCGroups.indexOf(groupID) == -1 ) {
+						arrFoundSCGroups.push(sc.groupID);
+					} else if( arrInvalidSCGroups.indexOf(sc.groupID) == -1 ) {
 						// double group id found but add only once
-						arrInvalidSCGroups.push(groupID);
+						arrInvalidSCGroups.push(sc.groupID);
 					}
 				}
 			}
@@ -244,6 +246,7 @@ package as3.aeronaut.module.aircraft
 			var limitValid:Boolean = true;
 			var groupsValid:Boolean = true;
 			var multiEngineAndHighTValid:Boolean = true;
+			var framesValid:Boolean = true;
 			
 			// check sc limit 12 - BTN
 			if( Globals.myRuleConfigs.getIsMaxCharacteristicCheckActive() == true
@@ -268,12 +271,14 @@ package as3.aeronaut.module.aircraft
 				var groupIsInvalid:Boolean = false;
 				var frameIsNotAllowed:Boolean = false;
 				
-				if( arrInvalidSCGroups.indexOf(groupID) != -1 ) 
+				if( arrInvalidSCGroups.indexOf(sc.groupID) != -1 ) 
 					groupIsInvalid = true;
 				
 				if( !this.checkSCAllowsFrame(sc,frame) )
+				{
 					frameIsNotAllowed = true;
-					
+					framesValid = true;
+				}
 				this.listSpecial.setItemIsInvalid(
 						i,
 						(groupIsInvalid || frameIsNotAllowed)
@@ -285,10 +290,23 @@ package as3.aeronaut.module.aircraft
 				this.listSpecial.setItemIsInvalid(idxSCMultipleEngines,true);
 				this.listSpecial.setItemIsInvalid(idxSCHightorque,true);
 			}
+			
+			if( Console.isConsoleAvailable() )
+			{
+				Console.getInstance().writeln(
+						"Page Special validate:"
+							+ " limit="+limitValid
+							+ " groups="+groupsValid
+							+ " multi+ht="+multiEngineAndHighTValid
+							+ " frames="+framesValid,
+						DebugLevel.DEBUG
+					);
+			}
 			// finally set valid
 			this.setValid( limitValid 
 					&& groupsValid 
 					&& multiEngineAndHighTValid 
+					&& framesValid
 				);
 		}
 		
