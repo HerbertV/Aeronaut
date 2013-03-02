@@ -61,18 +61,18 @@ package as3.aeronaut.module.aircraft
 		{
 			super();
 			
-			this.numStepArmorComplete.setupSteps(0, 460, 0, 10);
+			this.numStepArmorComplete.setupSteps(0, 1000, 0, 10);
 			
-			this.numStepArmorNose.setupSteps(0, 80, 0, 10);
-			this.numStepArmorPWL.setupSteps(0, 80, 0, 10);
-			this.numStepArmorPWT.setupSteps(0, 80, 0, 10);
-			this.numStepArmorPB.setupSteps(0, 80, 0, 10);
-			this.numStepArmorPS.setupSteps(0, 80, 0, 10);
-			this.numStepArmorSWL.setupSteps(0, 80, 0, 10);
-			this.numStepArmorSWT.setupSteps(0, 80, 0, 10);
-			this.numStepArmorSB.setupSteps(0, 80, 0, 10);
-			this.numStepArmorSS.setupSteps(0, 80, 0, 10);
-			this.numStepArmorTail.setupSteps(0, 80, 0, 10);
+			this.numStepArmorNose.setupSteps(0, 100, 0, 10);
+			this.numStepArmorPWL.setupSteps(0, 100, 0, 10);
+			this.numStepArmorPWT.setupSteps(0, 100, 0, 10);
+			this.numStepArmorPB.setupSteps(0, 100, 0, 10);
+			this.numStepArmorPS.setupSteps(0, 100, 0, 10);
+			this.numStepArmorSWL.setupSteps(0, 100, 0, 10);
+			this.numStepArmorSWT.setupSteps(0, 100, 0, 10);
+			this.numStepArmorSB.setupSteps(0, 100, 0, 10);
+			this.numStepArmorSS.setupSteps(0, 100, 0, 10);
+			this.numStepArmorTail.setupSteps(0, 100, 0, 10);
 			
 			this.numStepArmorComplete.setValueChangedCallback(
 					armorChangedHandler
