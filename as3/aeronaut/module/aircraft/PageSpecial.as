@@ -211,20 +211,21 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function validateForm():void
 		{
-			var groupID:String = "";
 			var arrSC:Array = this.listSpecial.getItemIDs()
-			
+			var sc:SpecialCharacteristic;			
 			var arrFoundSCGroups:Array = new Array();
 			var arrInvalidSCGroups:Array = new Array();
+			var frame:String = this.winAircraft.getFrameType();
 			
 			var idxSCMultipleEngines:int = arrSC.indexOf(BaseData.HCID_SC_MULTIPLEENGINES);
 			var idxSCHightorque:int = arrSC.indexOf(BaseData.HCID_SC_HIGHTORQUE);
 			
-			// check groups first 
+			// check groups
+			// invald groups are marked later
 			for( var i:int = 0; i < arrSC.length; i++ )
 			{
-				groupID = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]).groupID;
-				if( groupID != "" ) 
+				sc = Globals.myBaseData.getSpecialCharacteristic(arrSC[i])
+				if( sc.groupID != "" ) 
 				{
 					if( arrFoundSCGroups.indexOf(groupID) == -1 )
 					{
@@ -258,16 +259,25 @@ package as3.aeronaut.module.aircraft
 			// mark sc free label
 			this.winAircraft.setTextFieldValid(this.lblSCFree, limitValid);
 			
-			// mark sc
+			// mark sc with invalid groups
+			// or with wrong frametype
 			for( i=0; i<arrSC.length; i++ )
 			{
-				groupID = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]).groupID;
+				sc = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]);
+				var groupID:String = sc.groupID;
+				var groupIsInvalid:Boolean = false;
+				var frameIsNotAllowed:Boolean = false;
+				
 				if( arrInvalidSCGroups.indexOf(groupID) != -1 ) 
-				{
-					this.listSpecial.setItemIsInvalid(i,true);
-				} else {
-					this.listSpecial.setItemIsInvalid(i,false);
-				}
+					groupIsInvalid = true;
+				
+				if( !this.checkSCAllowsFrame(sc,frame) )
+					frameIsNotAllowed = true;
+					
+				this.listSpecial.setItemIsInvalid(
+						i,
+						(groupIsInvalid || frameIsNotAllowed)
+					);
 			}
 			// mark high torque + multiple engines
 			if( idxSCMultipleEngines != -1 && idxSCHightorque!= -1 )
@@ -325,25 +335,46 @@ package as3.aeronaut.module.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * checkSCAllowsFrame
+		 * ---------------------------------------------------------------------
+		 * check if a special characteristic can be used by the frame type.
+		 *
+		 * @param sc
+		 * @param frame
+		 *
+		 * @return
+		 */
+		private function checkSCAllowsFrame(
+				sc:SpecialCharacteristic,
+				frame:String
+			):Boolean
+		{
+			for each ( var af:String in sc.allowedFrames )
+			{
+				if( af == frame )
+					return true;
+			}
+			return false;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * filterSCPulldown
 		 * ---------------------------------------------------------------------
 		 * refreshes the special characteristics pulldown
 		 */
 		private function filterSCPulldown()
 		{
-			/*
 			this.pdSpecial.clearSelection();
 			this.pdSpecial.clearSelectionItemList();
 			
 			var frame:String = this.winAircraft.getFrameType();
-	// FIXME indexof is === so it works not		
 			for( var i:int = 0; i < this.unfilteredSCs.length; i++ )
-				if( this.unfilteredSCs[i].allowedFrames.indexOf(frame) > -1 )
+				if( this.checkSCAllowsFrame(this.unfilteredSCs[i],frame) )
 					this.pdSpecial.addSelectionItem(
 							this.unfilteredSCs[i].myName, 
 							this.unfilteredSCs[i].myID
 						);
-						*/
 		}
 		
 		/**

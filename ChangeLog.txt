@@ -16,7 +16,9 @@ Version - 1.1.0 alpha 01:
 	This allows more custom house rule setups.
 -	frame definitions are now configured via aircraftConfigs.ae
 	see issue #22
-
+- 	Aircrafts special characteristics are now filtered and validated with 
+	the frame type. See Issue #28
+-	Layout adjustments in the aircraft window.
 
 
 Version - 1.0.2: 
@@ -28,7 +30,7 @@ Version - 1.0.2:
 - 	Fixed Issue #14: Gun point 8 is activated now.
 - 	Fixed Issue #16: Gunners and NPC become no longer invalid.
 - 	Fixed Issue #17: RHP weight label is now formatted correct.
--   	Fixed Issue #23: EP with textinputs are now updating as intended.
+-   Fixed Issue #23: EP with textinputs are now updating as intended.
 -	Fixed Issue #18: Now all glyphs are included.
 
 

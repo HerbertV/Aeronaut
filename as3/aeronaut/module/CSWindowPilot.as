@@ -29,8 +29,12 @@ package as3.aeronaut.module
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
 	import as3.hv.core.utils.BitmapHelper;
+	import as3.hv.core.utils.StringHelper;
 	import as3.hv.core.net.ImageLoader;
+	
 	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
@@ -51,9 +55,6 @@ package as3.aeronaut.module
 	import as3.aeronaut.objects.baseData.Language;
 	
 	import as3.aeronaut.print.IPrintable;
-
-// TODO	
-	//import as3.aeronaut.print.SheetPilot;
 		
 	// =========================================================================
 	// CSWindowPilot
@@ -830,7 +831,7 @@ package as3.aeronaut.module
 			this.form.pdLinkedTo.setActive(false);
 			
 			this.form.btnAddEP.setActive(true);
-			
+// TODO add ace pilot			
 			if( pilotType == Pilot.TYPE_HERO ) 
 			{
 				this.intTotalEP = Pilot.BASE_EP_HERO;
@@ -1118,11 +1119,38 @@ package as3.aeronaut.module
 					selectedFile.lastIndexOf("\\") + 1,
 					selectedFile.length
 				);
+			
 			var destDir = mdm.Application.path 
 					+ Globals.PATH_IMAGES
 					+ Globals.PATH_PILOT;
 			var destFile = destDir + filename;
-				
+			
+			if( Console.isConsoleAvailable() )
+			{
+				if( DebugLevel.check(DebugLevel.DEBUG) )
+				{									   
+					Console.getInstance().writeln(
+							"Importing Pilot Foto:",
+							DebugLevel.INFO
+						);
+					Console.getInstance().writeln(
+							"selectedFile: " +selectedFile,
+							DebugLevel.DEBUG
+						);
+					Console.getInstance().writeln(
+							"srDir: " +srcDir,
+							DebugLevel.DEBUG
+						);
+					Console.getInstance().writeln(
+							"filename: " +filename,
+							DebugLevel.DEBUG
+						);
+					Console.getInstance().writeln(
+							"destDir: " +destDir,
+							DebugLevel.DEBUG
+						);
+				}
+			}
 			Globals.lastSelectedImportDir = srcDir;
 			
 			if( !CSDialogs.fileExitsNotOrOverwrite(destFile) )  
