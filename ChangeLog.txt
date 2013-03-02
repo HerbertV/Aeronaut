@@ -19,6 +19,8 @@ Version - 1.1.0 alpha 01:
 - 	Aircrafts special characteristics are now filtered and validated with 
 	the frame type. See Issue #28
 -	Layout adjustments in the aircraft window.
+-	Each armor section can now have 10 lines
+-	Added nitro boxes to the aircraft print sheet. See issue #13
 
 
 Version - 1.0.2: 
