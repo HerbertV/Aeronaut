@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -76,11 +76,15 @@ package as3.aeronaut.module.aircraft
 		private var scFree:int = 0;
 		
 		private var intAdditionalCost:int = 0;
+		private var fAirframeCostMod:Number = 0.00;
+		private var fCockpitCostMod:Number = 0.00;
+		private var fEngineCostMod:Number = 0.00;
+		private var fArmorCostMod:Number = 0.00;
+		private var fSpeedCostMod:Number = 0.00;
+		private var fCompleteCostMod:Number = 0.00;
+		
 		private var intAdditionalWeight:int = 0;
-		private var fAirframeMod:Number = 0.00;
-		private var fCockpitMod:Number = 0.00;
-		private var fEngineMod:Number = 0.00;
-		private var fArmorMod:Number = 0.00;
+		private var fCompleteWeightMod:Number = 0.00;
 		
 		private var myBlueprintLoader:ImageLoader = null;
 		private var srcBlueprint:String = "";
@@ -239,8 +243,6 @@ package as3.aeronaut.module.aircraft
 					}
 				}
 			}
-			
-// TODO add frametype check
 			
 			//check
 			var limitValid:Boolean = true;
@@ -484,7 +486,7 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function getAirframeCostMod():Number
 		{
-			return this.fAirframeMod;
+			return this.fAirframeCostMod;
 		}
 		
 		/**
@@ -495,7 +497,7 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function getCockpitCostMod():Number
 		{
-			return this.fCockpitMod;
+			return this.fCockpitCostMod;
 		}
 		
 		/**
@@ -506,7 +508,7 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function getEngineCostMod():Number
 		{
-			return this.fEngineMod;
+			return this.fEngineCostMod;
 		}
 	
 		/**
@@ -517,7 +519,40 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function getArmorCostMod():Number
 		{
-			return this.fArmorMod;
+			return this.fArmorCostMod;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSpeedCostMod
+		 * ---------------------------------------------------------------------
+		 * @param
+		 */
+		public function getSpeedCostMod():Number
+		{
+			return this.fSpeedCostMod;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCompleteCostMod
+		 * ---------------------------------------------------------------------
+		 * @param
+		 */
+		public function getCompleteCostMod():Number
+		{
+			return this.fCompleteCostMod;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCompleteWeightMod
+		 * ---------------------------------------------------------------------
+		 * @param
+		 */
+		public function getCompleteWeightMod():Number
+		{
+			return this.fCompleteWeightMod;
 		}
 		
 		/**
@@ -533,54 +568,81 @@ package as3.aeronaut.module.aircraft
 		public function recalc():void
 		{
 			var objSC:SpecialCharacteristic = null;
-// TODO add new cost and weight types
 			this.intAdditionalCost = 0;
 			this.intAdditionalWeight = 0;
-			this.fAirframeMod = 0.00;
-			this.fCockpitMod = 0.00;
-			this.fEngineMod = 0.00;
-			this.fArmorMod = 0.00;
+			this.fAirframeCostMod = 0.00;
+			this.fCockpitCostMod = 0.00;
+			this.fEngineCostMod = 0.00;
+			this.fArmorCostMod = 0.00;
+			this.fCompleteCostMod = 0.00;
+			this.fSpeedCostMod = 0.00;
+			this.fCompleteWeightMod = 0.00;
+			
 			
 			var arrSC:Array = this.listSpecial.getItemIDs()
 			for( var i:int = 0; i < arrSC.length; i++ )
 			{
 				objSC = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]);
+				// costs
 				for( var j:int=0; j< objSC.costType.length; j++ ) 
 				{
 					if( objSC.costType[j] == SpecialCharacteristic.CT_AIRFRAME ) 
 					{
-						this.fAirframeMod += objSC.costChanges * 100;
+						this.fAirframeCostMod += objSC.costChanges * 100;
 						
 					} else if( objSC.costType[j] == SpecialCharacteristic.CT_COCKPIT ) {
-						this.fCockpitMod += objSC.costChanges * 100;
+						this.fCockpitCostMod += objSC.costChanges * 100;
 						
 					} else if( objSC.costType[j] == SpecialCharacteristic.CT_ENGINE ) {
-						this.fEngineMod += objSC.costChanges * 100;
+						this.fEngineCostMod += objSC.costChanges * 100;
 						
 					} else if( objSC.costType[j] == SpecialCharacteristic.CT_ARMOR ) {
-						this.fArmorMod += objSC.costChanges * 100;
+						this.fArmorCostMod += objSC.costChanges * 100;
 						
 					} else if( objSC.costType[j] == SpecialCharacteristic.CT_ADDITIONAL ) {
 						this.intAdditionalCost += int(objSC.costChanges);
-						this.intAdditionalWeight += int(objSC.weightChanges);
+					
+					} else if( objSC.costType[j] == SpecialCharacteristic.CT_COMPLETE ) {
+						this.fCompleteCostMod += objSC.costChanges * 100;
+					
+					} else if( objSC.costType[j] == SpecialCharacteristic.CT_SPEED ) {
+						this.fSpeedCostMod += objSC.costChanges * 100;
 					} 
+				}
+				//weight
+				for( var k:int=0; k< objSC.weightType.length; k++ ) 
+				{
+					if( objSC.weightType[k] == SpecialCharacteristic.WT_ADDITIONAL ) 
+					{
+						this.intAdditionalWeight += int(objSC.weightChanges);
+					
+					} else if( objSC.weightType[k] == SpecialCharacteristic.WT_COMPLETE ) {
+						this.fCompleteWeightMod += objSC.weightChanges * 100;
+					}
 				}
 			}
 			// Note: this is done to avoid a floating point problem.
-			this.fAirframeMod /= 100;
-			this.fCockpitMod /= 100;
-			this.fEngineMod /= 100;
-			this.fArmorMod /= 100;
+			this.fAirframeCostMod /= 100;
+			this.fCockpitCostMod /= 100;
+			this.fEngineCostMod /= 100;
+			this.fArmorCostMod /= 100;
+			this.fCompleteCostMod /= 100;
+			this.fSpeedCostMod /= 100;
+			this.fCompleteWeightMod /= 100;
 			
 			// update labels
 			this.winAircraft.form.lblCostAdditional.text = 
 					CSFormatter.formatDollar(this.intAdditionalCost);
 			this.lblAdditionalWeight.text = 
 					CSFormatter.formatLbs(this.intAdditionalWeight);
-			this.lblAirframeCostMod.text = String(fAirframeMod);
-			this.lblCockpitCostMod.text = String(fCockpitMod);
-			this.lblEngineCostMod.text = String(fEngineMod);
-			this.lblArmorCostMod.text = String(fArmorMod);
+			this.lblAirframeCostMod.text = String(fAirframeCostMod);
+			this.lblCockpitCostMod.text = String(fCockpitCostMod);
+			this.lblEngineCostMod.text = String(fEngineCostMod);
+			this.lblArmorCostMod.text = String(fArmorCostMod);
+			this.lblSpeedCostMod.text = String(fSpeedCostMod);
+			this.lblCompleteCostMod.text = String(fCompleteCostMod);
+			this.lblCompleteWeightMod.text = String(fCompleteWeightMod);
+			
 		}
 	
 		/**

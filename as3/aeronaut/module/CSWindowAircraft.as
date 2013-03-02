@@ -800,6 +800,11 @@ package as3.aeronaut.module
 					- this.form.page2.getWeaponWeight()
 					- this.form.page2.getHardpointWeight() 
 					- this.form.page3.getWeight();
+			
+			// weight modifier for Z&B SCs
+			this.intFreeWeight -= int( this.intPayload 
+					* this.form.page1.getCompleteWeightMod()
+				);	
 					
 			this.form.lblFreeWeight.text =  CSFormatter.formatLbs(intFreeWeight);
 			
@@ -815,11 +820,12 @@ package as3.aeronaut.module
 		{
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
 			
-			this.intEngineCost = 
-					Globals.myAircraftConfigs.getMaxSpeedCost(
+			var maxSpeedCost:int = Globals.myAircraftConfigs.getMaxSpeedCost(
 							currBTN, 
 							this.form.numStepSpeed.getValue()
-						)
+						);
+			
+			this.intEngineCost = maxSpeedCost
 					+ Globals.myAircraftConfigs.getMaxAccelCost(
 							currBTN, 
 							this.form.numStepAccel.getValue()
@@ -829,6 +835,11 @@ package as3.aeronaut.module
 			this.intEngineCost += int( this.form.page1.getEngineCostMod()
 					* this.intEngineCost 
 				);
+			// Speed modifier for Z&B SCs
+			this.intEngineCost += int( this.form.page1.getSpeedCostMod()
+					* maxSpeedCost 
+				);
+			
 			this.form.lblCostEngine.text = CSFormatter.formatDollar(
 					this.intEngineCost
 				);
@@ -888,6 +899,11 @@ package as3.aeronaut.module
 					+ this.intEngineCost 
 					+ this.intAirframeCost 
 					+ this.intCockpitCost;
+			
+			// complete cost mod for Z&B SCs
+			compCost += int( this.form.page1.getCompleteCostMod()
+					* compCost
+				);
 			
 			// update Labels
 			this.form.lblCostWeapon.text = CSFormatter.formatDollar(
