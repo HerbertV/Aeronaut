@@ -30,7 +30,7 @@ package as3.aeronaut.objects
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.XMLProcessor;
 		
-	import as3.aeronaut.objects.baseData.*;
+	import as3.aeronaut.objects.aircraftConfigs.*;
 	
 	// =========================================================================
 	// AircraftConfigs
@@ -441,6 +441,63 @@ package as3.aeronaut.objects
 			return 0;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getGun
+		 * ---------------------------------------------------------------------
+		 * @param id
+		 *
+		 * @return gun object
+		 */
+		public function getFrameDefinition(type:String):FrameDefinition
+		{
+			var obj:FrameDefinition = null;
+			
+			if( ready )
+			{
+				var xml:XMLList =  myXML..frameDef.(@frameType == type);
+				if( xml != null )
+				{
+					var props:Array = new Array();
+					for each( var ap:XML in xml..allowedProp ) 
+						props.push(ap.@propType);
+					
+					var wings:Boolean = false;
+					if( xml.@hasWings == "true" ) 
+						wings = true;
+					
+					var bows:Boolean = false;
+					if( xml.@hasBows == "true" ) 
+						bows = true;
+					
+					obj = new FrameDefinition(
+							xml.@frameType,
+							props,
+							xml.@minBaseTarget,
+							xml.@maxBaseTarget,
+							xml.@minSpeed,
+							xml.@maxSpeed,
+							xml.@minGs,
+							xml.@maxGs,
+							xml.@minAccel,
+							xml.@maxAccel,
+							xml.@minDecel,
+							xml.@maxDecel,
+							wings,
+							bows,
+							xml.@maxGuns,
+							xml.@allowsTurrets
+						);
+				} else {
+					if( Console.isConsoleAvailable() )
+						Console.getInstance().writeln(
+								"FrameDefinition with type:"+type+" not found!",
+								DebugLevel.ERROR
+							);
+				}
+			}
+			return obj;
+		}
 		
 	}
 }

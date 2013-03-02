@@ -14,6 +14,8 @@ Version - 1.1.0 alpha 01:
 -	BTN, max speed, max Gs and max acceleration weights and cost
 	can be now configured via aircraftConfigs.ae. See issue #24
 	This allows more custom house rule setups.
+-	frame definitions are now configured via aircraftConfigs.ae
+	see issue #22
 
 
 

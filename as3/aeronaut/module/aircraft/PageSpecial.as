@@ -45,6 +45,8 @@ package as3.aeronaut.module.aircraft
 	
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.SpecialCharacteristic;
+	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
+	
 	
 	// =========================================================================
 	// Class PageSpecial
@@ -81,6 +83,8 @@ package as3.aeronaut.module.aircraft
 		private var myBlueprintLoader:ImageLoader = null;
 		private var srcBlueprint:String = "";
 		private var loadedBlueprintSrc:String = "";
+		
+		private var unfilteredSCs:Array;
 				
 		// =====================================================================
 		// Constructor
@@ -90,12 +94,11 @@ package as3.aeronaut.module.aircraft
 			super();
 			
 			this.pdSpecial.setEmptySelectionText("",false);
-// TODO add filter by frame			
-			var arrSc:Array = Globals.myBaseData.getSpecialCharacteristics();
-			for( var i:int = 0; i < arrSc.length; i++ )
+			this.unfilteredSCs = Globals.myBaseData.getSpecialCharacteristics();
+			for( var i:int = 0; i < this.unfilteredSCs.length; i++ )
 				this.pdSpecial.addSelectionItem(
-						arrSc[i].myName, 
-						arrSc[i].myID
+						this.unfilteredSCs[i].myName, 
+						this.unfilteredSCs[i].myID
 					);
 			
 			this.btnAddSpecial.setupTooltip(
@@ -140,6 +143,7 @@ package as3.aeronaut.module.aircraft
 			var objS:SpecialCharacteristic = null;
 			var arrSC:Array =obj.getSpecialCharacteristics();
 			
+			this.filterSCPulldown();
 			this.listSpecial.clearList();
 			
 			this.scLimit = Globals.myAircraftConfigs.getBTNmaxSCByIndex(
@@ -233,6 +237,8 @@ package as3.aeronaut.module.aircraft
 				}
 			}
 			
+// TODO add frametype check
+			
 			//check
 			var limitValid:Boolean = true;
 			var groupsValid:Boolean = true;
@@ -319,15 +325,47 @@ package as3.aeronaut.module.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * filterSCPulldown
+		 * ---------------------------------------------------------------------
+		 * refreshes the special characteristics pulldown
+		 */
+		private function filterSCPulldown()
+		{
+			/*
+			this.pdSpecial.clearSelection();
+			this.pdSpecial.clearSelectionItemList();
+			
+			var frame:String = this.winAircraft.getFrameType();
+	// FIXME indexof is === so it works not		
+			for( var i:int = 0; i < this.unfilteredSCs.length; i++ )
+				if( this.unfilteredSCs[i].allowedFrames.indexOf(frame) > -1 )
+					this.pdSpecial.addSelectionItem(
+							this.unfilteredSCs[i].myName, 
+							this.unfilteredSCs[i].myID
+						);
+						*/
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * updateMultipleEngines
 		 * ---------------------------------------------------------------------
 		 */
 		private function updateMultipleEngines():void
 		{
-			var arrSC:Array = this.listSpecial.getItemIDs()
-// TODO bombers and cargos always multiple engines 2 to 6 
+			var arrSC:Array = this.listSpecial.getItemIDs();
 			
-			if( arrSC.indexOf(BaseData.HCID_SC_MULTIPLEENGINES) != -1 ) 
+			var isBC:Boolean = false;
+			var frame:String = this.winAircraft.getFrameType();
+			
+			if( frame == FrameDefinition.FT_HEAVY_BOMBER 
+					|| frame == FrameDefinition.FT_LIGHT_BOMBER 
+					|| frame == FrameDefinition.FT_HEAVY_CARGO 
+					|| frame == FrameDefinition.FT_LIGHT_CARGO 
+				)
+				isBC = true;
+			
+			if( arrSC.indexOf(BaseData.HCID_SC_MULTIPLEENGINES) != -1 || isBC ) 
 			{
 				this.winAircraft.setMultipleEngines(true);
 			} else {

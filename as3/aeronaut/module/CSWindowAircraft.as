@@ -29,6 +29,9 @@ package as3.aeronaut.module
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
@@ -37,6 +40,8 @@ package as3.aeronaut.module
 	import as3.aeronaut.objects.Aircraft;	
 	import as3.aeronaut.objects.aircraft.*;
 	import as3.aeronaut.objects.ICSBaseObject;
+	
+	import as3.aeronaut.objects.aircraftConfigs.*;
 	
 	import as3.aeronaut.gui.*;
 	
@@ -87,6 +92,7 @@ package as3.aeronaut.module
 		private var intCockpitCost:int = 0;
 		
 		private var lastFrameType:String = "";
+		private var frameDef:FrameDefinition = null;
 		
 		// =====================================================================
 		// Constructor
@@ -140,13 +146,35 @@ package as3.aeronaut.module
 			this.form.rbtnPropDouble.setActive(false);
 			
 			rbgFrame = new CSRadioButtonGroup();
-			rbgFrame.addMember(this.form.rbtnFrameFighter,"fighter");
-			rbgFrame.addMember(this.form.rbtnFrameHFighter,"heavyFighter");
-			rbgFrame.addMember(this.form.rbtnFrameHoplite,"hoplite");
-			rbgFrame.addMember(this.form.rbtnFrameHeavyBomber,"heavyBomber");
-			rbgFrame.addMember(this.form.rbtnFrameLightBomber,"lightBomber");
-			rbgFrame.addMember(this.form.rbtnFrameHeavyCargo,"heavyCargo");
-			rbgFrame.addMember(this.form.rbtnFrameLightCargo,"lightCargo");
+			rbgFrame.addMember(
+					this.form.rbtnFrameFighter,
+					FrameDefinition.FT_FIGHTER
+				);
+			rbgFrame.addMember(
+					this.form.rbtnFrameHFighter,
+					FrameDefinition.FT_HEAVY_FIGHTER
+				);
+			rbgFrame.addMember(
+					this.form.rbtnFrameHoplite,
+					FrameDefinition.FT_AUTOGYRO
+				);
+			rbgFrame.addMember(
+					this.form.rbtnFrameHeavyBomber,
+					FrameDefinition.FT_HEAVY_BOMBER
+				);
+			rbgFrame.addMember(
+					this.form.rbtnFrameLightBomber,
+					FrameDefinition.FT_LIGHT_BOMBER
+				);
+			rbgFrame.addMember(
+					this.form.rbtnFrameHeavyCargo,
+					FrameDefinition.FT_HEAVY_CARGO
+				);
+			rbgFrame.addMember(
+					this.form.rbtnFrameLightCargo,
+					FrameDefinition.FT_LIGHT_CARGO
+				);
+			
 			this.form.rbtnFrameFighter.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					frameTypeChangedHandler
@@ -177,10 +205,22 @@ package as3.aeronaut.module
 				);
 
 			rbgProp = new CSRadioButtonGroup();
-			rbgProp.addMember(this.form.rbtnPropTractor,"tractor");
-			rbgProp.addMember(this.form.rbtnPropPusher,"pusher");
-			rbgProp.addMember(this.form.rbtnPropHoplite,"hoplite");
-			rbgProp.addMember(this.form.rbtnPropDouble,"double");
+			rbgProp.addMember(
+					this.form.rbtnPropTractor,
+					FrameDefinition.PT_TRACTOR
+				);
+			rbgProp.addMember(
+					this.form.rbtnPropPusher,
+					FrameDefinition.PT_PUSHER
+				);
+			rbgProp.addMember(
+					this.form.rbtnPropHoplite,
+					FrameDefinition.PT_AUTOGYRO
+				);
+			rbgProp.addMember(
+					this.form.rbtnPropDouble,
+					FrameDefinition.PT_DOUBLE
+				);
 			
 			this.form.numStepBaseTarget.setAutoStepActive(false);
 			this.form.numStepBaseTarget.setValueChangedCallback(
@@ -551,8 +591,6 @@ package as3.aeronaut.module
 		{
 			this.updateObjectFromWindow();
 
-// TODO add case for printBomberCargo.swf
-
 			Globals.myPrintManager.addSheet("printAircraft.swf",this.myObject);
 			Globals.myPrintManager.printNow();
 		}
@@ -619,6 +657,17 @@ package as3.aeronaut.module
 		public function getFrameType():String 
 		{
 			return this.rbgFrame.getValue();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getFrameDefinition
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getFrameDefinition():FrameDefinition 
+		{
+			return this.frameDef;
 		}
 		
 		/**
@@ -789,7 +838,7 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * calcAirframeCost
 		 * ---------------------------------------------------------------------
-		 * gets the cost ruling from ruleconfig.ae
+		 * gets the cost from aircraftConfigs.ae
 		 */
 		public function calcAirframeCost():void
 		{
@@ -857,59 +906,124 @@ package as3.aeronaut.module
 		private function updateGUIByFrameType():void
 		{
 			var currFrame:String = rbgFrame.getValue();
+			// first set the actual frame definition
+			this.frameDef = Globals.myAircraftConfigs.getFrameDefinition(currFrame);
+			
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						this.frameDef.toString(),
+						DebugLevel.INFO
+					);
+				
+			// prop setup
+			var lastProp:String = this.rbgProp.getValue()
+			
+			this.form.rbtnPropTractor.setActive(false);
+			this.form.rbtnPropPusher.setActive(false);
+			this.form.rbtnPropHoplite.setActive(false);
+			
+			var lastPropFound:Boolean = false;
+			for each( var ap:String in this.frameDef.allowedProps )
+			{
+				if( ap == FrameDefinition.PT_PUSHER )
+					this.form.rbtnPropPusher.setActive(true);
+				else if( ap == FrameDefinition.PT_TRACTOR )
+					this.form.rbtnPropTractor.setActive(true);
+				else if( ap == FrameDefinition.PT_AUTOGYRO )
+					this.form.rbtnPropHoplite.setActive(true);
+				
+				if( ap == lastProp )
+					lastPropFound = true;
+			}
+			
+			if( !lastPropFound )
+				this.rbgProp.setValue(this.frameDef.allowedProps[0]);
+			
+			// btn setup
 			var currBTN:int = this.form.numStepBaseTarget.getValue();
-			var currGs:int = this.form.numStepGs.getValue();
 			var arrListBTN:Array = Globals.myAircraftConfigs.getBTNList();
 			
-			if( currFrame == "fighter" )
-			{
-				this.form.rbtnPropTractor.setActive(true);
-				this.form.rbtnPropPusher.setActive(true);
-				this.form.rbtnPropHoplite.setActive(false);
-				
-				if( this.rbgProp.getValue() == "hoplite" )
-					this.rbgProp.setValue("tractor");
-				
-				if( currBTN < 5 ) 
-					currBTN = 5;
-				
-				this.form.numStepBaseTarget.setupSteps(5,10,currBTN,arrListBTN);
-				
-			} else if( currFrame == "heavyFighter" ) {
-				this.form.rbtnPropTractor.setActive(true);
-				this.form.rbtnPropPusher.setActive(true);
-				this.form.rbtnPropHoplite.setActive(false);
-				
-				if( rbgProp.getValue() == "hoplite" ) 
-					rbgProp.setValue("tractor");
+			if( currBTN < this.frameDef.minBaseTarget )
+				currBTN = this.frameDef.minBaseTarget;
+			if( currBTN > this.frameDef.maxBaseTarget )
+				currBTN = this.frameDef.maxBaseTarget;
+					
+			this.form.numStepBaseTarget.setupSteps(
+					this.frameDef.minBaseTarget,
+					this.frameDef.maxBaseTarget,
+					currBTN,
+					arrListBTN
+				);
 			
-				if( currBTN > 6 )
-					currBTN = 6;
-				
-				this.form.numStepBaseTarget.setupSteps(1,6,currBTN,arrListBTN);
+			// speed setup
+			var currSpeed:int = this.form.numStepSpeed.getValue();
 			
-			} else if( currFrame == "hoplite" ) {
-				this.form.rbtnPropTractor.setActive(false);
-				this.form.rbtnPropPusher.setActive(false);
-				this.form.rbtnPropHoplite.setActive(true);
-				
-				if( rbgProp.getValue() != "hoplite" )
-					rbgProp.setValue("hoplite");
-				
-				if( currBTN < 6 ) 
-					currBTN = 6;
-				
-				this.form.numStepBaseTarget.setupSteps(6,10,currBTN,arrListBTN);
+			if( currSpeed < this.frameDef.minSpeed )
+				currSpeed = this.frameDef.minSpeed;
+			if( currSpeed > this.frameDef.maxSpeed )
+				currSpeed = this.frameDef.maxSpeed;
+					
+			this.form.numStepSpeed.setupSteps(
+					this.frameDef.minSpeed,
+					this.frameDef.maxSpeed,
+					currSpeed,
+					1
+				);
 			
-				currGs = 5;
-			} else {
-				// TODO just a test for bombers/cargso
-				this.form.numStepBaseTarget.setupSteps(11,23,11,arrListBTN);
-			}
-	// TODO add bombers/cargos too		
-			
-			this.form.numStepGs.setupSteps(1,5,currGs,1);
+			// Gs setup
+			var currGs:int = this.form.numStepGs.getValue();
+			this.form.numStepGs.setActive(true);
 				
+			if( currGs < this.frameDef.minGs )
+				currGs = this.frameDef.minGs;
+			if( currGs > this.frameDef.maxGs )
+				currGs = this.frameDef.maxGs;
+					
+			this.form.numStepGs.setupSteps(
+					this.frameDef.minGs,
+					this.frameDef.maxGs,
+					currGs,
+					1
+				);
+			if( this.frameDef.minGs == this.frameDef.maxGs )
+				this.form.numStepGs.setActive(false);
+				
+			// Accel setup
+			var currAccel:int = this.form.numStepAccel.getValue();
+			this.form.numStepAccel.setActive(true);
+				
+			if( currAccel < this.frameDef.minAccel )
+				currAccel = this.frameDef.minAccel;
+			if( currAccel > this.frameDef.maxAccel )
+				currAccel = this.frameDef.maxAccel;
+					
+			this.form.numStepAccel.setupSteps(
+					this.frameDef.minAccel,
+					this.frameDef.maxAccel,
+					currAccel,
+					1
+				);
+			if( this.frameDef.minAccel == this.frameDef.maxAccel )
+				this.form.numStepAccel.setActive(false);
+			
+			// Decel setup
+			var currDecel:int = this.form.numStepDecel.getValue();
+			this.form.numStepDecel.setActive(true);
+				
+			if( currDecel < this.frameDef.minDecel )
+				currDecel = this.frameDef.minDecel;
+			if( currDecel > this.frameDef.maxDecel )
+				currDecel = this.frameDef.maxDecel;
+					
+			this.form.numStepDecel.setupSteps(
+					this.frameDef.minDecel,
+					this.frameDef.maxDecel,
+					currDecel,
+					1
+				);
+			if( this.frameDef.minDecel == this.frameDef.maxDecel )
+				this.form.numStepDecel.setActive(false);
+							
 			// special characteristics
 			this.form.page1.init(this);
 			// weapons
@@ -945,6 +1059,7 @@ package as3.aeronaut.module
 			this.calcMaxGWeight();
 			this.calcBaseTargetWeights();
 			this.calcMaxSpeedWeight();
+			this.calcMaxAccelWeight();
 			this.calcFreeWeight();
 			this.calcCompleteCost();
 				

@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -32,7 +32,7 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.module.ICSValidate;
 	
 	import as3.aeronaut.objects.Aircraft;	
-	
+	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;	
 	
 	// =========================================================================
 	// Class PageArmor
@@ -125,7 +125,7 @@ package as3.aeronaut.module.aircraft
 		{
 			this.winAircraft = win;
 			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
-			var frame:String = this.winAircraft.getFrameType();
+			var frameDef:FrameDefinition = this.winAircraft.getFrameDefinition();
 			
 			
 			this.numStepArmorPWL.setActive(true);
@@ -144,10 +144,9 @@ package as3.aeronaut.module.aircraft
 			this.numStepArmorSB.BG_white.alpha = 1.0;
 			this.numStepArmorSS.setActive(true);
 			this.numStepArmorSS.BG_white.alpha = 1.0;
-				
-			if( frame == "fighter" 
-					|| frame == "heavyFighter"
-					|| frame == "hoplite" )
+	
+	
+			if( !frameDef.hasBows )
 			{
 				this.numStepArmorPB.setActive(false);
 				this.numStepArmorPB.BG_white.alpha = 0.3;
@@ -163,7 +162,7 @@ package as3.aeronaut.module.aircraft
 				this.numStepArmorSS.setValue(0);
 			}
 			
-			if( frame == "hoplite" )
+			if( !frameDef.hasWings )
 			{
 				this.numStepArmorPWL.setActive(false);
 				this.numStepArmorPWL.BG_white.alpha = 0.3;

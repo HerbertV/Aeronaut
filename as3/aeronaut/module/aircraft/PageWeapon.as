@@ -39,6 +39,7 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.objects.aircraft.Turret;	
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.Gun;
+	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	
 	// =========================================================================
 	// Class PageWeapon
@@ -111,26 +112,17 @@ package as3.aeronaut.module.aircraft
 			this.winAircraft = win;
 			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
 			var frame:String = this.winAircraft.getFrameType();
+			var frameDef:FrameDefinition = this.winAircraft.getFrameDefinition();
 			
 			this.numStepRocketSlots.setValue(obj.getRocketSlotCount());
 			this.recalcRocketHardpoints();
 			
-			this.intMaxGuns = 10;
-			if( frame == "fighter" || frame == "heavyFighter" )
-			 	this.intMaxGuns = 8;
-			
-			if( frame == "hoplite" || frame == "lightBomber" )
-			 	this.intMaxGuns = 4;
-			
-			if( frame == "lightCargo" || frame == "heavyCargo" )
-			 	this.intMaxGuns = 0;
+			this.intMaxGuns = frameDef.maxGuns;
 			
 			this.rbtnHasTurrets.setSelected(false);
 			this.rbtnHasTurrets.setActive(false);
 			
-			if( frame == "heavyFighter" 
-					|| frame == "lightBomber"
-					|| frame == "heavyBomber" )
+			if( frameDef.allowsTurrets > 0 )
 				this.rbtnHasTurrets.setActive(true);
 			
 			if( obj.getTurrets().length > 0 )
@@ -734,7 +726,6 @@ package as3.aeronaut.module.aircraft
 		 */
 		private function recalcRocketHardpoints()
 		{
-			
 			var currBTN:int = this.winAircraft.form.numStepBaseTarget.getValue();
 			var frame:String = this.winAircraft.getFrameType();
 			var maxRHP:int = 11 - currBTN;
