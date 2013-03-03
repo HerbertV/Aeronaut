@@ -43,11 +43,13 @@ package as3.aeronaut.module.aircraft
 	//
 	public class PageBombCargo
 			extends AbstractPage 
+				implements ICSValidate
 	{
 		// =====================================================================
 		// Variables
 		// =====================================================================
 		private var winAircraft:CSWindowAircraft = null;
+		private var isValid:Boolean = true;
 		
 		// =====================================================================
 		// Constructor
@@ -72,6 +74,8 @@ package as3.aeronaut.module.aircraft
 		public function init(win:CSWindowAircraft):void
 		{
 			this.winAircraft = win;
+			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
+			
 //TODO
 		}
 		
@@ -87,6 +91,38 @@ package as3.aeronaut.module.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * validateForm
+		 * ---------------------------------------------------------------------
+		 */
+		public function validateForm():void
+		{
+// TODO
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * validateForm
+		 * ---------------------------------------------------------------------
+		 * @param v
+		 */
+		public function setValid(v:Boolean):void 
+		{
+			this.isValid = v;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * validateForm
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getIsValid():Boolean 
+		{
+			return this.isValid;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * updateObjectFromWindow
 		 * ---------------------------------------------------------------------
 		 * called by updateObjectFromWindow function from our window.
@@ -96,8 +132,9 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function updateObjectFromWindow():Aircraft
 		{
+			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
 //TODO
-			return null;
+			return obj;
 		
 		}
 	

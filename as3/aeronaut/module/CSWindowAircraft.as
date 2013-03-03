@@ -136,8 +136,7 @@ package as3.aeronaut.module
 			this.pbtnController.addPage(this.form.btnPage2,this.form.page2);
 			this.pbtnController.addPage(this.form.btnPage3,this.form.page3);
 			this.pbtnController.addPage(this.form.btnPage4,this.form.page4);
-// TODO activate when ready			
-			//this.pbtnController.addPage(this.form.btnPage5,this.form.page5);
+			this.pbtnController.addPage(this.form.btnPage5,this.form.page5);
 			this.pbtnController.setActivePage(0);			
 			
 			this.form.txtName.text = "";
@@ -269,8 +268,6 @@ package as3.aeronaut.module
 			this.form.numStepLength.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepHeight.setupSteps(5 ,30 ,10, 6);
 			this.form.numStepHeight.setupTooltip(Globals.myTooltip,"");
-			
-//			
 		}
 		
 		/**
@@ -285,7 +282,7 @@ package as3.aeronaut.module
 			this.form.page2.dispose();
 			this.form.page3.dispose();
 			this.form.page4.dispose();
-// TODO page 5 for Z&B
+			this.form.page5.dispose();
 			
 			super.dispose();
 		}
@@ -461,7 +458,7 @@ package as3.aeronaut.module
 			this.myObject = this.form.page2.updateObjectFromWindow();
 			this.myObject = this.form.page3.updateObjectFromWindow();
 			this.myObject = this.form.page4.updateObjectFromWindow();
-//TODO add page 5
+			this.myObject = this.form.page5.updateObjectFromWindow();
 		}
 		
 		/**
@@ -606,6 +603,8 @@ package as3.aeronaut.module
 			this.form.page1.validateForm();
 			this.form.page2.validateForm();
 			this.form.page3.validateForm();
+			//validation for bomb weight
+			this.form.page5.validateForm();
 			
 			var weightValid:Boolean = true;
 			if( this.intFreeWeight < 0 ) 
@@ -619,6 +618,7 @@ package as3.aeronaut.module
 			this.setValid( this.form.page1.getIsValid()
 					&& this.form.page2.getIsValid()
 					&& this.form.page3.getIsValid()
+					&& this.form.page5.getIsValid()
 					&& weightValid
 				);
 		}
@@ -800,7 +800,8 @@ package as3.aeronaut.module
 					- this.form.page2.getWeaponWeight()
 					- this.form.page2.getHardpointWeight() 
 					- this.form.page3.getWeight();
-			
+					
+// TODO bomb weight from page5			
 			// weight modifier for Z&B SCs
 			this.intFreeWeight -= int( this.intPayload 
 					* this.form.page1.getCompleteWeightMod()
@@ -1048,7 +1049,8 @@ package as3.aeronaut.module
 			this.form.page3.init(this);
 			//crew
 			this.form.page4.init(this);
-// TODO init page 5			
+			//bombs cargo
+			this.form.page5.init(this);
 		}
 		
 		// =====================================================================

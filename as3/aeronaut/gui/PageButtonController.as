@@ -77,10 +77,10 @@ package as3.aeronaut.gui
 				return;
 
 			for( var i:int=0; i<this.pages.length; i++ )
+			{
 				AbstractPage(this.pages[i]).hidePage();
-			
-			if( this.activePage != -1 )
-				PageButton(this.buttons[this.activePage]).setSelected(false);	
+				PageButton(this.buttons[i]).setSelected(false);	
+			}
 			
 			PageButton(this.buttons[idx]).setSelected(true);	
 			AbstractPage(this.pages[idx]).showPage();

@@ -107,6 +107,9 @@ package as3.aeronaut.gui
 		public function setSelected(sel:Boolean):void
 		{
 			this.isSelected = sel;
+			if( sel == false )
+				this.isRollover = false;
+			
 			this.updateView();
 		}
 		
