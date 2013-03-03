@@ -32,7 +32,6 @@ package as3.aeronaut.module
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
-	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
 	import as3.aeronaut.CSFormatter;
@@ -103,6 +102,27 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * filterRockets
+		 * ---------------------------------------------------------------------
+		 * filters rockets
+		 * only rockets that can placed into rocket slots
+		 *
+		 * @return
+		 */
+		private function filterRockets():Array
+		{
+			var arrRock:Array = Globals.myBaseData.getRockets();
+			var arrFiltered:Array = new Array();
+			
+			for( var i:int=0; i<arrRock.length; i++ )
+				if( arrRock[i].slots > 0 )
+					arrFiltered.push(arrRock[i]);
+			
+			return arrFiltered;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * init
 		 * ---------------------------------------------------------------------
 		 * @see AbstractModule
@@ -116,7 +136,8 @@ package as3.aeronaut.module
 			this.setStyle(CSStyle.BLACK);
 			
 			// ROCKETS
-			var arrRock:Array = Globals.myBaseData.getRockets();
+			var arrRock:Array = filterRockets();
+			
 			// init 8 slots
 			for( var slot:int = 1; slot < 9; slot++ )
 			{
