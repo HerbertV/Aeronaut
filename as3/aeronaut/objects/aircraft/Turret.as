@@ -28,22 +28,6 @@ package as3.aeronaut.objects.aircraft
 	public class Turret
 	{
 		// =====================================================================
-		// Constants
-		// =====================================================================
-		//nose
-		public static const DIR_FRONT = "front";
-		//aft
-		public static const DIR_REAR = "rear"; 
-		//left side
-		public static const DIR_LEFT = "left"; 
-		//right side
-		public static const DIR_RIGHT = "right"; 
-		//top
-		public static const DIR_DORSAL = "dorsal"; 
-		//bottom
-		public static const DIR_VENTRAL = "ventral"; 
-		
-		// =====================================================================
 		// Varianbles
 		// =====================================================================
 		
