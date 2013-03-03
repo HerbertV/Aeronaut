@@ -443,11 +443,34 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getGun
+		 * parseTurretDefinitions
 		 * ---------------------------------------------------------------------
-		 * @param id
+		 * @param xmlFrameDef
 		 *
-		 * @return gun object
+		 * @return array of TurretDefinition
+		 */
+		private function parseTurretDefinitions(xmlFrameDef:XMLList):Array
+		{
+			var arrtd:Array = new Array();
+			for each( var xmltd:XML in xmlFrameDef..turretDef ) 
+			{
+				var linked:Array = xmltd.@linkedGuns.split(",");
+				var td:TurretDefinition = new TurretDefinition(
+						xmltd.@direction,
+						linked
+					);
+				arrtd.push(td);
+			}
+			return arrtd;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getFrameDefinition
+		 * ---------------------------------------------------------------------
+		 * @param type
+		 *
+		 * @return frame definition object
 		 */
 		public function getFrameDefinition(type:String):FrameDefinition
 		{
@@ -486,7 +509,8 @@ package as3.aeronaut.objects
 							wings,
 							bows,
 							xml.@maxGuns,
-							xml.@allowsTurrets
+							xml.@allowsTurrets,
+							this.parseTurretDefinitions(xml)
 						);
 				} else {
 					if( Console.isConsoleAvailable() )

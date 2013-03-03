@@ -40,6 +40,8 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.Gun;
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
+	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
+	
 	
 	// =========================================================================
 	// Class PageWeapon
@@ -304,7 +306,7 @@ package as3.aeronaut.module.aircraft
 				if( gpWithTurrets.indexOf(1) > -1 
 						|| gpWithTurrets.indexOf(2) > -1 )
 				{
-					t = new Turret(Turret.DIR_FRONT);
+					t = new Turret(TurretDefinition.DIR_FRONT);
 					if( gpWithTurrets.indexOf(1) > -1 )
 						t.linkedGuns.push(1);
 					if( gpWithTurrets.indexOf(2) > -1 )
@@ -317,7 +319,7 @@ package as3.aeronaut.module.aircraft
 				if( gpWithTurrets.indexOf(7) > -1 
 						|| gpWithTurrets.indexOf(8) > -1 )
 				{
-					t = new Turret(Turret.DIR_REAR);
+					t = new Turret(TurretDefinition.DIR_REAR);
 					if( gpWithTurrets.indexOf(7) > -1 )
 						t.linkedGuns.push(7);
 					if( gpWithTurrets.indexOf(8) > -1 )

@@ -81,6 +81,8 @@ package as3.aeronaut.objects.aircraftConfigs
 		
 		public var allowsTurrets:int;
 		
+		public var turretDefs:Array;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -88,7 +90,23 @@ package as3.aeronaut.objects.aircraftConfigs
 		/**
 		 * Constructor
 		 * 
-		 * @param frame	
+		 * @param frame	frame type
+		 * @param props
+		 * @param minbtn	
+		 * @param maxbtn	
+		 * @param mins
+		 * @param maxs	
+		 * @param ming	
+		 * @param maxg	
+		 * @param mina	
+		 * @param maxa	
+		 * @param mind
+		 * @param maxd	
+		 * @param wings	
+		 * @param bows	
+		 * @param guns	
+		 * @param ta
+		 * @param td
 		 */
 		public function FrameDefinition(
 				frame:String,
@@ -106,7 +124,8 @@ package as3.aeronaut.objects.aircraftConfigs
 				wings:Boolean,
 				bows:Boolean,
 				guns:int,
-				turrets:int
+				ta:int,
+				td:Array
 			)
 		{
 			frameType = frame;
@@ -132,7 +151,8 @@ package as3.aeronaut.objects.aircraftConfigs
 		
 			maxGuns = guns;
 		
-			allowsTurrets = turrets;
+			allowsTurrets = ta;
+			turretDefs = td;
 		}
 		
 		// =====================================================================

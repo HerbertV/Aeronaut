@@ -22,10 +22,10 @@
 package as3.aeronaut.objects.aircraftConfigs
 {
 	// =========================================================================
-	// TurretDirection
+	// TurretDefinition
 	// =========================================================================
 	// 
-	public class TurretDirection
+	public class TurretDefinition
 	{
 		// =====================================================================
 		// Constants
@@ -61,8 +61,8 @@ package as3.aeronaut.objects.aircraftConfigs
 		 * @param dir
 		 * @param linked
 		 */
-		public function TurretDirection(
-				dir:String
+		public function TurretDefinition(
+				dir:String,
 				linked:Array
 			)
 		{
