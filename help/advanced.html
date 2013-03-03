@@ -49,8 +49,8 @@
 	<i>Company Tag:</i><br>
 	<span class="Code">
 	&lt;company ID="C_001"&gt;<br>
-		&lt;shortName>Bell&lt;/shortName&gt;<br>
-		&lt;longName>Bell Aircraft Corporation&lt;/longName&gt;<br>
+	&nbsp; &nbsp; &lt;shortName>Bell&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName>Bell Aircraft Corporation&lt;/longName&gt;<br>
 	&lt;/company&gt;<br><br>
 	</span>
 	The Companies are used in the aircraft window to fill the manufacturer list. 
@@ -68,8 +68,8 @@
 	The contries are used in the pilot window for choosing a nationality for your pilot. 
 	The attribute "ID" has to be unique.
 	The attribute "languageID" is a reference to the mother tongue spooken in this country.
-	The attribute "srcFlag" is the file name of the national flag. All Flags are stored in 
-	"\images\nations\" sub-directory.
+	The attribute "srcFlag" is the file name of the national flag. 
+	All Flags are stored in "\images\nations\" sub-directory.
 	Inside the tag the countries name is stored.
 	<br>
 	<br>
@@ -106,8 +106,8 @@
 	<i>Gun Tag:</i><br>
 	<span class="Code">
 	&lt;gun ID="CAL_30_N" range="7" cal="30" weight="150" price="180"&gt;<br>
-		&lt;shortName>30&lt;/shortName&gt;<br>
-		&lt;longName>.30-caliber-gun&lt;/longName&gt;<br>
+	&nbsp; &nbsp; &lt;shortName>30&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName>.30-caliber-gun&lt;/longName&gt;<br>
 	&lt;/gun&gt;<br>
 	</span>
 	<br>
@@ -125,8 +125,8 @@
 	<i>Ammunition Tag:</i><br>
 	<span class="Code">
 	&lt;ammunition ID="30_AP" cal="30" price="10"&gt;<br>
-		&lt;shortName&gt;AP&lt;/shortName&gt;<br>
-		&lt;longName&gt;Armor Percing .30-cal&lt;/longName&gt;<br>
+	&nbsp; &nbsp; &lt;shortName&gt;AP&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName&gt;Armor Percing .30-cal&lt;/longName&gt;<br>
 	&lt;/ammunition&gt;<br>
 	</span>
 	<br>
@@ -141,8 +141,8 @@
 	<i>Rocket Tag:</i><br>
 	<span class="Code">
 	&lt;rocket type="rocket" range="4" slots="1" usesPerSlot="1" ID="AP" price="200" weight="100" toHitMod="0"&gt;<br>
-		&lt;shortName&gt;AP&lt;/shortName&gt;<br>
-		&lt;longName&gt;Armor Piercing&lt;/longName&gt;<br>
+	&nbsp; &nbsp; &lt;shortName&gt;AP&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName&gt;Armor Piercing&lt;/longName&gt;<br>
 	&lt;/rocket&gt;<br>
 	</span>
 	<br>
@@ -154,7 +154,7 @@
 	The attribute "range" is the range in hexes.
 	The attributes "slots" and "usesPerSlot" describing the space a rocket needs. 
 	If slots is 0 the bomb can only loaded in a bombrack of a bomber.
-	The attribute "price" is the price in Dollar.
+	The attribute "price" is the price in Dollar.<br>
 	The "longName" tag is shown in the weapon list and the "shortName" tag is used in the print sheet.
 	The attributes "weight" and "toHitMod" are added for the new bomber rules. weight is in lbs.
 	<br>
@@ -165,13 +165,11 @@
 	<i>Special Characteristic Tag:</i><br>
 	<span class="Code">
 	&lt;specialCharacteristic ID="AC_001" groupID="nitro" hasHardcodedAbility="false" countsToSCLimit="true"&gt;<br>
-		&lt;name&gt;Nitro Injectors&lt;/name&gt;<br>
-		&lt;allowedFrame type="" /&gt;<br>
-			1-n...<br>
-		&lt;cost type="" changes="" /&gt;<br>
-		&lt;weight type="" changes="" /&gt;<br>
-		
-		&lt;description&gt;&lt;/description&gt; (optional)<br>
+	&nbsp; &nbsp; &lt;name&gt;Nitro Injectors&lt;/name&gt;<br>
+	&nbsp; &nbsp; &lt;allowedFrame type="" /&gt;  1-n...<br>
+	&nbsp; &nbsp; &lt;cost type="" changes="" /&gt;<br>
+	&nbsp; &nbsp; &lt;weight type="" changes="" /&gt;<br>
+	&nbsp; &nbsp; &lt;description&gt;&lt;/description&gt; (optional)<br>
 	&lt;/specialCharacteristic&gt;<br>
 	</span>
 	<br>
@@ -181,19 +179,19 @@
 	The attribute "groupID" if the field is empty you can add the characteristic multiple times. If a groupID is set only one element of the same id can be added to an aircraft.
 	The attribute "hasHardcodedAbility" marks SCs that have hardcoded functions inside Aeronaut.
 	The attribute "countsToSCLimit" if it is true, the characteristic counts to the limit.
-	<br>
+	<br><br>
 	The tag "allowedFrame" is added 1-n times. each tag defines a frametype that can have this SC. 
-	<br>
+	<br><br>
 	The tag "cost" defines cost type and cost changes.
 	Allowed types are additional, complete, speed, engine, airframe, cockpit, armor, weapon or a comma seperated list of these types.
 	If the type is additional the changes attribute is read as absolute value all other types affect the cost changes of
 	the category in percent.
-	<br>
+	<br><br>
 	The tag "weight" defines weight type and weight changes.
 	Allowed types are additional or complete
 	If the type is additional the changes attribute is read as absolute value all other types affect the weight changes of
 	the category in percent.
-	<br>
+	<br><br>
 	The "descripton" tag is not used so far and is now optional.
 	<br>
 	<br>
@@ -201,14 +199,15 @@
 	
 	<i>Squadrons:</i><br>
 	<br> TODO Since Version 1.1.0 not implemented yet.
-	
-	<br>
-	<br>
 	<br>
 	
 </p>
+<br>
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a>		
+</p>
 <br><br>
-<p class="Text" align="justify">
+<p class="Text">
 	<b>Editing AircraftConfigs.ae</b>
 	<br>
 	<br>
@@ -222,45 +221,49 @@
 	<i>Base Target Matrix:</i><br>
 	<span class="Code">
 	&lt;baseTarget indexID="1"  BTN="1" loadedWeight="14500" payload="10000" cost="0"  maxSC="11" /&gt;
-	</span>
+	</span><br>
 	TODO
-	<br>
+	
 	<br>
 	<br>
 	
 	<i>Max Speed Matrix:</i><br>
 	<span class="Code">
 	&lt;maxSpeed btnID="1" speed="1"  weight="700" cost="470" /&gt;
-	</span>
+	</span><br>
 	TODO
-	<br>
+	
 	<br>
 	<br>
 	
 	<i>Max Gs Matrix:</i><br>
 	<span class="Code">
 	&lt;maxGForce btnID="1" g="1" weight="1100" cost="510" /&gt;
-	</span>
+	</span><br>
 	TODO
-	<br>
+	
 	<br>
 	<br>
 	
 	<i>Max Acceleration Matrix:</i><br>
 	<span class="Code">
 	&lt;maxAcceleration btnID="1" accel="1" weight="1100"  cost="250" /&gt;
-	</span>
+	</span><br>
 	TODO
-	<br>
+	
 	<br>
 	<br>
 	
 	<i>Frame Definition Tag:</i><br>
 	<span class="Code">
-	&lt;frameDef frameType="fighter" minBaseTarget="5" maxBaseTarget="10" minSpeed="1" maxSpeed="5" minGs="1" maxGs="5" minAccel="1" maxAccel="3" minDecel="2"	maxDecel="2" hasWings="true" hasBows="false"  maxGuns="8" allowsTurrets="0"
-			&gt;<br>
-				&lt;allowedProp propType="pusher"/&gt;<br>
-					1-n ...<br>
+	&lt;frameDef frameType="fighter" <br>
+	&nbsp; &nbsp; &nbsp; &nbsp; minBaseTarget="5" maxBaseTarget="10" minSpeed="1"<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; maxSpeed="5" minGs="1" maxGs="5"<br> 
+	&nbsp; &nbsp; &nbsp; &nbsp; minAccel="1" maxAccel="3" minDecel="2"<br>	
+	&nbsp; &nbsp; &nbsp; &nbsp; maxDecel="2" hasWings="true" hasBows="false" <br>
+	&nbsp; &nbsp; &nbsp; &nbsp; maxGuns="8" allowsTurrets="0"&gt;<br>
+	&nbsp; &nbsp; &lt;allowedProp propType="pusher"/&gt; 1-n ...<br>
+	&nbsp; &nbsp; &lt;turretDirections direction="" linkedGuns="1,2"/&gt; 0-n ...<br>
 	&lt;/frameDef&gt;<br>
 	</span>
 	First you can't add new frame types by your own yet, but modify the exiting ones.
@@ -270,8 +273,6 @@
 		2 = only turrets allowed <br>
 		
 		TODO
-	<br>
-	<br>
 	<br>
 </p>
 <br>
