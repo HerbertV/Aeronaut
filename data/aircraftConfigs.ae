@@ -356,10 +356,11 @@ allowsTurrets:
 					hasWings="true"
 					hasBows="false" 
 					maxGuns="8"
-					allowsTurrets="0"
+					allowsTurrets="1"
 				>
 					<allowedProp propType="pusher"/>
 					<allowedProp propType="tractor"/>
+					<turretDef direction="rear" linkedGuns="7,8"  cost="400" weight="400" />
 			</frameDef>
 				
 			<frameDef frameType="heavyFighter"

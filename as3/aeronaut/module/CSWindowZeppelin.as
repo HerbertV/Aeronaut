@@ -242,7 +242,8 @@ package as3.aeronaut.module
 		 */
 		public function getFilename():String 
 		{
-			return this.myObject.getFilename();
+// TODO
+			return ""; // this.myObject.getFilename();
 		}
 		
 		/**

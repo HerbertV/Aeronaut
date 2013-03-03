@@ -1103,10 +1103,6 @@
 			
 <!--
 TODO remove and implement this in turret section
-			<specialCharacteristic ID="AC_038" groupID="turret" costType="additional" weightChanges="400" costChanges="300" hasHardcodedAbility="false"  countsToSCLimit="true">
-				<name>2nd Turret</name>
-				<description></description>
-			</specialCharacteristic>
 
 			<specialCharacteristic ID="AC_039" groupID="" costType="additional" weightChanges="320" costChanges="1400" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>360° Turret</name>

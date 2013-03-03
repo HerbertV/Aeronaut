@@ -161,6 +161,45 @@ package as3.aeronaut.objects.aircraftConfigs
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getTurretDirectionForGunPoint
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param gp gunpoint number 1-10
+		 *
+		 * @return direction as string
+		 */
+		public function getTurretDirectionForGunPoint(gp:int):String
+		{
+			if( turretDefs == null || turretDefs.length == 0 ) 
+				return "";
+			
+			for each( var td:TurretDefinition in turretDefs )
+				if( td.linkedGuns.indexOf(String(gp)) > -1 )
+					return td.direction;
+					
+			return "";		
+		}	
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getTurretDirectionForGunPoint
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param dir
+		 *
+		 * @return TurretDefiniton
+		 */
+		public function getTurretDefinitionForDirection(dir:String):TurretDefinition
+		{
+			for each( var td:TurretDefinition in turretDefs )
+				if( td.direction == dir )
+					return td;
+			
+			return null;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * toString
 		 * ---------------------------------------------------------------------
 		 *

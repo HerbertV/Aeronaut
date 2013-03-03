@@ -22,6 +22,7 @@ Version - 1.1.0 alpha 01:
 -	Each armor section can now have 10 lines
 -	Added nitro boxes to the aircraft print sheet. See issue #13
 -	Added new cost and weight mods for Special Characteristics. See #32 and #33
+-	Changed turret implementation for Bombers. See #31
 
 
 Version - 1.0.2: 

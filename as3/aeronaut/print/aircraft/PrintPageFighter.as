@@ -37,6 +37,7 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.objects.baseData.SpecialCharacteristic;
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.Squadron;
+	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
 	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
@@ -351,7 +352,7 @@ package as3.aeronaut.print.aircraft
 			if( turrets.length > 0 )
 			{
 				for( var i:int = 0; i < turrets.length; i++ )
-					if( turrets[i].direction == Turret.DIR_REAR )
+					if( turrets[i].direction == TurretDefinition.DIR_REAR )
 					{
 						hasRearTurrets = true;
 						break;

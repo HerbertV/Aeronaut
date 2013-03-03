@@ -111,6 +111,8 @@ package as3.aeronaut.objects
 							<gunpoint pointNumber="6"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
 							<gunpoint pointNumber="7"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
 							<gunpoint pointNumber="8"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="9"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="10"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
 						</gunpoints>
 						<rocketslots count="6"/>
 						<turrets>

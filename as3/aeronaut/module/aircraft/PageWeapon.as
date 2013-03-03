@@ -273,6 +273,7 @@ package as3.aeronaut.module.aircraft
 		public function updateObjectFromWindow():Aircraft
 		{
 			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
+			var frameDef:FrameDefinition = this.winAircraft.getFrameDefinition();
 			var gpWithTurrets:Array = new Array();
 			
 			obj.setRocketSlotCount(this.numStepRocketSlots.getValue());
@@ -298,35 +299,35 @@ package as3.aeronaut.module.aircraft
 				obj.setGunpoint(gp);
 			
 			}
-//TODO bomber turrets
+
 			//TURRETS
 			var arrTur:Array = new Array();
+			var t:Turret;
+			var doesExist:Boolean;
+			var dir:String;
 			if( this.rbtnHasTurrets.getIsSelected() ) 
 			{
-				var t:Turret;
-				// front turret
-				if( gpWithTurrets.indexOf(1) > -1 
-						|| gpWithTurrets.indexOf(2) > -1 )
+				for each( var gpnum:int in gpWithTurrets )
 				{
-					t = new Turret(TurretDefinition.DIR_FRONT);
-					if( gpWithTurrets.indexOf(1) > -1 )
-						t.linkedGuns.push(1);
-					if( gpWithTurrets.indexOf(2) > -1 )
-						t.linkedGuns.push(2);
+					dir = frameDef.getTurretDirectionForGunPoint(gpnum);
 					
-					arrTur.push(t);
-				}
-//TODO  Adjust this for bombers
-				// rear turret
-				if( gpWithTurrets.indexOf(7) > -1 
-						|| gpWithTurrets.indexOf(8) > -1 )
-				{
-					t = new Turret(TurretDefinition.DIR_REAR);
-					if( gpWithTurrets.indexOf(7) > -1 )
-						t.linkedGuns.push(7);
-					if( gpWithTurrets.indexOf(8) > -1 )
-						t.linkedGuns.push(8);
+					doesExist = false
+					// first check if turret with this direction is already created.
+					for each( t in arrTur )
+					{
+						if( t.direction == dir )
+						{
+							doesExist = true;
+							t.linkedGuns.push(gpnum);
+						}
+					}
 					
+					if( doesExist )
+						continue;
+					
+					// create a new 
+					t = new Turret(dir);
+					t.linkedGuns.push(gpnum);
 					arrTur.push(t);
 				}
 			}
@@ -650,6 +651,10 @@ package as3.aeronaut.module.aircraft
 			var modCostFireLinked:Number = 
 				Globals.myBaseData.getSpecialCharacteristic(BaseData.HCID_SC_LINKEDFIRE).costChanges;
 			
+			var frameDef:FrameDefinition = this.winAircraft.getFrameDefinition();
+			var arrTurretsInUse:Array = new Array();
+			var tdir:String;
+			
 			for( var i:int = 1; i <= intMaxGuns; i++ )
 			{
 				var gunrow:Object = getGunRow(i);
@@ -691,8 +696,12 @@ package as3.aeronaut.module.aircraft
 				
 				if(	CSRadioButton(gunrow["rbtnGunNTurret"]).getIsSelected() )
 				{
-					gunWeight += (gun.weight/2);
-					modCost += 0.50;
+					gunWeight += (gun.weight * 0.5);
+					modCost += 0.50;				
+					// for later cost and weight calculation we store every active turret once.
+					tdir = frameDef.getTurretDirectionForGunPoint(i);
+					if( arrTurretsInUse.indexOf(tdir) == -1 )
+						arrTurretsInUse.push(tdir);
 				}
 				gunCost += int(gun.price * modCost);
 				
@@ -703,11 +712,18 @@ package as3.aeronaut.module.aircraft
 				
 				gunrow = null;
 			}
-// TODO get weight and cost from turret definition			
-			// Turret base weight 400lbs
-			if (this.rbtnHasTurrets.getIsSelected() ) 
-				this.intWeaponWeight += 400;
-
+			
+			// now collect cost and weight changes per turret
+			if( arrTurretsInUse.length > 0 )
+			{
+				for each( tdir in arrTurretsInUse )
+				{
+					var td:TurretDefinition = frameDef.getTurretDefinitionForDirection(tdir);
+					this.intWeaponWeight += td.weight;
+					this.intWeaponCost += td.cost;
+				}
+			}
+			
 			this.lblWeaponWeight.text = CSFormatter.formatLbs(this.intWeaponWeight);
 		}
 	
