@@ -457,7 +457,9 @@ package as3.aeronaut.objects
 				var linked:Array = xmltd.@linkedGuns.split(",");
 				var td:TurretDefinition = new TurretDefinition(
 						xmltd.@direction,
-						linked
+						linked,
+						xmltd.@weight,
+						xmltd.@cost
 					);
 				arrtd.push(td);
 			}

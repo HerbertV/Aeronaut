@@ -375,8 +375,8 @@ allowsTurrets:
 				>
 					<allowedProp propType="pusher"/>
 					<allowedProp propType="tractor"/>
-					<turretDef direction="front" linkedGuns="1,2" />
-					<turretDef direction="rear" linkedGuns="7,8" />					
+					<turretDef direction="front" linkedGuns="1,2" cost="400" weight="400" />
+					<turretDef direction="rear" linkedGuns="7,8"  cost="400" weight="400" />					
 			</frameDef>
 				
 			<frameDef frameType="hoplite"
@@ -406,8 +406,8 @@ allowsTurrets:
 				>
 					<allowedProp propType="pusher"/>
 					<allowedProp propType="tractor"/>
-					<turretDef direction="front" linkedGuns="1,2" />
-					<turretDef direction="rear" linkedGuns="3,4" />					
+					<turretDef direction="front" linkedGuns="1,2" cost="400" weight="400"  />
+					<turretDef direction="rear" linkedGuns="3,4"  cost="400" weight="400" />					
 			</frameDef>
 			
 			<frameDef frameType="heavyBomber"
@@ -423,12 +423,12 @@ allowsTurrets:
 				>
 					<allowedProp propType="pusher"/>
 					<allowedProp propType="tractor"/>
-					<turretDef direction="front" linkedGuns="1,2" />
-					<turretDef direction="dorsal" linkedGuns="3,4" />	
-					<turretDef direction="ventral" linkedGuns="5,6" />	
-					<turretDef direction="left" linkedGuns="7" />	
-					<turretDef direction="right" linkedGuns="8" />	
-					<turretDef direction="rear" linkedGuns="9,10" />	
+					<turretDef direction="front" linkedGuns="1,2" cost="400" weight="400"  />
+					<turretDef direction="dorsal" linkedGuns="3,4" cost="427" weight="427"/>	
+					<turretDef direction="ventral" linkedGuns="5,6" cost="427" weight="427"/>	
+					<turretDef direction="left" linkedGuns="7" cost="300" weight="300" />	
+					<turretDef direction="right" linkedGuns="8"  cost="300" weight="300" />	
+					<turretDef direction="rear" linkedGuns="9,10"  cost="400" weight="400" />	
 			</frameDef>
 			
 			 <frameDef frameType="lightCargo"

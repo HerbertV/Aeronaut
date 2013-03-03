@@ -414,13 +414,15 @@ maxSC max special characteristics</xs:documentation>
 															<xs:attribute name="propType" type="aircraftProps" use="required"/>
 														</xs:complexType>
 													</xs:element>
-													<xs:element name="turretDirections" minOccurs="0" maxOccurs="unbounded">
+													<xs:element name="turretDef" minOccurs="0" maxOccurs="unbounded">
 														<xs:annotation>
 															<xs:documentation>linkedGuns = Gun point numbers as CSV Array</xs:documentation>
 														</xs:annotation>
 														<xs:complexType>
 															<xs:attribute name="direction" type="turretDirections" use="required"/>
 															<xs:attribute name="linkedGuns" type="xs:string" use="required"/>
+															<xs:attribute name="weight" type="xs:int" use="required"/>
+															<xs:attribute name="cost" type="xs:int" use="required"/>
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>

@@ -47,8 +47,13 @@ package as3.aeronaut.objects.aircraftConfigs
 		// Variables
 		// =====================================================================
 		
-		public var linkedGuns:Array = new Array();
 		public var direction:String = "front";
+		
+		public var linkedGuns:Array = new Array();
+		
+		public var weight:int;
+		
+		public var cost:int;
 		
 		
 		// =====================================================================
@@ -60,14 +65,20 @@ package as3.aeronaut.objects.aircraftConfigs
 		 * 
 		 * @param dir
 		 * @param linked
+		 * @param w
+		 * @param c
 		 */
 		public function TurretDefinition(
 				dir:String,
-				linked:Array
+				linked:Array,
+				w:int,
+				c:int
 			)
 		{
 			this.direction = dir;
 			this.linkedGuns = linked;
+			this.weight = w;
+			this.cost = c;
 		}
 	
 		// =====================================================================
@@ -83,7 +94,7 @@ package as3.aeronaut.objects.aircraftConfigs
 		 *
 		 * @return label as string
 		 */
-		public function getLabelforDirection(dir:String):String
+		public static function getLabelforDirection(dir:String):String
 		{
 			if( dir == DIR_FRONT )
 				return "Nose";
@@ -104,6 +115,21 @@ package as3.aeronaut.objects.aircraftConfigs
 				return "Ventral";
 			
 			return "";
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * toString
+		 * ---------------------------------------------------------------------
+		 *
+		 * @return Object as string
+		 */
+		public function toString():String
+		{
+			return "aircraftConfigs.TurretDefinition ["
+				+ this.direction
+				+ ", linked guns[ " + linkedGuns.toString() 
+				+ "] ]";
 		}
 	
 	}

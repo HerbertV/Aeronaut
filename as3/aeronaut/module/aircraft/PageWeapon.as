@@ -27,6 +27,9 @@ package as3.aeronaut.module.aircraft
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
@@ -124,12 +127,12 @@ package as3.aeronaut.module.aircraft
 			this.rbtnHasTurrets.setSelected(false);
 			this.rbtnHasTurrets.setActive(false);
 			
-			if( frameDef.allowsTurrets > 0 )
+			if( frameDef.allowsTurrets == 1 )
 				this.rbtnHasTurrets.setActive(true);
 			
-			if( obj.getTurrets().length > 0 )
+			if( obj.getTurrets().length > 0 
+					|| frameDef.allowsTurrets == 2 )
 				this.rbtnHasTurrets.setSelected(true);
-//TODO new turret handling
 			
 			// ammo/fire linked setup
 			var arrSC:Array = obj.getSpecialCharacteristics();
@@ -177,8 +180,7 @@ package as3.aeronaut.module.aircraft
 					CSRadioButton(gunrow["rbtnGunNTurret"]).setSelected(false);
 					if (gp.direction == Gunpoint.DIR_TURRET)
 						CSRadioButton(gunrow["rbtnGunNTurret"]).setSelected(true);
-//TODO new turret handling
-					
+
 				} else {
 					// inactive row
 					setGunRowActive(gunrow,false);
@@ -549,29 +551,17 @@ package as3.aeronaut.module.aircraft
 				lbl:TextField
 			):void
 		{
-//TODO add new turrets for Z&B				
-			if( idx > intMaxGuns 
-			   		|| !this.rbtnHasTurrets.getIsActive() )
-			{
-				lbl.text = "";
-				return;
-			}
+			lbl.text = "";
+			var fd:FrameDefinition = this.winAircraft.getFrameDefinition();
 			
-			switch( idx )
-			{
-				case 1:
-				case 2:
-					lbl.text = "Nose";
-					break;
-					
-				case 7:
-				case 8:
-					lbl.text = "Aft";
-					break;
-				
-				default:
-					lbl.text = "";
-			}
+			if( fd.allowsTurrets == 0 )
+				return;
+			
+			var arrtd:Array = fd.turretDefs;
+			
+			for each( var td:TurretDefinition in arrtd )
+				if( td.linkedGuns.indexOf(String(idx)) > -1 )
+					lbl.text = TurretDefinition.getLabelforDirection(td.direction);
 		}
 		
 		/**
@@ -713,7 +703,7 @@ package as3.aeronaut.module.aircraft
 				
 				gunrow = null;
 			}
-			
+// TODO get weight and cost from turret definition			
 			// Turret base weight 400lbs
 			if (this.rbtnHasTurrets.getIsSelected() ) 
 				this.intWeaponWeight += 400;
