@@ -7,6 +7,9 @@ ________              ___   ____     Crimson Skies      __             ________
 	for the out-of-print CRIMSON SKIES boardgame by created FASA. 
  
 	Inspired by Scott Janssens' CADET. 
+	Very special thanks to Patrick Kopke for releasing his 
+	"Zeppelin & Bombers" sourcebook un-official.
+	Dedicated to all the fans of Crimson Skies.
 	
 	Visit: http://www.foxforcefive.de/cs/
 	
@@ -17,6 +20,20 @@ ________              ___   ____     Crimson Skies      __             ________
 	Version 1.1.0 alpha 01
 ================================================================================
 
+--------------------------------------------------------------------------------
+	About:
+--------------------------------------------------------------------------------
+	Supports the official rules from all official sources.
+	Supports FF5 housrules.
+	
+	Since version 1.1.0 (Work in Progress):
+	Supports the "un-official" "Zeppelin & Bombers" rules written 
+	by Patrick Koepke (Autor of "Pride of the Republic") 
+	http://www.patrickkoepke.com/
+	
+	"Zeppelin & Bombers" can be downloaded here:
+	http://www.montanaraiders.com/zeppelinsandbombers.html
+	
 --------------------------------------------------------------------------------
 	System Requirements:
 --------------------------------------------------------------------------------
@@ -38,8 +55,10 @@ ________              ___   ____     Crimson Skies      __             ________
 	Otherwise the file association does not work.
 	This is not a bug but a security reason.
 	
-	see github issues:
+	see github for issues:
 	http://github.com/HerbertV/Aeronaut/issues
+	or visit the Aeronaut Thread:
+	http://montanaraiders.com/forum/viewtopic.php?f=15&t=401
 	
 --------------------------------------------------------------------------------
 	Hardcoded Stuff:
@@ -54,6 +73,9 @@ ________              ___   ____     Crimson Skies      __             ________
 		-> calculates the G modifiers
 - 	Multiple Engines 
 		-> Enables/Disables the Numeric Stepper for the engine count
+- 	Nitro
+		-> draws the nitro box in in the print sheets.
+		
 
 --------------------------------------------------------------------------------
 	Aircraft Blueprints:
