@@ -5,4 +5,6 @@ images/pinups/
 data/loadouts/
 winProto.fla
 print.fla
+
 *.as3proj
+obj/

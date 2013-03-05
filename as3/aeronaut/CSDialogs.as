@@ -81,7 +81,7 @@ package as3.aeronaut
 			
 			mdm.Dialogs.BrowseFile.allowMultiple = false;
 			mdm.Dialogs.BrowseFile.title = "Save " + iwin.getTitle();
-    		mdm.Dialogs.BrowseFile.filterList = "Aeronaut|*" + Globals.AE_EXT;;
+    		mdm.Dialogs.BrowseFile.filterList = "Aeronaut|*" + Globals.AE_EXT;
     		mdm.Dialogs.BrowseFile.buttonText = "Save";
 			
 			if( fullPath == "" )

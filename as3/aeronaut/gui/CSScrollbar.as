@@ -211,8 +211,6 @@ package as3.aeronaut.gui
 			if( this.scrollingText == null )
 				return;
 			
-			var maxDistance:Number = this.scrollBottom - this.scrollTop;
-			
 			// since there is no function to get max visible lines
 			var visibleLines:int = this.scrollingText.numLines 
 					- this.scrollingText.maxScrollV;

@@ -160,7 +160,7 @@ package as3.aeronaut.objects
 		 * ---------------------------------------------------------------------
 		 * @param val
 		 */
-		public function setName(val:String) 
+		public function setName(val:String):void
 		{
 			this.myXML.squadron.replace(
 					"name", 

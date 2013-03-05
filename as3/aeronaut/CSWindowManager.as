@@ -376,8 +376,6 @@ package as3.aeronaut
 			if( loadedxml == null )
 				return;
 				
-			var newWin:CSWindow = null;
-				
 			if( Aircraft.checkXML(loadedxml) ) 
 			{
 				openWindow(WND_AIRCRAFT,filename);
@@ -465,7 +463,7 @@ package as3.aeronaut
 			Globals.myToolbarBottom.updateToolbar();
 						
 			Globals.myCSProgressBar.setProgressTo(100, "loading finished");
-			Globals.myCSProgressBar.hide();;
+			Globals.myCSProgressBar.hide();
 		}
 		
 		/**

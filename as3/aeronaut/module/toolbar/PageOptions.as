@@ -45,7 +45,6 @@ package as3.aeronaut.module.toolbar
 		// Variables
 		// =====================================================================
 		private var rbgRocketHPMass:CSRadioButtonGroup = null;
-		private var rbgAircraftCost:CSRadioButtonGroup = null;
 		
 		// =====================================================================
 		// Constructor

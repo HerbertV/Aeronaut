@@ -94,7 +94,7 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i < 11; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
+				var gunrow:GunRow = getGunRow(i);
 				initGunRow(gunrow);
 				gunrow = null;
 			}
@@ -116,7 +116,6 @@ package as3.aeronaut.module.aircraft
 		{
 			this.winAircraft = win;
 			var obj:Aircraft = Aircraft(this.winAircraft.getObject());
-			var frame:String = this.winAircraft.getFrameType();
 			var frameDef:FrameDefinition = this.winAircraft.getFrameDefinition();
 			
 			this.numStepRocketSlots.setValue(obj.getRocketSlotCount());
@@ -149,7 +148,7 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i < 11; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
+				var gunrow:GunRow = getGunRow(i);
 				setTurretLabel(i, TextField(gunrow["lblGunNTurret"]) );
 			
 				if( i <= this.intMaxGuns )
@@ -208,20 +207,20 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i < 11; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
-				CSPullDown(gunrow["pdGunN"]).removeEventListener(
+				var gunrow:GunRow = getGunRow(i);
+				gunrow.pdGunN.removeEventListener(
 						MouseEvent.MOUSE_DOWN, 
 						gunChangedHandler
 					); 
-				CSRadioButton(gunrow["rbtnGunNTurret"]).removeEventListener(
+				gunrow.rbtnGunNTurret.removeEventListener(
 						MouseEvent.MOUSE_DOWN, 
 						gunChangedHandler
 					); 
-				CSRadioButton(gunrow["rbtnGunNFireLinked"]).removeEventListener(
+				gunrow.rbtnGunNFireLinked.removeEventListener(
 						MouseEvent.MOUSE_DOWN, 
 						gunChangedHandler
 					); 
-				CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).removeEventListener(
+				gunrow.rbtnGunNAmmoLinked.removeEventListener(
 						MouseEvent.MOUSE_DOWN, 
 						gunChangedHandler
 					); 
@@ -339,33 +338,24 @@ package as3.aeronaut.module.aircraft
 		 * ---------------------------------------------------------------------
 		 * getGunRow
 		 * ---------------------------------------------------------------------
-		 * returns all elements of a gun slot as an Object
+		 * returns all elements of a gun point as an GunRow Object
 		 *
 		 * @param idx 1-10
 		 *
 		 * @return 
 		 */
-		private function getGunRow(idx:uint):Object
+		private function getGunRow(idx:uint):GunRow
 		{
-			var gunrow:Object = {
-					pdGunN:
-						this.getChildByName("pdGun"+idx), 
-					lblGunNWeight:
-						this.getChildByName("lblGun"+idx+"Weight"),
-					rbtnGunNTurret:
-						this.getChildByName("rbtnGun"+idx+"Turret"),
-					lblGunNTurret:
-						this.getChildByName("lblGun"+idx+"Turret"),
-					numStepGunNFire:
-						this.getChildByName("numStepGun"+idx+"Fire"),
-					rbtnGunNFireLinked:
-						this.getChildByName("rbtnGun"+idx+"FireLinked"),
-					numStepGunNAmmo:
-						this.getChildByName("numStepGun"+idx+"Ammo"),
-					rbtnGunNAmmoLinked:
-						this.getChildByName("rbtnGun"+idx+"AmmoLinked")
-				}; 
-			return gunrow;
+			return new GunRow(
+					CSPullDown(this.getChildByName("pdGun" + idx)), 
+					TextField(this.getChildByName("lblGun" + idx + "Weight")),
+					CSRadioButton(this.getChildByName("rbtnGun" + idx + "Turret")),
+					TextField(this.getChildByName("lblGun" + idx + "Turret")),
+					CSNumStepperInteger(this.getChildByName("numStepGun" + idx + "Fire")),
+					CSRadioButton(this.getChildByName("rbtnGun" + idx + "FireLinked")),
+					CSNumStepperInteger(this.getChildByName("numStepGun" + idx + "Ammo")),
+					CSRadioButton(this.getChildByName("rbtnGun"+idx+"AmmoLinked"))
+				);
 		}
 		
 		/**
@@ -378,54 +368,54 @@ package as3.aeronaut.module.aircraft
 		 * @param active
 		 */
 		private function setGunRowActive(
-				gunrow:Object, 
+				gunrow:GunRow, 
 				active:Boolean
 			):void
 		{
-			CSPullDown(gunrow["pdGunN"]).setActive(active);
+			gunrow.pdGunN.setActive(active);
 			
-			CSRadioButton(gunrow["rbtnGunNTurret"]).setActive(
+			gunrow.rbtnGunNTurret.setActive(
 					this.rbtnHasTurrets.getIsSelected() && active
 				);
 			
-			CSNumStepperInteger(gunrow["numStepGunNFire"]).setActive(
-					CSRadioButton(gunrow["rbtnGunNFireLinked"]).getIsSelected()
+			gunrow.numStepGunNFire.setActive(
+					gunrow.rbtnGunNFireLinked.getIsSelected()
 						&& active
 						&& this.isFireLinked
 				);
-			CSRadioButton(gunrow["rbtnGunNFireLinked"]).setActive(
+			gunrow.rbtnGunNFireLinked.setActive(
 					this.isFireLinked && active
 				);
-			CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setActive(
-					CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).getIsSelected()
+			gunrow.numStepGunNAmmo.setActive(
+					gunrow.rbtnGunNAmmoLinked.getIsSelected()
 						&& active
 						&& this.isAmmoLinked
 				);
-			CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setActive(
+			gunrow.rbtnGunNAmmoLinked.setActive(
 					this.isAmmoLinked && active
 				);
 			
-			if( !CSPullDown(gunrow["pdGunN"]).getIsActive() )
+			if( gunrow.pdGunN.getIsActive() )
 			{
-				CSPullDown(gunrow["pdGunN"]).setActiveSelectionItem(
+				gunrow.pdGunN.setActiveSelectionItem(
 						CSPullDown.ID_EMPTYSELECTION
 					);
-				TextField(gunrow["lblGunNWeight"]).text = "0 lbs.";
+				gunrow.lblGunNWeight.text = "0 lbs.";
 			}
 			
-			if( !CSRadioButton(gunrow["rbtnGunNTurret"]).getIsActive() )
-				CSRadioButton(gunrow["rbtnGunNTurret"]).setSelected(false);
+			if( !gunrow.rbtnGunNTurret.getIsActive() )
+				gunrow.rbtnGunNTurret.setSelected(false);
 			
-			if( !CSNumStepperInteger(gunrow["numStepGunNFire"]).getIsActive() )
+			if( !gunrow.numStepGunNFire.getIsActive() )
 			{
-				CSNumStepperInteger(gunrow["numStepGunNFire"]).setValue(0);
-				CSRadioButton(gunrow["rbtnGunNFireLinked"]).setSelected(false);
+				gunrow.numStepGunNFire.setValue(0);
+				gunrow.rbtnGunNFireLinked.setSelected(false);
 			}
 			
-			if( !CSNumStepperInteger(gunrow["numStepGunNAmmo"]).getIsActive() )
+			if( !gunrow.numStepGunNAmmo.getIsActive() )
 			{
-				CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setValue(0);
-				CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setSelected(false);
+				gunrow.numStepGunNAmmo.setValue(0);
+				gunrow.rbtnGunNAmmoLinked.setSelected(false);
 			}
 		}
 		
@@ -435,50 +425,49 @@ package as3.aeronaut.module.aircraft
 		 * ---------------------------------------------------------------------
 		 * called by contructor for first time setup
 		 *
-		 * @param gunrow object
+		 * @param gunrow
 		 */
-		public function initGunRow(gunrow:Object):void
+		public function initGunRow(gunrow:GunRow):void
 		{
 			var arrGuns:Array = Globals.myBaseData.getGuns();
 			
 			// pdGunN
-			var pd:CSPullDown = CSPullDown(gunrow["pdGunN"]);
-			pd.setMaxVisibleItems(8);
-			pd.setEmptySelectionText("empty",true);
+			gunrow.pdGunN.setMaxVisibleItems(8);
+			gunrow.pdGunN.setEmptySelectionText("empty",true);
 			
 			for( var i:int = 0; i < arrGuns.length; i++ ) 
-				pd.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
+				gunrow.pdGunN.addSelectionItem(arrGuns[i].longName, arrGuns[i].myID);
 			
-			pd.addEventListener(
+			gunrow.pdGunN.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
 					gunChangedHandler
 				); 
 		
 			//rbtnGunNTurret
-			CSRadioButton(gunrow["rbtnGunNTurret"]).setActive(false);
-			CSRadioButton(gunrow["rbtnGunNTurret"]).addEventListener(
+			gunrow.rbtnGunNTurret.setActive(false);
+			gunrow.rbtnGunNTurret.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
 					gunChangedHandler
 				); 
 			
 			//numStepGunNFire
-			CSNumStepperInteger(gunrow["numStepGunNFire"]).setupSteps(0,10,0,1);
-			CSNumStepperInteger(gunrow["numStepGunNFire"]).setActive(false);
+			gunrow.numStepGunNFire.setupSteps(0,10,0,1);
+			gunrow.numStepGunNFire.setActive(false);
 			
 			//rbtnGunNFireLinked,
-		 	CSRadioButton(gunrow["rbtnGunNFireLinked"]).setActive(false);
-			CSRadioButton(gunrow["rbtnGunNFireLinked"]).addEventListener(
+		 	gunrow.rbtnGunNFireLinked.setActive(false);
+			gunrow.rbtnGunNFireLinked.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
 					gunChangedHandler
 				); 
 			
 			//numStepGunNAmmo,
-		 	CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setupSteps(0,10,0,1);
-			CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setActive(false);
+		 	gunrow.numStepGunNAmmo.setupSteps(0,10,0,1);
+			gunrow.numStepGunNAmmo.setActive(false);
 			
 			//rbtnGunNAmmoLinked
-			CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setActive(false);
-			CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).addEventListener(
+			gunrow.rbtnGunNAmmoLinked.setActive(false);
+			gunrow.rbtnGunNAmmoLinked.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
 					gunChangedHandler
 				); 
@@ -499,15 +488,15 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i <= intMaxGuns; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
+				var gunrow:GunRow = getGunRow(i);
 				
-				CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setActive(isLinked);
+				gunrow.rbtnGunNAmmoLinked.setActive(isLinked);
 				
 				if( !isLinked )
 				{
-					CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setActive(isLinked);
-					CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setValue(0);
-					CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setSelected(false);
+					gunrow.numStepGunNAmmo.setActive(isLinked);
+					gunrow.numStepGunNAmmo.setValue(0);
+					gunrow.rbtnGunNAmmoLinked.setSelected(false);
 				}
 			}
 		}
@@ -527,14 +516,14 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i <= intMaxGuns; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
-				CSRadioButton(gunrow["rbtnGunNFireLinked"]).setActive(isLinked);
+				var gunrow:GunRow = getGunRow(i);
+				gunrow.rbtnGunNFireLinked.setActive(isLinked);
 				
 				if( !isLinked )
 				{
-					CSNumStepperInteger(gunrow["numStepGunNFire"]).setActive(isLinked);
-					CSNumStepperInteger(gunrow["numStepGunNFire"]).setValue(0);
-					CSRadioButton(gunrow["rbtnGunNFireLinked"]).setSelected(false);
+					gunrow.numStepGunNFire.setActive(isLinked);
+					gunrow.numStepGunNFire.setValue(0);
+					gunrow.rbtnGunNFireLinked.setSelected(false);
 				}
 			}
 		}
@@ -576,15 +565,15 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i < 11; i++ )
 			{	
-				var gunrow:Object = getGunRow(i);
-				setTurretLabel(i, TextField(gunrow["lblGunNTurret"]) );
+				var gunrow:GunRow = getGunRow(i);
+				setTurretLabel(i, gunrow.lblGunNTurret );
 			
 				if( i > intMaxGuns )
 					continue;
 				
-				CSRadioButton(gunrow["rbtnGunNTurret"]).setActive(active);
+				gunrow.rbtnGunNTurret.setActive(active);
 				if( !active )
-					CSRadioButton(gunrow["rbtnGunNTurret"]).setSelected(false);
+					gunrow.rbtnGunNTurret.setSelected(false);
 					
 				gunrow = null;
 			}
@@ -657,13 +646,12 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i <= intMaxGuns; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
-				var gunid:String =
-					CSPullDown(gunrow["pdGunN"]).getIDForCurrentSelection();
+				var gunrow:GunRow = getGunRow(i);
+				var gunid:String = gunrow.pdGunN.getIDForCurrentSelection();
 				
 				if( gunid == CSPullDown.ID_EMPTYSELECTION ) 
 				{
-					TextField(gunrow["lblGunNWeight"]).text = CSFormatter.formatLbs(0);
+					gunrow.lblGunNWeight.text = CSFormatter.formatLbs(0);
 					continue;
 				}
 				
@@ -672,29 +660,29 @@ package as3.aeronaut.module.aircraft
 				var gunCost:int = gun.price;
 				var modCost:Number = 0.00;
 			
-				if( CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).getIsSelected() )
+				if( gunrow.rbtnGunNAmmoLinked.getIsSelected() )
 				{
 					modCost = modCostAmmoLinked;
-					CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setActive(true);
-					if( CSNumStepperInteger(gunrow["numStepGunNAmmo"]).getValue() == 0 ) 
-						CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setValue(1);
+					gunrow.numStepGunNAmmo.setActive(true);
+					if( gunrow.numStepGunNAmmo.getValue() == 0 ) 
+						gunrow.numStepGunNAmmo.setValue(1);
 				} else {
-					CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setActive(false);
-					CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setValue(0);
+					gunrow.numStepGunNAmmo.setActive(false);
+					gunrow.numStepGunNAmmo.setValue(0);
 				}
 				
-				if( CSRadioButton(gunrow["rbtnGunNFireLinked"]).getIsSelected() )
+				if( gunrow.rbtnGunNFireLinked.getIsSelected() )
 				{
 					modCost += modCostFireLinked;
-					CSNumStepperInteger(gunrow["numStepGunNFire"]).setActive(true);
-					if( CSNumStepperInteger(gunrow["numStepGunNFire"]).getValue() == 0 ) 
-						CSNumStepperInteger(gunrow["numStepGunNFire"]).setValue(1);
+					gunrow.numStepGunNFire.setActive(true);
+					if( gunrow.numStepGunNFire.getValue() == 0 ) 
+						gunrow.numStepGunNFire.setValue(1);
 				} else {
-					CSNumStepperInteger(gunrow["numStepGunNFire"]).setActive(false);
-					CSNumStepperInteger(gunrow["numStepGunNFire"]).setValue(0);
+					gunrow.numStepGunNFire.setActive(false);
+					gunrow.numStepGunNFire.setValue(0);
 				}
 				
-				if(	CSRadioButton(gunrow["rbtnGunNTurret"]).getIsSelected() )
+				if(	gunrow.rbtnGunNTurret.getIsSelected() )
 				{
 					gunWeight += (gun.weight * 0.5);
 					modCost += 0.50;				
@@ -705,7 +693,7 @@ package as3.aeronaut.module.aircraft
 				}
 				gunCost += int(gun.price * modCost);
 				
-				TextField(gunrow["lblGunNWeight"]).text = CSFormatter.formatLbs(gunWeight);
+				gunrow.lblGunNWeight.text = CSFormatter.formatLbs(gunWeight);
 				
 				this.intWeaponCost += gunCost;
 				this.intWeaponWeight += gunWeight;
@@ -732,7 +720,7 @@ package as3.aeronaut.module.aircraft
 		 * recalcRocketHardpoints
 		 * ---------------------------------------------------------------------
 		 */
-		private function recalcRocketHardpoints()
+		private function recalcRocketHardpoints():void
 		{
 			var currBTN:int = this.winAircraft.form.numStepBaseTarget.getValue();
 			var frame:String = this.winAircraft.getFrameType();
