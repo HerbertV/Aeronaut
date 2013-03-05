@@ -14,7 +14,7 @@
  * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2009-2012 Herbert Veitengruber 
+ * Copyright (c) 2009-2013 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
@@ -28,19 +28,19 @@ package as3.aeronaut.gui
 	
 	import as3.hv.components.tooltip.ITooltip;
 	
-	
-	// =========================================================================
-	// CSAbstractNumStepper
-	// =========================================================================
-	// Dynamic abstract NumStepper class 
-	//
-	// Any NumStepper needs following sub mc's:
-	// - BG_black
-	// - BG_white
-	// - buttons.btnUp
-	// - buttons.btnDown
-	// - txtValue
-	//
+	/**
+	 * =========================================================================
+	 * CSAbstractNumStepper
+	 * =========================================================================
+	 * Dynamic abstract NumStepper class 
+	 *
+	 * Any NumStepper needs following sub mc's:
+	 * - BG_black
+	 * - BG_white
+	 * - buttons.btnUp
+	 * - buttons.btnDown
+	 * - txtValue
+	 */
 	dynamic public class CSAbstractNumStepper 
 			extends MovieClip 
 			implements ICSStyleable
@@ -60,14 +60,15 @@ package as3.aeronaut.gui
 		protected var isDownArrowPressed:Boolean = false;
 		
 		protected var callbackFunction:Function = null;
-		protected var callbackObject:Object = null;
 		
 		protected var tooltipText:String = "";
 		protected var myTooltip:ITooltip = null;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function CSAbstractNumStepper()
 		{
 			super();
@@ -290,22 +291,18 @@ package as3.aeronaut.gui
 		 * ---------------------------------------------------------------------
 		 * setValueChangedCallback
 		 * ---------------------------------------------------------------------
-		 * is called every time the value changed. 
+		 * callback function is called every time the value changed. 
 		 * Called only if stepper is active.
 		 * Called by clicks and EnterFrame Event (if auto stepper is active)
 		 *
-		 * function myFunc(o:Object):void
-		 *
 		 * @param f
-		 * @param o (optional)
+		 * 		function myFunctionName(e:NumStepperValueChangedEvent):void
 		 */
 		public function setValueChangedCallback(
-				f:Function,
-				o:Object=null
+				f:Function
 			):void
 		{
 			this.callbackFunction = f;
-			this.callbackObject = o;
 		}
 		
 		/**
@@ -360,7 +357,9 @@ package as3.aeronaut.gui
 					this.stepUp();
 					this.updateTextField();
 					if( callbackFunction != null )
-						this.callbackFunction(callbackObject);
+						this.callbackFunction(
+								new NumStepperValueChangedEvent(this)
+							);
 				} else {
 					this.isUpArrowPressed = false;
 				}
@@ -373,7 +372,9 @@ package as3.aeronaut.gui
 					this.stepDown();
 					this.updateTextField();
 					if( callbackFunction != null )
-						this.callbackFunction(callbackObject);
+						this.callbackFunction(
+								new NumStepperValueChangedEvent(this)
+							);
 				} else {
 					this.isDownArrowPressed = false;
 				}
@@ -399,7 +400,9 @@ package as3.aeronaut.gui
 			this.stepUp();
 			this.updateTextField();
 			if( callbackFunction != null )
-				this.callbackFunction(callbackObject);
+				this.callbackFunction(
+						new NumStepperValueChangedEvent(this)
+					);
 						
 			this.isUpArrowPressed = true;
 			this.autoStepDelayCounter = 0;
@@ -437,7 +440,9 @@ package as3.aeronaut.gui
 			this.stepDown();
 			this.updateTextField();
 			if( callbackFunction != null )
-				this.callbackFunction(callbackObject);
+				this.callbackFunction(
+						new NumStepperValueChangedEvent(this)
+					);
 			
 			this.isDownArrowPressed = true;
 			this.autoStepDelayCounter = 0;

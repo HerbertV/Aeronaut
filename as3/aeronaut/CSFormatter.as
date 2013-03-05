@@ -21,12 +21,13 @@
  */
 package as3.aeronaut
 {
-	// =========================================================================
-	// CSFormatter
-	// =========================================================================
-	// static helper class for formatting 
-	// and converting US measurements into metric measurements.
-	//
+	/**
+	 * =========================================================================
+	 * CSFormatter
+	 * =========================================================================
+	 * static helper class for formatting 
+	 * and converting US measurements into metric measurements.
+	 */
 	public class CSFormatter
 	{
 		// =====================================================================

@@ -86,7 +86,7 @@ package as3.aeronaut.module
 		{
 			super();
 			
-			this.moduleVersion = Globals.version;
+			this.moduleVersion = Globals.VERSION;
 			this.y = TOOLBAR_CLOSE_POS;
 			
 			// loading symbol

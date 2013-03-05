@@ -51,7 +51,7 @@ package as3.aeronaut.module
 		{
 			super();
 			
-			this.moduleVersion = Globals.version;
+			this.moduleVersion = Globals.VERSION;
 		}
 		
 		// =====================================================================

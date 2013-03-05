@@ -27,6 +27,7 @@ package as3.aeronaut.module.pilot
 	
 	import as3.aeronaut.gui.CSNumStepperInteger;
 	import as3.aeronaut.gui.CSNumStepperQuickDraw;
+	import as3.aeronaut.gui.NumStepperValueChangedEvent;
 	import as3.aeronaut.gui.ICSStyleable;
 	
 	import as3.aeronaut.objects.ICSBaseObject;
@@ -401,7 +402,7 @@ package as3.aeronaut.module.pilot
 		 * 
 		 * @param e
 		 */
-		private function stepperChangedHandler(o:Object):void
+		private function stepperChangedHandler(e:NumStepperValueChangedEvent):void
 		{
 			this.calcEP();
 			this.winPilot.calcEP();

@@ -34,11 +34,12 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.objects.Aircraft;	
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;	
 	
-	// =========================================================================
-	// Class PageArmor
-	// =========================================================================
-	// Aircraft Page 3 Armor 
-	//
+	/**
+	 * =========================================================================
+	 * Class PageArmor
+	 * =========================================================================
+	 * Aircraft Window Page 3 Armor 
+	 */
 	public class PageArmor
 			extends AbstractPage 
 			implements ICSValidate
@@ -54,9 +55,11 @@ package as3.aeronaut.module.aircraft
 		
 		private var intUnspendArmor:int = 0;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function PageArmor()
 		{
 			super();
@@ -348,9 +351,9 @@ package as3.aeronaut.module.aircraft
 		 * ---------------------------------------------------------------------
 		 * armorChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param o 
+		 * @param e  
 		 */
-		private function armorChangedHandler(e:Object):void
+		private function armorChangedHandler(e:NumStepperValueChangedEvent):void
 		{
 			this.recalc();
 			

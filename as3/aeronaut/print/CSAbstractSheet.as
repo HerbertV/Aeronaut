@@ -49,7 +49,7 @@ package as3.aeronaut.print
 		public function CSAbstractSheet()
 		{
 			super();
-			this.moduleVersion = Globals.version;
+			this.moduleVersion = Globals.VERSION;
 			
 			this.pages = new Array();
 		}

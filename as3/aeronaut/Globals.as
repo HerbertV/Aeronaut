@@ -38,11 +38,12 @@ package as3.aeronaut
 	
 	import as3.aeronaut.print.PrintManager;
 	
-	// =========================================================================
-	// Class Globals
-	// =========================================================================
-	// static Helper class for easy access
-	//
+	/**
+	 * =========================================================================
+	 * Class Globals
+	 * =========================================================================
+	 * static Helper class for easy access
+	 */
 	public class Globals
 	{
 		// =====================================================================
@@ -81,12 +82,15 @@ package as3.aeronaut
 		
 		public static const PATH_PINUP:String = "pinups\\";
 		
+		// ---------------------------------------------------------------------
+		// 	program version
+		// ---------------------------------------------------------------------
+		public static const VERSION:String = "1.1.0-alpha01";
+		
 		// =====================================================================
 		// Variables
 		// =====================================================================
 		
-		//programm version
-		public static var version:String = "1.1.0-alpha01";
 		//Progress bar
 		public static var myCSProgressBar:IProgressSymbol = null;
 		// Tooltip

@@ -88,7 +88,7 @@ package as3.aeronaut.module.menu
 			
 			// set the version in the about sheet
 			this.targetSheet.labelVersion.text = "Version " 
-					+ Globals.version;
+					+ Globals.VERSION;
 			
 			this.addEventListener(
 					MouseEvent.MOUSE_OVER, 

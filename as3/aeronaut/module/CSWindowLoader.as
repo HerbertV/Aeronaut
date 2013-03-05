@@ -61,7 +61,7 @@ package as3.aeronaut.module
 			super(
 				  	file,
 					target,
-					Globals.version,
+					Globals.VERSION,
 					"CSWindowLoader"
 				);
 		}

@@ -35,6 +35,7 @@ package as3.aeronaut.print
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.Squadron;
 	import as3.aeronaut.objects.Loadout;
+	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	
 	import as3.aeronaut.Globals;
 	
@@ -58,25 +59,22 @@ package as3.aeronaut.print
 	
 		public static const ARMORLINE_HEIGHT:int = 8;
 		
-		// armor section with armour row offsets
-		public static const PWL:Object = { id: "pwl", isfront:true, x: 39.0, y: 468.5 };
-		public static const NOSE:Object = { id: "nose", isfront:true, x: 145.0, y: 404.5 };
-		public static const SWL:Object = { id: "swl", isfront:true, x: 250.5, y: 468.5 };
-		public static const PWT:Object = { id: "pwt", isfront:false, x: 39.0, y: 532.0 };
-		public static const TAIL:Object = { id: "tail", isfront:false, x: 145.0, y: 571.5 };
-		public static const TAIL_TURRET:Object = { id: "tt", isfront:false, x: 145.0, y: 587.5 };
-		public static const SWT:Object = { id: "swt", isfront:false, x: 250.5, y: 532.0 };
-		
-// TODO
-// also we need to adjust the pwl,swl,pwt,swt if it is a large plane
-		public static const PB:Object = { id: "pb", isfront:true, x: 0.0, y: 0 };
-		public static const PS:Object = { id: "ps", isfront:false, x: 0.0, y: 0 };
-		public static const SB:Object = { id: "sb", isfront:true, x: 0.0, y: 0 };
-		public static const SS:Object = { id: "ss", isfront:false, x: 0.0, y: 0 };
-		
 		// =====================================================================
 		// Variables
 		// =====================================================================
+		// armor section with armour row offsets
+		public static var PWL:ArmorRow;
+		public static var NOSE:ArmorRow;
+		public static var SWL:ArmorRow;
+		public static var PWT:ArmorRow;
+		public static var TAIL:ArmorRow;
+		public static var TAIL_TURRET:ArmorRow;
+		public static var SWT:ArmorRow;
+		public static var PB:ArmorRow;
+		public static var PS:ArmorRow;
+		public static var SB:ArmorRow;
+		public static var SS:ArmorRow;
+
 		
 		private var myObject:Aircraft;
 		
@@ -93,13 +91,95 @@ package as3.aeronaut.print
 		
 		private var loader:ImageLoader;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function SheetAircraft()
 		{
 			super();
 			crew = new Array();
+			
+			if( PWL != null )
+				return;
+				
+// TODO extend with BC offsets				
+			PWL = new ArmorRow(
+					ArmorRow.ID_PWL,
+					true,
+					39.0,
+					468.5
+				);
+			NOSE = new ArmorRow(
+					ArmorRow.ID_NOSE,
+					true,
+					145.0,
+					404.5
+				);
+			SWL = new ArmorRow(
+					ArmorRow.ID_SWL,
+					true,
+					250.5,
+					468.5
+				);
+			PWT = new ArmorRow(
+					ArmorRow.ID_PWT,
+					false,
+					39.0,
+					532.0
+				);
+			TAIL = new ArmorRow(
+					ArmorRow.ID_TAIL,
+					false,
+					145.0,
+					571.5
+				);
+			TAIL_TURRET = new ArmorRow(
+					ArmorRow.ID_TAIL_TURRET,
+					false,
+					145.0,
+					587.5
+				);
+			SWT = new ArmorRow(
+					ArmorRow.ID_SWT,
+					false,
+					250.5,
+					532.0
+				);
+			// BC only rows
+			PB = new ArmorRow(
+					ArmorRow.ID_PB,
+					true,
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				);
+			PS = new ArmorRow(
+					ArmorRow.ID_PS,
+					false,
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				);
+			SB = new ArmorRow(
+					ArmorRow.ID_SB,
+					true,
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				);
+			SS = new ArmorRow(
+					ArmorRow.ID_SS,
+					false,
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				);
 		}
 
 		// =====================================================================
@@ -157,32 +237,32 @@ package as3.aeronaut.print
 			var page:ICSPrintPageAircraft;
 			
 // TODO also add flavor sheet if it is selected			
-			if( frame == "fighter" ) 
+			if( frame == FrameDefinition.FT_FIGHTER ) 
 			{
 				page = new PageFighter();
 				CSAbstractPrintPage(page).setSheet(this);
 				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
-			} else if( frame == "heavyFighter" ) {
+			} else if( frame == FrameDefinition.FT_HEAVY_FIGHTER ) {
 				page = new PageHeavyFighter();
 				CSAbstractPrintPage(page).setSheet(this);
 				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
-			} else if( frame == "hoplite" ) {
+			} else if( frame == FrameDefinition.FT_AUTOGYRO ) {
 				page = new PageAutogyro();
 				CSAbstractPrintPage(page).setSheet(this);
 				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
-			} else if( frame == "heavyBomber" ) {
+			} else if( frame == FrameDefinition.FT_LIGHT_BOMBER ) {
 				//TODO
-			} else if( frame == "lightBomber" ) {
+			} else if( frame == FrameDefinition.FT_LIGHT_BOMBER ) {
 				//TODO
-			} else if( frame == "heavyCargo" ) {
+			} else if( frame == FrameDefinition.FT_HEAVY_CARGO ) {
 				//TODO
-			} else if( frame == "lightCargo" ) {
+			} else if( frame == FrameDefinition.FT_LIGHT_CARGO ) {
 				//TODO
 			}
 		}
@@ -350,7 +430,7 @@ package as3.aeronaut.print
 		 */
 		public function addArmorLines(
 				count:int, 
-				section:Object,
+				section:ArmorRow,
 				target:Sprite
 			):void 
 		{
@@ -373,36 +453,36 @@ package as3.aeronaut.print
 			}
 			
 			// Legend
-			if( section.id == "pwl" )
+			if( section.id == ArmorRow.ID_PWL )
 			{
 				movEnd = new SpriteLegendPWL();
 				
-			} else if( section.id == "pwt" ) {
+			} else if( section.id == ArmorRow.ID_PWT ) {
 				movEnd = new SpriteLegendPWT();
 				
-			} else if( section.id == "nose" ) {
+			} else if( section.id == ArmorRow.ID_NOSE ) {
 				movEnd = new SpriteLegendNose();
 				
-			} else if( section.id == "tail" 
-					|| section.id == "tt" ) {
+			} else if( section.id == ArmorRow.ID_TAIL 
+					|| section.id == ArmorRow.ID_TAIL_TURRET ) {
 				movEnd = new SpriteLegendTail();
 				
-			} else if( section.id == "swl" ) {
+			} else if( section.id == ArmorRow.ID_SWL ) {
 				movEnd = new SpriteLegendSWL();
 				
-			} else if( section.id == "swt" ) {
+			} else if( section.id == ArmorRow.ID_SWT ) {
 				movEnd = new SpriteLegendSWT();
 				
-			} else if( section.id == "pb" ) {
+			} else if( section.id == ArmorRow.ID_PB ) {
 				movEnd = new SpriteLegendPB();
 				
-			} else if( section.id == "ps" ) {
+			} else if( section.id == ArmorRow.ID_PS ) {
 				movEnd = new SpriteLegendPS();
 				
-			} else if( section.id == "sb" ) {
+			} else if( section.id == ArmorRow.ID_SB ) {
 				movEnd = new SpriteLegendSB();
 				
-			} else if( section.id == "ss" ) {
+			} else if( section.id == ArmorRow.ID_SS ) {
 				movEnd = new SpriteLegendSS();
 			}
 			

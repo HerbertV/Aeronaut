@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -45,12 +45,12 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
 	
-	
-	// =========================================================================
-	// Class PageWeapon
-	// =========================================================================
-	// Aircraft Page 2 Weapons 
-	//
+	/**
+	 * =========================================================================
+	 * Class PageWeapon
+	 * =========================================================================
+	 * Aircraft Window Page 2 Weapons 
+	 */
 	public class PageWeapon
 			extends AbstractPage
 			implements ICSValidate
@@ -72,11 +72,12 @@ package as3.aeronaut.module.aircraft
 		// to prevent searching sc's evertime
 		private var isAmmoLinked:Boolean = false;
 		private var isFireLinked:Boolean = false;
-		
-		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+				
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function PageWeapon()
 		{
 			super();
@@ -135,21 +136,20 @@ package as3.aeronaut.module.aircraft
 			
 			// ammo/fire linked setup
 			var arrSC:Array = obj.getSpecialCharacteristics();
-			var idxAmmo:int = arrSC.indexOf(BaseData.HCID_SC_LINKEDAMMO);
-			var idxFire:int = arrSC.indexOf(BaseData.HCID_SC_LINKEDFIRE);
-			
 			this.isAmmoLinked = false;
-			if( idxAmmo != -1 )
-				this.isAmmoLinked = true;
-			
 			this.isFireLinked = false;
-			if( idxFire != -1 )
-				this.isFireLinked = true;
+			for each( var sc:String in arrSC )
+			{
+				if( sc == BaseData.HCID_SC_LINKEDAMMO )
+					this.isAmmoLinked = true;
+				if( sc == BaseData.HCID_SC_LINKEDFIRE )
+					this.isFireLinked = true;
+			}
 			
 			for( var i:int = 1; i < 11; i++ )
 			{
 				var gunrow:GunRow = getGunRow(i);
-				setTurretLabel(i, TextField(gunrow["lblGunNTurret"]) );
+				setTurretLabel(i, gunrow.lblGunNTurret);
 			
 				if( i <= this.intMaxGuns )
 				{
@@ -157,32 +157,30 @@ package as3.aeronaut.module.aircraft
 					setGunRowActive(gunrow,true);
 					var gp:Gunpoint = obj.getGunpoint(i);
 					
-					CSPullDown(gunrow["pdGunN"]).setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
-					CSPullDown(gunrow["pdGunN"]).setActiveSelectionItem(gp.gunID);
-					TextField(gunrow["lblGunNWeight"]).text = "0 lbs.";
-			
-					CSNumStepperInteger(gunrow["numStepGunNFire"]).setValue(gp.firelinkGroup);
-					CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setValue(gp.ammolinkGroup);
+					gunrow.pdGunN.setActiveSelectionItem(gp.gunID);
 					
-					CSRadioButton(gunrow["rbtnGunNFireLinked"]).setSelected(false);
+					gunrow.numStepGunNFire.setValue(gp.firelinkGroup);
+					gunrow.numStepGunNAmmo.setValue(gp.ammolinkGroup);
+					
+					gunrow.rbtnGunNFireLinked.setSelected(false);
 					if( gp.firelinkGroup > 0 )
 					{
-						CSNumStepperInteger(gunrow["numStepGunNFire"]).setActive(true);
-						CSRadioButton(gunrow["rbtnGunNFireLinked"]).setSelected(true);
+						gunrow.numStepGunNFire.setActive(true);
+						gunrow.rbtnGunNFireLinked.setSelected(true);
 					}
-					CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setSelected(false);
+					gunrow.rbtnGunNAmmoLinked.setSelected(false);
 					if( gp.ammolinkGroup > 0 )
 					{
-						CSNumStepperInteger(gunrow["numStepGunNAmmo"]).setActive(true);
-					CSRadioButton(gunrow["rbtnGunNAmmoLinked"]).setSelected(true);
+						gunrow.numStepGunNAmmo.setActive(true);
+						gunrow.rbtnGunNAmmoLinked.setSelected(true);
 					}
-					CSRadioButton(gunrow["rbtnGunNTurret"]).setSelected(false);
+					gunrow.rbtnGunNTurret.setSelected(false);
 					if (gp.direction == Gunpoint.DIR_TURRET)
-						CSRadioButton(gunrow["rbtnGunNTurret"]).setSelected(true);
+						gunrow.rbtnGunNTurret.setSelected(true);
 
 				} else {
 					// inactive row
-					setGunRowActive(gunrow,false);
+					setGunRowActive(gunrow, false);
 				}
 				gunrow = null;
 			}
@@ -279,16 +277,16 @@ package as3.aeronaut.module.aircraft
 			
 			for( var i:int = 1; i < 11; i++ )
 			{
-				var gunrow:Object = getGunRow(i);
-				var gunid:String = CSPullDown(gunrow["pdGunN"]).getIDForCurrentSelection();
+				var gunrow:GunRow = getGunRow(i);
+				var gunid:String = gunrow.pdGunN.getIDForCurrentSelection();
 				if (gunid == CSPullDown.ID_EMPTYSELECTION)
 					gunid = "";
 					
 				var gp:Gunpoint = new Gunpoint(i,gunid);
-				gp.firelinkGroup = CSNumStepperInteger(gunrow["numStepGunNFire"]).getValue();
-				gp.ammolinkGroup = CSNumStepperInteger(gunrow["numStepGunNAmmo"]).getValue();
+				gp.firelinkGroup = gunrow.numStepGunNFire.getValue();
+				gp.ammolinkGroup = gunrow.numStepGunNAmmo.getValue();
 				
-				if( CSRadioButton(gunrow["rbtnGunNTurret"]).getIsSelected() )
+				if( gunrow.rbtnGunNTurret.getIsSelected() )
 				{
 					gp.direction = Gunpoint.DIR_TURRET;
 					gpWithTurrets.push(i);
@@ -296,7 +294,6 @@ package as3.aeronaut.module.aircraft
 					gp.direction = Gunpoint.DIR_FORWARD;
 				}
 				obj.setGunpoint(gp);
-			
 			}
 
 			//TURRETS
@@ -395,7 +392,7 @@ package as3.aeronaut.module.aircraft
 					this.isAmmoLinked && active
 				);
 			
-			if( gunrow.pdGunN.getIsActive() )
+			if( !gunrow.pdGunN.getIsActive() )
 			{
 				gunrow.pdGunN.setActiveSelectionItem(
 						CSPullDown.ID_EMPTYSELECTION

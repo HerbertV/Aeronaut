@@ -50,13 +50,15 @@ package as3.aeronaut.module
 	import as3.aeronaut.print.IPrintable;
 	import as3.aeronaut.print.PrintManager;
 	
-	// =========================================================================
-	// CSWindowAircraft
-	// =========================================================================
-	// This class is a linked document class for "winAircraft.swf"
-	// @see as3.aeronaut.objects.Aircraft
-	//
-	// Window for crating/editing Aircraft.
+	/**
+	 * =========================================================================
+	 * CSWindowAircraft
+	 * =========================================================================
+	 * This class is a linked document class for "winAircraft.swf"
+	 * @see as3.aeronaut.objects.Aircraft
+	 *
+	 * Window for crating/editing Aircraft.
+	 */
 	public class CSWindowAircraft 
 			extends CSWindow 
 			implements ICSWindowAircraft, ICSValidate, IPrintable
@@ -94,9 +96,11 @@ package as3.aeronaut.module
 		private var lastFrameType:String = "";
 		private var frameDef:FrameDefinition = null;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function CSWindowAircraft()
 		{
 			super();
@@ -1088,9 +1092,9 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * baseTargetChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param o
+		 * @param vc
 		 */
-		private function baseTargetChangedHandler(o:Object):void
+		private function baseTargetChangedHandler(e:NumStepperValueChangedEvent):void
 		{
 			// for free sc
 			this.form.page1.init(this);
@@ -1111,9 +1115,9 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * maxSpeedChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param o
+		 * @param e
 		 */
-		private function maxSpeedChangedHandler(o:Object):void
+		private function maxSpeedChangedHandler(e:NumStepperValueChangedEvent):void
 		{
 			this.calcMaxSpeedWeight();
 			this.calcFreeWeight();
@@ -1125,9 +1129,9 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * maxGChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param o
+		 * @param vc
 		 */
-		private function maxGChangedHandler(o:Object):void
+		private function maxGChangedHandler(e:NumStepperValueChangedEvent):void
 		{
 			this.calcMaxGWeight();
 			this.calcFreeWeight();
@@ -1139,9 +1143,9 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * maxAccelChangedHandler
 		 * ---------------------------------------------------------------------
-		 * @param o
+		 * @param vc
 		 */
-		private function maxAccelChangedHandler(o:Object):void
+		private function maxAccelChangedHandler(e:NumStepperValueChangedEvent):void
 		{
 			this.calcMaxAccelWeight();
 			this.calcFreeWeight();

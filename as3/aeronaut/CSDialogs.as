@@ -25,12 +25,13 @@ package as3.aeronaut
 	
 	import as3.aeronaut.module.ICSWindow;
 		
-	// =========================================================================
-	// Class CSDialogs
-	// =========================================================================
-	// static Dialog helper class
-	// with all preset Dialogs needed in Aeronaut
-	//
+	/**
+	 * =========================================================================
+	 * Class CSDialogs
+	 * =========================================================================
+	 * static Dialog helper class
+	 * with all preset Dialogs needed in Aeronaut
+	 */
 	public class CSDialogs
 	{
 	

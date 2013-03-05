@@ -348,7 +348,8 @@ package as3.aeronaut.print
 					type, 
 					listener, 
 					useCapture, 
-					priority
+					priority,
+					useWeakReference
 				);
 		}
 			   
