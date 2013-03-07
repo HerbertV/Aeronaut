@@ -5,6 +5,11 @@
 *An unoffical custom aircraft, pilot design and editing tool for the out-of-print CRIMSON SKIES boardgame created by FASA.*
 
 *Inspired by Scott Janssens' CADET.*
+*Very special thanks to Patrick Koepke for releasing his "Zeppelin & Bombers" sourcebook un-official.*
+
+*Dedicated to all the fans of Crimson Skies.*
+
+[Aeronaut is Licensed under MIT License](http://opensource.org/licenses/MIT)
 
 -----------------------------------
 

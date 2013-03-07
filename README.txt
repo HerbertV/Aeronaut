@@ -13,7 +13,7 @@ ________              ___   ____     Crimson Skies      __             ________
 	
 	Visit: http://www.foxforcefive.de/cs/
 	
-	Aeronaut is Licensed under MIT License
+	Aeronaut is Licensed under MIT License: http://opensource.org/licenses/MIT
 	Sources: http://github.com/HerbertV/Aeronaut/
 
 ================================================================================

@@ -2,7 +2,9 @@
 TODO.txt
 *.exe
 images/pinups/
+images/pilots/
 data/loadouts/
+data/pilots/
 winProto.fla
 print.fla
 
