@@ -67,8 +67,8 @@ package as3.aeronaut.print.aircraft
 		 * @param loadout
 		 */
 		public function init(
-				aircraft:Aircraft,
-				loadout:Loadout
+				aircraft:Aircraft=null,
+				loadout:Loadout=null
 			):void
 		{
 			throw new Error("SpriteWeapons init is abstract");
