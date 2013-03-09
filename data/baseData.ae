@@ -1099,16 +1099,13 @@
 				<cost type="complete" changes="-0.10" />
 				<weight type="additional" changes="0" />
 			</specialCharacteristic>
-			
-			
-<!--
-TODO remove and implement this in turret section
-
-			<specialCharacteristic ID="AC_039" groupID="" costType="additional" weightChanges="320" costChanges="1400" hasHardcodedAbility="false"  countsToSCLimit="true">
+	
+			<specialCharacteristic ID="AC_046" groupID="turret"  hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>360° Turret</name>
-				<description></description>
+				<allowedFrame type="heavyFighter" />
+				<cost type="additional" changes="1400" />
+				<weight type="additional" changes="320" />
 			</specialCharacteristic>
--->
 			
 		</aircraftCharacteristics>
 
