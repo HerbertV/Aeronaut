@@ -31,17 +31,17 @@ package as3.aeronaut.objects.aircraftConfigs
 		// Constants
 		// =====================================================================
 		//nose
-		public static const DIR_FRONT = "front";
+		public static const DIR_FRONT:String = "front";
 		//aft
-		public static const DIR_REAR = "rear"; 
+		public static const DIR_REAR:String = "rear"; 
 		//left side
-		public static const DIR_LEFT = "left"; 
+		public static const DIR_LEFT:String = "left"; 
 		//right side
-		public static const DIR_RIGHT = "right"; 
+		public static const DIR_RIGHT:String = "right"; 
 		//top
-		public static const DIR_DORSAL = "dorsal"; 
+		public static const DIR_DORSAL:String = "dorsal"; 
 		//bottom
-		public static const DIR_VENTRAL = "ventral"; 
+		public static const DIR_VENTRAL:String = "ventral"; 
 		
 		// =====================================================================
 		// Variables

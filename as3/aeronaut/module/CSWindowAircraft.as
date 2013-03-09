@@ -277,6 +277,7 @@ package as3.aeronaut.module
 			this.form.numStepHeight.setupSteps(5 ,30 ,10, 6);
 			this.form.numStepHeight.setupTooltip(Globals.myTooltip, "");
 			
+			this.form.btnImportCadet.setupTooltip(Globals.myTooltip,"Import CADET Aircraft");
 			this.form.btnImportCadet.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					importCadetHandler
@@ -1079,6 +1080,8 @@ package as3.aeronaut.module
 		 */
 		private function importCadetHandler(e:MouseEvent):void
 		{
+// TODO check for unsaved data
+			
 			var file:String = AbstractCadetImporter.selectImportCadetFile(
 					"Aircraft",
 					"cdt"
@@ -1107,7 +1110,13 @@ package as3.aeronaut.module
 			var importer:AircraftImporter = new AircraftImporter(loader.getBytes());
 			
 			if ( !importer.parseBytes() )
+			{
+				AbstractCadetImporter.invalidFile(loader.getFilename());
 				return;
+			}
+			this.initFromAircraft(importer.getAircraft());
+			// every import is unsaved.
+			this.setSaved(false);
 		}
 		
 		/**
