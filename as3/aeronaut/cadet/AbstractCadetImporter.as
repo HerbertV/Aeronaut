@@ -1,4 +1,4 @@
-﻿/*
+/*
  *    ___   ____                        __  
  *   / _ | / __/______  ___  ___ ___ __/ /_ 
  *  / __ |/ _// __/ _ \/ _ \/ _ `/ // / __/ 
@@ -98,14 +98,14 @@ package as3.aeronaut.cadet
 			mdm.Dialogs.BrowseFile.filterText = "Cadet (*." + ext + ")|*." + ext;
 			mdm.Dialogs.BrowseFile.defaultDirectory = importDir;
 						
-			var filePath:String = mdm.Dialogs.BrowseFile.show();
+			var selected:String = mdm.Dialogs.BrowseFile.show();
 			
-			if( importDir != "false" )
+			if( selected != "false" )
 			{
 				AbstractCadetImporter.lastSelectedCadetDir = 
-						importDir.substring(0,filePath.lastIndexOf("\\"));
+						selected.substring(0,selected.lastIndexOf("\\"));
 			}
-			return importDir;
+			return selected;
 		}
 		
 		/**
