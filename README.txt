@@ -7,9 +7,10 @@ ________              ___   ____     Crimson Skies      __             ________
 	for the out-of-print CRIMSON SKIES boardgame by created FASA. 
  
 	Inspired by Scott Janssens' CADET. 
-	Very special thanks to Patrick Kopke for releasing his 
+	Very special thanks to Patrick Koepke for releasing his 
 	"Zeppelin & Bombers" sourcebook un-official.
-	Dedicated to all the fans of Crimson Skies.
+	
+	This program is dedicated to all the fans of Crimson Skies.
 	
 	Visit: http://www.foxforcefive.de/cs/
 	
@@ -17,7 +18,7 @@ ________              ___   ____     Crimson Skies      __             ________
 	Sources: http://github.com/HerbertV/Aeronaut/
 
 ================================================================================
-	Version 1.1.0 alpha 01
+	Version 1.1.0 alpha 02
 ================================================================================
 
 --------------------------------------------------------------------------------
@@ -33,6 +34,10 @@ ________              ___   ____     Crimson Skies      __             ________
 	
 	"Zeppelin & Bombers" can be downloaded here:
 	http://www.montanaraiders.com/zeppelinsandbombers.html
+	
+	Thanks to Neil Holley for supporting me with the cadet parser:
+	https://bitbucket.org/neilh/cadetparser.py/src
+	That allows me to import cadet files.
 	
 --------------------------------------------------------------------------------
 	System Requirements:
