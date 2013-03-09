@@ -29,6 +29,7 @@ package as3.aeronaut.module
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.net.BinaryLoader;
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
@@ -49,6 +50,9 @@ package as3.aeronaut.module
 	
 	import as3.aeronaut.print.IPrintable;
 	import as3.aeronaut.print.PrintManager;
+	
+	import as3.aeronaut.cadet.AircraftImporter;
+	import as3.aeronaut.cadet.AbstractCadetImporter;
 	
 	/**
 	 * =========================================================================
@@ -271,7 +275,12 @@ package as3.aeronaut.module
 			this.form.numStepLength.setupSteps(10 ,100 ,20, 0);
 			this.form.numStepLength.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepHeight.setupSteps(5 ,30 ,10, 6);
-			this.form.numStepHeight.setupTooltip(Globals.myTooltip,"");
+			this.form.numStepHeight.setupTooltip(Globals.myTooltip, "");
+			
+			this.form.btnImportCadet.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					importCadetHandler
+				);
 		}
 		
 		/**
@@ -1060,6 +1069,46 @@ package as3.aeronaut.module
 		// =====================================================================
 		// Event Handler
 		// =====================================================================
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * importCadetHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function importCadetHandler(e:MouseEvent):void
+		{
+			var file:String = AbstractCadetImporter.selectImportCadetFile(
+					"Aircraft",
+					"cdt"
+				);
+				
+			if( file == "false" )
+				return;
+				
+			var loader:BinaryLoader = new BinaryLoader(file);
+			loader.addEventListener(
+					Event.COMPLETE, 
+					cadetLoadedHandler
+				); 
+			loader.load();	
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * cadetLoadedHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function cadetLoadedHandler(e:Event):void
+		{
+			var loader:BinaryLoader = BinaryLoader(e.currentTarget);
+			var importer:AircraftImporter = new AircraftImporter(loader.getBytes());
+			
+			if ( !importer.parseBytes() )
+				return;
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------

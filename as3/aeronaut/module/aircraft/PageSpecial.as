@@ -762,7 +762,7 @@ package as3.aeronaut.module.aircraft
 		 */
 		private function blueprintLoadedHandler(e:Event):void
 		{
-			var bmp:Bitmap =this.myBlueprintLoader.getImage();
+			var bmp:Bitmap = this.myBlueprintLoader.getImage();
 			bmp = BitmapHelper.resizeBitmap(
 					bmp,
 					BLUEPRINT_WIDTH, 
