@@ -26,7 +26,10 @@ package as3.aeronaut.cadet
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.objects.Aircraft;
+	import as3.aeronaut.objects.aircraft.Gunpoint;
+	import as3.aeronaut.objects.aircraft.Turret;
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
 	
@@ -163,7 +166,7 @@ package as3.aeronaut.cadet
 			bytes.readUTFBytes(len);
 			
 			// TODO update names in baseData.ae
-			//now the entry is just skipped
+			//now this entry is just skipped
 		}
 		
 		/**
@@ -226,12 +229,14 @@ package as3.aeronaut.cadet
 			aircraft.setRange(bytes.readUnsignedInt());
 			aircraft.setServiceCeiling(bytes.readUnsignedInt() * 500);
 		
-			//TODO needs to split inches and feet.
-			/*
-        p.WingSpanInInches = _read_int(f)
-        p.LengthInInches = _read_int(f)
-        p.HeightInInches = _read_int(f)
-			*/
+			var arr:Array = CSFormatter.extractFeetInches(bytes.readUnsignedInt());
+			aircraft.setWingspan(arr[0], arr[1]);
+			
+			arr = CSFormatter.extractFeetInches(bytes.readUnsignedInt());
+			aircraft.setLength(arr[0], arr[1]);
+			
+			arr = CSFormatter.extractFeetInches(bytes.readUnsignedInt());
+			aircraft.setHeight(arr[0], arr[1]);
 		}
 		
 		/**
@@ -241,15 +246,12 @@ package as3.aeronaut.cadet
 		 */
 		private function parseArmor():void
 		{
-			// TODO
-			/*
-			p.NoseArmorRows = _read_int(f)
-        p.PortWingLeadingArmorRows = _read_int(f)
-        p.PortWingTrailingArmorRows = _read_int(f)
-        p.StarboardWingLeadingArmorRows = _read_int(f)
-        p.StarboardWingTrailingArmorRows = _read_int(f)
-        p.TailArmorRows = _read_int(f)
-			*/
+			aircraft.setArmorNose(bytes.readUnsignedInt()*10);
+			aircraft.setArmorPWL(bytes.readUnsignedInt()*10);
+			aircraft.setArmorPWT(bytes.readUnsignedInt()*10);
+			aircraft.setArmorSWL(bytes.readUnsignedInt()*10);
+			aircraft.setArmorSWT(bytes.readUnsignedInt()*10);
+			aircraft.setArmorTail(bytes.readUnsignedInt()*10);
 		}
 		
 		/**
@@ -259,16 +261,28 @@ package as3.aeronaut.cadet
 		 */
 		private function parseGuns():void
 		{
-			//TODO
-			/*
-			def _read_gun(f):
-				vals=unpack('<2i', f.read(2 * 4))
-				return (_gun_enum[vals[0]], _gun_mount_enum[vals[1]])
-			def _read_guns(f):
-				guns = []
-				for g in range(8):
-					guns.append(_read_gun(f))
-			*/
+			// the good thing is cadet support only one turret.
+			// this makes the turret import easier.
+			var t:Turret = new Turret(turretDir);
+			
+			for( var i:int = 1; i < 9; i++ )
+			{
+				var cal:String = GUN_CAL[bytes.readUnsignedInt()];
+				var mount:String = GUN_MOUNT[bytes.readUnsignedInt()];
+				
+				var gp:Gunpoint = new Gunpoint(i, cal);
+				gp.direction = mount;
+				
+				if( mount == "turret")
+					t.linkedGuns.push(i);
+				
+				aircraft.setGunpoint(gp);
+			}
+			
+			if( t.linkedGuns.length == 0 )
+				return;
+			
+			aircraft.setTurrets(new Array(t));
 		}
 		
 		/**

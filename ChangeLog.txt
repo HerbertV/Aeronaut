@@ -13,7 +13,7 @@ Version - 1.1.0 alpha 02:
 - 	Added 360° Turret as SC again (id is now AC_046) it's now a heavy fighter
 	exclusive SC, since the rules for dorsal/ventral turrets differ from the 
 	360° turret of the monitor.
-	
+-	Added import for CADET planes.	
 
 
 Version - 1.1.0 alpha 01: 

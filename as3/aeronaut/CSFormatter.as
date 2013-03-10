@@ -351,6 +351,23 @@ package as3.aeronaut
 			return kg.toFixed(1) + " " + KILOGRAMM;
 		}
 		
+		/**
+		 * ---------------------------------------------------------------------
+		 * extractFeetInches
+		 * ---------------------------------------------------------------------
+		 * splits inches into feet and inches.
+		 *
+		 * @param inches
+		 * 
+		 * @return Array of feet and inch
+		 */
+		public static function extractFeetInches(inches:int):Array
+		{
+			var inch:int = inches % 12;
+			var feet:int = (inches - inch ) / 12;
+			
+			return new Array(feet, inch);
+		}
 		
 	}
 }
