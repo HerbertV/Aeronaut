@@ -108,44 +108,44 @@ package as3.aeronaut.print
 			PWL = new ArmorRow(
 					ArmorRow.ID_PWL,
 					true,
-					39.0,
-					468.5
+					27.0,
+					447.5
 				);
 			NOSE = new ArmorRow(
 					ArmorRow.ID_NOSE,
 					true,
-					145.0,
-					404.5
+					133.0,
+					383.5
 				);
 			SWL = new ArmorRow(
 					ArmorRow.ID_SWL,
 					true,
-					250.5,
-					468.5
+					238.5,
+					447.5
 				);
 			PWT = new ArmorRow(
 					ArmorRow.ID_PWT,
 					false,
-					39.0,
-					532.0
+					27.0,
+					511.0
 				);
 			TAIL = new ArmorRow(
 					ArmorRow.ID_TAIL,
 					false,
-					145.0,
-					571.5
+					133.0,
+					550.5
 				);
 			TAIL_TURRET = new ArmorRow(
 					ArmorRow.ID_TAIL_TURRET,
 					false,
-					145.0,
-					587.5
+					133.0,
+					566.5
 				);
 			SWT = new ArmorRow(
 					ArmorRow.ID_SWT,
 					false,
-					250.5,
-					532.0
+					238.5,
+					511.0
 				);
 			// BC only rows
 			PB = new ArmorRow(

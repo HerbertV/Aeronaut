@@ -124,9 +124,10 @@ package as3.aeronaut.print
 			this.pageRect = rect;
 			this.printContainer = container;
 			
+			// define the print rectangle without offsets.
 			if( rect == null )
-				this.pageRect = new Rectangle(15,15,560,780);
-			
+				this.pageRect = new Rectangle(0,0,565,750);
+							
 			if( Console.isConsoleAvailable() )
 			{
 				Console.getInstance().writeln(
@@ -208,9 +209,19 @@ package as3.aeronaut.print
 				var offsetY:int = pageRect.y;
 				var neededWidth:int = pageRect.width;
 				var neededHeight:int = pageRect.height;
-			
 				var deltaWidth:int = (pj.pageWidth - neededWidth) / 2;
 				var deltaHeight:int = (pj.pageHeight - neededHeight) / 2;
+				
+				if( Console.isConsoleAvailable() )
+						Console.getInstance().writeln(
+								"Print Dimensions:",
+								DebugLevel.DEBUG,
+								"needed: [w: " + neededWidth + " h: " + neededHeight + " ]"
+									+ "<br>pj: [w: " + pj.pageWidth + " h: " + pj.pageHeight + " ]"
+									+ "<br>delta: [w: " +deltaWidth + " h: " + deltaHeight + " ]"
+								
+							);
+							
 				if( pj.pageWidth < neededWidth 
 						|| pj.pageHeight < neededHeight ) 
 				{
@@ -222,20 +233,24 @@ package as3.aeronaut.print
 								"Please reduce your page margins."
 							);
 				}
-				
 				// center page
+				//
+				// note: 
+				// this looks silly but the offsets have to be negative
+				// also the width/height must be adjusted to print without
+				// cutoffs.
 				if( deltaWidth > 0 ) 
 				{
-					offsetX -= deltaWidth;
+					offsetX = -deltaWidth;
 					neededWidth += deltaWidth;
 				}
 				if( deltaHeight > 0 ) 
 				{
-					offsetY -= deltaHeight;
+					offsetY = -deltaHeight;
 					neededHeight += deltaHeight;
 				}
-				pageRect = new Rectangle(offsetX, offsetY, neededWidth, neededHeight);
 				
+				var usedRect:Rectangle = new Rectangle(offsetX, offsetY, neededWidth, neededHeight);
 				var sheet:CSAbstractSheet;
 				var page:Sprite;
 				 
@@ -250,7 +265,7 @@ package as3.aeronaut.print
 						this.printContainer.stage.addChild(page);
 						try 
 						{
-							pj.addPage(page,pageRect,pjOptions);
+							pj.addPage(page,usedRect,pjOptions);
 							pageCount++;
 						} catch(e:Error) {
 							// log a warning message

@@ -221,16 +221,16 @@ package as3.aeronaut.print.aircraft
 		private function initMaxSpeed():void
 		{
 			if( this.myObject.getMaxSpeed() < 5 )
-				this.lblMaxSpeed5.visible = false;
+				this.boxPerformance.lblMaxSpeed5.visible = false;
 			
 			if( this.myObject.getMaxSpeed() < 4 ) 
-				this.lblMaxSpeed4.visible = false;
+				this.boxPerformance.lblMaxSpeed4.visible = false;
 			
 			if( this.myObject.getMaxSpeed() < 3 )
-				this.lblMaxSpeed3.visible = false;
+				this.boxPerformance.lblMaxSpeed3.visible = false;
 			
 			if( this.myObject.getMaxSpeed() < 2 ) 
-				this.lblMaxSpeed2.visible = false;
+				this.boxPerformance.lblMaxSpeed2.visible = false;
 		}
 		
 		/**
@@ -241,10 +241,10 @@ package as3.aeronaut.print.aircraft
 		private function initAccel():void
 		{
 			if( this.myObject.getAccelRate() < 3 ) 
-				this.lblMaxAccel3.visible = false;
+				this.boxPerformance.lblMaxAccel3.visible = false;
 			
 			if( this.myObject.getAccelRate() < 2 )
-				this.lblMaxAccel2.visible = false;
+				this.boxPerformance.lblMaxAccel2.visible = false;
 		}
 		
 		/**
@@ -311,29 +311,29 @@ package as3.aeronaut.print.aircraft
 			var right:int = this.myObject.getMaxGs() + rightGMod;
 			
 			if( left < 5 ) 
-				this.lblMaxGsPort5.visible = false;
+				this.boxPerformance.lblMaxGsPort5.visible = false;
 			if( right < 5 )
-				this.lblMaxGsStar5.visible = false;
+				this.boxPerformance.lblMaxGsStar5.visible = false;
 			
 			if( left < 4 )
-				this.lblMaxGsPort4.visible = false;
+				this.boxPerformance.lblMaxGsPort4.visible = false;
 			if( right < 4 )
-				this.lblMaxGsStar4.visible = false;
+				this.boxPerformance.lblMaxGsStar4.visible = false;
 			
 			if( left < 3 ) 
-				this.lblMaxGsPort3.visible = false;
+				this.boxPerformance.lblMaxGsPort3.visible = false;
 			if( right < 3 ) 
-				this.lblMaxGsStar3.visible = false;
+				this.boxPerformance.lblMaxGsStar3.visible = false;
 			
 			if( left < 2 )
-				this.lblMaxGsPort2.visible = false;
+				this.boxPerformance.lblMaxGsPort2.visible = false;
 			if( right < 2 ) 
-				this.lblMaxGsStar2.visible = false;
+				this.boxPerformance.lblMaxGsStar2.visible = false;
 			
 			if( left < 1 ) 
-				this.lblMaxGsPort1.visible = false;
+				this.boxPerformance.lblMaxGsPort1.visible = false;
 			if( right < 1 ) 
-				this.lblMaxGsStar1.visible = false;
+				this.boxPerformance.lblMaxGsStar1.visible = false;
 		}
 		
 		/**
