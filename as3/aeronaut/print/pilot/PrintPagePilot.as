@@ -40,11 +40,12 @@ package as3.aeronaut.print.pilot
 	import as3.hv.core.utils.BitmapHelper;
 	
 	
-	// =========================================================================
-	// Class PrintPagePilot
-	// =========================================================================
-	// Library Symbol linked class for Pilot Page 
-	//
+	/**
+	 * =========================================================================
+	 * Class PrintPagePilot
+	 * =========================================================================
+	 * Library Symbol linked class for Pilot Page 
+	 */
 	public class PrintPagePilot
 			extends CSAbstractPrintPage
 			implements ICSPrintPagePilot
@@ -54,9 +55,11 @@ package as3.aeronaut.print.pilot
 		// =====================================================================
 		private var myObject:Pilot;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Contructor
+		 * =====================================================================
+		 */
 		public function PrintPagePilot()
 		{
 			super();
@@ -89,6 +92,7 @@ package as3.aeronaut.print.pilot
 		 */
 		public function initFromPilot(obj:Pilot):void
 		{
+			super.init();
 			this.myObject = obj;
 			
 			this.lblPilotName.text = obj.getName();

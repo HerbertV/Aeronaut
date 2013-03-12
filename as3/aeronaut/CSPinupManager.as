@@ -42,8 +42,6 @@ package as3.aeronaut
 	import as3.hv.core.console.DebugLevel;
 	import as3.hv.core.net.ImageLoader;
 	
-	import as3.aeronaut.Globals;
-	
 	// =========================================================================
 	// CSPinupManager
 	// =========================================================================

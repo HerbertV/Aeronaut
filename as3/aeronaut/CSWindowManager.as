@@ -42,8 +42,6 @@ package as3.aeronaut
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.Squadron;
 	import as3.aeronaut.objects.Zeppelin;
-		
-	import as3.aeronaut.Globals;
 	
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;

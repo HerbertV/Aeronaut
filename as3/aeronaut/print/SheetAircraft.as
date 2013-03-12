@@ -256,7 +256,7 @@ package as3.aeronaut.print
 				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
-			} else if( frame == FrameDefinition.FT_LIGHT_BOMBER ) {
+			} else if( frame == FrameDefinition.FT_HEAVY_BOMBER ) {
 				//TODO
 			} else if( frame == FrameDefinition.FT_LIGHT_BOMBER ) {
 				//TODO

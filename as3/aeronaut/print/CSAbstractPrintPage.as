@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -23,13 +23,15 @@ package as3.aeronaut.print
 {
 	import flash.display.MovieClip;
 	
+	import as3.aeronaut.Globals;
 	
-	// =========================================================================
-	// Class CSAbstractPrintPage
-	// =========================================================================
-	// Abstract base class for all print pages
-	//
-	public class CSAbstractPrintPage
+	/**
+	 * =========================================================================
+	 * Class CSAbstractPrintPage
+	 * =========================================================================
+	 * Abstract base class for all print pages
+	 */
+	dynamic public class CSAbstractPrintPage
 			extends MovieClip
 	{
 		// =====================================================================
@@ -38,9 +40,11 @@ package as3.aeronaut.print
 		protected var mySheet:CSAbstractSheet;
 		
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function CSAbstractPrintPage()
 		{
 			super();
@@ -49,6 +53,17 @@ package as3.aeronaut.print
 		// =====================================================================
 		// Functions
 		// =====================================================================
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * init
+		 * ---------------------------------------------------------------------
+		 * Call this from your initFromObject function.
+		 */
+		public function init():void
+		{
+			this.lblVersion.text = "printed with Aeronaut v." +Globals.VERSION;
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------

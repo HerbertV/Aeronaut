@@ -26,19 +26,20 @@ package as3.aeronaut.cadet
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.objects.Aircraft;
 	import as3.aeronaut.objects.aircraft.Gunpoint;
 	import as3.aeronaut.objects.aircraft.Turret;
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
+	import as3.aeronaut.objects.baseData.Company;
 	
 	/**
 	 * =========================================================================
 	 * AicraftImporter
 	 * =========================================================================
-	 * For importing aircrafts from cadet files.
-	 * 
+	 * For importing aircrafts from cadet (cdt) files.
 	 */
 	public class AircraftImporter
 			extends AbstractCadetImporter 
@@ -100,6 +101,9 @@ package as3.aeronaut.cadet
 			this.aircraft.createNew();
 		}
 		
+		// =====================================================================
+		// Functions
+		// =====================================================================
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -163,10 +167,18 @@ package as3.aeronaut.cadet
 		private function parseManufacturer():void
 		{
 			var len:int = bytes.readUnsignedInt();
-			bytes.readUTFBytes(len);
+			var manufacturer:String = bytes.readUTFBytes(len);
 			
-			// TODO update names in baseData.ae
-			//now this entry is just skipped
+			var companies:Array = Globals.myBaseData.getCompanies();
+			// check against longname 
+			for each( var company:Company in companies )
+			{
+				if ( company.longName == manufacturer )
+				{
+					aircraft.setManufacturerID(company.myID)
+					return;
+				}
+			}
 		}
 		
 		/**
