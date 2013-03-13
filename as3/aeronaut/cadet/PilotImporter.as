@@ -43,7 +43,10 @@ package as3.aeronaut.cadet
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		
+		private static const PTYPE:Array = new Array( 
+				"hero", 
+				"sidekick"
+			);
 		
 		// =====================================================================
 		// Variables
@@ -95,14 +98,37 @@ package as3.aeronaut.cadet
 			// squadname is skipped
 			parseString();
 			pilot.setPlanename(parseString());
+			// hero or sidekick
+// TODO needs change if subtype is available			
+			pilot.setType(PTYPE[bytes.readByte()]);
 			
-// TODO	need to figure out what comes next.
-
-
+			this.parseSkills();
+			
+			pilot.setMissionCount(bytes.readInt());
+			pilot.setKills(bytes.readInt());
+			pilot.setCraftLost(bytes.readInt());
+			pilot.setCurrentEP(bytes.readInt());
+			pilot.setTotalEP(bytes.readInt());
+	
 			return true;
 		}
 		
-		
+		/**
+		 * ---------------------------------------------------------------------
+		 * parseSkils
+		 * ---------------------------------------------------------------------
+		 */
+		private function parseSkills():void
+		{
+			var statsHex:String = bytes.readInt().toString(16)
+			
+			pilot.setNaturalTouch( uint("0x"+statsHex.charAt(5)) );
+			pilot.setSixthSense( uint("0x"+statsHex.charAt(4)) );
+			pilot.setDeadEye( uint("0x"+statsHex.charAt(3)) );
+			pilot.setSteadyHand( uint("0x"+statsHex.charAt(2)) );
+			pilot.setConstitution( uint("0x"+statsHex.charAt(1)) );
+			pilot.setQuickDraw( uint("0x"+statsHex.charAt(0)) );	
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------

@@ -153,7 +153,7 @@ package as3.aeronaut.cadet
 		 */
 		protected function parseString():String
 		{
-			var len:int = bytes.readUnsignedInt();
+			var len:int = bytes.readInt();
 			return bytes.readUTFBytes(len);
 		}
 	}

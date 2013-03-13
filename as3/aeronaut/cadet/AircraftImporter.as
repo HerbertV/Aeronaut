@@ -118,23 +118,23 @@ package as3.aeronaut.cadet
 			if( bytes.readUTFBytes(5) != "CADET" )
 				return false;
 			
-			if( bytes.readUnsignedShort() != 1 )
+			if( bytes.readShort() != 1 )
 				return false;
 				
-			if( bytes.readUnsignedInt() != 2 )
+			if( bytes.readInt() != 2 )
 				return false;
 			
 			aircraft.setName(this.parseString());
 			this.parseManufacturer();
 			
 			//p.unknown.append(_read_int(f)) # appears to always be 0
-			bytes.readUnsignedInt();	
+			bytes.readInt();	
 			
 			this.parseMainStats();
 			
 			// skip p.ArmorRows = _read_int(f)
 			// aeronaut calculates this.
-			bytes.readUnsignedInt();	
+			bytes.readInt();	
 			
 			this.parseTurret();
 			this.parseSpecs();
@@ -178,31 +178,31 @@ package as3.aeronaut.cadet
 		 */
 		private function parseMainStats():void
 		{
-			var ft:String = FRAME_TYPES[bytes.readUnsignedInt()];
+			var ft:String = FRAME_TYPES[bytes.readInt()];
 			aircraft.setFrameType(ft);
-			var pt:String = PROP_TYPES[bytes.readUnsignedInt()];
+			var pt:String = PROP_TYPES[bytes.readInt()];
 			aircraft.setPropType(pt);
 			
-			aircraft.setBaseTarget(bytes.readUnsignedInt());
+			aircraft.setBaseTarget(bytes.readInt());
 			
 			//p.LoadedWeight = _read_int(f)
-			bytes.readUnsignedInt();
+			bytes.readInt();
 			//p.BaseToHitWeight = _read_int(f)
-			bytes.readUnsignedInt();
+			bytes.readInt();
 			
-			aircraft.setMaxSpeed(bytes.readUnsignedInt());
+			aircraft.setMaxSpeed(bytes.readInt());
 			//p.MaxSpeedWeight = _read_int(f)
-			bytes.readUnsignedInt();
+			bytes.readInt();
 			
-			aircraft.setMaxGs(bytes.readUnsignedInt());
+			aircraft.setMaxGs(bytes.readInt());
 			//p.MaxGsWeight = _read_int(f)
-			bytes.readUnsignedInt();
+			bytes.readInt();
 			
-			aircraft.setAccelRate(bytes.readUnsignedInt());
+			aircraft.setAccelRate(bytes.readInt());
 			//p.AccelerationWeight = _read_int(f)
-			bytes.readUnsignedInt();
+			bytes.readInt();
 			
-			aircraft.setDecelRate(bytes.readUnsignedInt());	
+			aircraft.setDecelRate(bytes.readInt());	
 		}
 		
 		/**
@@ -213,10 +213,10 @@ package as3.aeronaut.cadet
 		private function parseTurret():void
 		{
 			//p.TurretWeight = _read_int(f)
-			bytes.readUnsignedInt();
+			bytes.readInt();
 			// save for later use
 			// p.TurretDirection = _turret_direction_enum[_read_int(f)]
-			turretDir = TURRET_DIR[bytes.readUnsignedInt()];
+			turretDir = TURRET_DIR[bytes.readInt()];
         }
 		
 		/**
@@ -226,16 +226,16 @@ package as3.aeronaut.cadet
 		 */
 		private function parseSpecs():void
 		{
-			aircraft.setRange(bytes.readUnsignedInt());
-			aircraft.setServiceCeiling(bytes.readUnsignedInt() * 500);
+			aircraft.setRange(bytes.readInt());
+			aircraft.setServiceCeiling(bytes.readInt() * 500);
 		
-			var arr:Array = CSFormatter.extractFeetInches(bytes.readUnsignedInt());
+			var arr:Array = CSFormatter.extractFeetInches(bytes.readInt());
 			aircraft.setWingspan(arr[0], arr[1]);
 			
-			arr = CSFormatter.extractFeetInches(bytes.readUnsignedInt());
+			arr = CSFormatter.extractFeetInches(bytes.readInt());
 			aircraft.setLength(arr[0], arr[1]);
 			
-			arr = CSFormatter.extractFeetInches(bytes.readUnsignedInt());
+			arr = CSFormatter.extractFeetInches(bytes.readInt());
 			aircraft.setHeight(arr[0], arr[1]);
 		}
 		
@@ -246,12 +246,12 @@ package as3.aeronaut.cadet
 		 */
 		private function parseArmor():void
 		{
-			aircraft.setArmorNose(bytes.readUnsignedInt()*10);
-			aircraft.setArmorPWL(bytes.readUnsignedInt()*10);
-			aircraft.setArmorPWT(bytes.readUnsignedInt()*10);
-			aircraft.setArmorSWL(bytes.readUnsignedInt()*10);
-			aircraft.setArmorSWT(bytes.readUnsignedInt()*10);
-			aircraft.setArmorTail(bytes.readUnsignedInt()*10);
+			aircraft.setArmorNose(bytes.readInt()*10);
+			aircraft.setArmorPWL(bytes.readInt()*10);
+			aircraft.setArmorPWT(bytes.readInt()*10);
+			aircraft.setArmorSWL(bytes.readInt()*10);
+			aircraft.setArmorSWT(bytes.readInt()*10);
+			aircraft.setArmorTail(bytes.readInt()*10);
 		}
 		
 		/**
@@ -267,8 +267,8 @@ package as3.aeronaut.cadet
 			
 			for( var i:int = 1; i < 9; i++ )
 			{
-				var cal:String = GUN_CAL[bytes.readUnsignedInt()];
-				var mount:String = GUN_MOUNT[bytes.readUnsignedInt()];
+				var cal:String = GUN_CAL[bytes.readInt()];
+				var mount:String = GUN_MOUNT[bytes.readInt()];
 				
 				var gp:Gunpoint = new Gunpoint(i, cal);
 				gp.direction = mount;
