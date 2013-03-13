@@ -141,6 +141,21 @@ package as3.aeronaut.cadet
 			throw new Error("Abstract function needs override!");
 		}
 		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * parseString
+		 * ---------------------------------------------------------------------
+		 * parses a string entry in our byte array.
+		 * All cadet strings start with an integer that define the string length.
+		 * 
+		 * @return
+		 */
+		protected function parseString():String
+		{
+			var len:int = bytes.readUnsignedInt();
+			return bytes.readUTFBytes(len);
+		}
 	}
 
 }

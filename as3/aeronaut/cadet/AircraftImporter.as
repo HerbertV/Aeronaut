@@ -124,7 +124,7 @@ package as3.aeronaut.cadet
 			if( bytes.readUnsignedInt() != 2 )
 				return false;
 			
-			this.parseName();
+			aircraft.setName(this.parseString());
 			this.parseManufacturer();
 			
 			//p.unknown.append(_read_int(f)) # appears to always be 0
@@ -150,26 +150,14 @@ package as3.aeronaut.cadet
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * parseName
-		 * ---------------------------------------------------------------------
-		 */
-		private function parseName():void
-		{
-			var len:int = bytes.readUnsignedInt();
-			aircraft.setName(bytes.readUTFBytes(len));
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
 		 * parseManufacturer
 		 * ---------------------------------------------------------------------
 		 */
 		private function parseManufacturer():void
 		{
-			var len:int = bytes.readUnsignedInt();
-			var manufacturer:String = bytes.readUTFBytes(len);
-			
+			var manufacturer:String = this.parseString();	
 			var companies:Array = Globals.myBaseData.getCompanies();
+			
 			// check against longname 
 			for each( var company:Company in companies )
 			{
