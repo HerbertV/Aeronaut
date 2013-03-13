@@ -1,0 +1,109 @@
+
+<p class="Headline">Advanced Editing - AircraftConfigs.ae</p>
+<br>
+
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a><br>
+	<a href="event:advanced.html">Back to Advanced Editing</a>
+</p>
+
+<p class="Text">
+	<b>Base Target Matrix:</b>
+	<br><br>
+	<span class="Code">
+	&lt;baseTarget indexID="1" BTN="1" loadedWeight="14500"<br>
+	&nbsp; &nbsp; payload="10000" cost="0"  maxSC="11" /&gt;
+	<br><br>
+	</span>
+	
+	For the BTN 1-10 the <i>indexID</i> is equal to the <i>BTN</i>. 
+	This makes the new BTN handling compatible with the old system previous to version 1.1.0.
+	<br>
+	<i>"loadedWeight"</i> and <i>"payload"</i> are set in lbs. Also the <i>"payload"</i> is equal
+	to the bombers/cargo so called weight class. 
+	<br>
+	<i>"cost"</i> is the fixed price in Dollar. This allows you easily to adjust the airframe
+	cost calculation in absolute values.
+	<i>"maxSC"</i> are the maximal special characteristics.
+	<br>
+	<br>
+	
+	<b>Max Speed Matrix:</b>
+	<br><br>
+	<span class="Code">
+	&lt;maxSpeed btnID="1" speed="1"  weight="700" cost="470" /&gt;
+	<br><br>
+	</span>
+	You will need an entry for each possible BTN / max. speed combination.<br>
+	The attribute <i>"btnID"</i> has to be unique and is a reference to base target matrix
+	indexId.<br>
+	<i>"speed"</i> is the max speed value.	
+	<i>"weight"</i> is set in lbs. 
+	<i>"cost"</i> is set in Dollars.
+	<br>
+	<br>
+	<br>
+		
+	<b>Max Gs Matrix:</b>
+	<br><br>
+	<span class="Code">
+	&lt;maxGForce btnID="1" g="1" weight="1100" cost="510" /&gt;
+	<br><br>
+	</span>
+	You will need an entry for each possible BTN / max. G combination.<br>
+	The attribute <i>"btnID"</i> has to be unique and is a reference to base target matrix
+	indexId.<br>
+	<i>"g"</i> is the max G value.	
+	<i>"weight"</i> is set in lbs.
+	<i>"cost"</i> is set in Dollars.
+	<br>
+	<br>
+	<br>
+	
+	<b>Max Acceleration Matrix:</b>
+	<br><br>
+	<span class="Code">
+	&lt;maxAcceleration btnID="1" accel="1" weight="1100"  cost="250" /&gt;
+	<br><br>
+	</span>
+	You will need an entry for each possible BTN / max. Acceleration combination.<br>
+	The attribute <i>"btnID"</i> has to be unique and is a reference to base target matrix
+	indexId.<br>
+	<i>"accel"</i> is the max Acceleration value.	
+	<i>"weight"</i> is set in lbs.
+	<i>"cost"</i> is set in Dollars.
+	<br>
+	<br>
+	<br>
+	
+	<b>Frame Definition Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;frameDef frameType="fighter" <br>
+	&nbsp; &nbsp; &nbsp; &nbsp; minBaseTarget="5" maxBaseTarget="10" minSpeed="1"<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; maxSpeed="5" minGs="1" maxGs="5"<br> 
+	&nbsp; &nbsp; &nbsp; &nbsp; minAccel="1" maxAccel="3" minDecel="2"<br>	
+	&nbsp; &nbsp; &nbsp; &nbsp; maxDecel="2" hasWings="true" hasBows="false" <br>
+	&nbsp; &nbsp; &nbsp; &nbsp; maxGuns="8" allowsTurrets="0"&gt;<br>
+	&nbsp; &nbsp; &lt;allowedProp propType="pusher"/&gt; 1-n ...<br>
+	&nbsp; &nbsp; &lt;turretDef direction="" linkedGuns="1,2" weight="" cost=""/&gt;<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; 0-n ...<br>
+	&lt;/frameDef&gt;<br>
+	</span>
+	First you can't add new frame types by your own yet, but modify the exiting ones, which are:<br>
+	<i>fighter, heavyFighter, hoplite, heavyBomber, lightBomber, heavyCargo and lightCargo</i><br>
+	The frame definition sets up everything that is limited by the aircraft window, when you select
+	a specific frame.<br/>
+	<br>
+	The attribute "allowsTurrets" can be 0,1 or 2:<br>
+	&nbsp; &nbsp; 0 = no <br>
+	&nbsp; &nbsp; 1 = may have <br> 
+	&nbsp; &nbsp; 2 = only turrets allowed <br>
+	<br>
+</p>
+<br>
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a><br>
+	<a href="event:advanced.html">Back to Advanced Editing</a>
+</p>
+	

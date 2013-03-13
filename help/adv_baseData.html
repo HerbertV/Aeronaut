@@ -1,0 +1,197 @@
+
+<p class="Headline">Advanced Editing - BaseData.ae</p>
+<br>
+
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a><br>
+	<a href="event:advanced.html">Back to Advanced Editing</a>
+</p>
+
+<p class="Text">
+	<b>Company Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;company ID="C_001"&gt;<br>
+	&nbsp; &nbsp; &lt;shortName>Bell&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName>Bell Aircraft Corporation&lt;/longName&gt;<br>
+	&lt;/company&gt;
+	<br><br>
+	</span>
+	The Companies are used in the aircraft window to fill the manufacturer list.<br> 
+	The Attribute <i>"ID"</i> has to be unique.
+	The <i>"longName"</i> tag is shown in the manufacturer list and the <i>"shortName"</i> tag 
+	is used as a prefix for the aircrafts name in the print sheet.
+	<br>
+	<br>
+	<br>
+		
+	<b>Country Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;country ID="CY_001" languageID="L_01"<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; srcFlag="na_alaska.jpg"&gt;<br>
+	&nbsp; &nbsp; Alaska<br>
+	&lt;/country&gt;
+	<br><br>
+	</span>
+	The contries are used in the pilot window for choosing a nationality for your pilot.<br> 
+	The attribute <i>"ID"</i> has to be unique.
+	The attribute <i>"languageID"</i> is a reference to the mother tongue spooken in this country.
+	The attribute <i>"srcFlag"</i> is the file name of the national flag. 
+	All Flags are stored in "\images\nations\" sub-directory.
+	Inside the tag the countries name is stored.
+	<br>
+	<br>
+	<br>
+	
+	<b>Language Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;language ID="L_01"&gt;English&lt;/language&gt;
+	<br><br>
+	</span>
+	
+	If you use the Feat rules you can choose also "Language Feats".<br>
+	The attribute <i>"ID"</i> has to be unique.	
+	<br>
+	<br>
+	<br>
+	
+	<b>Feat Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;feat  ID="F_01" maxLvl="0" xpCost="200"&gt;<br>
+	&nbsp; &nbsp; Ace of Aces<br>
+	&lt;/feat&gt;
+	<br><br>
+	</span>
+	
+	If you use the Feat rules you can choose from this list in the pilot window.<br>
+	The attribute <i>"ID"</i> has to be unique.	
+	The attribute <i>"maxLevel"</i> describes how many levels a feat has. 
+	Some feats have no levels. so this value is set to 0.
+	But if it has 2 levels you set this value to 2.<br> 
+	The attribute <i>"xpCost"</i> stores the experience costs per level,
+	if your feat has non levels only a single number is necessary.
+	If your feat has for example 3 levels than you write your costs like this 50,100,150.
+	The first value is the cost for level 1, the secound value is for level 2 and so on.
+	<br>
+	<br>
+	<br>
+	
+	<b>Gun Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;gun ID="CAL_30_N" range="7" cal="30" weight="150" price="180"&gt;<br>
+	&nbsp; &nbsp; &lt;shortName>30&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName>.30-caliber-gun&lt;/longName&gt;<br>
+	&lt;/gun&gt;
+	<br><br>
+	</span>
+	Here you can add anything that is attachable to a gunpoint.<br>
+	The attribute <i>"ID"</i> has to be unique.	
+	The attribute <i>"range"</i> is the gun range in hexes.
+	The attribute <i>"cal"</i> is the caliber which is used as a reference for the ammunition.
+	The attribute <i>"weight"</i> is the weight in lbs.
+	The attribute <i>"price"</i> is the price in Dollar.<br>
+	The <i>"longName"</i> tag is shown in the weapon list and the <i>"shortName"</i> tag is used in the print sheet.
+	<br>
+	<br>
+	<br>
+	
+	<b>Ammunition Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;ammunition ID="30_AP" cal="30" price="10"&gt;<br>
+	&nbsp; &nbsp; &lt;shortName&gt;AP&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName&gt;Armor Percing .30-cal&lt;/longName&gt;<br>
+	&lt;/ammunition&gt;
+	<br><br>
+	</span>
+	The attribute <i>"ID"</i> has to be unique.	
+	The attribute <i>"cal"</i> is the caliber which is used as a reference for the gun.
+	The attribute <i>"price"</i> is the price in Dollar.<br>
+	The <i>"longName"</i> tag is shown in the loadout list 
+	and the <i>"shortName"</i> tag is used in the print sheet.
+	<br>
+	<br>
+	<br>
+	
+	<b>Rocket Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;rocket ID="AP" type="rocket" range="4" slots="1"<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; usesPerSlot="1" price="200" weight="100" toHitMod="0"&gt;<br>
+	&nbsp; &nbsp; &lt;shortName&gt;AP&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName&gt;Armor Piercing&lt;/longName&gt;<br>
+	&lt;/rocket&gt;<br><br>
+	</span>
+	Changed with Version 1.1.0
+	<br>
+	Here you can add anything that is attachable to a rocket hardpoint or to a bomb rack.<br>
+	The attribute <i>"ID"</i> has to be unique.	
+	The attribute <i>"type"</i> can be rocket, bomb, reloadable or fueltank.
+	The attribute <i>"range"</i> is the range in hexes.
+	The attributes <i>"slots"</i> and <i>"usesPerSlot"</i> describing the space a rocket needs. 
+	If slots is 0 the bomb can only loaded in a bombrack of a bomber.
+	The attribute <i>"price"</i> is the price in Dollar.<br>
+	The <i>"longName"</i> tag is shown in the weapon list and the <i>"shortName"</i> tag is used in the print sheet.
+	The attributes <i>"weight"</i> and <i>"toHitMod"</i> are added for the new bomber rules from Z&amp;B.
+	Weight is in lbs.
+	<br>
+	<br>
+	<br>
+	
+	
+	<b>Special Characteristic Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;specialCharacteristic ID="AC_001" groupID="nitro"<br>
+	&nbsp; &nbsp; &nbsp; &nbsp; hasHardcodedAbility="false" countsToSCLimit="true"&gt;<br>
+	&nbsp; &nbsp; &lt;name&gt;Nitro Injectors&lt;/name&gt;<br>
+	&nbsp; &nbsp; &lt;allowedFrame type="" /&gt;  1-n...<br>
+	&nbsp; &nbsp; &lt;cost type="" changes="" /&gt;<br>
+	&nbsp; &nbsp; &lt;weight type="" changes="" /&gt;<br>
+	&nbsp; &nbsp; &lt;description&gt;&lt;/description&gt; (optional)<br>
+	&lt;/specialCharacteristic&gt;<br>
+	</span>
+	<br>
+	Changed with Version 1.1.0
+	<br>
+	The attribute <i>"ID"</i> has to be unique.	
+	The attribute <i>"groupID"</i> if the field is empty you can add the characteristic multiple times.
+	If a groupID is set only one element of the same id can be added to an aircraft.<br>
+	The attribute <i>"hasHardcodedAbility"</i> marks SCs that have hardcoded functions inside Aeronaut.
+	The attribute <i>"countsToSCLimit"</i> if it is true, the characteristic counts to the limit.
+	<br><br>
+	The tag <i>"allowedFrame"</i> is added 1-n times. each tag defines a frametype that can have this SC. 
+	<br><br>
+	The tag <i>"cost"</i> defines cost type and cost changes. Allowed types are:<br>
+	<i>additional, complete, speed, engine, airframe, cockpit, armor, weapon</i>
+	or a comma seperated list of these types.<br>
+	If the type is additional the changes attribute is read as absolute value all
+	other types affect the cost changes of the category in percent.
+	<br><br>
+	The tag <i>"weight"</i> defines weight type and weight changes. Allowed types are:<br>
+	<i>additional or complete</i><br>
+	If the type is additional the changes attribute is read as absolute value 
+	all other types affect the weight changes of the category in percent.
+	<br><br>
+	The <i>"descripton"</i> tag is not used so far and is now optional.
+	<br>
+	<br>
+	<br>
+	
+	<b>Squadrons:</b>
+	<br><br>
+	<br> TODO Since Version 1.1.0 not implemented yet.
+	<br>
+	
+</p>
+
+<br>
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a><br>
+	<a href="event:advanced.html">Back to Advanced Editing</a>
+</p>
+	
