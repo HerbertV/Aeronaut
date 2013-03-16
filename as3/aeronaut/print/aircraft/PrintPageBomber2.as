@@ -29,7 +29,7 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.print.CSAbstractPrintPage;
 	import as3.aeronaut.print.ICSPrintPageAircraft;
 	import as3.aeronaut.print.SheetAircraft;
-			
+	
 	import as3.aeronaut.objects.Aircraft;
 	import as3.aeronaut.objects.aircraft.Turret;
 	import as3.aeronaut.objects.ICSBaseObject;
@@ -46,32 +46,26 @@ package as3.aeronaut.print.aircraft
 	
 	/**
 	 * =========================================================================
-	 * Class AbstractPrintPageLargeAircraft
+	 * Class PrintPageBomber2
 	 * =========================================================================
-	 * Abtract Class for printing one page aircraft sheets 
-	 * for Fighter, Heavy Fighters and Autogyros.
+	 * Library Symbol linked class for Bomber page 2
 	 * 
-	 * must contain all repeating header infos:
-	 * - containerSquadLogo
-	 * - lblConstructionName
-	 * - lblSquadName
-	 * - lblAircraftName
+	 * Page 2 includes the crew and weapons
 	 */
-	dynamic public class AbstractPrintPageLargeAircraft
-			extends CSAbstractPrintPage
+	public class PrintPageBomber2
+			extends AbstractPrintPageLargeAircraft
 			implements ICSPrintPageAircraft
 	{
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		protected var myObject:Aircraft;
 		
 		/**
 		 * =====================================================================
 		 * Constructor
 		 * =====================================================================
 		 */
-		public function AbstractPrintPageLargeAircraft()
+		public function PrintPageBomber2()
 		{
 			super();
 		}
@@ -79,19 +73,6 @@ package as3.aeronaut.print.aircraft
 		// =====================================================================
 		// Functions
 		// =====================================================================
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * initFromObject
-		 * ---------------------------------------------------------------------
-		 * @see ICSPrintPage
-		 *
-		 * @param obj
-		 */
-		public function initFromObject(obj:ICSBaseObject):void
-		{
-			this.initFromAircraft(Aircraft(obj));
-		}
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -103,55 +84,19 @@ package as3.aeronaut.print.aircraft
 		 */
 		public function initFromAircraft(obj:Aircraft):void
 		{
-			super.init();
-			this.myObject = obj;
+			super.initFromAircraft(obj);
 			
-			var company:String = "";
-			if( obj.getManufacturerID() != "" ) 
-				company = Globals.myBaseData.getCompany(
-						obj.getManufacturerID()
-					).shortName + " ";
-			
-			this.lblConstructionName.htmlText = "<b>" 
-					+ company 
-					+ obj.getName()
-					+ "</b>";
-			
-			var pilot:Pilot = SheetAircraft(this.mySheet).getPilot();
-			
-			if ( pilot == null )
-			{
-				this.lblPilotName.text = "";
-				this.lblAircraftName.text = "";
-				
-			} else {
-				this.lblAircraftName.text = pilot.getPlanename();
-				this.lblPilotName.text = pilot.getName();
-			}
-			
-			var squad:Squadron = SheetAircraft(this.mySheet).getSquadron();
-			if( squad != null ) 
-			{
-				this.lblSquadName.text = squad.getName();
-				
-				if( SheetAircraft(this.mySheet).getSquadLogo() != null )
-				{
-					var logo:Bitmap = SheetAircraft(this.mySheet).getSquadLogo();
-					logo = BitmapHelper.resizeBitmap(
-							logo, 
-							SheetAircraft.SQUADLOGO_WIDTH, 
-							SheetAircraft.SQUADLOGO_HEIGHT, 
-							false
-						);
-					
-					logo.x -= logo.width/2;
-					logo.y -= logo.height/2;
-					this.containerSquadLogo.addChild(logo);
-				}
-			} else {
-				this.lblSquadName.text = "";
-			}
+			// TODO	new weapon sprite
+			/*
+			this.myWeapons.init(
+					obj, 
+					SheetAircraft(this.mySheet).getLoadout() 
+				);
+			*/
+			// TODO crew instead
+			//this.initPilot();
 		}
+		
 		
 	}
 }

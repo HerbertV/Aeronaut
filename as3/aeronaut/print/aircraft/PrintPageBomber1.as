@@ -48,7 +48,7 @@ package as3.aeronaut.print.aircraft
 	
 	/**
 	 * =========================================================================
-	 * Class PrintPageBombers1
+	 * Class PrintPageBomber1
 	 * =========================================================================
 	 * Library Symbol linked class for Bomber page 1
 	 * 
@@ -58,10 +58,9 @@ package as3.aeronaut.print.aircraft
 	 *  - lblBTN
 	 *  - lblFrameType
 	 *  - lblPropType
-	 * 
-	 * TODO choose where SCs are printed on page 1 or 2
+	 *  - lblSpecial
 	 */
-	public class PrintPageBombers1
+	public class PrintPageBomber1
 			extends AbstractPrintPageLargeAircraft
 			implements ICSPrintPageAircraft
 	{
@@ -74,7 +73,7 @@ package as3.aeronaut.print.aircraft
 		 * Constructor
 		 * =====================================================================
 		 */
-		public function PrintPageBombers1()
+		public function PrintPageBomber1()
 		{
 			super();
 		}
@@ -127,12 +126,9 @@ package as3.aeronaut.print.aircraft
 			this.initMaxSpeed();
 			this.initAccel();
 			
-			this.myWeapons.init(
-					obj, 
-					SheetAircraft(this.mySheet).getLoadout() 
-				);
-			
 			this.initPilot();
+			//TODO co pilot
+			
 			this.initArmor();
 		}
 		
@@ -147,11 +143,8 @@ package as3.aeronaut.print.aircraft
 			
 			if( pilot == null )
 			{
-				this.lblPilotName.text = "";
-				this.lblSquadName.text = "";
-				this.lblAircraftName.text = "";
-				this.lblNT.htmlText = "";
-				this.lblSS.htmlText = "";
+				this.lblPilotNT.htmlText = "";
+				this.lblPilotSS.htmlText = "";
 				this.lblDE.htmlText = "";
 				this.lblSH.htmlText = "";
 				this.lblCO.htmlText = "";
@@ -159,8 +152,6 @@ package as3.aeronaut.print.aircraft
 				return;
 			}
 			
-			this.lblAircraftName.text = pilot.getPlanename();
-				
 			this.lblNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
 			this.lblSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
 			this.lblDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
@@ -174,6 +165,8 @@ package as3.aeronaut.print.aircraft
 			strQD = strQD + "</b>";
 			this.lblQD.htmlText = strQD;
 			
+			// TODO copilot instead gunnter
+			/*
 			var gunner:Pilot = null;
 			if( SheetAircraft(this.mySheet).getCrew().length > 0 )
 				gunner = Pilot(SheetAircraft(this.mySheet).getCrew()[0]);
@@ -185,28 +178,8 @@ package as3.aeronaut.print.aircraft
 			} else {
 				this.lblPilotName.y = 89;
 			}
+			*/
 			
-			var squad:Squadron = SheetAircraft(this.mySheet).getSquadron();
-			if( squad != null ) 
-			{
-				this.lblSquadName.text = squad.getName();
-				if( SheetAircraft(this.mySheet).getSquadLogo() != null )
-				{
-					var logo:Bitmap = SheetAircraft(this.mySheet).getSquadLogo();
-					logo = BitmapHelper.resizeBitmap(
-							logo, 
-							SheetAircraft.SQUADLOGO_WIDTH, 
-							SheetAircraft.SQUADLOGO_HEIGHT, 
-							false
-						);
-					
-					logo.x -= logo.width/2;
-					logo.y -= logo.height/2;
-					this.containerSquadLogo.addChild(logo);
-				}
-			} else {
-				this.lblSquadName.text = "";
-			}
 		}
 		
 		/**
