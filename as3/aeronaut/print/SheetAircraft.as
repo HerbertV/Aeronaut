@@ -437,17 +437,32 @@ package as3.aeronaut.print
 			var lines:int = count/10;
 			var movLine:Sprite = null;
 			var movEnd:Sprite = null;
+			var useBC:Boolean = false;
+			
+			if( frame == FrameDefinition.FT_HEAVY_BOMBER 
+					|| frame == FrameDefinition.FT_LIGHT_BOMBER 
+					|| frame == FrameDefinition.FT_HEAVY_CARGO 
+					|| frame == FrameDefinition.FT_LIGHT_CARGO ) 
+				useBC = true;
 			
 			for( var i:int = 0; i < lines; i++ ) 
 			{
 				movLine = new SpriteSingleArmorLine();
 				movLine.x = section.x; 
+				if( useBC )
+					movLine.x = section.xBC;
 				
 				if( section.isfront == true ) 
 				{
-					movLine.y = section.y - ( i * ARMORLINE_HEIGHT );
+					if( useBC )
+						movLine.y = section.yBC - ( i * ARMORLINE_HEIGHT );
+					else
+						movLine.y = section.y - ( i * ARMORLINE_HEIGHT );
 				} else {
-					movLine.y = section.y + ( i * ARMORLINE_HEIGHT );
+					if( useBC )
+						movLine.y = section.yBC + ( i * ARMORLINE_HEIGHT );
+					else
+						movLine.y = section.y + ( i * ARMORLINE_HEIGHT );
 				}
 				target.addChild(movLine);
 			}
@@ -488,11 +503,20 @@ package as3.aeronaut.print
 			
 			if( section.isfront == true ) 
 			{
-				movEnd.y = section.y - ((lines-1) * ARMORLINE_HEIGHT);
+				if( useBC )
+					movEnd.y = section.yBC - ( i * ARMORLINE_HEIGHT );
+				else
+					movEnd.y = section.y - ((lines-1) * ARMORLINE_HEIGHT);
 			} else {
-				movEnd.y = section.y + (lines * ARMORLINE_HEIGHT);
+				if( useBC )
+					movEnd.y = section.yBC - ( i * ARMORLINE_HEIGHT );
+				else
+					movEnd.y = section.y + (lines * ARMORLINE_HEIGHT);
 			}
 			movEnd.x = section.x;
+			if( useBC )
+				movEnd.x = section.xBC;
+				
 			target.addChild(movEnd);
 		}
 		

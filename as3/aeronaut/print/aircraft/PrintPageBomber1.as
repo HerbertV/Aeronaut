@@ -312,62 +312,16 @@ package as3.aeronaut.print.aircraft
 		 */
 		private function initArmor():void
 		{
-			var usedProp:String = this.myObject.getPropType();
-			var turrets:Array = this.myObject.getTurrets();
-			
 			var myDamageRaster:Sprite = null;
-			var hasRearTurrets:Boolean = false;
 			
-			if( turrets.length > 0 )
+			if( this.myObject.getFrameType() == FrameDefinition.FT_HEAVY_BOMBER )
 			{
-				for( var i:int = 0; i < turrets.length; i++ )
-					if( turrets[i].direction == TurretDefinition.DIR_REAR )
-					{
-						hasRearTurrets = true;
-						break;
-					}
-			}
-			
-			if( usedProp == "tractor" ) 
-			{
-				if( hasRearTurrets )
-				{
-					myDamageRaster = new AC2TractorWithTurret();
-					SheetAircraft(this.mySheet).addArmorLines(
-							this.myObject.getArmorTail(), 
-							SheetAircraft.TAIL_TURRET,
-							myDamageRaster
-						);
-					
-				} else {
-					myDamageRaster = new AC1TractorNoTurret();
-					SheetAircraft(this.mySheet).addArmorLines(
-							this.myObject.getArmorTail(), 
-							SheetAircraft.TAIL,
-							myDamageRaster
-						);
-				}
+				myDamageRaster = new AC6HeavyBomber();
 				
-			} else if( usedProp == "pusher" ) {
-				if( hasRearTurrets )
-				{
-					myDamageRaster = new AC4PusherWithTurret();
-					SheetAircraft(this.mySheet).addArmorLines(
-							this.myObject.getArmorTail(), 
-							SheetAircraft.TAIL_TURRET,
-							myDamageRaster
-						);
-					
-				} else {
-					myDamageRaster = new AC3PusherNoTurret();
-					SheetAircraft(this.mySheet).addArmorLines(
-							this.myObject.getArmorTail(), 
-							SheetAircraft.TAIL,
-							myDamageRaster
-						);
-				}
-			}
-			
+			} else if( this.myObject.getFrameType() == FrameDefinition.FT_LIGHT_BOMBER ) {
+				myDamageRaster = new AC7LightBomber();
+			} 
+						
 			SheetAircraft(this.mySheet).addArmorLines(
 					this.myObject.getArmorNose(), 
 					SheetAircraft.NOSE,
@@ -393,6 +347,31 @@ package as3.aeronaut.print.aircraft
 					SheetAircraft.SWT,
 					myDamageRaster
 				);
+			SheetAircraft(this.mySheet).addArmorLines(
+					this.myObject.getArmorTail(), 
+					SheetAircraft.TAIL,
+					myDamageRaster
+				);	
+			SheetAircraft(this.mySheet).addArmorLines(
+					this.myObject.getArmorPB(), 
+					SheetAircraft.PB,
+					myDamageRaster
+				);	
+			SheetAircraft(this.mySheet).addArmorLines(
+					this.myObject.getArmorPS(), 
+					SheetAircraft.PS,
+					myDamageRaster
+				);	
+			SheetAircraft(this.mySheet).addArmorLines(
+					this.myObject.getArmorSB, 
+					SheetAircraft.SB,
+					myDamageRaster
+				);	
+			SheetAircraft(this.mySheet).addArmorLines(
+					this.myObject.getArmorSS(), 
+					SheetAircraft.SS,
+					myDamageRaster
+				);	
 			
 			this.addChild(myDamageRaster);
 		}
