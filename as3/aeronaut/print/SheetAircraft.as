@@ -280,7 +280,7 @@ package as3.aeronaut.print
 		 * ---------------------------------------------------------------------
 		 */
 		private function loadLoadout():void
-		{
+		{			
 			if( this.myObject.getLoadoutFile() == "" ) 
 				return;
 				

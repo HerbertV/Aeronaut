@@ -93,12 +93,13 @@ package as3.aeronaut.print.aircraft
 		override public function initFromAircraft(obj:Aircraft):void
 		{
 			super.initFromAircraft(obj);
-			
 			this.lblBTN.htmlText = "<b>" 
 					+ Globals.myAircraftConfigs.getBTNByIndex(obj.getBaseTarget()) 
 					+ "</b>";
-					
-					
+			
+			this.lblWeightClass.text = CSFormatter.formatLbs(
+					Globals.myAircraftConfigs.getBTNPayloadByIndex(obj.getBaseTarget())
+				);	
 			// Frame 
 			if( obj.getFrameType() == FrameDefinition.FT_HEAVY_BOMBER )
 			{
@@ -248,7 +249,8 @@ package as3.aeronaut.print.aircraft
 			
 			var arrSC:Array = this.myObject.getSpecialCharacteristics();
 			var specialObj:SpecialCharacteristic = null;
-			var gmods:Array = new Array(int(0),int(0));
+			
+			this.boxNitro.visible = false;
 			
 			for( var i:int=0; i< arrSC.length; i++ ) 
 			{
@@ -256,8 +258,11 @@ package as3.aeronaut.print.aircraft
 				this.lblSpecial.appendText(
 						"- " + specialObj.myName + "\n"
 					);
+				
+				if( specialObj.myID == BaseData.HCID_SC_NITRO5
+				   		|| specialObj.myID == BaseData.HCID_SC_NITRO4 ) 
+					this.boxNitro.visible = true;
 			}
-			return gmods;
 		}
 		
 		/**

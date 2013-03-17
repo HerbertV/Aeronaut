@@ -632,6 +632,11 @@
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
 				<allowedFrame type="hoplite" />
+				<allowedFrame type="heavyBomber" />
+				<allowedFrame type="lightBomber" />
+				<allowedFrame type="heavyCargo" />
+				<allowedFrame type="lightCargo" />
+				
 				<cost type="additional" changes="750" />
 				<weight type="additional" changes="25" />
 			</specialCharacteristic>

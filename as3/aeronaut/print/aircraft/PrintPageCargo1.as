@@ -97,8 +97,11 @@ package as3.aeronaut.print.aircraft
 			this.lblBTN.htmlText = "<b>" 
 					+ Globals.myAircraftConfigs.getBTNByIndex(obj.getBaseTarget()) 
 					+ "</b>";
-					
-					
+			
+			this.lblWeightClass.text = CSFormatter.formatLbs(
+					Globals.myAircraftConfigs.getBTNPayloadByIndex(obj.getBaseTarget())
+				);
+				
 			// Frame 
 			if( obj.getFrameType() == FrameDefinition.FT_HEAVY_CARGO )
 			{
@@ -248,16 +251,20 @@ package as3.aeronaut.print.aircraft
 			
 			var arrSC:Array = this.myObject.getSpecialCharacteristics();
 			var specialObj:SpecialCharacteristic = null;
-			var gmods:Array = new Array(int(0),int(0));
 			
+			this.boxNitro.visible = false;
+				
 			for( var i:int=0; i< arrSC.length; i++ ) 
 			{
 				specialObj = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]);
 				this.lblSpecial.appendText(
 						"- " + specialObj.myName + "\n"
 					);
+				
+				if( specialObj.myID == BaseData.HCID_SC_NITRO5
+				   		|| specialObj.myID == BaseData.HCID_SC_NITRO4 ) 
+					this.boxNitro.visible = true;	
 			}
-			return gmods;
 		}
 		
 		/**

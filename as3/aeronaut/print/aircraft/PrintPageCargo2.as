@@ -86,14 +86,7 @@ package as3.aeronaut.print.aircraft
 		{
 			super.initFromAircraft(obj);
 			
-			// TODO	new weapon sprite
-			/*
-			this.myWeapons.init(
-					obj, 
-					SheetAircraft(this.mySheet).getLoadout() 
-				);
-			*/
-			// TODO crew instead
+			// TODO crew and cargo
 			//this.initPilot();
 		}
 		

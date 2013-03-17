@@ -263,10 +263,9 @@ package as3.aeronaut.module
 						arrCo[i].myID
 					);
 				
-// TODO maybe this needs changes for bombers			
 			this.form.numStepServiceCeiling.setupSteps(5000 ,50000 ,5000, 500);
-			this.form.numStepServiceCeiling.setupTooltip(Globals.myTooltip,"");
-			this.form.numStepRange.setupSteps(50 ,2000 ,50, 25);
+			this.form.numStepServiceCeiling.setupTooltip(Globals.myTooltip, "");
+			this.form.numStepRange.setupSteps(50 ,2500 ,50, 25);
 			this.form.numStepRange.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepEngine.setupSteps(1,8,1,1);
 			this.form.numStepEngine.setActive(false);
