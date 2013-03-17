@@ -49,6 +49,7 @@ package as3.aeronaut.module
 	import as3.aeronaut.objects.loadout.RocketLoadout;	
 	import as3.aeronaut.objects.Aircraft;	
 	import as3.aeronaut.objects.aircraft.Gunpoint;
+	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 		
 	// =========================================================================
 	// CSWindowLoadout
@@ -179,7 +180,7 @@ package as3.aeronaut.module
 			
 			// GUN AMMUNITION
 			// add eventlissteners
-			for( var gnum:int = 1; gnum < 9; gnum++ )
+			for( var gnum:int = 1; gnum < 11; gnum++ )
 			{
 				var pdG:CSPullDown = this.getAmmoPullDown(gnum);
 				pdG.addEventListener(
@@ -226,7 +227,7 @@ package as3.aeronaut.module
 				pdB.clearSelectionItemList();
 			}
 			
-			for( var gnum:int = 1; gnum < 9; gnum++ )
+			for( var gnum:int = 1; gnum < 11; gnum++ )
 			{
 				var pdG:CSPullDown = this.getAmmoPullDown(gnum);
 				pdG.removeEventListener(
@@ -385,7 +386,7 @@ package as3.aeronaut.module
 			
 			// ammunition
 			var arr:Array = new Array();
-			for( var gnum:int = 1; gnum < 9; gnum++ )
+			for( var gnum:int = 1; gnum < 11; gnum++ )
 			{
 				id = this.getAmmoPullDown(gnum).getIDForCurrentSelection();
 				if( id == CSPullDown.ID_EMPTYSELECTION ) 
@@ -591,7 +592,7 @@ package as3.aeronaut.module
 			):CSPullDown
 		{
 			return CSPullDown(
-					this.form.getChildByName("pdRocket"+slot+subslot)
+					this.form.boxRockets.getChildByName("pdRocket"+slot+subslot)
 				);
 		}
 		
@@ -608,7 +609,7 @@ package as3.aeronaut.module
 		{
 			var pdBname:String = pd.name.substring(0,pd.name.length-1) + "b";
 			return CSPullDown(
-					this.form.getChildByName(pdBname)
+					this.form.boxRockets.getChildByName(pdBname)
 				);
 		}
 		
@@ -624,8 +625,13 @@ package as3.aeronaut.module
 				slot:uint
 			):CSPullDown
 		{
+			if( slot < 9 )
+				return CSPullDown(
+						this.form.boxGuns.getChildByName("pdGun"+slot+"Ammo")
+					);
+			
 			return CSPullDown(
-					this.form.getChildByName("pdGun"+slot+"Ammo")
+					this.form.boxGuns.boxGun9_10.getChildByName("pdGun"+slot+"Ammo")
 				);
 		}
 		
@@ -641,9 +647,14 @@ package as3.aeronaut.module
 				slot:uint
 			):TextField
 		{
+			if( slot < 9 )
+				return TextField(
+						this.form.boxGuns.getChildByName("lblGun"+slot+"Caliber")
+					);
+			
 			return TextField(
-					this.form.getChildByName("lblGun"+slot+"Caliber")
-				);
+					this.form.boxGuns.boxGun9_10.getChildByName("lblGun"+slot+"Caliber")
+				);		
 		}
 		
 		/**
@@ -653,7 +664,7 @@ package as3.aeronaut.module
 		 */
 		private function resetAllGuns():void
 		{
-			for( var slot:int = 1; slot < 9; slot++ )
+			for( var slot:int = 1; slot < 11; slot++ )
 			{
 				var pdG:CSPullDown = this.getAmmoPullDown(slot);
 				pdG.clearSelection();
@@ -691,20 +702,35 @@ package as3.aeronaut.module
 		 */
 		private function updateUIByAircraft():void
 		{
+			this.form.boxGuns.boxGun9_10.visible = false;
+			this.form.boxRockets.visible = true;
+			
 			if( this.myAircraft == null ) 
 				return;
+			
+			var frameType:String = this.myAircraft.getFrameType();
 			
 			// max hardpoints of this aircraft
 			this.form.lblHardpoints.text = String(
 					this.myAircraft.getRocketSlotCount()
 				);
 			
-			// hoplite adjustment
+			if( frameType == FrameDefinition.FT_LIGHT_BOMBER
+					|| frameType == FrameDefinition.FT_HEAVY_BOMBER
+					|| frameType == FrameDefinition.FT_HEAVY_CARGO
+					|| frameType == FrameDefinition.FT_LIGHT_CARGO 
+				)
+			{
+				this.form.boxRockets.visible = false;
+				this.form.boxGuns.boxGun9_10.visible = true;
+			}
+			
+			// rocket adjustments for autogyro
 			for( var slot:int = 5; slot < 9; slot++ )
 			{
 				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
 				
-				if( this.myAircraft.getFrameType() == "hoplite" )
+				if( frameType == FrameDefinition.FT_AUTOGYRO )
 				{
 					pdA.clearSelection();
 					pdA.setActive(false);
@@ -719,7 +745,7 @@ package as3.aeronaut.module
 			}
 			
 			// gunpoints and ammunition
-			for( var gnum:int = 1; gnum < 9; gnum++ )
+			for( var gnum:int = 1; gnum < 11; gnum++ )
 			{
 				var currGP:Gunpoint = this.myAircraft.getGunpoint(gnum);
 				
@@ -779,7 +805,7 @@ package as3.aeronaut.module
 		{
 			this.intAmmoCost = 0;
 			
-			for( var gnum:int = 1; gnum < 9; gnum++ )
+			for( var gnum:int = 1; gnum < 11; gnum++ )
 			{
 				var id:String = this.getAmmoPullDown(gnum).getIDForCurrentSelection();
 				if( id != CSPullDown.ID_EMPTYSELECTION ) 
