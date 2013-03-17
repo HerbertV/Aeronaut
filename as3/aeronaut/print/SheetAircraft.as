@@ -100,86 +100,8 @@ package as3.aeronaut.print
 		{
 			super();
 			crew = new Array();
-			
-			if( PWL != null )
-				return;
-				
-// TODO extend with BC offsets				
-			PWL = new ArmorRow(
-					ArmorRow.ID_PWL,
-					true,
-					27.0,
-					447.5
-				);
-			NOSE = new ArmorRow(
-					ArmorRow.ID_NOSE,
-					true,
-					133.0,
-					383.5
-				);
-			SWL = new ArmorRow(
-					ArmorRow.ID_SWL,
-					true,
-					238.5,
-					447.5
-				);
-			PWT = new ArmorRow(
-					ArmorRow.ID_PWT,
-					false,
-					27.0,
-					511.0
-				);
-			TAIL = new ArmorRow(
-					ArmorRow.ID_TAIL,
-					false,
-					133.0,
-					550.5
-				);
-			TAIL_TURRET = new ArmorRow(
-					ArmorRow.ID_TAIL_TURRET,
-					false,
-					133.0,
-					566.5
-				);
-			SWT = new ArmorRow(
-					ArmorRow.ID_SWT,
-					false,
-					238.5,
-					511.0
-				);
-			// BC only rows
-			PB = new ArmorRow(
-					ArmorRow.ID_PB,
-					true,
-					0.0,
-					0.0,
-					0.0,
-					0.0
-				);
-			PS = new ArmorRow(
-					ArmorRow.ID_PS,
-					false,
-					0.0,
-					0.0,
-					0.0,
-					0.0
-				);
-			SB = new ArmorRow(
-					ArmorRow.ID_SB,
-					true,
-					0.0,
-					0.0,
-					0.0,
-					0.0
-				);
-			SS = new ArmorRow(
-					ArmorRow.ID_SS,
-					false,
-					0.0,
-					0.0,
-					0.0,
-					0.0
-				);
+		
+			initArmorRows();
 		}
 
 		// =====================================================================
@@ -256,13 +178,21 @@ package as3.aeronaut.print
 				page.initFromAircraft(this.myObject);
 				this.pages.push(page);
 				
-			} else if( frame == FrameDefinition.FT_HEAVY_BOMBER ) {
-				//TODO
-			} else if( frame == FrameDefinition.FT_LIGHT_BOMBER ) {
-				//TODO
-			} else if( frame == FrameDefinition.FT_HEAVY_CARGO ) {
-				//TODO
-			} else if( frame == FrameDefinition.FT_LIGHT_CARGO ) {
+			} else if( frame == FrameDefinition.FT_HEAVY_BOMBER
+					|| frame == FrameDefinition.FT_LIGHT_BOMBER ) {
+				// page1
+				page = new Page1Bomber();
+				CSAbstractPrintPage(page).setSheet(this);
+				page.initFromAircraft(this.myObject);
+				this.pages.push(page);
+				// page 2
+				page = new Page2Bomber();
+				CSAbstractPrintPage(page).setSheet(this);
+				page.initFromAircraft(this.myObject);
+				this.pages.push(page);
+				
+			} else if( frame == FrameDefinition.FT_HEAVY_CARGO
+					|| frame == FrameDefinition.FT_LIGHT_CARGO ) {
 				//TODO
 			}
 		}
@@ -438,6 +368,7 @@ package as3.aeronaut.print
 			var movLine:Sprite = null;
 			var movEnd:Sprite = null;
 			var useBC:Boolean = false;
+			var frame:String = this.myObject.getFrameType();
 			
 			if( frame == FrameDefinition.FT_HEAVY_BOMBER 
 					|| frame == FrameDefinition.FT_LIGHT_BOMBER 
@@ -504,12 +435,12 @@ package as3.aeronaut.print
 			if( section.isfront == true ) 
 			{
 				if( useBC )
-					movEnd.y = section.yBC - ( i * ARMORLINE_HEIGHT );
+					movEnd.y = section.yBC - ((lines-1) * ARMORLINE_HEIGHT );
 				else
 					movEnd.y = section.y - ((lines-1) * ARMORLINE_HEIGHT);
 			} else {
 				if( useBC )
-					movEnd.y = section.yBC - ( i * ARMORLINE_HEIGHT );
+					movEnd.y = section.yBC + (lines * ARMORLINE_HEIGHT );
 				else
 					movEnd.y = section.y + (lines * ARMORLINE_HEIGHT);
 			}
@@ -519,6 +450,108 @@ package as3.aeronaut.print
 				
 			target.addChild(movEnd);
 		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * initArmorRows
+		 * ---------------------------------------------------------------------
+		 * setup the coordinates for the armor rows
+		 */
+		private function initArmorRows()
+		{
+			if( PWL != null )
+				return;
+				
+			PWL = new ArmorRow(
+					ArmorRow.ID_PWL,
+					true,
+					27.0,
+					447.5,
+					21.0,
+					361.5
+				);
+			NOSE = new ArmorRow(
+					ArmorRow.ID_NOSE,
+					true,
+					133.0,
+					383.5,
+					233.5,
+					299
+				);
+			SWL = new ArmorRow(
+					ArmorRow.ID_SWL,
+					true,
+					238.5,
+					447.5,
+					444.0,
+					361.5
+				);
+			PWT = new ArmorRow(
+					ArmorRow.ID_PWT,
+					false,
+					27.0,
+					511.0,
+					21.0,
+					450.5
+				);
+			TAIL = new ArmorRow(
+					ArmorRow.ID_TAIL,
+					false,
+					133.0,
+					550.5,
+					233.5,
+					504.5
+				);
+			TAIL_TURRET = new ArmorRow(
+					ArmorRow.ID_TAIL_TURRET,
+					false,
+					133.0,
+					566.5
+				);
+			SWT = new ArmorRow(
+					ArmorRow.ID_SWT,
+					false,
+					238.5,
+					511.0,
+					444,
+					450.5
+				);
+			// BC only rows
+			PB = new ArmorRow(
+					ArmorRow.ID_PB,
+					true,
+					0.0,
+					0.0,
+					127,
+					361.5
+				);
+			PS = new ArmorRow(
+					ArmorRow.ID_PS,
+					false,
+					0.0,
+					0.0,
+					127,
+					489
+				);
+			SB = new ArmorRow(
+					ArmorRow.ID_SB,
+					true,
+					0.0,
+					0.0,
+					339,
+					361.5
+				);
+			SS = new ArmorRow(
+					ArmorRow.ID_SS,
+					false,
+					0.0,
+					0.0,
+					339,
+					489
+				);
+		}
+		
 		
 		// =====================================================================
 		// Event Handler

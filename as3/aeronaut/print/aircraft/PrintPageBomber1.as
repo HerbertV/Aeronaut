@@ -90,7 +90,7 @@ package as3.aeronaut.print.aircraft
 		 *
 		 * @param obj
 		 */
-		public function initFromAircraft(obj:Aircraft):void
+		override public function initFromAircraft(obj:Aircraft):void
 		{
 			super.initFromAircraft(obj);
 			
@@ -127,7 +127,7 @@ package as3.aeronaut.print.aircraft
 			this.initAccel();
 			
 			this.initPilot();
-			//TODO co pilot
+			this.initCoPilot();
 			
 			this.initArmor();
 		}
@@ -145,41 +145,62 @@ package as3.aeronaut.print.aircraft
 			{
 				this.lblPilotNT.htmlText = "";
 				this.lblPilotSS.htmlText = "";
-				this.lblDE.htmlText = "";
-				this.lblSH.htmlText = "";
-				this.lblCO.htmlText = "";
-				this.lblQD.htmlText = "";
+				this.lblPilotDE.htmlText = "";
+				this.lblPilotSH.htmlText = "";
+				this.lblPilotCO.htmlText = "";
+				this.lblPilotQD.htmlText = "";
 				return;
 			}
 			
-			this.lblNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
-			this.lblSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
-			this.lblDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
-			this.lblSH.htmlText = "<b>" + pilot.getSteadyHand() + "</b>";
-			this.lblCO.htmlText = "<b>" + pilot.getConstitution() + "</b>";
+			this.lblPilotNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
+			this.lblPilotSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
+			this.lblPilotDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
+			this.lblPilotSH.htmlText = "<b>" + pilot.getSteadyHand() + "</b>";
+			this.lblPilotCO.htmlText = "<b>" + pilot.getConstitution() + "</b>";
 				
 			var strQD:String = "<b>"+ pilot.getQuickDraw()[0];
 			if( pilot.getQuickDraw()[1] > 0 ) 
 				strQD = strQD + "." + pilot.getQuickDraw()[1];
 				
 			strQD = strQD + "</b>";
-			this.lblQD.htmlText = strQD;
-			
-			// TODO copilot instead gunnter
-			/*
-			var gunner:Pilot = null;
-			if( SheetAircraft(this.mySheet).getCrew().length > 0 )
-				gunner = Pilot(SheetAircraft(this.mySheet).getCrew()[0]);
-			
-			this.lblPilotName.text = pilot.getName();
+			this.lblPilotQD.htmlText = strQD;
+		}
 		
-			if( gunner != null ) {
-				this.lblPilotName.appendText("\nCo-pilot: " + gunner.getName());  
-			} else {
-				this.lblPilotName.y = 89;
-			}
-			*/
+		/**
+		 * ---------------------------------------------------------------------
+		 * initCoPilot
+		 * ---------------------------------------------------------------------
+		 */
+		private function initCoPilot()
+		{
+			// TODO load copilot
+			//var pilot:Pilot = SheetAircraft(this.mySheet).getPilot();
 			
+			//if( pilot == null )
+			//{
+				this.lblCoPilotName.text = "";
+				this.lblCoPilotNT.htmlText = "";
+				this.lblCoPilotSS.htmlText = "";
+				this.lblCoPilotDE.htmlText = "";
+				this.lblCoPilotSH.htmlText = "";
+				this.lblCoPilotCO.htmlText = "";
+				this.lblCoPilotQD.htmlText = "";
+			//	return;
+			//}
+			/*
+			this.lblCoPilotNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
+			this.lblCoPilotSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
+			this.lblCoPilotDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
+			this.lblCoPilotSH.htmlText = "<b>" + pilot.getSteadyHand() + "</b>";
+			this.lblCoPilotCO.htmlText = "<b>" + pilot.getConstitution() + "</b>";
+				
+			var strQD:String = "<b>"+ pilot.getQuickDraw()[0];
+			if( pilot.getQuickDraw()[1] > 0 ) 
+				strQD = strQD + "." + pilot.getQuickDraw()[1];
+				
+			strQD = strQD + "</b>";
+			this.lblCoPilotQD.htmlText = strQD;
+			*/
 		}
 		
 		/**
@@ -233,15 +254,9 @@ package as3.aeronaut.print.aircraft
 			var specialObj:SpecialCharacteristic = null;
 			var gmods:Array = new Array(int(0),int(0));
 			
-			this.boxNitro.visible = false;
-			
 			for( var i:int=0; i< arrSC.length; i++ ) 
 			{
 				specialObj = Globals.myBaseData.getSpecialCharacteristic(arrSC[i]);
-				
-				if( specialObj.myID == BaseData.HCID_SC_NITRO5
-				   		|| specialObj.myID == BaseData.HCID_SC_NITRO4 ) 
-					this.boxNitro.visible = true;
 				
 				if( specialObj.myID == BaseData.HCID_SC_HIGHTORQUE ) 
 				{
@@ -363,7 +378,7 @@ package as3.aeronaut.print.aircraft
 					myDamageRaster
 				);	
 			SheetAircraft(this.mySheet).addArmorLines(
-					this.myObject.getArmorSB, 
+					this.myObject.getArmorSB(), 
 					SheetAircraft.SB,
 					myDamageRaster
 				);	

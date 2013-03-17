@@ -82,7 +82,7 @@ package as3.aeronaut.print.aircraft
 		 *
 		 * @param obj
 		 */
-		public function initFromAircraft(obj:Aircraft):void
+		override public function initFromAircraft(obj:Aircraft):void
 		{
 			super.initFromAircraft(obj);
 			
