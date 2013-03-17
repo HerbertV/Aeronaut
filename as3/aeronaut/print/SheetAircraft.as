@@ -156,44 +156,45 @@ package as3.aeronaut.print
 		private function initPages():void
 		{
 			var frame:String = this.myObject.getFrameType();
-			var page:ICSPrintPageAircraft;
+			var page1:ICSPrintPageAircraft = null;
+			var page2:ICSPrintPageAircraft = null;
+			var pageFlavor:ICSPrintPageAircraft = null;
 			
-// TODO also add flavor sheet if it is selected			
 			if( frame == FrameDefinition.FT_FIGHTER ) 
 			{
-				page = new PageFighter();
-				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(this.myObject);
-				this.pages.push(page);
+				page1 = new PageFighter();
 				
 			} else if( frame == FrameDefinition.FT_HEAVY_FIGHTER ) {
-				page = new PageHeavyFighter();
-				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(this.myObject);
-				this.pages.push(page);
+				page1 = new PageHeavyFighter();
 				
 			} else if( frame == FrameDefinition.FT_AUTOGYRO ) {
-				page = new PageAutogyro();
-				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(this.myObject);
-				this.pages.push(page);
+				page1 = new PageAutogyro();
 				
 			} else if( frame == FrameDefinition.FT_HEAVY_BOMBER
 					|| frame == FrameDefinition.FT_LIGHT_BOMBER ) {
-				// page1
-				page = new Page1Bomber();
-				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(this.myObject);
-				this.pages.push(page);
-				// page 2
-				page = new Page2Bomber();
-				CSAbstractPrintPage(page).setSheet(this);
-				page.initFromAircraft(this.myObject);
-				this.pages.push(page);
+				page1 = new Page1Bomber();
+				page2 = new Page2Bomber();
 				
 			} else if( frame == FrameDefinition.FT_HEAVY_CARGO
 					|| frame == FrameDefinition.FT_LIGHT_CARGO ) {
-				//TODO
+				page1 = new Page1Cargo();
+				page2 = new Page2Cargo();	
+			}
+			
+			CSAbstractPrintPage(page1).setSheet(this);
+			page1.initFromAircraft(this.myObject);
+			this.pages.push(page1);
+		
+			if( page2 != null )
+			{
+				CSAbstractPrintPage(page2).setSheet(this);
+				page2.initFromAircraft(this.myObject);
+				this.pages.push(page2);
+			}
+			
+			if( pageFlavor != null )
+			{
+// TODO also add flavor sheet if it is selected							
 			}
 		}
 		

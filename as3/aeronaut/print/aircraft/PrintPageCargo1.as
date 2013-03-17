@@ -48,9 +48,9 @@ package as3.aeronaut.print.aircraft
 	
 	/**
 	 * =========================================================================
-	 * Class PrintPageBomber1
+	 * Class PrintPageCargo1
 	 * =========================================================================
-	 * Library Symbol linked class for Bomber page 1
+	 * Library Symbol linked class for Cargo page 1
 	 * 
 	 * Page 1 has:
 	 *  - myDamageRaster
@@ -60,7 +60,7 @@ package as3.aeronaut.print.aircraft
 	 *  - lblPropType
 	 *  - lblSpecial
 	 */
-	public class PrintPageBomber1
+	public class PrintPageCargo1
 			extends AbstractPrintPageLargeAircraft
 			implements ICSPrintPageAircraft
 	{
@@ -73,7 +73,7 @@ package as3.aeronaut.print.aircraft
 		 * Constructor
 		 * =====================================================================
 		 */
-		public function PrintPageBomber1()
+		public function PrintPageCargo1()
 		{
 			super();
 		}
@@ -100,12 +100,12 @@ package as3.aeronaut.print.aircraft
 					
 					
 			// Frame 
-			if( obj.getFrameType() == FrameDefinition.FT_HEAVY_BOMBER )
+			if( obj.getFrameType() == FrameDefinition.FT_HEAVY_CARGO )
 			{
-				this.lblFrameType.text = "Heavy Bomber";
+				this.lblFrameType.text = "Heavy Cargo";
 				
-			} else if( obj.getFrameType() == FrameDefinition.FT_LIGHT_BOMBER ) {
-				this.lblFrameType.text = "Light Bomber";
+			} else if( obj.getFrameType() == FrameDefinition.FT_LIGHT_CARGO ) {
+				this.lblFrameType.text = "Light Cargo";
 			} 
 			
 			//Prop
@@ -303,15 +303,7 @@ package as3.aeronaut.print.aircraft
 		 */
 		private function initArmor():void
 		{
-			var myDamageRaster:Sprite = null;
-			
-			if( this.myObject.getFrameType() == FrameDefinition.FT_HEAVY_BOMBER )
-			{
-				myDamageRaster = new AC6HeavyBomber();
-				
-			} else if( this.myObject.getFrameType() == FrameDefinition.FT_LIGHT_BOMBER ) {
-				myDamageRaster = new AC7LightBomber();
-			} 
+			var myDamageRaster:Sprite =  new AC8Cargo();
 						
 			SheetAircraft(this.mySheet).addArmorLines(
 					this.myObject.getArmorNose(), 
