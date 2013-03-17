@@ -12,6 +12,8 @@ for reference numbers see https://github.com/HerbertV/Aeronaut/issues
 Version - 1.1.0 alpha 03: 
 --------------------------------------------------------------------------------
 - 	updated Help files.
+-	updated loadout window for gun 9 and 10.
+
 
 
 Version - 1.1.0 alpha 02: 
