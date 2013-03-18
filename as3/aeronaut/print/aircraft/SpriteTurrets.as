@@ -21,8 +21,7 @@
  */
 package as3.aeronaut.print.aircraft
 {
-	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
-	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
+	import as3.aeronaut.objects.Pilot;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	
@@ -32,16 +31,15 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.objects.loadout.*;
 	import as3.aeronaut.objects.baseData.Gun;
 	import as3.aeronaut.objects.baseData.Ammunition;
-	import as3.aeronaut.objects.baseData.Rocket;
 	
 	import as3.aeronaut.Globals;
 		
 	// =========================================================================
-	// Class SpriteWeapons
+	// Class SpriteTurrets
 	// =========================================================================
-	// Base class for Guns, Rockets 
+	// Base class bomber turret sprites
 	//
-	public class SpriteWeapons
+	public class SpriteTurrets
 			extends Sprite
 	{
 	
@@ -52,7 +50,7 @@ package as3.aeronaut.print.aircraft
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function SpriteWeapons()
+		public function SpriteTurrets()
 		{
 			super();
 		}
@@ -67,13 +65,15 @@ package as3.aeronaut.print.aircraft
 		 * ---------------------------------------------------------------------
 		 * @param aircraft
 		 * @param loadout
+		 * @param gunners array of pilots
 		 */
 		public function init(
 				aircraft:Aircraft,
-				loadout:Loadout
+				loadout:Loadout,
+				gunners:Array
 			):void
 		{
-			throw new Error("SpriteWeapons init is abstract");
+			throw new Error("SpriteTurrets init is abstract");
 		}
 		
 		/**
@@ -95,7 +95,6 @@ package as3.aeronaut.print.aircraft
 			if( currGP.gunID == "" ) 
 			{
 				TextField(this.getChildByName("lblLinked"+gpnum)).text = "";
-				TextField(this.getChildByName("lblTurret"+gpnum)).text = "";
 				TextField(this.getChildByName("lblCal"+gpnum)).htmlText = "";
 				TextField(this.getChildByName("lblRange"+gpnum)).text = "";
 				TextField(this.getChildByName("lblAmmo"+gpnum)).text = "";
@@ -105,23 +104,11 @@ package as3.aeronaut.print.aircraft
 			var currGun:Gun = Globals.myBaseData.getGun(currGP.gunID);
 			var linkedtext:String = "";
 			
-			if( currGP.direction == Gunpoint.DIR_TURRET )
-			{
-				var frame:FrameDefinition = 
-						Globals.myAircraftConfigs.getFrameDefinition(aircraft.getFrameType())
-				var t:String = TurretDefinition.getLabelforDirection(
-						frame.getTurretDirectionForGunPoint(gpnum)
-					);
-				
-				TextField(this.getChildByName("lblTurret"+gpnum)).text = t;
-			} else {
-				TextField(this.getChildByName("lblTurret"+gpnum)).text = "";
-			}
 			if( currGP.firelinkGroup > 0 )
-				linkedtext = "F"+currGP.firelinkGroup;
+				linkedtext = "F" + currGP.firelinkGroup;
 			
 			if( currGP.ammolinkGroup > 0 )
-				linkedtext += " A"+currGP.ammolinkGroup;
+				linkedtext += " A" + currGP.ammolinkGroup;
 			
 			TextField(this.getChildByName("lblLinked"+gpnum)).text = linkedtext;
 			TextField(this.getChildByName("lblCal"+gpnum)).htmlText = 
@@ -146,63 +133,44 @@ package as3.aeronaut.print.aircraft
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * setupRocket
+		 * setupGun
 		 * ---------------------------------------------------------------------
-		 * @param slotnum
-		 * @param loadout
+		 * @param gunnernum
+		 * @param aircraft
+		 * @param pilot
 		 */
-		protected function setupRocket(
-				slotnum:uint,
-				loadout:Loadout
+		protected function setupGunner(
+				gunnernum:uint,
+				aircraft:Aircraft,
+				gunner:Pilot
 			):void
 		{
-			var lblType:TextField = 
-				TextField(this.getChildByName("lblSlot" + slotnum + "Type"));
-			var lblRange:TextField = 
-				TextField(this.getChildByName("lblSlot" + slotnum + "Range"));
-				
-			lblType.htmlText = "";
-			lblRange.htmlText = "";
-			
-			if( loadout == null ) 
-				return;
-			
-			var arrRL:Array = loadout.getRocketLoadoutsBySlot(slotnum);
-			if( arrRL.length == 0 )
-				return;
-			
-			// vertical center
-			if( arrRL.length < 3 )
-				lblType.y = lblType.y + 4;
-			
-			var currRocket:Rocket = null;
-			var typeText:String = "";
-			var rangeText:String = "";
-			var maxCharsPerLine:int = 8;
-			var charCounter = 0;
-			
-			for( var i:int = 0; i < arrRL.length; i++ )
+			if( gunner == null )
 			{
-				currRocket = Globals.myBaseData.getRocket(arrRL[i].rocketID);
-				charCounter += currRocket.shortName.length;
-				if( i==1 || i==3 )
-				{
-					for( var j:int = 0; j < (maxCharsPerLine-charCounter); j++ ) 
-						typeText += " ";
-					
-					rangeText = rangeText + "      ";
-					charCounter = 0;
-					
-				} else if( i==2 ) {
-					typeText = typeText+ "<br/>";
-					rangeText = rangeText + "<br/>";
-				}
-				typeText += currRocket.shortName;
-				rangeText += String(currRocket.range);
+				TextField(this.getChildByName("lblGunner" + gpnum + "Name")).text = "";
+				TextField(this.getChildByName("lblGunner" + gpnum + "NT")).text = "";
+				TextField(this.getChildByName("lblGunner" + gpnum + "SS")).text = "";
+				TextField(this.getChildByName("lblGunner" + gpnum + "DE")).text = "";
+				TextField(this.getChildByName("lblGunner" + gpnum + "SH")).text = "";
+				TextField(this.getChildByName("lblGunner" + gpnum + "CO")).text = "";
+				TextField(this.getChildByName("lblGunner" + gpnum + "QD")).text = "";
+				return;
 			}
 			
-			lblType.htmlText = "<b>"+typeText+"</b>";
-			lblRange.htmlText = "<b>"+rangeText+"</b>";
+			TextField(this.getChildByName("lblGunner" + gpnum + "Name")).text = 
+					gunner.getName();
+			TextField(this.getChildByName("lblGunner" + gpnum + "NT")).text = 
+					gunner.getNaturalTouch();
+			TextField(this.getChildByName("lblGunner" + gpnum + "SS")).text = 
+					gunner.getSixthSense();
+			TextField(this.getChildByName("lblGunner" + gpnum + "DE")).text = 
+					gunner.getDeadEye();
+			TextField(this.getChildByName("lblGunner" + gpnum + "SH")).text = 
+					gunner.getSteadyHand();
+			TextField(this.getChildByName("lblGunner" + gpnum + "CO")).text = 
+					gunner.getConstitution();
+			TextField(this.getChildByName("lblGunner" + gpnum + "QD")).text = 
+					gunner.getQuickDraw();
 		}
 	}
 }
