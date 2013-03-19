@@ -38,6 +38,7 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.Squadron;
 	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
+	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
@@ -86,17 +87,29 @@ package as3.aeronaut.print.aircraft
 		{
 			super.initFromAircraft(obj);
 			
-			// TODO	new weapon sprite
-			/*
-			this.myWeapons.init(
+			var turrets:SpriteTurrets;
+			var gunners:Array;
+			
+			if ( obj.getFrameType() == FrameDefinition.FT_HEAVY_BOMBER )
+			{
+				turrets = new SpriteBomberTurrets10();
+// TODO fill it with the gunners if crew is implemented				
+				gunners = new Array(null, null, null, null, null, null);
+				
+			} else {
+				
+				turrets = new SpriteBomberTurrets4();
+// TODO fill it with the gunners if crew is implemented				
+				gunners = new Array(null, null);
+			}
+			turrets.init(
 					obj, 
-					SheetAircraft(this.mySheet).getLoadout() 
+					SheetAircraft(this.mySheet).getLoadout(), 
+					gunners
 				);
-			*/
-			// TODO crew instead
-			//this.initPilot();
-		}
-		
-		
+			this.addChild(turrets);	
+			
+// TODO Bombardie and Bombracks
+		}	
 	}
 }

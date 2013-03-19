@@ -33,6 +33,9 @@ package as3.aeronaut.print.aircraft
 	import as3.aeronaut.objects.baseData.Ammunition;
 	
 	import as3.aeronaut.Globals;
+	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
 		
 	// =========================================================================
 	// Class SpriteTurrets
@@ -109,7 +112,7 @@ package as3.aeronaut.print.aircraft
 			
 			if( currGP.ammolinkGroup > 0 )
 				linkedtext += " A" + currGP.ammolinkGroup;
-			
+				
 			TextField(this.getChildByName("lblLinked"+gpnum)).text = linkedtext;
 			TextField(this.getChildByName("lblCal"+gpnum)).htmlText = 
 					"<b>" + currGun.shortName + "</b>";
@@ -122,7 +125,7 @@ package as3.aeronaut.print.aircraft
 				TextField(this.getChildByName("lblAmmo"+gpnum)).text = "";
 				return;
 			}
-			
+		
 			var currAmmo:Ammunition = Globals.myBaseData.getAmmunition(
 					loadout.getGunAmmo(gpnum).ammoID
 				);
@@ -136,41 +139,44 @@ package as3.aeronaut.print.aircraft
 		 * setupGun
 		 * ---------------------------------------------------------------------
 		 * @param gunnernum
-		 * @param aircraft
-		 * @param pilot
+		 * @param gunner of class pilot
 		 */
 		protected function setupGunner(
 				gunnernum:uint,
-				aircraft:Aircraft,
 				gunner:Pilot
 			):void
 		{
 			if( gunner == null )
 			{
-				TextField(this.getChildByName("lblGunner" + gpnum + "Name")).text = "";
-				TextField(this.getChildByName("lblGunner" + gpnum + "NT")).text = "";
-				TextField(this.getChildByName("lblGunner" + gpnum + "SS")).text = "";
-				TextField(this.getChildByName("lblGunner" + gpnum + "DE")).text = "";
-				TextField(this.getChildByName("lblGunner" + gpnum + "SH")).text = "";
-				TextField(this.getChildByName("lblGunner" + gpnum + "CO")).text = "";
-				TextField(this.getChildByName("lblGunner" + gpnum + "QD")).text = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "Name")).text = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "NT")).htmlText = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "SS")).htmlText = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "DE")).htmlText = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "SH")).htmlText = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "CO")).htmlText = "";
+				TextField(this.getChildByName("lblGunner" + gunnernum + "QD")).htmlText = "";
 				return;
 			}
 			
-			TextField(this.getChildByName("lblGunner" + gpnum + "Name")).text = 
+			TextField(this.getChildByName("lblGunner" + gunnernum + "Name")).htmlText = 
 					gunner.getName();
-			TextField(this.getChildByName("lblGunner" + gpnum + "NT")).text = 
-					gunner.getNaturalTouch();
-			TextField(this.getChildByName("lblGunner" + gpnum + "SS")).text = 
-					gunner.getSixthSense();
-			TextField(this.getChildByName("lblGunner" + gpnum + "DE")).text = 
-					gunner.getDeadEye();
-			TextField(this.getChildByName("lblGunner" + gpnum + "SH")).text = 
-					gunner.getSteadyHand();
-			TextField(this.getChildByName("lblGunner" + gpnum + "CO")).text = 
-					gunner.getConstitution();
-			TextField(this.getChildByName("lblGunner" + gpnum + "QD")).text = 
-					gunner.getQuickDraw();
+			TextField(this.getChildByName("lblGunner" + gunnernum + "NT")).htmlText = 
+					"<b>" + gunner.getNaturalTouch() + "</b>";
+			TextField(this.getChildByName("lblGunner" + gunnernum + "SS")).htmlText = 
+					"<b>" + gunner.getSixthSense() + "</b>";
+			TextField(this.getChildByName("lblGunner" + gunnernum + "DE")).htmlText = 
+					"<b>" + gunner.getDeadEye() + "</b>";
+			TextField(this.getChildByName("lblGunner" + gunnernum + "SH")).htmlText = 
+					"<b>" + gunner.getSteadyHand() + "</b>";
+			TextField(this.getChildByName("lblGunner" + gunnernum + "CO")).htmlText = 
+					"<b>" + gunner.getConstitution() + "</b>";
+			
+			var strQD:String = "<b>"+ gunner.getQuickDraw()[0];
+			if( gunner.getQuickDraw()[1] > 0 ) 
+				strQD = strQD + "." + gunner.getQuickDraw()[1];
+				
+			strQD = strQD + "</b>";
+			TextField(this.getChildByName("lblGunner" + gunnernum + "QD")).htmlText = strQD;
 		}
 	}
 }

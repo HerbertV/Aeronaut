@@ -65,15 +65,21 @@ package as3.aeronaut.print.aircraft
 		 * ---------------------------------------------------------------------
 		 * @param aircraft
 		 * @param loadout
-		 * @param gunners array of pilots
+		 * @param gunners array of exact 6 pilots if there is no gunner 
+		 * 			the arrays value is null
 		 */
-		public function init(
+		override public function init(
 				aircraft:Aircraft,
 				loadout:Loadout,
 				gunners:Array
 			):void
 		{
-			// TODO
+			var i:int = 0;
+			for( i = 1; i < 11; i++ )
+				this.setupGun(i, aircraft, loadout);
+			
+			for ( i = 0; i < 6; i++ )
+				this.setupGunner((i+1), gunners[i]);
 		}
 		
 	}
