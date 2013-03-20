@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 2.0.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -34,9 +34,11 @@ package as3.aeronaut.objects
 		
 	import as3.aeronaut.objects.pilot.*;
 	
-	// =========================================================================
-	// Pilot
-	// =========================================================================
+	/**
+	 * =========================================================================
+	 * Pilot
+	 * =========================================================================
+	 */
 	public class Pilot 
 			extends CSBaseObject 
 			implements ICSBaseObject
@@ -44,7 +46,10 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const FILE_VERSION:String = "2.0";		
 		public static const BASE_TAG:String = "pilot";
+		
+// TODO split up type and subtype
 		
 		public static const TYPE_HERO:String = "hero";
 		public static const TYPE_SIDEKICK:String = "sidekick";
@@ -80,13 +85,14 @@ package as3.aeronaut.objects
 		// If the type is "npc" a file becomes never locked.
 		private var isLocked:Boolean = false;
 		
-		// =====================================================================
-		// Contructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Contructor
+		 * =====================================================================
+		 */
 		public function Pilot()
 		{
 			super();
-			
 		}
 		
 		// =====================================================================
@@ -119,9 +125,10 @@ package as3.aeronaut.objects
 		public function createNew():void
 		{
 			myXML = new XML();
+// TODO split up type and subtype
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<pilot type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_EP_HERO} currentXP={BASE_EP_HERO} bailOutBonus="0" linkedTo="" lostConstitutionEP="0">
+					<pilot version={FILE_VERSION} type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_EP_HERO} currentXP={BASE_EP_HERO} bailOutBonus="0" linkedTo="" lostConstitutionEP="0">
 						<name>New Pilot</name>
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
 						<country ID=""/>
@@ -153,6 +160,7 @@ package as3.aeronaut.objects
 			if( Pilot.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
+				this.updateVersion();
 				this.isLocked = true;
 			} else {
 				if( Console.isConsoleAvailable() )
@@ -185,6 +193,33 @@ package as3.aeronaut.objects
 						);
 				this.createNew();
 			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersion
+		 * ---------------------------------------------------------------------
+		 */
+		public function updateVersion():void
+		{
+			if( this.myXML.pilot.@version == FILE_VERSION )
+				return;
+				
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						"Updating Pilot File",
+						DebugLevel.DEBUG,
+						"from " + this.myXML.pilot.@version 
+							+ " to " +FILE_VERSION
+					);
+			
+			// update from 1.0 to 2.0
+			if( this.myXML.pilot.attribute("version").length() == 0 )
+			{
+				// TODO split up type and subtype
+				
+			}
+			//this.myXML.pilot.@version = FILE_VERSION;
 		}
 		
 		/**

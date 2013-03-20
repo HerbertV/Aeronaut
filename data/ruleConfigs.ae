@@ -1,5 +1,5 @@
 <aeronaut XMLVersion="1.0" xsi:noNamespaceSchemaLocation="aeronaut.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <ruleConfigs>
+  <ruleConfigs version="1.1">
     <genericSettings>
       <printAircraftFlavorSheet doPrint="false"/>
     </genericSettings>

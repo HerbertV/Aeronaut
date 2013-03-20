@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 2.0.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -46,6 +46,7 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const FILE_VERSION:String = "2.0";
 		public static const BASE_TAG:String = "aircraft";
 		
 		// =====================================================================
@@ -96,31 +97,32 @@ package as3.aeronaut.objects
 		 */
 		public function createNew():void
 		{
-//TODO bombbays and cargo
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<aircraft frameType='fighter' PropType="tractor" baseTarget="5" accelRate="1" maxSpeed="1" maxGs="1" decelRate="2" engineCount="1" crewCount="1" srcFoto="">
+					<aircraft version={FILE_VERSION} frameType="fighter" PropType="tractor" baseTarget="5" accelRate="1" maxSpeed="1" maxGs="1" decelRate="2" engineCount="1" crewCount="1" srcFoto="">
 						<name>New Plane</name>
 						<manufacturer ID=""/>
 						<specs height="10,6" length="20,0" range="75" serviceCeiling="5000" wingspan="25,0"/>
 						<specialCharacteristics>
 						</specialCharacteristics>
 						<gunpoints>
-							<gunpoint pointNumber="1"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="2"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="3"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="4"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="5"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="6"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="7"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="8"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="9"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
-							<gunpoint pointNumber="10"  gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="1" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="2" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="5" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="6" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="7" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+							<gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
 						</gunpoints>
 						<rocketslots count="6"/>
 						<turrets>
 						</turrets>
+						<cargo>
+						</cargo>
 						<armor starboardwingTrailing="0" tail="0" portwingTrailing="0" starboardwingLeading="0" nose="0" portwingLeading="0"/>
 					</aircraft>
 				</aeronaut>;
@@ -140,6 +142,7 @@ package as3.aeronaut.objects
 			if( Aircraft.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
+				this.updateVersion();
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
@@ -171,7 +174,41 @@ package as3.aeronaut.objects
 				this.createNew();
 			}
 		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersion
+		 * ---------------------------------------------------------------------
+		 */
+		public function updateVersion():void
+		{
+			if( this.myXML.aircraft.@version == FILE_VERSION )
+				return;
 				
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						"Updating Aircraft File",
+						DebugLevel.DEBUG,
+						"from " + this.myXML.aircraft.@version 
+							+ " to " +FILE_VERSION
+					);
+			
+			// update from 1.0 to 2.0
+			// add new gun points
+			if( this.myXML.aircraft.attribute("version").length() == 0 )
+			{
+				this.myXML.aircraft.gunpoints.appendChild(
+						<gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+					);
+				this.myXML.aircraft.gunpoints.appendChild(
+						<gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+					);
+			}
+			
+			// finally update version
+			this.myXML.aircraft.@version = FILE_VERSION;
+		}
+		
 		/**
 		 * ---------------------------------------------------------------------
 		 * getLoadoutFile

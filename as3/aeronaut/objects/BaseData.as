@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.1.0
+ * @version: 2.0.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -42,6 +42,8 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const FILE_VERSION:String = "2.0";
+		
 		// hardoded ids
 		public static const HCID_SC_MULTIPLEENGINES:String = "AC_003";
 		public static const HCID_SC_LINKEDAMMO:String = "AC_008";

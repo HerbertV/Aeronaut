@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 1.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -21,31 +21,54 @@
  */
 package as3.aeronaut.objects
 {
-	// =========================================================================
-	// ICSBaseObject
-	// =========================================================================
-	// Interface for CS(Crimson skies) objects that are store as ae files.
-	// e.g. Aircraft, Loadout, Pilot, Squadron, Zeppelin
-	// 
+	/**
+	 * =========================================================================
+	 * ICSBaseObject
+	 * =========================================================================
+	 * Interface for CS(Crimson skies) objects that are store as ae files.
+	 * e.g. Aircraft, Loadout, Pilot, Squadron, Zeppelin
+	 */ 
 	public interface ICSBaseObject
 	{
-		// ----------------------------------------------------------
-		// createNew
-		// ----------------------------------------------------------
-		// creates an empty xml structure for this object
+		/**
+		 * ---------------------------------------------------------------------
+		 * createNew
+		 * ---------------------------------------------------------------------
+		 * creates an empty xml structure for this object
+		 */
 		function createNew():void;
 				
-		// ----------------------------------------------------------
-		// loadFile
-		// ----------------------------------------------------------
-		// load xml file and parses it
+		/**
+		 * ---------------------------------------------------------------------
+		 * loadFile
+		 * ---------------------------------------------------------------------
+		 * load xml file and parses it
+		 * 
+		 * @param	filename
+		 */		
 		function loadFile(filename:String):void;
 				
-		// ----------------------------------------------------------
-		// setXML
-		// ----------------------------------------------------------
-		// updates the xml
+		/**
+		 * ---------------------------------------------------------------------
+		 * setXML
+		 * ---------------------------------------------------------------------
+		 * updates the xml with the new one
+		 * 
+		 * @param	xmldoc
+		 */
 		function setXML(xmldoc:XML):void;
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersion
+		 * ---------------------------------------------------------------------
+		 * if the version of this file has changed this function adjust
+		 * the file to fit into the new version.
+		 * 
+		 * best way is to call it after loading was a success.
+		 */
+		function updateVersion():void;
 				
 	}	
 }

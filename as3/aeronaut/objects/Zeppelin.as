@@ -42,6 +42,7 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const FILE_VERSION:String = "1.0";
 		public static const BASE_TAG:String = "zeppelin";
 		
 		// =====================================================================
@@ -91,7 +92,7 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<zeppelin>
+					<zeppelin version="FILE_VERSION">
 						TODO
 					</zeppelin>
 				</aeronaut>;
@@ -134,6 +135,7 @@ package as3.aeronaut.objects
 			if( Zeppelin.checkXML(xmldoc) ) 
 			{
 				this.myXML = xmldoc;
+				this.updateVersion();
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
@@ -142,6 +144,27 @@ package as3.aeronaut.objects
 						);
 				this.createNew();
 			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersion
+		 * ---------------------------------------------------------------------
+		 */
+		public function updateVersion():void
+		{
+			if( this.myXML.zeppelin.@version == FILE_VERSION )
+				return;
+				
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						"Updating Zeppelin File",
+						DebugLevel.DEBUG,
+						"from " + this.myXML.zeppelin.@version 
+							+ " to " +FILE_VERSION
+					);
+					
+			//this.myXML.loadout.@version = FILE_VERSION;
 		}
 	
 	}

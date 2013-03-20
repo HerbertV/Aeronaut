@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 2.0.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -42,6 +42,7 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const FILE_VERSION:String = "2.0";
 		public static const BASE_TAG:String = "squadron";
 		
 		// =====================================================================
@@ -89,7 +90,7 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<squadron srcLogo="">
+					<squadron version="2.0" srcLogo="">
 						<name>New Squadron</name>
 					</squadron>
 				</aeronaut>;
@@ -111,6 +112,7 @@ package as3.aeronaut.objects
 			if( Squadron.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
+				this.updateVersion();
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
@@ -141,6 +143,33 @@ package as3.aeronaut.objects
 						);
 				this.createNew();
 			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersion
+		 * ---------------------------------------------------------------------
+		 */
+		public function updateVersion():void
+		{
+			if( this.myXML.squadron.@version == FILE_VERSION )
+				return;
+				
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						"Updating Squadron File",
+						DebugLevel.DEBUG,
+						"from " + this.myXML.squadron.@version 
+							+ " to " +FILE_VERSION
+					);
+			
+			// update from 1.0 to 2.0
+			if( this.myXML.squadron.attribute("version").length() == 0 )
+			{
+				// TODO add new tags
+				
+			}
+			//this.myXML.squadron.@version = FILE_VERSION;
 		}
 		
 		/**

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Andreas Nutz (seven M GmbH) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="aeronaut">
 		<xs:annotation>
@@ -272,6 +271,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="aircraftConfigs">
@@ -454,12 +454,16 @@ maxSC max special characteristics</xs:documentation>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="zeppelinConfigs">
 					<xs:annotation>
 						<xs:documentation>TODO</xs:documentation>
 					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
+					</xs:complexType>
 				</xs:element>
 				<xs:element name="ruleConfigs">
 					<xs:annotation>
@@ -516,6 +520,7 @@ maxSC max special characteristics</xs:documentation>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="1.1"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="squadron">
@@ -560,6 +565,7 @@ maxSC max special characteristics</xs:documentation>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
 						<xs:attribute name="srcLogo" type="url" use="optional"/>
 						<xs:attribute name="typeID" type="xs:string" use="optional"/>
 						<xs:attribute name="honorLevel" type="xs:int" use="optional"/>
@@ -619,7 +625,27 @@ maxSC max special characteristics</xs:documentation>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
+							<xs:element name="bombs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="bombLoadout" maxOccurs="32">
+											<xs:complexType>
+												<xs:attribute name="idx" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:int">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="8"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="bombID" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
 						<xs:attribute name="srcAircraft" type="url"/>
 					</xs:complexType>
 				</xs:element>
@@ -698,6 +724,7 @@ maxSC max special characteristics</xs:documentation>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
 						<xs:attribute name="type" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
@@ -858,11 +885,6 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="bombbay" minOccurs="0">
-								<xs:complexType>
-									<xs:sequence/>
-								</xs:complexType>
-							</xs:element>
 							<xs:element name="cargo" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence/>
@@ -884,6 +906,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 							</xs:element>
 							<xs:element name="description" type="xs:string" minOccurs="0"/>
 						</xs:sequence>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
 						<xs:attribute name="frameType" type="aircraftFrames" use="required"/>
 						<xs:attribute name="PropType" type="aircraftProps" use="required"/>
 						<xs:attribute name="baseTarget" use="required">
@@ -948,6 +971,9 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 					<xs:annotation>
 						<xs:documentation>TODO</xs:documentation>
 					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
+					</xs:complexType>
 				</xs:element>
 			</xs:choice>
 			<xs:attribute name="XMLVersion" type="xs:string" use="required" fixed="1.0"/>
