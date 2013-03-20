@@ -37,11 +37,11 @@ package as3.aeronaut.module.aircraft
 	
 	
 	// =========================================================================
-	// Class PageBombCargo
+	// Class PageCargo
 	// =========================================================================
-	// Aircraft Page 5 Bomb Bay and Cargo Rooms 
+	// Aircraft Page 5 Cargo Rooms 
 	//
-	public class PageBombCargo
+	public class PageCargo
 			extends AbstractPage 
 				implements ICSValidate
 	{
@@ -54,7 +54,7 @@ package as3.aeronaut.module.aircraft
 		// =====================================================================
 		// Constructor
 		// =====================================================================
-		public function PageBombCargo()
+		public function PageCargo()
 		{
 			super();
 		}
