@@ -135,7 +135,6 @@ package as3.aeronaut.objects
 			if( Zeppelin.checkXML(xmldoc) ) 
 			{
 				this.myXML = xmldoc;
-				this.updateVersion();
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
@@ -151,10 +150,10 @@ package as3.aeronaut.objects
 		 * updateVersion
 		 * ---------------------------------------------------------------------
 		 */
-		public function updateVersion():void
+		public function updateVersion():Boolean
 		{
 			if( this.myXML.zeppelin.@version == FILE_VERSION )
-				return;
+				return false;
 				
 			if( Console.isConsoleAvailable() )
 				Console.getInstance().writeln(
@@ -164,7 +163,8 @@ package as3.aeronaut.objects
 							+ " to " +FILE_VERSION
 					);
 					
-			//this.myXML.loadout.@version = FILE_VERSION;
+			//this.myXML.zeppelin.@version = FILE_VERSION;
+			return true;
 		}
 	
 	}

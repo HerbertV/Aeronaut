@@ -100,6 +100,9 @@ package as3.aeronaut.module
 		private var lastFrameType:String = "";
 		private var frameDef:FrameDefinition = null;
 		
+		// becomes true if file was updated after loading
+		private var fileWasUpdated:Boolean = false;
+		
 		/**
 		 * =====================================================================
 		 * Constructor
@@ -311,6 +314,7 @@ package as3.aeronaut.module
 		{
 			var obj:Aircraft = new Aircraft();
 			obj.loadFile(fn);
+			this.fileWasUpdated = obj.updateVersion();
 			this.initFromAircraft(obj);
 		}
 		
@@ -337,6 +341,7 @@ package as3.aeronaut.module
 		{
 			var obj:Aircraft = new Aircraft();
 			obj.createNew();
+			this.fileWasUpdated = false;
 			this.initFromAircraft(obj);
 		}
 		
@@ -364,6 +369,9 @@ package as3.aeronaut.module
 		{
 			this.setValid(true);
 			this.setSaved(true);
+			if( this.fileWasUpdated )
+				this.setSaved(false);
+			
 			this.myObject = obj;
 			
 			this.form.txtName.text = this.myObject.getName();
@@ -1113,9 +1121,11 @@ package as3.aeronaut.module
 				AbstractCadetImporter.invalidFile(loader.getFilename());
 				return;
 			}
+			this.fileWasUpdated = false;
 			this.initFromAircraft(importer.getAircraft());
 			// every import is unsaved.
 			this.setSaved(false);
+			
 		}
 		
 		/**

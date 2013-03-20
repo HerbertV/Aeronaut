@@ -111,6 +111,9 @@ package as3.aeronaut.module
 		private var intFeatEP:int = 0;
 		private var intLanguageEP:int = 0;
 		
+		// becomes true if file was updated after loading
+		private var fileWasUpdated:Boolean = false;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -289,6 +292,7 @@ package as3.aeronaut.module
 		{
 			var obj:Pilot = new Pilot();
 			obj.loadFile(fn);
+			this.fileWasUpdated = obj.updateVersion();
 			this.initFromPilot(obj);
 		}
 		
@@ -315,6 +319,7 @@ package as3.aeronaut.module
 		{
 			var obj:Pilot = new Pilot();
 			obj.createNew();
+			this.fileWasUpdated = false;
 			this.initFromPilot(obj);
 		}
 		
@@ -342,6 +347,9 @@ package as3.aeronaut.module
 		{
 			this.setValid(true);
 			this.setSaved(true);
+			if( this.fileWasUpdated )
+				this.setSaved(false);
+			
 			this.setTextFieldValid(this.form.lblCurrentEP, true);
 			
 			this.myObject = obj;

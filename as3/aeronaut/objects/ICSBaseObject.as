@@ -67,8 +67,10 @@ package as3.aeronaut.objects
 		 * the file to fit into the new version.
 		 * 
 		 * best way is to call it after loading was a success.
+		 * 
+		 * @return returns true if a update was done.
 		 */
-		function updateVersion():void;
+		function updateVersion():Boolean;
 				
 	}	
 }

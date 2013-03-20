@@ -59,6 +59,9 @@ package as3.aeronaut.module
 		private var myObject:Squadron = null;
 		private var myLoader:ImageLoader = null;
 		
+		// becomes true if file was updated after loading
+		private var fileWasUpdated:Boolean = false;
+		
 		// =====================================================================
 		// CSWindowSquad
 		// =====================================================================
@@ -141,6 +144,7 @@ package as3.aeronaut.module
 		{
 			var obj:Squadron = new Squadron();
 			obj.loadFile(fn);
+			this.fileWasUpdated = obj.updateVersion();
 			this.initFromSquadron(obj);
 		}
 		
@@ -167,6 +171,7 @@ package as3.aeronaut.module
 		{
 			var obj:Squadron = new Squadron();
 			obj.createNew();
+			this.fileWasUpdated = false;
 			this.initFromSquadron(obj);
 		}
 		
@@ -193,6 +198,8 @@ package as3.aeronaut.module
 		public function initFromSquadron(obj:Squadron):void
 		{
 			this.setSaved(true);
+			if( this.fileWasUpdated )
+				this.setSaved(false);
 			
 			this.myObject = obj;
 			

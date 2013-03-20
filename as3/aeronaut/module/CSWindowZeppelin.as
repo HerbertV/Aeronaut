@@ -53,6 +53,9 @@ package as3.aeronaut.module
 		private var isSaved:Boolean = true;
 		private var myObject:Zeppelin = null;
 		
+		// becomes true if file was updated after loading
+		private var fileWasUpdated:Boolean = false;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -117,6 +120,7 @@ package as3.aeronaut.module
 		{
 			var obj:Zeppelin = new Zeppelin();
 			obj.loadFile(fn);
+			this.fileWasUpdated = obj.updateVersion();
 			this.initFromZeppelin(obj);
 		}
 		
@@ -143,6 +147,7 @@ package as3.aeronaut.module
 		{
 			var obj:Zeppelin = new Zeppelin();
 			obj.createNew();
+			this.fileWasUpdated = false;
 			this.initFromZeppelin(obj);
 		}
 		
@@ -170,7 +175,8 @@ package as3.aeronaut.module
 		{
 			this.setValid(true);
 			this.setSaved(true);
-			
+			if( this.fileWasUpdated )
+				this.setSaved(false);
 //TODO
 		}
 		

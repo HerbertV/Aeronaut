@@ -112,7 +112,6 @@ package as3.aeronaut.objects
 			if( Squadron.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
-				this.updateVersion();
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
@@ -150,10 +149,10 @@ package as3.aeronaut.objects
 		 * updateVersion
 		 * ---------------------------------------------------------------------
 		 */
-		public function updateVersion():void
+		public function updateVersion():Boolean
 		{
 			if( this.myXML.squadron.@version == FILE_VERSION )
-				return;
+				return false;
 				
 			if( Console.isConsoleAvailable() )
 				Console.getInstance().writeln(
@@ -170,6 +169,7 @@ package as3.aeronaut.objects
 				
 			}
 			//this.myXML.squadron.@version = FILE_VERSION;
+			return true;
 		}
 		
 		/**

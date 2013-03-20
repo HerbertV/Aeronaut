@@ -77,6 +77,9 @@ package as3.aeronaut.module
 		private var intAmmoCost:int = 0;
 		private var intRocketCost:int = 0;
 		
+		// becomes true if file was updated after loading
+		private var fileWasUpdated:Boolean = false;
+		
 		// =====================================================================
 		// Constructor
 		// =====================================================================
@@ -258,6 +261,7 @@ package as3.aeronaut.module
 		{
 			var obj:Loadout = new Loadout();
 			obj.loadFile(fn);
+			this.fileWasUpdated = obj.updateVersion();
 			this.initFromLoadout(obj);
 		}
 		
@@ -284,6 +288,7 @@ package as3.aeronaut.module
 		{
 			var obj:Loadout = new Loadout();
 			obj.createNew();
+			this.fileWasUpdated = false;
 			this.initFromLoadout(obj);
 		}
 		
@@ -311,6 +316,9 @@ package as3.aeronaut.module
 		{
 			this.setSaved(true);
 			this.setValid(true);
+			if( this.fileWasUpdated )
+				this.setSaved(false);
+			
 			this.myObject = obj;
 			
 			// name
