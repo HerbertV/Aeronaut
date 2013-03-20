@@ -109,7 +109,12 @@ package as3.aeronaut.print.aircraft
 				);
 			this.addChild(turrets);	
 			
-// TODO Bombardie and Bombracks
+// TODO fill bombardier if crew is implemented		
+			this.myBombBays.init(
+					obj,
+					SheetAircraft(this.mySheet).getLoadout(),
+					null
+				);
 		}	
 	}
 }

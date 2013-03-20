@@ -31,6 +31,7 @@ package as3.aeronaut.objects.loadout
 		// =====================================================================
 		// Variables
 		// =====================================================================
+		public var bay:String = "";
 		public var index:int = 0;
 		public var bombID:String = "";
 		
@@ -39,14 +40,17 @@ package as3.aeronaut.objects.loadout
 		 * Constructor
 		 * =====================================================================
 		 * 
+		 * @param b bomb bay (FL,FR,AL,AR)
 		 * @param i index
 		 * @param bID bomb id
 		 */
 		public function BombLoadout(
+				b:String,
 				i:int, 
 				bID:String
 			)
 		{
+			bay = b;
 			index = i;
 			bombID = bID;
 		}
@@ -65,6 +69,7 @@ package as3.aeronaut.objects.loadout
 		public function toString():String
 		{
 			return "loadout.BombLoadout ["
+				+ bay + ", "
 				+ index + ", "
 				+ bombID + " ]";
 		}

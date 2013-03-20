@@ -376,6 +376,7 @@ package as3.aeronaut.objects
 			for each( var bl:XML in myXML..bombLoadout ) 
 			{
 				var obj:BombLoadout = new BombLoadout(
+						bl.@bay,
 						bl.@idx, 
 						bl.@bombID 
 					);
@@ -384,6 +385,34 @@ package as3.aeronaut.objects
 			return arr;
 		}
 		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBombLoadoutByBay
+		 * ---------------------------------------------------------------------
+		 * @param bay
+		 * @param idx
+		 *
+		 * @return
+		 */
+		public function getBombLoadoutByBay(
+				bay:String,
+				idx:int
+			):BombLoadout 
+		{
+			for each( var bl:XML in myXML..bombLoadout ) 
+			{
+				if( bl.@bay == bay && bl.@idx == idx ) 
+				{
+					return new BombLoadout(
+							bl.@bay, 
+							bl.@idx, 
+							bl.@bombID 
+						);
+				}
+			}
+			return null;
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------
@@ -399,7 +428,7 @@ package as3.aeronaut.objects
 			for( var i:int = 0; i< arr.length; i++ )  
 			{
 				newBombsXML.appendChild(
-						<bombLoadout idx={arr[i].index} bombID={arr[i].bombID} />
+						<bombLoadout bay={arr[i].bay} idx={arr[i].index} bombID={arr[i].bombID} />
 					);
 			}
 			myXML.loadout.replace(

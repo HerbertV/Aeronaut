@@ -195,7 +195,7 @@ package as3.aeronaut.objects
 			
 			// update from 1.0 to 2.0
 			// add new gun points
-			if( this.myXML.aircraft.attribute("version").length() == 0 )
+			if( this.myXML.aircraft..gunpoint.(@pointNumber==9).length() == 0 )
 			{
 				this.myXML.aircraft.gunpoints.appendChild(
 						<gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
