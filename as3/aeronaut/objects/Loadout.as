@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.0.0
+ * @version: 2.0.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -34,9 +34,11 @@ package as3.aeronaut.objects
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
-	// =========================================================================
-	// Loadout
-	// =========================================================================
+	/**
+	 * =========================================================================
+	 * Loadout
+	 * =========================================================================
+	 */
 	public class Loadout 
 			extends CSBaseObject 
 			implements ICSBaseObject
@@ -44,16 +46,20 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
+		public static const FILE_VERSION:String = "2.0";
 		public static const BASE_TAG:String = "loadout";
+		
 		
 		// =====================================================================
 		// Variables
 		// =====================================================================
 		
 		
-		// =====================================================================
-		// Contructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Contructor
+		 * =====================================================================
+		 */
 		public function Loadout()
 		{
 			super();
@@ -73,7 +79,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if (XMLProcessor.checkDoc(xmldoc)
+			if( XMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -91,12 +97,14 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<loadout srcAircraft="">
+					<loadout version={Loadout.FILE_VERSION} srcAircraft="">
 						<name>New Loadout</name>
 						<gunAmmos>
 						</gunAmmos>
 						<rockets>
 						</rockets>
+						<bombs>
+						</bombs>
 					</loadout>
 				</aeronaut>;
 		}
@@ -114,6 +122,7 @@ package as3.aeronaut.objects
 			if( Loadout.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
+				this.updateVersion();
 			} else {
 				if( Console.isConsoleAvailable() )
 					Console.getInstance().writeln(
@@ -144,6 +153,34 @@ package as3.aeronaut.objects
 						);
 				this.createNew();
 			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersion
+		 * ---------------------------------------------------------------------
+		 */
+		public function updateVersion():void
+		{
+			if( this.myXML.loadout.@version == FILE_VERSION )
+				return;
+				
+			if( Console.isConsoleAvailable() )
+				Console.getInstance().writeln(
+						"Updating Loadout File",
+						DebugLevel.DEBUG,
+						"from " + this.myXML.loadout.@version 
+							+ " to " +FILE_VERSION
+					);
+			
+			
+			// update from 1.0 to 2.0
+			// add bombs
+			if( this.myXML.loadout.child("bombs").length() == 0 )
+				this.myXML.loadout.appendChild(<bombs />);
+			
+			// finaly update version
+			this.myXML.loadout.@version = FILE_VERSION;
 		}
 		
 		/**
@@ -323,6 +360,51 @@ package as3.aeronaut.objects
 			myXML.loadout.replace(
 					"rockets",
 					newRocketsXML
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBombLoadouts
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getBombLoadouts():Array 
+		{
+			var arr:Array = new Array();
+
+			for each( var bl:XML in myXML..bombLoadout ) 
+			{
+				var obj:BombLoadout = new BombLoadout(
+						bl.@idx, 
+						bl.@bombID 
+					);
+				arr.push(obj);
+			}
+			return arr;
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setBombLoadouts
+		 * ---------------------------------------------------------------------
+		 * @param arr
+		 */
+		public function setBombLoadouts(arr:Array) 
+		{
+			var newBombsXML:XML = <bombs>
+									</bombs>;
+									
+			for( var i:int = 0; i< arr.length; i++ )  
+			{
+				newBombsXML.appendChild(
+						<bombLoadout idx={arr[i].index} bombID={arr[i].bombID} />
+					);
+			}
+			myXML.loadout.replace(
+					"bombs",
+					newBombsXML
 				);
 		}
 		
