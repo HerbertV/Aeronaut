@@ -13,7 +13,7 @@ Version - 1.1.0 alpha 03:
 --------------------------------------------------------------------------------
 - 	updated Help files.
 -	updated loadout window for gun 9 and 10.
-
+-	Files can now be delete from within Aeronaut
 
 
 Version - 1.1.0 alpha 02: 

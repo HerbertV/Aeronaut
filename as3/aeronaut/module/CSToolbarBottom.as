@@ -496,7 +496,12 @@ package as3.aeronaut.module
 		 */
 		private function clickDeleteHandler(e:MouseEvent):void
 		{
-// TODO			
+			var file:String = CSDialogs.selectDeleteAE();
+			
+			if( file == "false" )
+				return;
+				
+			mdm.FileSystem.deleteFile(file);
 		}
 		
 		/**

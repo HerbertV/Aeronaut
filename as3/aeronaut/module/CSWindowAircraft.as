@@ -822,7 +822,6 @@ package as3.aeronaut.module
 					- this.form.page2.getHardpointWeight() 
 					- this.form.page3.getWeight();
 					
-// TODO bomb weight from page5			
 			// weight modifier for Z&B SCs
 			this.intFreeWeight -= int( this.intPayload 
 					* this.form.page1.getCompleteWeightMod()

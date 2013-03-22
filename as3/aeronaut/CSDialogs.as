@@ -109,6 +109,30 @@ package as3.aeronaut
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * selectDeleteAE
+		 * ---------------------------------------------------------------------
+		 * returns the selected file or "false"
+		 * 
+		 * @param titleSuffix
+		 *
+		 * @return
+		 */
+		public static function selectDeleteAE():String
+		{
+			mdm.Dialogs.BrowseFile.title = "Delete AE File ";
+			mdm.Dialogs.BrowseFile.allowMultiple = false;
+			mdm.Dialogs.BrowseFile.dialogText = "Choose a file.";		
+			mdm.Dialogs.BrowseFile.buttonText = "Delete"
+			mdm.Dialogs.BrowseFile.filterList = "Aeronaut|*" + Globals.AE_EXT;			
+			mdm.Dialogs.BrowseFile.defaultDirectory =  
+					mdm.Application.path 
+						+ Globals.PATH_DATA ;
+						
+			return mdm.Dialogs.BrowseFile.show();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * selectImportImage
 		 * ---------------------------------------------------------------------
 		 * returns the selected file or "false"
