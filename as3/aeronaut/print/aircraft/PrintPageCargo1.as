@@ -191,6 +191,7 @@ package as3.aeronaut.print.aircraft
 			//	return;
 			//}
 			/*
+			this.lblCoPilotName.text = "";
 			this.lblCoPilotNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
 			this.lblCoPilotSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
 			this.lblCoPilotDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
