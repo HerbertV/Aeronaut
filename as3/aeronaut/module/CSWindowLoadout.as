@@ -38,6 +38,7 @@ package as3.aeronaut.module
 	
 	import as3.aeronaut.gui.CSStyle;
 	import as3.aeronaut.gui.CSPullDown;
+	import as3.aeronaut.gui.PageButtonController;
 	
 	import as3.aeronaut.objects.FileList;
 	import as3.aeronaut.objects.ICSBaseObject;
@@ -57,7 +58,7 @@ package as3.aeronaut.module
 	// This class is a linked document class for "winLoadout.swf"
 	// @see as3.aeronaut.objects.Loadout
 	//
-	// Window for crating/editing Loadouts.
+	// Window for creating/editing Loadouts.
 	//
 	public class CSWindowLoadout 
 			extends CSWindow 
@@ -67,15 +68,13 @@ package as3.aeronaut.module
 		// =====================================================================
 		// Variables
 		// =====================================================================
+		private var pbtnController:PageButtonController = null;
+		
 		private var isSaved:Boolean = true;
 		private var isValid:Boolean = true;
 		
 		private var myObject:Loadout = null;
 		private var myAircraft:Aircraft = null;
-		
-		private var intFreeHardpoints:int = 0;
-		private var intAmmoCost:int = 0;
-		private var intRocketCost:int = 0;
 		
 		// becomes true if file was updated after loading
 		private var fileWasUpdated:Boolean = false;
@@ -106,27 +105,6 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * filterRockets
-		 * ---------------------------------------------------------------------
-		 * filters rockets
-		 * only rockets that can placed into rocket slots
-		 *
-		 * @return
-		 */
-		private function filterRockets():Array
-		{
-			var arrRock:Array = Globals.myBaseData.getRockets();
-			var arrFiltered:Array = new Array();
-			
-			for( var i:int=0; i<arrRock.length; i++ )
-				if( arrRock[i].slots > 0 )
-					arrFiltered.push(arrRock[i]);
-			
-			return arrFiltered;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
 		 * init
 		 * ---------------------------------------------------------------------
 		 * @see AbstractModule
@@ -139,58 +117,14 @@ package as3.aeronaut.module
 			this.setSaved(true);
 			this.setStyle(CSStyle.BLACK);
 			
-			// ROCKETS
-			var arrRock:Array = filterRockets();
+			this.pbtnController = new PageButtonController();
+			this.pbtnController.addPage(this.form.btnPage1,this.form.page1);
+			this.pbtnController.addPage(this.form.btnPage2,this.form.page2);
+			this.pbtnController.addPage(this.form.btnPage3,this.form.page3);
+			this.pbtnController.setActivePage(0);
 			
-			// init 8 slots
-			for( var slot:int = 1; slot < 9; slot++ )
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-				pdA.setEmptySelectionText("",true);
-				pdB.setEmptySelectionText("",true);
-				
-				if( slot > 4 )
-				{
-					pdA.setMaxVisibleItems(7);
-					pdB.setMaxVisibleItems(7);
-				}
-				pdB.setActive(false);
-			
-				for( var i:int = 0; i < arrRock.length; i++ ) 
-				{
-					pdA.addSelectionItem(
-							arrRock[i].longName, 
-							arrRock[i].myID
-						);
-					
-					if( arrRock[i].slots == 1 
-							&& arrRock[i].usesPerSlot > 1 ) 
-						pdB.addSelectionItem(
-								arrRock[i].longName, 
-								arrRock[i].myID
-							);
-				}
-				pdA.addEventListener(
-						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
-					);
-				pdB.addEventListener(
-						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
-					);
-			}
-			
-			// GUN AMMUNITION
-			// add eventlissteners
-			for( var gnum:int = 1; gnum < 11; gnum++ )
-			{
-				var pdG:CSPullDown = this.getAmmoPullDown(gnum);
-				pdG.addEventListener(
-						MouseEvent.MOUSE_DOWN, 
-						ammoChangedHandler
-					);
-			}
+			this.form.btnPage2.setActive(false);
+			this.form.btnPage3.setActive(false);
 			
 			// AIRCRAFT Selector
 			this.form.pdAircraft.addEventListener(
@@ -198,7 +132,6 @@ package as3.aeronaut.module
 					aircraftChangedHandler
 				); 
 			
-			this.form.lblHardpoints.text = "0";
 			this.form.lblCost.text = "0 $";
 			
 			this.updateDirLists();
@@ -212,39 +145,14 @@ package as3.aeronaut.module
 		 */
 		override public function dispose():void
 		{
-			for( var slot:int = 1; slot < 9; slot++ )
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-				
-				pdA.removeEventListener(
-						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
-					);
-				pdB.removeEventListener(
-						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
-					);
-					
-				pdA.clearSelectionItemList();
-				pdB.clearSelectionItemList();
-			}
-			
-			for( var gnum:int = 1; gnum < 11; gnum++ )
-			{
-				var pdG:CSPullDown = this.getAmmoPullDown(gnum);
-				pdG.removeEventListener(
-						MouseEvent.MOUSE_DOWN, 
-						ammoChangedHandler
-					);
-				pdG.clearSelectionItemList();
-			}
+			this.form.page1.dispose();
+			this.form.page2.dispose();
+			this.form.page3.dispose();
 			
 			this.form.pdAircraft.removeEventListener(
 					MouseEvent.MOUSE_DOWN, 
 					aircraftChangedHandler
 				); 
-
 			this.form.pdAircraft.clearSelectionItemList();
 			
 			super.dispose();
@@ -316,6 +224,7 @@ package as3.aeronaut.module
 		{
 			this.setSaved(true);
 			this.setValid(true);
+			
 			if( this.fileWasUpdated )
 				this.setSaved(false);
 			
@@ -324,7 +233,6 @@ package as3.aeronaut.module
 			// name
 			this.form.txtName.text = this.myObject.getName();
 
-			this.resetAllGuns();
 			// aircraft link
 			if( this.myObject.getSrcAircraft() != "" ) 
 			{
@@ -334,39 +242,7 @@ package as3.aeronaut.module
 				this.loadAircraft(this.myObject.getSrcAircraft());
 				this.updateUIByAircraft();
 			}
-			
-			var i:int = 0;
-			// ammunition
-			var arr:Array = this.myObject.getGunAmmos();
-			for( i = 0; i < arr.length; i++ ) 
-			{
-				var pdG:CSPullDown = this.getAmmoPullDown(arr[i].gunPointNumber);
-				pdG.setActiveSelectionItem(arr[i].ammoID);
-			}
-			// rockets
-			arr = this.myObject.getRocketLoadouts();
-			for( i = 0; i < arr.length; i++ ) 
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(arr[i].slotNumber,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(arr[i].slotNumber,"b");
-				
-				if( arr[i].subSlot < 2 ) 
-				{
-					// sub slot = 0,1 
-					pdA.setActiveSelectionItem(arr[i].rocketID);				
-				} else {
-					// sub slot = 2
-					var t:String = Globals.myBaseData.getRocket(arr[i].rocketID).type
-					if( t != Rocket.TYPE_RELOADABLE) 
-						pdB.setActive(true);
-					
-					pdB.setActiveSelectionItem(arr[i].rocketID);
-				}
-			}
-			this.updateFreeHardpoints();
 			// costs
-			this.calcAmmoCosts();
-			this.calcRocketCosts();
 			this.calcCosts();
 		}
 		
@@ -393,45 +269,9 @@ package as3.aeronaut.module
 			}
 			
 			// ammunition
-			var arr:Array = new Array();
-			for( var gnum:int = 1; gnum < 11; gnum++ )
-			{
-				id = this.getAmmoPullDown(gnum).getIDForCurrentSelection();
-				if( id == CSPullDown.ID_EMPTYSELECTION ) 
-					continue;
-			
-				var ga:GunAmmo = new GunAmmo(gnum, id);
-				arr.push(ga);
-			}
-			this.myObject.setGunAmmos(arr);
-			
-			//rockets
-			arr = new Array();
-			for( var slot:int = 1; slot < 9; slot++ )
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-				var subslot:int = 0;
-				var rl:RocketLoadout = null;
-			
-				// slot a
-				id = pdA.getIDForCurrentSelection();
-				if( id != CSPullDown.ID_EMPTYSELECTION )
-				{				
-					if( Globals.myBaseData.getRocket(id).usesPerSlot > 1 )
-						subslot = 1;
-					rl = new RocketLoadout(slot, subslot, id);
-					arr.push(rl);
-				}
-				// slot b
-				id = pdB.getIDForCurrentSelection();
-				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-				{
-					rl = new RocketLoadout(slot,2,id);
-					arr.push(rl);
-				}
-			}
-			this.myObject.setRocketLoadouts(arr);
+			this.myObject = this.form.page1.updateObjectFromWindow();
+			this.myObject = this.form.page2.updateObjectFromWindow();
+			this.myObject = this.form.page3.updateObjectFromWindow();
 		}
 		
 		/**
@@ -498,6 +338,17 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getAircraft
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getAircraft():Aircraft
+		{
+			return this.myAircraft;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * getFilename
 		 * ---------------------------------------------------------------------
 		 * @see ICSWindow
@@ -552,12 +403,16 @@ package as3.aeronaut.module
 		 */
 		public function validateForm():void
 		{
+			this.form.page1.validateForm();
+			this.form.page2.validateForm();
+			this.form.page3.validateForm();
+			
 			this.setValid(true);
 			
-			if( this.intFreeHardpoints < 0 ) 
-				this.setValid(false);
-			
-			this.setTextFieldValid( this.form.lblHardpoints, this.isValid );
+			this.setValid( this.form.page1.getIsValid()
+					&& this.form.page2.getIsValid()
+					&& this.form.page3.getIsValid()
+				);
 		}
 		
 		/**
@@ -587,105 +442,6 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getRocketPullDown
-		 * ---------------------------------------------------------------------
-		 *
-		 * @param slot 1-8
-		 * @param subslot a or b
-		 * @return
-		 */
-		private function getRocketPullDown(
-				slot:uint,
-				subslot:String
-			):CSPullDown
-		{
-			return CSPullDown(
-					this.form.boxRockets.getChildByName("pdRocket"+slot+subslot)
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getRocketBSlotPullDown
-		 * ---------------------------------------------------------------------
-		 * get linkend rocket B-Slot pulldown.
-		 *
-		 * @param pd an A-Slot pulldown
-		 * @return
-		 */
-		private function getRocketBSlotPullDown(pd:CSPullDown):CSPullDown
-		{
-			var pdBname:String = pd.name.substring(0,pd.name.length-1) + "b";
-			return CSPullDown(
-					this.form.boxRockets.getChildByName(pdBname)
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getAmmoPullDown
-		 * ---------------------------------------------------------------------
-		 *
-		 * @param slot 1-8
-		 * @return
-		 */
-		private function getAmmoPullDown(
-				slot:uint
-			):CSPullDown
-		{
-			if( slot < 9 )
-				return CSPullDown(
-						this.form.boxGuns.getChildByName("pdGun"+slot+"Ammo")
-					);
-			
-			return CSPullDown(
-					this.form.boxGuns.boxGun9_10.getChildByName("pdGun"+slot+"Ammo")
-				);
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getCalLabel
-		 * ---------------------------------------------------------------------
-		 *
-		 * @param slot 1-8
-		 * @return
-		 */
-		private function getCalLabel(
-				slot:uint
-			):TextField
-		{
-			if( slot < 9 )
-				return TextField(
-						this.form.boxGuns.getChildByName("lblGun"+slot+"Caliber")
-					);
-			
-			return TextField(
-					this.form.boxGuns.boxGun9_10.getChildByName("lblGun"+slot+"Caliber")
-				);		
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * resetAllGuns
-		 * ---------------------------------------------------------------------
-		 */
-		private function resetAllGuns():void
-		{
-			for( var slot:int = 1; slot < 11; slot++ )
-			{
-				var pdG:CSPullDown = this.getAmmoPullDown(slot);
-				pdG.clearSelection();
-				pdG.clearSelectionItemList();
-				pdG.setEmptySelectionText("",true);
-				pdG.setActive(false);
-				
-				this.getCalLabel(slot).text = "";
-			}
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
 		 * loadAircraft
 		 * ---------------------------------------------------------------------
 		 * @param filename
@@ -710,140 +466,34 @@ package as3.aeronaut.module
 		 */
 		private function updateUIByAircraft():void
 		{
-			this.form.boxGuns.boxGun9_10.visible = false;
-			this.form.boxRockets.visible = true;
+			this.form.btnPage1.setActive(true);
+			this.form.btnPage2.setActive(false);
+			this.form.btnPage3.setActive(false);
+			this.pbtnController.setActivePage(0);
+			
+			this.form.page1.init(this);
+			this.form.page2.init(this);
+			this.form.page3.init(this);
 			
 			if( this.myAircraft == null ) 
 				return;
 			
 			var frameType:String = this.myAircraft.getFrameType();
 			
-			// max hardpoints of this aircraft
-			this.form.lblHardpoints.text = String(
-					this.myAircraft.getRocketSlotCount()
-				);
 			
 			if( frameType == FrameDefinition.FT_LIGHT_BOMBER
 					|| frameType == FrameDefinition.FT_HEAVY_BOMBER
-					|| frameType == FrameDefinition.FT_HEAVY_CARGO
-					|| frameType == FrameDefinition.FT_LIGHT_CARGO 
 				)
 			{
-				this.form.boxRockets.visible = false;
-				this.form.boxGuns.boxGun9_10.visible = true;
-			}
+				this.form.btnPage3.setActive(true);
+			} 
 			
-			// rocket adjustments for autogyro
-			for( var slot:int = 5; slot < 9; slot++ )
+			if( frameType == FrameDefinition.FT_AUTOGYRO
+					|| frameType == FrameDefinition.FT_FIGHTER
+					|| frameType == FrameDefinition.FT_HEAVY_FIGHTER
+				)
 			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				
-				if( frameType == FrameDefinition.FT_AUTOGYRO )
-				{
-					pdA.clearSelection();
-					pdA.setActive(false);
-					
-					var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-					pdB.clearSelection();
-					pdB.setActive(false);
-					
-				} else {
-					pdA.setActive(true);
-				}
-			}
-			
-			// gunpoints and ammunition
-			for( var gnum:int = 1; gnum < 11; gnum++ )
-			{
-				var currGP:Gunpoint = this.myAircraft.getGunpoint(gnum);
-				
-				// no gun go next slot
-				if( currGP.gunID == "") 
-					continue;
-				
-				var currGun:Gun = Globals.myBaseData.getGun(currGP.gunID);
-				var arrAmmo:Array = Globals.myBaseData.getAmmunitionByCaliber(currGun.cal);
-				var pdG:CSPullDown = this.getAmmoPullDown(gnum);
-				
-				this.getCalLabel(gnum).text = String(currGun.cal);
-					
-				for( var i:int = 0; i < arrAmmo.length; i++) 
-					pdG.addSelectionItem(
-							arrAmmo[i].longName,
-							arrAmmo[i].myID
-						); 
-				
-				pdG.setActive(true);
-			}
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * updateFreeHardpoints
-		 * ---------------------------------------------------------------------
-		 */
-		private function updateFreeHardpoints():void 
-		{
-			if( this.myAircraft == null ) 
-				return;
-			
-			// hardpoints from aircraft
-			this.intFreeHardpoints = this.myAircraft.getRocketSlotCount();
-			
-			for( var slot:int = 1; slot < 9; slot++ )
-			{
-				// slot a only check need 
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var id:String = pdA.getIDForCurrentSelection();
-				
-				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intFreeHardpoints -= Globals.myBaseData.getRocket(id).slots;
-			}
-			this.form.lblHardpoints.text = String(this.intFreeHardpoints);
-			this.validateForm();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * calcAmmoCosts
-		 * ---------------------------------------------------------------------
-		 * sums up the ammo price
-		 */
-		private function calcAmmoCosts():void
-		{
-			this.intAmmoCost = 0;
-			
-			for( var gnum:int = 1; gnum < 11; gnum++ )
-			{
-				var id:String = this.getAmmoPullDown(gnum).getIDForCurrentSelection();
-				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intAmmoCost += Globals.myBaseData.getAmmunition(id).price;
-			}
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * calcRocketCosts
-		 * ---------------------------------------------------------------------
-		 * sums up the rocket price
-		 */
-		private function calcRocketCosts() 
-		{
-			this.intRocketCost = 0;
-			
-			for( var slot:int = 1; slot < 9; slot++ )
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-			
-				//slot a
-				var id:String = pdA.getIDForCurrentSelection();
-				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intRocketCost += Globals.myBaseData.getRocket(id).price;
-				//slot b
-				id = pdB.getIDForCurrentSelection();
-				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intRocketCost += Globals.myBaseData.getRocket(id).price;
+				this.form.btnPage2.setActive(true);
 			}
 		}
 		
@@ -853,14 +503,16 @@ package as3.aeronaut.module
 		 * ---------------------------------------------------------------------
 		 * sums up the ammo and rocket costs
 		 */
-		private function calcCosts() 
+		public function calcCosts() 
 		{
 			this.form.lblCost.text = CSFormatter.formatDollar(
-					this.intAmmoCost 
-						+ this.intRocketCost
+					this.form.page1.getCost()
+						+ this.form.page2.getCost()
+						+ this.form.page3.getCost()
 				);
 		}
-
+		
+		
 		// =====================================================================
 		// Event Handler
 		// =====================================================================
@@ -882,82 +534,8 @@ package as3.aeronaut.module
 				
 			this.setSaved(false);
 				
-			this.resetAllGuns();
 			this.loadAircraft(file);
 			this.updateUIByAircraft();
-		}
-	
-		/**
-		 * ---------------------------------------------------------------------
-		 * ammoChangedHandler
-		 * ---------------------------------------------------------------------
-		 * eventhandler for all gun ammo pulldowns
-		 *
-		 * @param e
-		 */
-		private function ammoChangedHandler(e:MouseEvent):void
-		{
-			if( !(CSPullDown(e.currentTarget)).getIsActive() ) 
-				return;
-				
-			this.setSaved(false);
-			this.calcAmmoCosts();
-			this.calcCosts();
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * rocketChangedHandler
-		 * ---------------------------------------------------------------------
-		 * eventhandler for all rocket pulldowns
-		 *
-		 * @param e
-		 */
-		private function rocketChangedHandler(e:MouseEvent):void
-		{
-			var pd:CSPullDown = CSPullDown(e.currentTarget);
-			var pdName:String = pd.name;
-			
-			if( !pd.getIsActive() )
-				return;
-			
-			this.setSaved(false);
-				
-			// b-slot rocket pulldown
-			if( pdName.lastIndexOf("b") == (pdName.length - 1) )
-			{
-				this.calcRocketCosts();
-				this.calcCosts();
-				return;
-			}
-			
-			// a-slot rocket pulldown
-			var id:String = pd.getIDForCurrentSelection();
-			var pdB:CSPullDown = this.getRocketBSlotPullDown(pd);
-			
-			if( id != CSPullDown.ID_EMPTYSELECTION ) 
-			{
-				var rock:Rocket = Globals.myBaseData.getRocket(id);
-				if( rock.usesPerSlot > 1 )
-				{
-					if( rock.type == Rocket.TYPE_RELOADABLE) 
-					{
-						pdB.setActive(false);
-						pdB.setActiveSelectionItem(id);
-					} else {
-						pdB.setActive(true);
-					}
-				} else {
-					pdB.clearSelection();
-					pdB.setActive(false);
-				}
-			} else {
-				pdB.clearSelection();
-				pdB.setActive(false);
-			}
-			this.updateFreeHardpoints();
-			this.calcRocketCosts();
-			this.calcCosts();
 		}
 	
 	}
