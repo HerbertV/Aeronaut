@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aeronaut XMLVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="aeronaut.xsd">
-	<baseData version="2.0">
+	<baseData version="2.1">
 		<!--
 			 debug level:
 				0 = OFF
@@ -13,184 +13,6 @@
 		-->
 		<preferences debugLevel="4"/>
 
-		<!-- ==================================== Companies ==================================== -->
-		<companies>
-			<company ID="C_001">
-				<shortName>Bell</shortName>
-				<longName>Bell Aircraft Corporation</longName>
-			</company>
-			<company ID="C_002">
-				<shortName>Curtiss-Wright</shortName>
-				<longName>Curtiss-Wright Aviation</longName>
-			</company>
-			<company ID="C_003">
-				<shortName>Debruin</shortName>
-				<longName>Debruin Company</longName>
-			</company>
-			<company ID="C_004">
-				<shortName>Fairchild</shortName>
-				<longName>Fairchild Aircraft Manufacturing</longName>			
-			</company>
-			<company ID="C_005">
-				<shortName>Grumman</shortName>
-				<longName>Grumman Aircraft Engineering</longName>
-			</company>
-			<company ID="C_006">
-				<shortName>Hughes</shortName>
-				<longName>Hughes Aviation Company</longName>
-			</company>
-			<company ID="C_007">
-				<shortName>Marquette</shortName>
-				<longName>Marquette Airworks</longName>
-			</company>
-			<company ID="C_008">
-				<shortName>McDonnell</shortName>
-				<longName>McDonnell Aircraft Corporation</longName>
-			</company>
-			<company ID="C_009">
-				<shortName>Mitsubishi</shortName>
-				<longName>Mitsubishi &amp; Nakajima Kotobuki</longName>
-			</company>
-			<company ID="C_010">
-				<shortName>Ravenscroft</shortName>
-				<longName>Ravenscroft</longName>
-			</company>
-			<company ID="C_011">
-				<shortName>Sanderson</shortName>
-				<longName>Sanderson Machine Corporation</longName>
-			</company>
-			<company ID="C_012">
-				<shortName>Whittley &amp; Douglas</shortName>
-				<longName>Whittley &amp; Douglas</longName>
-			</company>
-			<company ID="C_013">
-				<shortName>William and Colt</shortName>
-				<longName>William and Colt Aviation</longName>
-			</company>
-			<company ID="C_014">
-				<shortName>Yakolev</shortName>
-				<longName>Yakolev</longName>
-			</company>
-			<company ID="C_015">
-				<shortName>Ford</shortName>
-				<longName>Ford Motors</longName>
-			</company>
-			<company ID="C_016">
-				<shortName>Metroplex</shortName>
-				<longName>Metroplex Autogyro Corporation</longName>
-			</company>
-			<company ID="C_017">
-				<shortName>StoutMetal</shortName>
-				<longName>StoutMetal/Ford Aircraft Company</longName>
-			</company>
-			<company ID="C_018">
-				<shortName>Blackflag</shortName>
-				<longName>Blackflag</longName>
-			</company>
-			<company ID="C_019">
-				<shortName>Bristol</shortName>
-				<longName>Bristol</longName>
-			</company>
-			<company ID="C_020">
-				<shortName>Focke-Wulf</shortName>
-				<longName>Focke-Wulf</longName>
-			</company>
-			<company ID="C_021">
-				<shortName>GM - Messerschmitt</shortName>
-				<longName>General Motors - Messerschmitt</longName>
-			</company>
-			<company ID="C_022">
-				<shortName>Boeing</shortName>
-				<longName>Boeing Aircraft Company</longName>
-			</company>
-			<company ID="C_023">
-				<shortName>Chance-Vought</shortName>
-				<longName>Chance-Vought</longName>
-			</company>
-			<company ID="C_024">
-				<shortName>TNCA</shortName>
-				<longName>Talleres Nacionales de Construcciones Aeronauticas</longName>
-			</company>
-			<company ID="C_025">
-				<shortName>De Havilland</shortName>
-				<longName>De Havilland Aircraft Company</longName>
-			</company>
-			<company ID="C_026">
-				<shortName>Sikorsky</shortName>
-				<longName>Sikorsky Aircraft Division</longName>
-			</company>
-			<company ID="C_027">
-				<shortName>McKinley</shortName>
-				<longName>McKinley Aviation</longName>
-			</company>
-			<company ID="C_028">
-				<shortName>PacAir</shortName>
-				<longName>PacAir Aviation</longName>
-			</company>
-			<company ID="C_029">
-				<shortName>North American</shortName>
-				<longName>North American Aircrafts </longName>
-			</company>
-			<company ID="C_030">
-				<shortName>WADG/Fairchild</shortName>
-				<longName>WADG/Fairchild</longName>
-			</company>
-			<company ID="C_031">
-				<shortName>Voss</shortName>
-				<longName>Voss</longName>
-			</company>
-			<company ID="C_032">
-				<shortName>Hughes-Consolidated</shortName>
-				<longName>Hughes-Consolidated Aircraft</longName>
-			</company>
-			<company ID="C_033">
-				<shortName>Davis</shortName>
-				<longName>Davis Aviation</longName>
-			</company>
-			<company ID="C_034">
-				<shortName>Seversky</shortName>
-				<longName>Seversky Aircraft Corporation</longName>
-			</company>
-			<company ID="C_035">
-				<shortName>Northrop</shortName>
-				<longName>Northrop Aircraft Inc.</longName>
-			</company>
-			<company ID="C_036">
-				<shortName>Deseret Air</shortName>
-				<longName>Deseret Air Company</longName>
-			</company>
-			<company ID="C_037">
-				<shortName>Houston</shortName>
-				<longName>Houston Aircraft Company</longName>
-			</company>
-			<company ID="C_038">
-				<shortName>Rolls-Royce</shortName>
-				<longName>Rolls-Royce</longName>
-			</company>
-			<company ID="C_039">
-				<shortName>Aerotechnologies</shortName>
-				<longName>Aerotechnologies Corporation</longName>
-			</company>
-			<company ID="C_040">
-				<shortName>Moraine-Saulnier</shortName>
-				<longName>Moraine-Saulnier</longName>
-			</company>
-			<company ID="C_041">
-				<shortName>Fairey</shortName>
-				<longName>Fairey Aviation Company Ltd.</longName>
-			</company>			
-			<company ID="C_042">
-				<shortName>S.I.P.A.</shortName>
-				<longName>Société Industrielle Pour L'Aviation</longName>
-			</company>
-			<company ID="C_043">
-				<shortName>Lockheed</shortName>
-				<longName>Lockheed Aircraft Company</longName>
-			</company>
-								
-		</companies>		
-		
-		
 		<!-- ==================================== Countries ==================================== -->
 		<countries>
 				<country ID="CY_001" languageID="L_01" srcFlag="na_alaska.jpg">Alaska</country>
@@ -232,6 +54,7 @@
 		
 		</countries>
 		
+		<!-- ==================================== Languages ==================================== -->
 		<languages xpCost="20">
 			<language ID="L_01">English</language>
 			<language ID="L_02">French</language>

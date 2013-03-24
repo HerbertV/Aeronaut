@@ -15,6 +15,7 @@ Version - 1.1.0 alpha 03:
 -	Files can now be delete from within Aeronaut
 -	Bombers and Cargos can be printed. See issue #27
 -	Update loadout window for gun 9/10 and split up into pages. See issue #38.
+-	Companies are now stored in an extra companies.ae file (#39)
 
 
 Version - 1.1.0 alpha 02: 

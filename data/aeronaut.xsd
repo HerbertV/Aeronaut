@@ -8,6 +8,7 @@
 		<xs:complexType>
 			<xs:choice>
 				<xs:element ref="baseData"/>
+				<xs:element ref="companies"/>
 				<xs:element ref="aircraftConfigs"/>
 				<xs:element ref="zeppelinConfigs"/>
 				<xs:element ref="ruleConfigs"/>
@@ -38,7 +39,6 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-				<xs:element ref="companies"/>
 				<xs:element name="countries">
 					<xs:complexType>
 						<xs:sequence>
@@ -268,7 +268,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="2.1"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="aircraftConfigs">
@@ -987,7 +987,8 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 	</xs:element>
 	<xs:element name="companies">
 		<xs:annotation>
-			<xs:documentation>aircraft and zeppelin manufactures</xs:documentation>
+			<xs:documentation>companies.ae and customCompanies.ae
+it includes aircraft and zeppelin manufactures</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -1001,6 +1002,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:simpleType name="url">

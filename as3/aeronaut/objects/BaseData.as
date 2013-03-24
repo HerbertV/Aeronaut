@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 2.0.0
+ * @version: 2.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -32,17 +32,19 @@ package as3.aeronaut.objects
 		
 	import as3.aeronaut.objects.baseData.*;
 	
-	// =========================================================================
-	// BaseData
-	// =========================================================================
-	// object for baseData.ae
-	// read only
+	/**
+	 * =========================================================================
+	 * BaseData
+	 * =========================================================================
+	 * object for baseData.ae
+	 * read only
+	 */
 	public class BaseData
 	{
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const FILE_VERSION:String = "2.0";
+		public static const FILE_VERSION:String = "2.1";
 		
 		// hardoded ids
 		public static const HCID_SC_MULTIPLEENGINES:String = "AC_003";
@@ -60,9 +62,11 @@ package as3.aeronaut.objects
 		private var ready:Boolean = false;
 		private var myXML:XML = new XML();
 				
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function BaseData()
 		{
 			var file:String = mdm.Application.path 
@@ -314,67 +318,6 @@ package as3.aeronaut.objects
 			return obj;
 		}
 		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getCompanies
-		 * ---------------------------------------------------------------------
-		 * @return company array
-		 */
-		public function getCompanies():Array
-		{
-			var arr:Array = new Array();
-
-			if( ready )
-			{
-				for each( var company:XML in myXML..company ) 
-				{
-					var coobj:Company = new Company(
-							company.@ID, 
-							company.shortName.text().toString(),
-							company.longName.text().toString()
-						);
-					arr.push(coobj);
-				}
-				if( arr.length > 1 )
-					arr.sortOn(
-							"shortName",
-							Array.CASEINSENSITIVE
-						);
-			}
-			return arr;
-		}
-	
-		/**
-		 * ---------------------------------------------------------------------
-		 * getCompany
-		 * ---------------------------------------------------------------------
-		 * @param id
-		 *
-		 * @return company object
-		 */
-		public function getCompany(id:String):Company
-		{
-			var obj:Company = null;
-			if( ready )
-			{
-				var xml:XMLList =  myXML..company.(@ID == id);
-				if( xml != null )
-				{
-					obj = new Company(
-							xml.@ID, 
-							xml.shortName.text().toString(), 
-							xml.longName.text().toString()
-						);
-				} else {
-					if( Console.isConsoleAvailable() )
-						Console.getInstance().writeln(
-								"Company with ID:"+id+" not found!",
-								DebugLevel.ERROR
-							);
-				}
-			}
-			return obj;
-		}
 		
 		/**
 		 * ---------------------------------------------------------------------

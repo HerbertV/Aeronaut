@@ -112,7 +112,7 @@ package as3.aeronaut.print.aircraft
 			
 			var company:String = "";
 			if( obj.getManufacturerID() != "" ) 
-				company = Globals.myBaseData.getCompany(
+				company = Globals.myCompanies.getCompany(
 						obj.getManufacturerID()
 					).shortName + " ";
 			

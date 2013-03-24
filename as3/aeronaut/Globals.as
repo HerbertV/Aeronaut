@@ -35,6 +35,7 @@ package as3.aeronaut
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.AircraftConfigs;
 	import as3.aeronaut.objects.RuleConfigs;
+	import as3.aeronaut.objects.Companies;
 	
 	import as3.aeronaut.print.PrintManager;
 	
@@ -110,7 +111,8 @@ package as3.aeronaut
 		public static var myBaseData:BaseData = null;
 		public static var myAircraftConfigs:AircraftConfigs = null;
 		public static var myRuleConfigs:RuleConfigs = null;
-			
+		public static var myCompanies:Companies = null;
+		
 		public static var lastSelectedImportDir:String = "";
 	
 	}

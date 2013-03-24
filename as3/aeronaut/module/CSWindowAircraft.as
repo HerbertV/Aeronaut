@@ -259,7 +259,7 @@ package as3.aeronaut.module
 			this.form.numStepDecel.setActive(false);
 							
 			this.form.pdManufacturer.setEmptySelectionText("",true);
-			var arrCo:Array = Globals.myBaseData.getCompanies();
+			var arrCo:Array = Globals.myCompanies.getCompanies();
 			for( var i:int = 0; i < arrCo.length; i++ ) 
 				this.form.pdManufacturer.addSelectionItem(
 						arrCo[i].longName, 

@@ -33,7 +33,7 @@ package as3.aeronaut.cadet
 	import as3.aeronaut.objects.aircraft.Turret;
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	import as3.aeronaut.objects.aircraftConfigs.TurretDefinition;
-	import as3.aeronaut.objects.baseData.Company;
+	import as3.aeronaut.objects.companies.Company;
 	
 	/**
 	 * =========================================================================
@@ -156,7 +156,7 @@ package as3.aeronaut.cadet
 		private function parseManufacturer():void
 		{
 			var manufacturer:String = this.parseString();	
-			var companies:Array = Globals.myBaseData.getCompanies();
+			var companies:Array = Globals.myCompanies.getCompanies();
 			
 			// check against longname 
 			for each( var company:Company in companies )

@@ -29,7 +29,6 @@
 	<br>
 	<br>
 	The "baseData.ae" file stores, most of the basic informations:
-	<li>Companies</li>
 	<li>Countries</li>
 	<li>Languages</li>
 	<li>Feats</li>
@@ -43,6 +42,10 @@
 	<br>
 	Here you will find a description of the most important tag-blocks:<br>
 	<a href="event:adv_baseData.html">Base Data Tag Overview</a>	
+	<br><br>
+	Since 1.1.0 companies are removed from base data and put into a seperate file.
+	(See below)
+	
 </p>
 <br>
 <p class="TextSmall" align="right">
@@ -73,6 +76,40 @@
 	<br>
 	<br>
 	The "rulesConfig.ae" file defines official rules and custom rules und you can switch them easily in the option menu.
+	
+</p>
+<br>
+<p class="TextSmall" align="right">
+	<a href="event:index.html">Back to Index</a>		
+</p>
+<br><br>
+
+<p class="Text" align="justify">
+	<b>Editing Companies.ae</b>
+	<br>
+	<br>
+	This file was added with Version 1.1.0.
+	The "companies.ae" file defines manufactures for aircrafts and zeppelins.
+	
+	<b>Company Tag:</b>
+	<br><br>
+	<span class="Code">
+	&lt;company ID="C_001"&gt;<br>
+	&nbsp; &nbsp; &lt;shortName>Bell&lt;/shortName&gt;<br>
+	&nbsp; &nbsp; &lt;longName>Bell Aircraft Corporation&lt;/longName&gt;<br>
+	&lt;/company&gt;
+	<br><br>
+	</span>
+	The Companies are used in the aircraft window to fill the manufacturer list.<br> 
+	The Attribute <i>"ID"</i> has to be unique.
+	The <i>"longName"</i> tag is shown in the manufacturer list and the <i>"shortName"</i> tag 
+	is used as a prefix for the aircrafts name in the print sheet.
+	<br>
+	<br>
+	In an upcomming version there will be also a customCompanies.ae file which
+	stores companies you have added from Aeronaut. This means you do no longer
+	need to add companies in  xml.
+	
 	
 </p>
 <br>
