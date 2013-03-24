@@ -76,12 +76,6 @@ package as3.aeronaut.module.loadout
 				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
 				pdA.setEmptySelectionText("",true);
 				pdB.setEmptySelectionText("",true);
-				
-				if( slot > 4 )
-				{
-					pdA.setMaxVisibleItems(7);
-					pdB.setMaxVisibleItems(7);
-				}
 				pdB.setActive(false);
 			
 				for( var i:int = 0; i < arrRock.length; i++ ) 

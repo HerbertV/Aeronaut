@@ -123,6 +123,7 @@ package as3.aeronaut.module
 			this.pbtnController.addPage(this.form.btnPage3,this.form.page3);
 			this.pbtnController.setActivePage(0);
 			
+			this.form.page1.resetAllGuns();
 			this.form.btnPage2.setActive(false);
 			this.form.btnPage3.setActive(false);
 			
@@ -406,8 +407,6 @@ package as3.aeronaut.module
 			this.form.page1.validateForm();
 			this.form.page2.validateForm();
 			this.form.page3.validateForm();
-			
-			this.setValid(true);
 			
 			this.setValid( this.form.page1.getIsValid()
 					&& this.form.page2.getIsValid()

@@ -25,6 +25,9 @@ package as3.aeronaut.module.loadout
 	import flash.text.TextField;
 	import flash.events.MouseEvent;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.gui.*;
@@ -35,7 +38,7 @@ package as3.aeronaut.module.loadout
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.Rocket;
 	import as3.aeronaut.objects.Loadout;	
-	import as3.aeronaut.objects.loadout.RocketLoadout;	
+	import as3.aeronaut.objects.loadout.BombLoadout;	
 	import as3.aeronaut.objects.Aircraft;	
 	import as3.aeronaut.objects.aircraftConfigs.FrameDefinition;
 	
@@ -66,51 +69,67 @@ package as3.aeronaut.module.loadout
 		public function PageBombs() 
 		{
 			super();
-			// TODO
-			/*
-			var arrRock:Array = filterRockets();
+			var arrBombs:Array = filterBombs();
 			
-			// init 8 slots
+			// init all Pulldowns
 			for( var slot:int = 1; slot < 9; slot++ )
 			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-				pdA.setEmptySelectionText("",true);
-				pdB.setEmptySelectionText("",true);
+				var pdFL:CSPullDown = this.getBombPullDown("FL",slot);
+				var pdFR:CSPullDown = this.getBombPullDown("FR",slot);
+				var pdAL:CSPullDown = this.getBombPullDown("AL",slot);
+				var pdAR:CSPullDown = this.getBombPullDown("AR",slot);
 				
+				pdFL.setEmptySelectionText("",true);
+				pdFR.setEmptySelectionText("",true);
+				pdAL.setEmptySelectionText("",true);
+				pdAR.setEmptySelectionText("",true);
+				
+// TODO check if max visible items is needed.
+				/*
 				if( slot > 4 )
 				{
 					pdA.setMaxVisibleItems(7);
 					pdB.setMaxVisibleItems(7);
 				}
-				pdB.setActive(false);
-			
-				for( var i:int = 0; i < arrRock.length; i++ ) 
+				*/
+				
+				for( var i:int = 0; i < arrBombs.length; i++ ) 
 				{
-					pdA.addSelectionItem(
-							arrRock[i].longName, 
-							arrRock[i].myID
+					pdFL.addSelectionItem(
+							arrBombs[i].longName, 
+							arrBombs[i].myID
 						);
-					
-					if( arrRock[i].slots == 1 
-							&& arrRock[i].usesPerSlot > 1 ) 
-						pdB.addSelectionItem(
-								arrRock[i].longName, 
-								arrRock[i].myID
-							);
+					pdFR.addSelectionItem(
+							arrBombs[i].longName, 
+							arrBombs[i].myID
+						);
+					pdAL.addSelectionItem(
+							arrBombs[i].longName, 
+							arrBombs[i].myID
+						);
+					pdAR.addSelectionItem(
+							arrBombs[i].longName, 
+							arrBombs[i].myID
+						);
+				
 				}
-				pdA.addEventListener(
+				pdFL.addEventListener(
 						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
+						bombChangedHandler
 					);
-				pdB.addEventListener(
+				pdFR.addEventListener(
 						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
+						bombChangedHandler
+					);
+				pdAL.addEventListener(
+						MouseEvent.MOUSE_DOWN, 
+						bombChangedHandler
+					);
+				pdAR.addEventListener(
+						MouseEvent.MOUSE_DOWN, 
+						bombChangedHandler
 					);
 			}
-			
-			this.form.lblHardpoints.text = "0";
-			*/
 		}
 		
 		
@@ -129,65 +148,22 @@ package as3.aeronaut.module.loadout
 		public function init(win:CSWindowLoadout):void
 		{
 			this.winLoadout = win;
-			
-			this.lblFreeWeight.text = "0";
+			this.lblFreeWeight.text = "0 lbs.";
 			
 			var loadout:Loadout = Loadout(winLoadout.getObject());
 			var aircraft:Aircraft = winLoadout.getAircraft();
+			
 			if( aircraft == null )
 				return;
-			// TODO
-			/*	
-			// max hardpoints of this aircraft
-			this.lblHardpoints.text = String(
-					aircraft.getRocketSlotCount()
-				);
 			
-			var frameType:String = aircaft.getFrameType();
-			
-			// rocket adjustments for autogyro
-			for( var slot:int = 5; slot < 9; slot++ )
+			var arr:Array = loadout.getBombLoadouts();
+			for( var i:int = 0; i < arr.length; i++ ) 
 			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				
-				if( frameType == FrameDefinition.FT_AUTOGYRO )
-				{
-					pdA.clearSelection();
-					pdA.setActive(false);
-					
-					var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-					pdB.clearSelection();
-					pdB.setActive(false);
-					
-				} else {
-					pdA.setActive(true);
-				}
+				var pd:CSPullDown = this.getBombPullDown(arr[i].bay,arr[i].index);
+				pd.setActiveSelectionItem(arr[i].bombID);				
 			}
-			
-			// rockets
-			var arr:Array = loadout.getRocketLoadouts();
-			
-			for( i = 0; i < arr.length; i++ ) 
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(arr[i].slotNumber,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(arr[i].slotNumber,"b");
-				
-				if( arr[i].subSlot < 2 ) 
-				{
-					// sub slot = 0,1 
-					pdA.setActiveSelectionItem(arr[i].rocketID);				
-				} else {
-					// sub slot = 2
-					var t:String = Globals.myBaseData.getRocket(arr[i].rocketID).type
-					if( t != Rocket.TYPE_RELOADABLE) 
-						pdB.setActive(true);
-					
-					pdB.setActiveSelectionItem(arr[i].rocketID);
-				}
-			}
-			this.updateFreeHardpoints();
-			this.calcRocketCosts();
-			*/
+			this.updateFreeWeight();
+			this.calcBombCosts();
 		}
 		
 		
@@ -198,26 +174,36 @@ package as3.aeronaut.module.loadout
 		 */
 		public function dispose():void
 		{
-			// TODO
-			/*
 			for( var slot:int = 1; slot < 9; slot++ )
 			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
+				var pdFL:CSPullDown = this.getBombPullDown("FL",slot);
+				var pdFR:CSPullDown = this.getBombPullDown("FR",slot);
+				var pdAL:CSPullDown = this.getBombPullDown("AL",slot);
+				var pdAR:CSPullDown = this.getBombPullDown("AR",slot);
 				
-				pdA.removeEventListener(
+				pdFL.removeEventListener(
 						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
+						bombChangedHandler
 					);
-				pdB.removeEventListener(
+				pdFR.removeEventListener(
 						MouseEvent.MOUSE_DOWN, 
-						rocketChangedHandler
+						bombChangedHandler
 					);
+				pdAL.removeEventListener(
+						MouseEvent.MOUSE_DOWN, 
+						bombChangedHandler
+					);
+				pdAR.removeEventListener(
+						MouseEvent.MOUSE_DOWN, 
+						bombChangedHandler
+					);
+				
 					
-				pdA.clearSelectionItemList();
-				pdB.clearSelectionItemList();
+				pdFL.clearSelectionItemList();
+				pdFR.clearSelectionItemList();
+				pdAL.clearSelectionItemList();
+				pdAR.clearSelectionItemList();
 			}
-			*/
 		}
 		
 		/**
@@ -228,13 +214,13 @@ package as3.aeronaut.module.loadout
 		public function validateForm():void
 		{
 			this.setValid(true);
-			//TODO
-			/*
-			if( this.intFreeHardpoints < 0 ) 
+			
+			if( this.intFreeWeight < 0 ) 
 				this.setValid(false);
 			
-			this.setTextFieldValid( this.lblHardpoints, this.isValid );
-			*/
+			if( this.winLoadout == null )
+				return;
+			this.winLoadout.setTextFieldValid( this.lblFreeWeight, this.isValid );
 		}
 		
 		/**
@@ -271,36 +257,50 @@ package as3.aeronaut.module.loadout
 		public function updateObjectFromWindow():Loadout
 		{
 			var obj:Loadout = Loadout(this.winLoadout.getObject());
-			// TODO
-			/*
 			var arr:Array = new Array();
 			
-			for( var slot:int = 1; slot < 9; slot++ )
-			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-				var subslot:int = 0;
-				var rl:RocketLoadout = null;
+			var pdFL:CSPullDown;
+			var pdFR:CSPullDown;
+			var pdAL:CSPullDown;
+			var pdAR:CSPullDown;
 			
-				// slot a
-				id = pdA.getIDForCurrentSelection();
+			var id:String;
+			var bl:BombLoadout;
+			
+			for( var index:int = 1; index < 9; index++ )
+			{
+				pdFL = this.getBombPullDown("FL",index);
+				pdFR = this.getBombPullDown("FR",index);
+				pdAL = this.getBombPullDown("AL",index);
+				pdAR = this.getBombPullDown("AR",index);
+				
+				id = pdFL.getIDForCurrentSelection();
 				if( id != CSPullDown.ID_EMPTYSELECTION )
 				{				
-					if( Globals.myBaseData.getRocket(id).usesPerSlot > 1 )
-						subslot = 1;
-					rl = new RocketLoadout(slot, subslot, id);
-					arr.push(rl);
+					bl = new BombLoadout("FL", index, id);
+					arr.push(bl);
 				}
-				// slot b
-				id = pdB.getIDForCurrentSelection();
-				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-				{
-					rl = new RocketLoadout(slot,2,id);
-					arr.push(rl);
+				id = pdFR.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION )
+				{				
+					bl = new BombLoadout("FR", index, id);
+					arr.push(bl);
+				}
+				id = pdAL.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION )
+				{				
+					bl = new BombLoadout("AL", index, id);
+					arr.push(bl);
+				}
+				id = pdAR.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION )
+				{				
+					bl = new BombLoadout("AR", index, id);
+					arr.push(bl);
 				}
 			}
-			obj.setRocketLoadouts(arr);
-			*/
+			obj.setBombLoadouts(arr);
+			
 			return obj;
 		}
 		
@@ -324,23 +324,55 @@ package as3.aeronaut.module.loadout
 		private function calcBombCosts() 
 		{
 			this.intBombCost = 0;
-			// TODO
-			/*
+			
+			var pdFL:CSPullDown;
+			var pdFR:CSPullDown;
+			var pdAL:CSPullDown;
+			var pdAR:CSPullDown;
+			var id:String;
+			
 			for( var slot:int = 1; slot < 9; slot++ )
 			{
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var pdB:CSPullDown = this.getRocketPullDown(slot,"b");
-			
-				//slot a
-				var id:String = pdA.getIDForCurrentSelection();
+				pdFL = this.getBombPullDown("FL",slot);
+				pdFR = this.getBombPullDown("FR",slot);
+				pdAL = this.getBombPullDown("AL",slot);
+				pdAR = this.getBombPullDown("AR",slot);
+				
+				id = pdFL.getIDForCurrentSelection();
 				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intRocketCost += Globals.myBaseData.getRocket(id).price;
-				//slot b
-				id = pdB.getIDForCurrentSelection();
+					this.intBombCost += Globals.myBaseData.getRocket(id).price;
+					
+				id = pdFR.getIDForCurrentSelection();
 				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intRocketCost += Globals.myBaseData.getRocket(id).price;
+					this.intBombCost += Globals.myBaseData.getRocket(id).price;
+					
+				id = pdAL.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION ) 
+					this.intBombCost += Globals.myBaseData.getRocket(id).price;
+					
+				id = pdAR.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION ) 
+					this.intBombCost += Globals.myBaseData.getRocket(id).price;
 			}
-			*/
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBombPullDown
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param bay 
+		 * @param slot 1-8
+		 * @return
+		 */
+		private function getBombPullDown(
+				bay:String,
+				slot:uint
+			):CSPullDown
+		{
+			return CSPullDown(
+					this.getChildByName("pdBomb"+bay+slot)
+				);
 		}
 		
 		/**
@@ -375,25 +407,41 @@ package as3.aeronaut.module.loadout
 			var aircraft:Aircraft = winLoadout.getAircraft();
 			if( aircraft == null )
 				return;
-			// TODO
-			/*
-			// hardpoints from aircraft
-			this.intFreeHardpoints = aircraft.getRocketSlotCount();
+			
+			this.intFreeWeight = aircraft.getFreeWeight();
+			
+			var pdFL:CSPullDown;
+			var pdFR:CSPullDown;
+			var pdAL:CSPullDown;
+			var pdAR:CSPullDown;
+			var id:String;
 			
 			for( var slot:int = 1; slot < 9; slot++ )
 			{
-				// slot a only check need 
-				var pdA:CSPullDown = this.getRocketPullDown(slot,"a");
-				var id:String = pdA.getIDForCurrentSelection();
+				pdFL = this.getBombPullDown("FL",slot);
+				pdFR = this.getBombPullDown("FR",slot);
+				pdAL = this.getBombPullDown("AL",slot);
+				pdAR = this.getBombPullDown("AR",slot);
 				
+				id = pdFL.getIDForCurrentSelection();
 				if( id != CSPullDown.ID_EMPTYSELECTION ) 
-					this.intFreeHardpoints -= Globals.myBaseData.getRocket(id).slots;
-			}
-			this.form.lblHardpoints.text = String(this.intFreeHardpoints);
-			*/
-			this.validateForm();
+					this.intFreeWeight -= Globals.myBaseData.getRocket(id).weight;
+					
+				id = pdFR.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION ) 
+					this.intFreeWeight -= Globals.myBaseData.getRocket(id).weight;
+					
+				id = pdAL.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION ) 
+					this.intFreeWeight -= Globals.myBaseData.getRocket(id).weight;
+					
+				id = pdAR.getIDForCurrentSelection();
+				if( id != CSPullDown.ID_EMPTYSELECTION ) 
+					this.intFreeWeight -= Globals.myBaseData.getRocket(id).weight;
+			}	
+			this.lblFreeWeight.text = CSFormatter.formatLbs(this.intFreeWeight);
+			this.winLoadout.validateForm();
 		}
-		
 		
 		
 		// =====================================================================
@@ -417,33 +465,6 @@ package as3.aeronaut.module.loadout
 				return;
 			
 			this.winLoadout.setSaved(false);
-			// TODO	
-			/*
-			// a-slot rocket pulldown
-			var id:String = pd.getIDForCurrentSelection();
-			var pdB:CSPullDown = this.getRocketBSlotPullDown(pd);
-			
-			if( id != CSPullDown.ID_EMPTYSELECTION ) 
-			{
-				var rock:Rocket = Globals.myBaseData.getRocket(id);
-				if( rock.usesPerSlot > 1 )
-				{
-					if( rock.type == Rocket.TYPE_RELOADABLE) 
-					{
-						pdB.setActive(false);
-						pdB.setActiveSelectionItem(id);
-					} else {
-						pdB.setActive(true);
-					}
-				} else {
-					pdB.clearSelection();
-					pdB.setActive(false);
-				}
-			} else {
-				pdB.clearSelection();
-				pdB.setActive(false);
-			}
-			*/
 			this.updateFreeWeight();
 			this.calcBombCosts();
 			this.winLoadout.calcCosts();

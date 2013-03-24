@@ -268,7 +268,7 @@ package as3.aeronaut.module.loadout
 		 * resetAllGuns
 		 * ---------------------------------------------------------------------
 		 */
-		private function resetAllGuns():void
+		public function resetAllGuns():void
 		{
 			for( var slot:int = 1; slot < 11; slot++ )
 			{

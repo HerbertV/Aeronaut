@@ -56,7 +56,6 @@ package as3.aeronaut.objects
 		private var myPilotFile:String = "";
 // TODO new handling for additional crew 
 		private var myGunnerFile:String = "";
-		private var freeWeight:int = 0;
 				
 		/**
 		 * =====================================================================
@@ -284,7 +283,7 @@ package as3.aeronaut.objects
 		 */
 		public function getFreeWeight():int 
 		{
-			return freeWeight;
+			return int(myXML.aircraft.@freeWeight);
 		}
 		
 		/**
@@ -295,7 +294,7 @@ package as3.aeronaut.objects
 		 */
 		public function setFreeWeight(val:int)
 		{
-			freeWeight = val;
+			this.myXML.aircraft.@freeWeight = val;
 		}
 		
 		/**

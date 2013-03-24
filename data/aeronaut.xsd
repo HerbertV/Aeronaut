@@ -792,7 +792,9 @@ maxSC max special characteristics</xs:documentation>
 	</xs:element>
 	<xs:element name="aircraft">
 		<xs:annotation>
-			<xs:documentation>for any aircraft ae file</xs:documentation>
+			<xs:documentation>for any aircraft ae file
+
+freeWeight is stored here for bomber loadouts.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -972,6 +974,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 			</xs:attribute>
 			<xs:attribute name="srcFoto" type="url" use="optional"/>
 			<xs:attribute name="srcCounter" type="url" use="optional"/>
+			<xs:attribute name="freeWeight" type="xs:int" use="optional"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="zeppelin">
@@ -984,7 +987,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 	</xs:element>
 	<xs:element name="companies">
 		<xs:annotation>
-			<xs:documentation>e.g. aircraft and zeppelin manufactures</xs:documentation>
+			<xs:documentation>aircraft and zeppelin manufactures</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
