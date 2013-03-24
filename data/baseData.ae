@@ -1085,7 +1085,7 @@
 				<weight type="additional" changes="0" />
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_044" groupID="confcond" hasHardcodedAbility="false"  countsToSCLimit="true">
+			<specialCharacteristic ID="AC_045" groupID="confcond" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Efficient Design</name>
 				<allowedFrame type="lightBomber" />
 				<allowedFrame type="lightCargo" />
@@ -1095,7 +1095,7 @@
 				<weight type="additional" changes="0" />
 			</specialCharacteristic>
 			
-			<specialCharacteristic ID="AC_045" groupID="confcond" hasHardcodedAbility="false"  countsToSCLimit="true">
+			<specialCharacteristic ID="AC_046" groupID="confcond" hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>Confined Conditions</name>
 				<allowedFrame type="lightBomber" />
 				<allowedFrame type="lightCargo" />
@@ -1105,7 +1105,7 @@
 				<weight type="additional" changes="0" />
 			</specialCharacteristic>
 	
-			<specialCharacteristic ID="AC_046" groupID="turret"  hasHardcodedAbility="false"  countsToSCLimit="true">
+			<specialCharacteristic ID="AC_047" groupID="turret"  hasHardcodedAbility="false"  countsToSCLimit="true">
 				<name>360° Turret</name>
 				<allowedFrame type="heavyFighter" />
 				<cost type="additional" changes="1400" />

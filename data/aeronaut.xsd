@@ -37,7 +37,7 @@
 													<xs:element name="shortName" type="xs:string"/>
 													<xs:element name="longName" type="xs:string"/>
 												</xs:sequence>
-												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="ID" type="xs:ID" use="required"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
@@ -50,7 +50,7 @@
 											<xs:complexType>
 												<xs:simpleContent>
 													<xs:extension base="xs:string">
-														<xs:attribute name="ID" type="xs:string" use="required"/>
+														<xs:attribute name="ID" type="xs:ID" use="required"/>
 														<xs:attribute name="srcFlag" type="xs:string" use="required"/>
 														<xs:attribute name="languageID" type="xs:string" use="required"/>
 													</xs:extension>
@@ -67,7 +67,7 @@
 											<xs:complexType>
 												<xs:simpleContent>
 													<xs:extension base="xs:string">
-														<xs:attribute name="ID" type="xs:string" use="required"/>
+														<xs:attribute name="ID" type="xs:ID" use="required"/>
 													</xs:extension>
 												</xs:simpleContent>
 											</xs:complexType>
@@ -86,7 +86,7 @@
 											<xs:complexType>
 												<xs:simpleContent>
 													<xs:extension base="xs:string">
-														<xs:attribute name="ID" type="xs:string" use="required"/>
+														<xs:attribute name="ID" type="xs:ID" use="required"/>
 														<xs:attribute name="xpCost" type="xs:string" use="required"/>
 														<xs:attribute name="maxLvl" type="xs:int" use="required"/>
 													</xs:extension>
@@ -115,7 +115,7 @@ shortName is used in the aircraft sheet</xs:documentation>
 																<xs:element name="shortName" type="xs:string"/>
 																<xs:element name="longName" type="xs:string"/>
 															</xs:sequence>
-															<xs:attribute name="ID" type="xs:string" use="required"/>
+															<xs:attribute name="ID" type="xs:ID" use="required"/>
 															<xs:attribute name="cal" type="xs:int" use="required"/>
 															<xs:attribute name="weight" type="xs:int" use="required"/>
 															<xs:attribute name="price" type="xs:int" use="required"/>
@@ -158,7 +158,7 @@ toHitMod is used for bombers</xs:documentation>
 																<xs:element name="shortName" type="xs:string"/>
 																<xs:element name="longName" type="xs:string"/>
 															</xs:sequence>
-															<xs:attribute name="ID" type="xs:string" use="required"/>
+															<xs:attribute name="ID" type="xs:ID" use="required"/>
 															<xs:attribute name="type" use="required">
 																<xs:simpleType>
 																	<xs:restriction base="xs:string">
@@ -231,7 +231,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 													</xs:element>
 													<xs:element name="description" type="xs:string" minOccurs="0"/>
 												</xs:sequence>
-												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="ID" type="xs:ID" use="required"/>
 												<xs:attribute name="groupID" type="xs:string" use="required"/>
 												<xs:attribute name="hasHardcodedAbility" type="xs:boolean" use="required"/>
 												<xs:attribute name="countsToSCLimit" type="xs:boolean" use="required"/>
@@ -248,7 +248,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 												<xs:sequence>
 													<xs:element name="name" type="xs:string"/>
 												</xs:sequence>
-												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="ID" type="xs:ID" use="required"/>
 												<xs:attribute name="size" type="xs:int" use="required"/>
 											</xs:complexType>
 										</xs:element>
@@ -257,7 +257,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 												<xs:sequence>
 													<xs:element name="name" type="xs:string"/>
 												</xs:sequence>
-												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="ID" type="xs:ID" use="required"/>
 											</xs:complexType>
 										</xs:element>
 										<xs:element name="squardronCharacteristic" minOccurs="0" maxOccurs="unbounded">
@@ -265,7 +265,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 												<xs:sequence>
 													<xs:element name="name" type="xs:string"/>
 												</xs:sequence>
-												<xs:attribute name="ID" type="xs:string" use="required"/>
+												<xs:attribute name="ID" type="xs:ID" use="required"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
