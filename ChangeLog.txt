@@ -16,11 +16,13 @@ Version - 1.1.0 alpha 03:
 -	Bombers and Cargos can be printed. See issue #27
 -	Update loadout window for gun 9/10 and split up into pages. See issue #38.
 -	Companies are now stored in an extra companies.ae file (#39)
+-	Added ae file versions and auto-updating for files.
+- 	All optional ff5 ae files are now updated.
 
 
 Version - 1.1.0 alpha 02: 
 --------------------------------------------------------------------------------
-- 	Added "360° Turret" as SC again (id is now AC_046) it's now a heavy fighter
+- 	Added "360° Turret" as SC again (id is now AC_047) it's now a heavy fighter
 	exclusive SC, since the rules for dorsal/ventral turrets differ from the 
 	360° turret of the "Monitor".
 -	Added import for CADET planes.
