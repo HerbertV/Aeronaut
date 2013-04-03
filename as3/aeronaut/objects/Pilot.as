@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 2.0.0
+ * @version: 2.1.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -46,16 +46,30 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const FILE_VERSION:String = "2.0";		
+		public static const FILE_VERSION:String = "2.1";		
 		public static const BASE_TAG:String = "pilot";
 		
-// TODO split up type and subtype
-		
-		public static const TYPE_HERO:String = "hero";
-		public static const TYPE_SIDEKICK:String = "sidekick";
-		public static const TYPE_GUNNER:String = "copilotgunner";
+		// the main types
+		public static const TYPE_PILOT:String = "pilot";
+		public static const TYPE_CREW:String = "crew";
 		public static const TYPE_NPC:String = "npc";
 		
+		// subtypes for pilots
+		public static const SUBTYPE_ACE:String = "ace";
+		public static const SUBTYPE_HERO:String = "hero";
+		public static const SUBTYPE_SIDEKICK:String = "sidekick";
+		public static const SUBTYPE_CUSTOM:String = "custom";
+		// subtypes for crew
+		public static const SUBTYPE_COPILOT:String = "copilot";
+		public static const SUBTYPE_GUNNER:String = "gunner";
+		public static const SUBTYPE_CREWCHIEF:String = "crewchief";
+		public static const SUBTYPE_LOADMASTER:String = "loadmaster";
+		public static const SUBTYPE_GUARD:String = "guard";
+		public static const SUBTYPE_LOADER:String = "loader";
+		// subtype for npc
+		public static const SUBTYPE_NPC:String = "npc";
+	
+		public static const BASE_EP_ACE:int = 500;
 		public static const BASE_EP_HERO:int = 450;
 		public static const BASE_EP_SIDEKICK:int = 350;
 		public static const BASE_EP_OTHER:int = 0;
@@ -125,11 +139,12 @@ package as3.aeronaut.objects
 		public function createNew():void
 		{
 			myXML = new XML();
-// TODO split up type and subtype
+			
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<pilot version={FILE_VERSION} type={TYPE_HERO} naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" totalXP={BASE_EP_HERO} currentXP={BASE_EP_HERO} bailOutBonus="0" linkedTo="" lostConstitutionEP="0">
+					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="true">
 						<name>New Pilot</name>
+						<stats naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" bailOutBonus="0" />
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
 						<country ID=""/>
 						<squadron ID=""/>
@@ -141,7 +156,7 @@ package as3.aeronaut.objects
 						</languages>
 						<feats>
 						</feats>
-						<logs missions="0" kills="0" craftLost="0"/>
+						<logs missions="0" kills="0" craftLost="0" totalEP={BASE_EP_HERO} currentEP={BASE_EP_HERO} lostConstitutionEP="0" />
 					</pilot>
 				</aeronaut>;
 		}
@@ -212,14 +227,71 @@ package as3.aeronaut.objects
 							+ " to " +FILE_VERSION
 					);
 			
-			// update from 1.0 to 2.0
-			if( this.myXML.pilot.attribute("version").length() == 0 )
-			{
-				// TODO split up type and subtype
-				
-			}
-			//this.myXML.pilot.@version = FILE_VERSION;
+			// update to 2.1
+			if( this.myXML.pilot.attribute("stats").length() == 0 )
+				updateVersionTo2_1();
+			
+			this.myXML.pilot.@version = FILE_VERSION;
 			return true;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateVersionTo2_1
+		 * ---------------------------------------------------------------------
+		 */
+		private function updateVersionTo2_1():void
+		{
+			//split up type and subtype
+			var oldType:String = myXML.pilot.@type;
+			if( oldType == "hero" || oldType == "sidekick" )
+			{
+				this.setType(TYPE_PILOT);
+				this.setSubType(oldType);
+				this.setCanLevelUp(true);
+				
+			} else if( oldType == "copilotgunner" ) {
+				this.setType(TYPE_CREW);
+				this.setSubType(SUBTYPE_COPILOT);
+				this.setCanLevelUp(false);
+			
+			} else {
+				this.setType(TYPE_NPC);
+				this.setSubType(SUBTYPE_NPC);
+				this.setCanLevelUp(true);
+			}
+			this.setUsedForAircrafts(true);
+			this.setUsedForZeppelins(false);
+			
+			// add new stats tag
+			myXML.insertChildAfter(myXML.name[0], <stats />);
+			// move stats to the new stats tag
+			this.setNaturalTouch(int(myXML.pilot.@naturalTouch));
+			this.setSixthSense(int(myXML.pilot.@sixthSense));
+			this.setDeadEye(int(myXML.pilot.@deadEye));
+			this.setSteadyHand(int(myXML.pilot.@steadyHand));
+			this.setConstitution(int(myXML.pilot.@constitution));
+			
+			var qd:Array = myXML.pilot.@quickDraw.split(",");
+			this.setQuickDraw(int(qd[0]),int(qd[1]));
+			this.setBailOutBonus(int(myXML.pilot.@bailOutBonus));
+			// remove the obsolete attributes
+			delete myXML.pilot.@naturalTouch;
+			delete myXML.pilot.@sixthSense;
+			delete myXML.pilot.@deadEye
+			delete myXML.pilot.@steadyHand;
+			delete myXML.pilot.@constitution;
+			delete myXML.pilot.@quickDraw;
+			delete myXML.pilot.@bailOutBonus;
+			
+			//move xp attributes to logs
+			this.setTotalEP(int(myXML.pilot.@totalXP));
+			this.setCurrentEP(int(myXML.pilot.@currentXP));
+			this.setLostConstitutionEP(int(myXML.pilot.@lostConstitutionEP));
+			//remove the obsolete attributes
+			delete myXML.pilot.@totalXP;
+			delete myXML.pilot.@currentXP;
+			delete myXML.pilot.@lostConstitutionEP;
 		}
 		
 		/**
@@ -282,13 +354,39 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getSubType
+		 * ---------------------------------------------------------------------
+		 * @since 2.1
+		 * 
+		 * @return
+		 */
+		public function getSubType():String 
+		{
+			return myXML.pilot.@subtype;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setSubType
+		 * ---------------------------------------------------------------------
+		 * @since 2.1
+		 * 
+		 * @param val
+		 */
+		public function setSubType(val:String)
+		{
+			this.myXML.pilot.@subtype = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * getNaturalTouch
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
 		public function getNaturalTouch():int 
 		{
-			return int(myXML.pilot.@naturalTouch);
+			return int(myXML.pilot.stats.@naturalTouch);
 		}
 		
 		/**
@@ -299,7 +397,7 @@ package as3.aeronaut.objects
 		 */
 		public function setNaturalTouch(val:int)
 		{
-			myXML.pilot.@naturalTouch = val;
+			myXML.pilot.stats.@naturalTouch = val;
 		}
 		
 		/**
@@ -310,7 +408,7 @@ package as3.aeronaut.objects
 		 */
 		public function getSixthSense():int 
 		{
-			return int(myXML.pilot.@sixthSense);
+			return int(myXML.pilot.stats.@sixthSense);
 		}
 		
 		/**
@@ -321,7 +419,7 @@ package as3.aeronaut.objects
 		 */
 		public function setSixthSense(val:int)
 		{
-			myXML.pilot.@sixthSense = val;
+			myXML.pilot.stats.@sixthSense = val;
 		}
 		
 		/**
@@ -332,7 +430,7 @@ package as3.aeronaut.objects
 		 */
 		public function getDeadEye():int 
 		{
-			return int(myXML.pilot.@deadEye);
+			return int(myXML.pilot.stats.@deadEye);
 		}
 		
 		/**
@@ -343,7 +441,7 @@ package as3.aeronaut.objects
 		 */
 		public function setDeadEye(val:int)
 		{
-			myXML.pilot.@deadEye = val;
+			myXML.pilot.stats.@deadEye = val;
 		}
 		
 		/**
@@ -354,7 +452,7 @@ package as3.aeronaut.objects
 		 */
 		public function getSteadyHand():int
 		{
-			return int(myXML.pilot.@steadyHand);
+			return int(myXML.pilot.stats.@steadyHand);
 		}
 		
 		/**
@@ -365,7 +463,7 @@ package as3.aeronaut.objects
 		 */
 		public function setSteadyHand(val:int)
 		{
-			myXML.pilot.@steadyHand = val;
+			myXML.pilot.stats.@steadyHand = val;
 		}
 		
 		/**
@@ -376,7 +474,7 @@ package as3.aeronaut.objects
 		 */
 		public function getConstitution():int 
 		{
-			return int(myXML.pilot.@constitution);
+			return int(myXML.pilot.stats.@constitution);
 		}
 		
 		/**
@@ -387,7 +485,7 @@ package as3.aeronaut.objects
 		 */
 		public function setConstitution(val:int)
 		{
-			myXML.pilot.@constitution = val;
+			myXML.pilot.stats.@constitution = val;
 		}
 		
 		/**
@@ -398,7 +496,7 @@ package as3.aeronaut.objects
 		 */
 		public function getQuickDraw():Array 
 		{
-			return myXML.pilot.@quickDraw.split(",");
+			return myXML.pilot.stats.@quickDraw.split(",");
 		}
 		
 		/**
@@ -409,7 +507,7 @@ package as3.aeronaut.objects
 		 */
 		public function setQuickDraw(val:int, subval:int)
 		{
-			myXML.pilot.@quickDraw = String(val+","+subval);
+			myXML.pilot.stats.@quickDraw = String(val+","+subval);
 		}
 		
 		/**
@@ -420,10 +518,10 @@ package as3.aeronaut.objects
 		 */
 		public function getLostConstitutionEP():int 
 		{
-			if ( myXML.pilot.@lostConstitutionEP ==  myXML.pilot.@nonexistingattribute )
+			if ( myXML.pilot.logs.@lostConstitutionEP ==  myXML.pilot.logs.@nonexistingattribute )
 				return 0;
 			
-			return int(myXML.pilot.@lostConstitutionEP);
+			return int(myXML.pilot.logs.@lostConstitutionEP);
 		}
 		
 		/**
@@ -434,7 +532,7 @@ package as3.aeronaut.objects
 		 */
 		public function setLostConstitutionEP(val:int)
 		{
-			myXML.pilot.@lostConstitutionEP = val;
+			myXML.pilot.logs.@lostConstitutionEP = val;
 		}
 		
 		
@@ -446,7 +544,7 @@ package as3.aeronaut.objects
 		 */
 		public function getTotalEP():int 
 		{
-			return int(myXML.pilot.@totalXP);
+			return int(myXML.pilot.logs.@totalEP);
 		}
 		
 		/**
@@ -457,7 +555,7 @@ package as3.aeronaut.objects
 		 */
 		public function setTotalEP(val:int)
 		{
-			myXML.pilot.@totalXP = val;
+			myXML.pilot.logs.@totalEP = val;
 		}
 		
 		/**
@@ -470,7 +568,7 @@ package as3.aeronaut.objects
 		 */
 		public function getCurrentEP():int 
 		{
-			return int(myXML.pilot.@currentXP);
+			return int(myXML.pilot.logs.@currentEP);
 		}
 		
 		/**
@@ -481,7 +579,7 @@ package as3.aeronaut.objects
 		 */
 		public function setCurrentEP(val:int)
 		{
-			myXML.pilot.@currentXP = val;
+			myXML.pilot.logs.@currentEP = val;
 		}
 		
 		/**
@@ -492,7 +590,7 @@ package as3.aeronaut.objects
 		 */
 		public function getBailOutBonus():int 
 		{
-			return int(myXML.pilot.@bailOutBonus);
+			return int(myXML.pilot.stats.@bailOutBonus);
 		}
 		
 		/**
@@ -503,7 +601,7 @@ package as3.aeronaut.objects
 		 */
 		public function setBailOutBonus(val:int)
 		{
-			myXML.pilot.@bailOutBonus = val;
+			myXML.pilot.stats.@bailOutBonus = val;
 		}
 		
 		/**
@@ -960,7 +1058,7 @@ package as3.aeronaut.objects
 		 */
 		public function getSrcNoseart():String 
 		{
-			return myXML.aircraft.noseart.@srcFoto;
+			return myXML.pilot.noseart.@srcFoto;
 		}
 		
 		/**
@@ -971,8 +1069,83 @@ package as3.aeronaut.objects
 		 */
 		public function setSrcNoseart(val:String)
 		{
-			myXML.aircraft.noseart.@srcFoto = val;
+			myXML.pilot.noseart.@srcFoto = val;
 		}
 	
+		/**
+		 * ---------------------------------------------------------------------
+		 * canLevelUp
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function canLevelUp():Boolean 
+		{
+			if( myXML.pilot.@canLevelUp == "false" )
+				return false;
+				
+			return true;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setCanLevelUp
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setCanLevelUp(val:Boolean)
+		{
+			myXML.pilot.@canLevelUp = val;
+		}
+	
+		/**
+		 * ---------------------------------------------------------------------
+		 * isUsedForAircrafts
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function isUsedForAircrafts():Boolean 
+		{
+			if( myXML.pilot.useForAircrafts == "false" )
+				return false;
+				
+			return true;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setUsedForAircrafts
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setUsedForAircrafts(val:Boolean)
+		{
+			myXML.pilot.useForAircrafts = val;
+		}
+	
+		/**
+		 * ---------------------------------------------------------------------
+		 * isUsedForZeppelins
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function isUsedForZeppelins():Boolean 
+		{
+			if( myXML.pilot.useForZeppelins == "false" )
+				return false;
+				
+			return true;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setUsedForZeppelins
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setUsedForZeppelins(val:Boolean)
+		{
+			myXML.pilot.useForZeppelins = val;
+		}
+
 	}
 }

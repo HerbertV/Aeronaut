@@ -35,7 +35,6 @@ package as3.aeronaut.module
 	import as3.hv.core.utils.StringHelper;
 	import as3.hv.core.net.ImageLoader;
 	
-	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
 	import as3.aeronaut.CSDialogs;
@@ -170,7 +169,9 @@ package as3.aeronaut.module
 					MouseEvent.MOUSE_DOWN,
 					changeSquadHandler
 				);
-			
+
+// TODO split up into 2 pulldowns or 2 radio button groups
+
 			//pilot type
 			this.rbgType = new CSRadioButtonGroup();
 			this.rbgType.addMember(this.form.rbtnTypeHero,"hero");
@@ -226,7 +227,9 @@ package as3.aeronaut.module
 				);
 			
 // TODO this.form.pdLinkedTo
-			
+// TODO add checkbox for level up
+// TODO add checkboxes for aircraft and zeppelin filters
+// TODO cadet import button			
 			//dirlists
 			this.updateDirLists();
 		}
@@ -602,10 +605,13 @@ package as3.aeronaut.module
 						arrFLSquad[i].filename
 					); 
 			
+			// TODO add new filtering
+			/*
 			if( this.rbgType.getValue() == Pilot.TYPE_GUNNER )
 			{
-// TODO this.form.pdLinkedTo
+				this.form.pdLinkedTo
 			}
+			*/
 			
 		}
 		
@@ -839,7 +845,8 @@ package as3.aeronaut.module
 			this.form.pdLinkedTo.setActive(false);
 			
 			this.form.btnAddEP.setActive(true);
-// TODO add ace pilot			
+// TODO add ace pilot and other subtypes
+/*
 			if( pilotType == Pilot.TYPE_HERO ) 
 			{
 				this.intTotalEP = Pilot.BASE_EP_HERO;
@@ -862,7 +869,7 @@ package as3.aeronaut.module
 				
 				this.form.btnAddEP.setActive(false);
 			}
-			
+*/			
 			this.form.myStatsBar.init(this);
 			this.form.myFeatBox.init(this);
 			this.form.myLanguageBox.init(this);			

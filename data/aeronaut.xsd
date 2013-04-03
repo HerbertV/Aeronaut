@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Herbert Veitengruber (privat) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="aeronaut">
 		<xs:annotation>
@@ -663,6 +662,55 @@ maxSC max special characteristics</xs:documentation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="name" type="xs:string"/>
+				<xs:element name="stats">
+					<xs:annotation>
+						<xs:documentation>since 2.1 the stats are in this seperate tag.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="naturalTouch" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="sixthSense" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="deadEye" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="steadyHand" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="constitution" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+									<xs:maxInclusive value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="quickDraw" type="xs:string" use="required"/>
+						<xs:attribute name="bailOutBonus" type="xs:int" use="required"/>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="appearance">
 					<xs:complexType>
 						<xs:attribute name="gender" use="required">
@@ -724,70 +772,50 @@ maxSC max special characteristics</xs:documentation>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="logs">
+					<xs:annotation>
+						<xs:documentation>since 2.1 currentXP, totalXp and lostConstitutionEP are moved to this tag.</xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 						<xs:attribute name="missions" type="xs:int" use="required"/>
 						<xs:attribute name="kills" type="xs:int" use="required"/>
 						<xs:attribute name="craftLost" type="xs:int" use="required"/>
+						<xs:attribute name="currentEP" type="xs:int" use="required"/>
+						<xs:attribute name="totalEP" type="xs:int" use="required"/>
+						<xs:attribute name="lostConstitutionEP" type="xs:int" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="2.1"/>
 			<xs:attribute name="type" use="required">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:enumeration value="hero"/>
-						<xs:enumeration value="sidekick"/>
-						<xs:enumeration value="copilotgunner"/>
+						<xs:enumeration value="pilot"/>
+						<xs:enumeration value="crew"/>
 						<xs:enumeration value="npc"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
-			<xs:attribute name="naturalTouch" use="required">
+			<xs:attribute name="subtype" use="required">
 				<xs:simpleType>
-					<xs:restriction base="xs:int">
-						<xs:minInclusive value="1"/>
-						<xs:maxInclusive value="11"/>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ace"/>
+						<xs:enumeration value="hero"/>
+						<xs:enumeration value="sidekick"/>
+						<xs:enumeration value="custom"/>
+						<xs:enumeration value="npc"/>
+						<xs:enumeration value="copilot"/>
+						<xs:enumeration value="gunner"/>
+						<xs:enumeration value="crewchief"/>
+						<xs:enumeration value="loadmaster"/>
+						<xs:enumeration value="guard"/>
+						<xs:enumeration value="loader"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
-			<xs:attribute name="sixthSense" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:int">
-						<xs:minInclusive value="1"/>
-						<xs:maxInclusive value="11"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="deadEye" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:int">
-						<xs:minInclusive value="1"/>
-						<xs:maxInclusive value="11"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="steadyHand" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:int">
-						<xs:minInclusive value="1"/>
-						<xs:maxInclusive value="11"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="constitution" use="required">
-				<xs:simpleType>
-					<xs:restriction base="xs:int">
-						<xs:minInclusive value="1"/>
-						<xs:maxInclusive value="11"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="quickDraw" type="xs:string" use="required"/>
-			<xs:attribute name="currentXP" type="xs:int" use="required"/>
-			<xs:attribute name="totalXP" type="xs:int" use="required"/>
-			<xs:attribute name="bailOutBonus" type="xs:int" use="required"/>
+			<xs:attribute name="canLevelUp" type="xs:boolean" use="required"/>
 			<xs:attribute name="linkedTo" type="xs:string" use="required"/>
-			<xs:attribute name="lostConstitutionEP" type="xs:int" use="optional"/>
+			<xs:attribute name="useForAircrafts" type="xs:boolean" use="required"/>
+			<xs:attribute name="useForZeppelins" type="xs:boolean" use="required"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="aircraft">

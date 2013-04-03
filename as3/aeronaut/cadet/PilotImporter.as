@@ -99,8 +99,8 @@ package as3.aeronaut.cadet
 			parseString();
 			pilot.setPlanename(parseString());
 			// hero or sidekick
-// TODO needs change if subtype is available			
-			pilot.setType(PTYPE[bytes.readByte()]);
+			pilot.setType(Pilot.TYPE_PILOT);
+			pilot.setSubType(PTYPE[bytes.readByte()]);
 			
 			this.parseSkills();
 			

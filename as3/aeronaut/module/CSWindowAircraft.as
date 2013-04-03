@@ -80,10 +80,6 @@ package as3.aeronaut.module
 		
 		private var myObject:Aircraft = null;
 		
-// TODO Noseart (or do this in pilot window) 
-		//private var myNoseartLoader:Loader = null;					
-		//private var srcNoseart:String ="";
-		
 		private var intPayload:int = 0;
 		private var intLoadedWeight:int = 0;
 		
@@ -1086,7 +1082,11 @@ package as3.aeronaut.module
 		 */
 		private function importCadetHandler(e:MouseEvent):void
 		{
-// TODO check for unsaved data
+			// abort import if window contains unsaved data 
+			// and the user wants to discard it.
+			if( !this.getIsSaved() )
+				if( !CSDialogs.changesNotSaved() )
+					return;
 			
 			var file:String = AbstractCadetImporter.selectImportCadetFile(
 					"Aircraft",

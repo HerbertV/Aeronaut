@@ -83,16 +83,7 @@ package as3.aeronaut.module.loadout
 				pdFR.setEmptySelectionText("",true);
 				pdAL.setEmptySelectionText("",true);
 				pdAR.setEmptySelectionText("",true);
-				
-// TODO check if max visible items is needed.
-				/*
-				if( slot > 4 )
-				{
-					pdA.setMaxVisibleItems(7);
-					pdB.setMaxVisibleItems(7);
-				}
-				*/
-				
+								
 				for( var i:int = 0; i < arrBombs.length; i++ ) 
 				{
 					pdFL.addSelectionItem(
