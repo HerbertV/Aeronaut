@@ -255,7 +255,7 @@ weightChanges in percent or fixed weight. fixed if additional all other weights 
 									<xs:attribute name="ID" type="xs:ID" use="required"/>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="squardronCharacteristic" minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="squadronCharacteristic" minOccurs="0" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="name" type="xs:string"/>
@@ -526,10 +526,10 @@ maxSC max special characteristics</xs:documentation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="name"/>
-				<xs:element name="priorityList" minOccurs="0">
+				<xs:element name="priorityList">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="squadronPriority" maxOccurs="unbounded">
+							<xs:element name="squadronPriority" minOccurs="0" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:attribute name="ID" type="xs:string" use="required"/>
 									<xs:attribute name="rank" use="required">
@@ -549,7 +549,7 @@ maxSC max special characteristics</xs:documentation>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="characteristicList" minOccurs="0">
+				<xs:element name="characteristicList">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="squardronCharacteristic" minOccurs="0" maxOccurs="2">
@@ -560,6 +560,7 @@ maxSC max special characteristics</xs:documentation>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="description"/>
 			</xs:sequence>
 			<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
 			<xs:attribute name="srcLogo" type="url" use="optional"/>

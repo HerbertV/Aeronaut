@@ -59,6 +59,9 @@ package as3.aeronaut.objects
 		public static const SUBTYPE_HERO:String = "hero";
 		public static const SUBTYPE_SIDEKICK:String = "sidekick";
 		public static const SUBTYPE_CUSTOM:String = "custom";
+		//for zeppelins
+		public static const SUBTYPE_CAPTAIN:String = "captain";
+		
 		// subtypes for crew
 		public static const SUBTYPE_COPILOT:String = "copilot";
 		public static const SUBTYPE_GUNNER:String = "gunner";
@@ -66,6 +69,7 @@ package as3.aeronaut.objects
 		public static const SUBTYPE_LOADMASTER:String = "loadmaster";
 		public static const SUBTYPE_GUARD:String = "guard";
 		public static const SUBTYPE_LOADER:String = "loader";
+		
 		// subtype for npc
 		public static const SUBTYPE_NPC:String = "npc";
 	
@@ -123,7 +127,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if (XMLProcessor.checkDoc(xmldoc)
+			if( XMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -142,7 +146,7 @@ package as3.aeronaut.objects
 			
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="true">
+					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="false">
 						<name>New Pilot</name>
 						<stats naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" bailOutBonus="0" />
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>

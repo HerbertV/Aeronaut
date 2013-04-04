@@ -27,6 +27,8 @@ package as3.aeronaut.objects
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.XMLProcessor;
 	
+	import as3.aeronaut.objects.squadron.*;
+	
 	import as3.hv.core.utils.StringHelper;
 	
 	import as3.hv.core.console.Console;
@@ -72,7 +74,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if (XMLProcessor.checkDoc(xmldoc)
+			if( XMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -90,8 +92,11 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			myXML =
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
-					<squadron version="2.0" srcLogo="">
+					<squadron version="2.0" srcLogo="" typeID="" honorLevel="1">
 						<name>New Squadron</name>
+						<priorityList> </priorityList>
+						<characteristicList> </characteristicList>
+						<description> </description>
 					</squadron>
 				</aeronaut>;
 		}
@@ -163,10 +168,15 @@ package as3.aeronaut.objects
 					);
 			
 			// update from 1.0 to 2.0
-			if( this.myXML.squadron.attribute("version").length() == 0 )
+			if( this.myXML.squadron.attribute("priorityList").length() == 0 )
 			{
-				// TODO add new tags
-				
+// TODO add new tags and attributes
+				// typeID="" honorLevel="1"
+/*
+				<priorityList> </priorityList>
+				<characteristicList> </characteristicList>
+				<description> </description>
+*/
 			}
 			//this.myXML.squadron.@version = FILE_VERSION;
 			return true;
@@ -218,6 +228,174 @@ package as3.aeronaut.objects
 		{
 			this.myXML.squadron.@srcLogo = val;
 		}
-	
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getDescription
+		 * ---------------------------------------------------------------------
+		 * @since 2.0
+		 * 
+		 * @return
+		 */
+		public function getDescription():String 
+		{
+			return myXML.squadron.description.text().toString();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setDescription
+		 * ---------------------------------------------------------------------
+		 * @since 2.0
+		 * 
+		 * @param val
+		 */
+		public function setDescription(val:String):void
+		{
+			this.myXML.squadron.replace(
+					"description", 
+					<description>{StringHelper.trim(val," ")}</description>
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getTypeID
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getTypeID():String
+		{
+			return myXML.squadron.@typeID;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setTypeID
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setTypeID(val:String) 
+		{
+			this.myXML.squadron.@typeID = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getHonorLevel
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getHonorLevel():int
+		{
+			return int(myXML.squadron.@honorLevel);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setHonorLevel
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setHonorLevel(val:int) 
+		{
+			this.myXML.squadron.@honorLevel = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronCharacteristics
+		 * ---------------------------------------------------------------------
+		 * there is no object class since we need only to store the id 
+		 *
+		 * @return
+		 */
+		public function getSquadronCharacteristics():Array
+		{
+			var arr:Array = new Array();
+
+			for each( var sc:XML in myXML..characteristicList ) 
+				arr.push(sc.@ID);
+			
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setSquadronCharacteristics
+		 * ---------------------------------------------------------------------
+		 * there is no object class since we need only to store the id 
+		 *
+		 * @param arr
+		 */
+		public function setSquadronCharacteristics(arr:Array)
+		{
+			var newScXML:XML = <characteristicList>
+							   </characteristicList>;
+									
+			for( var i:int = 0; i< arr.length; i++ )  
+				newScXML.appendChild(
+						<squardronCharacteristic ID={arr[i]} />
+					);
+			
+			myXML.squadron.replace(
+					"characteristicList",
+					newScXML
+				);
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronPriorities
+		 * ---------------------------------------------------------------------
+		 *
+		 * @return Array of SquadronTypes sorted by rank
+		 */
+		public function getSquadronPriorities():Array
+		{
+			var arr:Array = new Array();
+
+			if( ready )
+			{
+				for each( var xml:XML in myXML..squadronPriority ) 
+				{
+					var obj:Priority = new Priority(
+							xml.@ID, 
+							xml.@rank
+						);
+					arr.push(obj);
+				}
+				if( arr.length > 1 )
+					arr.sortOn(
+							"rank",
+							Array.CASEINSENSITIVE
+						);
+			}
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setSquadronPriorities
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param arr
+		 */
+		public function setSquadronPriorities(arr:Array)
+		{
+			var newpXML:XML = <priorityList>
+							   </priorityList>;
+									
+			for( var i:int = 0; i< arr.length; i++ )  
+				newpXML.appendChild(
+						<squadronPriority ID={arr[i].myID} rank={arr[i].rank}/>
+					);
+			
+			myXML.squadron.replace(
+					"priorityList",
+					newpXML
+				);
+		}
 	}
 }

@@ -659,8 +659,196 @@ package as3.aeronaut.objects
 			return obj;
 		}
 		
-// TODO: accessing squadron objects		
-// TODO: needs new object classes.
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronTypes
+		 * ---------------------------------------------------------------------
+		 *
+		 * @return Array of SquadronTypes sorted by name
+		 */
+		public function getSquadronTypes():Array
+		{
+			var arr:Array = new Array();
+
+			if( ready )
+			{
+				for each( var xml:XML in myXML..squadronType ) 
+				{
+					var xp:Array =  xml.@xpCost.split(",");
+					var obj:SquadronType = new SquadronType(
+							xml.@ID, 
+							xml.text().toString(), 
+							xml.@size
+						);
+					arr.push(obj);
+				}
+				if( arr.length > 1 )
+					arr.sortOn(
+							"myName",
+							Array.CASEINSENSITIVE
+						);
+			}
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronType
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param id 
+		 * 
+		 * @return SquadronType
+		 */
+		public function getSquadronType(id:String):SquadronType
+		{
+			if( !ready ) 
+				return null;
+				
+			var obj:SquadronType = null;
+			var xml:XMLList =  myXML..squadronType.(@ID == id);
+			
+			if( xml != null ) {
+				obj = new SquadronType(
+						xml.@ID, 
+						xml.text().toString(), 
+						xml.@size
+					);
+			} else {
+				if( Console.isConsoleAvailable() )
+					Console.getInstance().writeln(
+							"SquadronType with ID:"+id+" not found!",
+							DebugLevel.ERROR
+						);
+			}
+			return obj;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronPriorities
+		 * ---------------------------------------------------------------------
+		 *
+		 * @return Array of SquadronPriorities sorted by name
+		 */
+		public function getSquadronPriorities():Array
+		{
+			var arr:Array = new Array();
+
+			if( ready )
+			{
+				for each( var xml:XML in myXML..squadronPriority ) 
+				{
+					var xp:Array =  xml.@xpCost.split(",");
+					var obj:SquadronPriority = new SquadronPriority(
+							xml.@ID, 
+							xml.text().toString() 
+						);
+					arr.push(obj);
+				}
+				if( arr.length > 1 )
+					arr.sortOn(
+							"myName",
+							Array.CASEINSENSITIVE
+						);
+			}
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronPriority
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param id 
+		 * 
+		 * @return SquadronPriority
+		 */
+		public function getSquadronPriority(id:String):SquadronPriority
+		{
+			if( !ready ) 
+				return null;
+				
+			var obj:SquadronPriority = null;
+			var xml:XMLList =  myXML..squadronPriority.(@ID == id);
+			
+			if( xml != null ) {
+				obj = new SquadronPriority(
+						xml.@ID, 
+						xml.text().toString()
+					);
+			} else {
+				if( Console.isConsoleAvailable() )
+					Console.getInstance().writeln(
+							"SquadronPriority with ID:"+id+" not found!",
+							DebugLevel.ERROR
+						);
+			}
+			return obj;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronCharacteristics
+		 * ---------------------------------------------------------------------
+		 *
+		 * @return Array of SquadronCharacteristics sorted by name
+		 */
+		public function getSquadronCharacteristics():Array
+		{
+			var arr:Array = new Array();
+
+			if( ready )
+			{
+				for each( var xml:XML in myXML..squadronCharacteristic ) 
+				{
+					var xp:Array =  xml.@xpCost.split(",");
+					var obj:SquadronCharacteristic = new SquadronCharacteristic(
+							xml.@ID, 
+							xml.text().toString() 
+						);
+					arr.push(obj);
+				}
+				if( arr.length > 1 )
+					arr.sortOn(
+							"myName",
+							Array.CASEINSENSITIVE
+						);
+			}
+			return arr;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSquadronCharacteristic
+		 * ---------------------------------------------------------------------
+		 *
+		 * @param id 
+		 * 
+		 * @return SquadronCharacteristic
+		 */
+		public function getSquadronCharacteristic(id:String):SquadronCharacteristic
+		{
+			if( !ready ) 
+				return null;
+				
+			var obj:SquadronCharacteristic = null;
+			var xml:XMLList =  myXML..squadronCharacteristic.(@ID == id);
+			
+			if( xml != null ) {
+				obj = new SquadronCharacteristic(
+						xml.@ID, 
+						xml.text().toString()
+					);
+			} else {
+				if( Console.isConsoleAvailable() )
+					Console.getInstance().writeln(
+							"SquadronCharacteristic with ID:"+id+" not found!",
+							DebugLevel.ERROR
+						);
+			}
+			return obj;
+		}
 		
 	}
 }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *    ___   ____                        __  
  *   / _ | / __/______  ___  ___ ___ __/ /_ 
  *  / __ |/ _// __/ _ \/ _ \/ _ `/ // / __/ 
@@ -14,100 +14,49 @@
  * @version: 1.0.0
  * -----------------------------------------------------------------------------
  *
- * Copyright (c) 2009-2013 Herbert Veitengruber 
+ * Copyright (c) 2013 Herbert Veitengruber 
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  */
-package as3.aeronaut.objects.baseData
+package as3.aeronaut.objects.baseData 
 {
 	/**
 	 * =========================================================================
-	 * Feat
+	 * SquadronCharacteristic
 	 * =========================================================================
-	 * optional FF5 Ruling
+	 * for Z&B Sqaudron/Unit rules
 	 */
-	public class Feat
+	public class SquadronCharacteristic 
 	{
 		// =====================================================================
 		// Variables
 		// =====================================================================
 		public var myID:String;
 		public var myName:String;
-
-		public var xpCost:Array = new Array();
-		public var maxLevel:int = 0;
 		
 		/**
 		 * =====================================================================
 		 * Constructor
 		 * =====================================================================
 		 * 
-		 * @param id	
-		 * @param n	
-		 * @param xp
-		 * @param lvl
+		 * @param	id
+		 * @param	n
 		 */
-		public function Feat(
+		public function SquadronCharacteristic(
 				id:String,
-				n:String, 
-				xp:Array, 
-				lvl:int
-			)
+				n:String
+			) 
 		{
 			myID = id;
 			myName = n;
-			
-			xpCost = xp;
-			maxLevel = lvl;
 		}
+		
 		
 		// =====================================================================
 		// Functions
 		// =====================================================================
 		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getXPCostForLevel
-		 * ---------------------------------------------------------------------
-		 * 
-		 * @param lvl 
-		 *
-		 * @return
-		 */
-		public function getXPCostForLevel(lvl:int):int
-		{
-			if( maxLevel == 0 ) 
-				return int(xpCost[0]);
-			
-			if( lvl < maxLevel )
-				return int(xpCost[lvl]);
-			
-			return 0;
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * getXPCostString
-		 * ---------------------------------------------------------------------
-		 *
-		 * @return
-		 */
-		public function getXPCostString():String
-		{
-			var str:String ="[";
-			
-			for( var i:int = 0; i < xpCost.length; i++) 
-			{
-				str += xpCost[i] + " EP";
-				if( i < (xpCost.length-1) )
-					str += ",";
-			}
-			
-			str += "]";
-			return str;
-		}
-	
 		/**
 		 * ---------------------------------------------------------------------
 		 * toString
@@ -117,8 +66,9 @@ package as3.aeronaut.objects.baseData
 		 */
 		public function toString():String
 		{
-			return "baseData.Feat ["+myID+", "+myName+"]";
+			return "baseData.SquadronCharacteristic ["+myID+", "+myName+"]";
 		}
-	
+		
 	}
+
 }
