@@ -55,13 +55,15 @@ package as3.aeronaut.module
 	
 	import as3.aeronaut.print.IPrintable;
 		
-	// =========================================================================
-	// CSWindowPilot
-	// =========================================================================
-	// This class is a linked document class for "winPilot.swf"
-	// @see as3.aeronaut.objects.Pilot
-	//
-	// Window for crating/editing Pilot.
+	/**
+	 * =========================================================================
+	 * CSWindowPilot
+	 * =========================================================================
+	 * This class is a linked document class for "winPilot.swf"
+	 * @see as3.aeronaut.objects.Pilot
+	 *
+	 * Window for crating/editing Pilot.
+	 */
 	public class CSWindowPilot 
 			extends CSWindow 
 			implements ICSWindowPilot, ICSValidate, IPrintable
@@ -85,10 +87,10 @@ package as3.aeronaut.module
 		private var isSaved:Boolean = true;
 		private var myObject:Pilot = null;
 		
-		// radiobutton groups
-		private var rbgType:CSRadioButtonGroup = null;
 		private var lastSelectedType:String = "";
+		private var lastSelectedSubType:String = "";
 		
+		// radiobutton groups
 		private var rbgGender:CSRadioButtonGroup = null;
 
 		private var imgLoader:ImageLoader = null;
@@ -113,9 +115,11 @@ package as3.aeronaut.module
 		// becomes true if file was updated after loading
 		private var fileWasUpdated:Boolean = false;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function CSWindowPilot()
 		{
 			super();
@@ -171,13 +175,24 @@ package as3.aeronaut.module
 				);
 
 // TODO split up into 2 pulldowns or 2 radio button groups
-
+/* new form elements			
+this.form.pdType
+this.form.pdSubType
+this.form.rbtnCanLevelUp
+this.form.txtStartEP
+this.form.btnImportCadet
+*/			
+			
 			//pilot type
+			/*
 			this.rbgType = new CSRadioButtonGroup();
 			this.rbgType.addMember(this.form.rbtnTypeHero,"hero");
 			this.rbgType.addMember(this.form.rbtnTypeSidekick,"sidekick");
 			this.rbgType.addMember(this.form.rbtnTypeGunner,"copilotgunner");
 			this.rbgType.addMember(this.form.rbtnTypeNPC,"npc");
+			
+			
+			
 			this.form.rbtnTypeHero.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					typeChangedHandler
@@ -194,7 +209,7 @@ package as3.aeronaut.module
 					MouseEvent.MOUSE_DOWN,
 					typeChangedHandler
 				);
-			
+			*/
 			//gender
 			this.rbgGender = new CSRadioButtonGroup();
 			rbgGender.addMember(this.form.rbtnGenderMale,"male");
@@ -227,7 +242,7 @@ package as3.aeronaut.module
 				);
 			
 // TODO this.form.pdLinkedTo
-// TODO add checkbox for level up
+
 // TODO add checkboxes for aircraft and zeppelin filters
 // TODO cadet import button			
 			//dirlists
@@ -254,22 +269,7 @@ package as3.aeronaut.module
 					MouseEvent.MOUSE_DOWN,
 					changeSquadHandler
 				);
-			this.form.rbtnTypeHero.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					typeChangedHandler
-				);
-			this.form.rbtnTypeSidekick.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					typeChangedHandler
-				);
-			this.form.rbtnTypeGunner.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					typeChangedHandler
-				);
-			this.form.rbtnTypeNPC.removeEventListener(
-					MouseEvent.MOUSE_DOWN,
-					typeChangedHandler
-				);
+			// TODO dispose new form elements
 			this.form.btnAddEP.removeEventListener(
 					MouseEvent.MOUSE_DOWN,
 					clickAddEPHandler
@@ -359,8 +359,9 @@ package as3.aeronaut.module
 			
 			this.form.txtName.text = this.myObject.getName();
 			
-			this.rbgType.setValue(this.myObject.getType());
-			this.lastSelectedType = this.myObject.getType();
+			//TODO update for new form elements
+			//this.rbgType.setValue(this.myObject.getType());
+			//this.lastSelectedType = this.myObject.getType();
 			this.updateGUIByType();
 			
 			this.form.lblBailOutBonus.text = String(
@@ -420,10 +421,13 @@ package as3.aeronaut.module
 			
 			if( this.myObject.getIsLocked() == true )
 			{
+//TODO update for new form elements
+		/*
 				this.form.rbtnTypeHero.setActive(false);
 				this.form.rbtnTypeSidekick.setActive(false);
 				this.form.rbtnTypeGunner.setActive(false);
 				this.form.rbtnTypeNPC.setActive(false);
+		*/
 				this.form.rbtnGenderMale.setActive(false);
 				this.form.rbtnGenderFemale.setActive(false);
 			}
@@ -521,7 +525,9 @@ package as3.aeronaut.module
 		public function updateObjectFromWindow():void
 		{
 			this.myObject.setName(this.form.txtName.text);
-			this.myObject.setType(this.rbgType.getValue());
+			
+			// TODO
+			//this.myObject.setType(this.rbgType.getValue());
 			
 			this.myObject.setGender(this.rbgGender.getValue());
 			this.myObject.setHeight(
@@ -775,6 +781,8 @@ package as3.aeronaut.module
 		 */
 		public function getPilotType():String
 		{
+			// TODO
+			
 			return this.rbgType.getValue();
 		}
 		
@@ -1038,6 +1046,8 @@ package as3.aeronaut.module
 		 */
 		private function typeChangedHandler(e:MouseEvent):void
 		{
+			// TODO also add a new function subtype changed Handler
+			
 			var rbtn:CSRadioButton = CSRadioButton(e.currentTarget);
 			if( !rbtn.getIsActive() 
 					|| this.lastSelectedType == this.rbgType.getValue() )
@@ -1055,7 +1065,7 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * typeChangedHandler
+		 * changeNationHandler
 		 * ---------------------------------------------------------------------
 		 * @param e
 		 */

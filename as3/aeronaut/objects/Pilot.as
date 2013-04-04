@@ -148,7 +148,7 @@ package as3.aeronaut.objects
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
 					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="false">
 						<name>New Pilot</name>
-						<stats naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" bailOutBonus="0" />
+						<stats naturalTouch="1" sixthSense="1" deadEye="1" steadyHand="1" constitution="3" quickDraw="1,0" bailOutBonus="0" />
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
 						<country ID=""/>
 						<squadron ID=""/>
@@ -160,7 +160,7 @@ package as3.aeronaut.objects
 						</languages>
 						<feats>
 						</feats>
-						<logs missions="0" kills="0" craftLost="0" totalEP={BASE_EP_HERO} currentEP={BASE_EP_HERO} lostConstitutionEP="0" />
+						<logs missions="0" kills="0" craftLost="0" startEP={BASE_EP_HERO} totalEP={BASE_EP_HERO} currentEP={BASE_EP_HERO} lostConstitutionEP="0" />
 					</pilot>
 				</aeronaut>;
 		}
@@ -296,6 +296,13 @@ package as3.aeronaut.objects
 			delete myXML.pilot.@totalXP;
 			delete myXML.pilot.@currentXP;
 			delete myXML.pilot.@lostConstitutionEP;
+			
+			if( oldType == "hero" )
+				this.setStartEP(BASE_EP_HERO);
+			else if( oldType == "sidekick" )
+				this.setStartEP(BASE_EP_SIDEKICK);
+			else
+				this.setStartEP(BASE_EP_OTHER);
 		}
 		
 		/**
@@ -539,6 +546,28 @@ package as3.aeronaut.objects
 			myXML.pilot.logs.@lostConstitutionEP = val;
 		}
 		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getStartEP
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getStartEP():int 
+		{
+			return int(myXML.pilot.logs.@startEP);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setStartEP
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setStartEP(val:int)
+		{
+			myXML.pilot.logs.@startEP = val;
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------
