@@ -11,7 +11,7 @@
  * Visit: http://www.foxforcefive.de/cs/
  * -----------------------------------------------------------------------------
  * @author: Herbert Veitengruber 
- * @version: 1.1.0
+ * @version: 1.2.0
  * -----------------------------------------------------------------------------
  *
  * Copyright (c) 2009-2013 Herbert Veitengruber 
@@ -25,6 +25,8 @@ package as3.aeronaut.module
 	
 	import flash.display.MovieClip;
 	import flash.display.Bitmap;
+	import flash.text.TextField;
+	import flash.text.TextFieldType;
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -34,6 +36,7 @@ package as3.aeronaut.module
 	import as3.hv.core.utils.BitmapHelper;
 	import as3.hv.core.utils.StringHelper;
 	import as3.hv.core.net.ImageLoader;
+	import as3.hv.core.net.BinaryLoader;
 	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
@@ -54,7 +57,10 @@ package as3.aeronaut.module
 	import as3.aeronaut.objects.baseData.Language;
 	
 	import as3.aeronaut.print.IPrintable;
-		
+	
+	import as3.aeronaut.cadet.PilotImporter;
+	import as3.aeronaut.cadet.AbstractCadetImporter;
+	
 	/**
 	 * =========================================================================
 	 * CSWindowPilot
@@ -173,43 +179,41 @@ package as3.aeronaut.module
 					MouseEvent.MOUSE_DOWN,
 					changeSquadHandler
 				);
-
-// TODO split up into 2 pulldowns or 2 radio button groups
-/* new form elements			
-this.form.pdType
-this.form.pdSubType
-this.form.rbtnCanLevelUp
-this.form.txtStartEP
-this.form.btnImportCadet
-*/			
 			
-			//pilot type
-			/*
-			this.rbgType = new CSRadioButtonGroup();
-			this.rbgType.addMember(this.form.rbtnTypeHero,"hero");
-			this.rbgType.addMember(this.form.rbtnTypeSidekick,"sidekick");
-			this.rbgType.addMember(this.form.rbtnTypeGunner,"copilotgunner");
-			this.rbgType.addMember(this.form.rbtnTypeNPC,"npc");
-			
-			
-			
-			this.form.rbtnTypeHero.addEventListener(
+			//Type and subtype
+			this.form.pdType.setEmptySelectionText("", false);
+			this.form.pdType.addSelectionItem(
+						"Pilot", 
+						Pilot.TYPE_PILOT
+					);
+			this.form.pdType.addSelectionItem(
+						"Crew Member", 
+						Pilot.TYPE_CREW
+					);
+			this.form.pdType.addSelectionItem(
+						"NPC", 
+						Pilot.TYPE_NPC
+					);
+			this.form.pdType.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					typeChangedHandler
 				);
-			this.form.rbtnTypeSidekick.addEventListener(
+			this.form.pdSubType.setEmptySelectionText("", false);
+			this.form.pdSubType.addEventListener(
 					MouseEvent.MOUSE_DOWN,
 					typeChangedHandler
-				);
-			this.form.rbtnTypeGunner.addEventListener(
+				);	
+				
+			this.form.rbtnCanLevelUp.addEventListener(
 					MouseEvent.MOUSE_DOWN,
-					typeChangedHandler
+					canLevelHandler
 				);
-			this.form.rbtnTypeNPC.addEventListener(
-					MouseEvent.MOUSE_DOWN,
-					typeChangedHandler
-				);
-			*/
+		
+			this.form.txtStartEP.restrict = "0-9";
+				
+// TODO this.form.txtStartEP event listener (input and focus lost)
+		
+			
 			//gender
 			this.rbgGender = new CSRadioButtonGroup();
 			rbgGender.addMember(this.form.rbtnGenderMale,"male");
@@ -244,7 +248,16 @@ this.form.btnImportCadet
 // TODO this.form.pdLinkedTo
 
 // TODO add checkboxes for aircraft and zeppelin filters
-// TODO cadet import button			
+
+			this.form.btnImportCadet.setupTooltip(
+					Globals.myTooltip,
+					"Import CADET Pilot"
+				);
+			this.form.btnImportCadet.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					importCadetHandler
+				);
+				
 			//dirlists
 			this.updateDirLists();
 		}
@@ -269,12 +282,29 @@ this.form.btnImportCadet
 					MouseEvent.MOUSE_DOWN,
 					changeSquadHandler
 				);
-			// TODO dispose new form elements
 			this.form.btnAddEP.removeEventListener(
 					MouseEvent.MOUSE_DOWN,
 					clickAddEPHandler
 				);
 			
+			this.form.pdType.removeEventListener(
+					MouseEvent.MOUSE_DOWN,
+					typeChangedHandler
+				);
+			this.form.pdSubType.removeEventListener(
+					MouseEvent.MOUSE_DOWN,
+					typeChangedHandler
+				);	
+				
+			this.form.rbtnCanLevelUp.removeEventListener(
+					MouseEvent.MOUSE_DOWN,
+					canLevelHandler
+				);	
+			this.form.btnImportCadet.removeEventListener(
+					MouseEvent.MOUSE_DOWN,
+					importCadetHandler
+				);	
+				
 			this.form.myStatsBar.dispose();
 			this.form.myFeatBox.dispose();
 			this.form.myLanguageBox.dispose();
@@ -359,10 +389,13 @@ this.form.btnImportCadet
 			
 			this.form.txtName.text = this.myObject.getName();
 			
-			//TODO update for new form elements
-			//this.rbgType.setValue(this.myObject.getType());
-			//this.lastSelectedType = this.myObject.getType();
+			this.form.pdType.setActiveSelectionItem(this.myObject.getType());
+			this.lastSelectedType = this.myObject.getType();
 			this.updateGUIByType();
+			this.form.pdType.setActiveSelectionItem(this.myObject.getSubType());
+			this.lastSelectedSubType = this.myObject.getSubType();
+			this.updateGUIBySubType();
+			this.form.rbtnCanLevelUp.setSelected(this.myObject.canLevelUp());
 			
 			this.form.lblBailOutBonus.text = String(
 					this.myObject.getBailOutBonus()
@@ -419,15 +452,19 @@ this.form.btnImportCadet
 			this.form.myDescriptionBox.init(this);
 			this.form.myEquipmentBox.init(this);
 			
+			this.form.txtStartEP.text = this.myObject.getStartEP();
+			
+			// locked gui elements that are no
+			// longer changeable
 			if( this.myObject.getIsLocked() == true )
 			{
-//TODO update for new form elements
-		/*
-				this.form.rbtnTypeHero.setActive(false);
-				this.form.rbtnTypeSidekick.setActive(false);
-				this.form.rbtnTypeGunner.setActive(false);
-				this.form.rbtnTypeNPC.setActive(false);
-		*/
+				this.form.pdType.setActive(false);
+				this.form.pdSubType.setActive(false);
+				this.form.rbtnCanLevelUp.setActive(false);
+				this.form.txtStartEp.selectable = false;
+				this.form.txtStartEp.type = TextFieldType.DYNAMIC;
+			
+				
 				this.form.rbtnGenderMale.setActive(false);
 				this.form.rbtnGenderFemale.setActive(false);
 			}
@@ -525,9 +562,11 @@ this.form.btnImportCadet
 		public function updateObjectFromWindow():void
 		{
 			this.myObject.setName(this.form.txtName.text);
-			
-			// TODO
-			//this.myObject.setType(this.rbgType.getValue());
+	
+			this.myObject.setType(this.form.pdType.getIDForCurrentSelection());
+			this.myObject.setSubType(this.form.pdSubType.getIDForCurrentSelection());
+			this.myObject.setStartEP(int(this.form.txtStartEP.text));
+			this.myObject.setCanLevelUp(this.from.rbtnCanLevelUp.getIsSelected());
 			
 			this.myObject.setGender(this.rbgGender.getValue());
 			this.myObject.setHeight(
@@ -781,9 +820,18 @@ this.form.btnImportCadet
 		 */
 		public function getPilotType():String
 		{
-			// TODO
-			
-			return this.rbgType.getValue();
+			return this.form.pdType.getIDForCurrentSelection();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getPilotSubType
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getPilotSubType():String
+		{
+			return this.form.pdSubType.getIDForCurrentSelection();
 		}
 		
 		/**
@@ -847,37 +895,146 @@ this.form.btnImportCadet
 		 */
 		private function updateGUIByType()
 		{
+			this.form.pdSubType.clearSelectionItemList();
+			this.form.pdSubType.setEmptySelectionText("", false);
+			this.form.rbtnCanLevelUp.setSelected(false);
+			this.form.rbtnCanLevelUp.setActive(true);
+			this.form.pdLinkedTo.setActive(false);
+			
+			if( this.lastSelectedType == Pilot.TYPE_PILOT )
+			{
+				this.form.pdSubType.addSelectionItem(
+						"Ace Pilot", 
+						Pilot.SUBTYPE_ACE
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Hero", 
+						Pilot.SUBTYPE_HERO
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Wingman", 
+						Pilot.SUBTYPE_SIDEKICK
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Custom Pilot", 
+						Pilot.SUBTYPE_CUSTOM
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Zeppelin Captain", 
+						Pilot.SUBTYPE_CAPTAIN
+					);
+				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_HERO);
+				this.form.rbtnCanLevelUp.setSelected(true);
+				this.form.rbtnCanLevelUp.setActive(false);
+				
+			} else if( this.lastSelectedType == Pilot.TYPE_CREW ) {
+				this.form.pdSubType.addSelectionItem(
+						"Co-Pilot", 
+						Pilot.SUBTYPE_COPILOT
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Gunner", 
+						Pilot.SUBTYPE_GUNNER
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Bombardier", 
+						Pilot.SUBTYPE_BOMBARDIER
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Crew Chief", 
+						Pilot.SUBTYPE_CREWCHIEF
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Security Guard", 
+						Pilot.SUBTYPE_GUARD
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Load Master", 
+						Pilot.SUBTYPE_LOADMASTER
+					);
+				this.form.pdSubType.addSelectionItem(
+						"Loader", 
+						Pilot.SUBTYPE_LOADER
+					);
+				
+				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_COPILOT);
+				
+			} else if( this.lastSelectedType == Pilot.TYPE_NPC ) {
+				this.form.pdSubType.addSelectionItem(
+						"NPC", 
+						Pilot.SUBTYPE_NPC
+					);
+				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_NPC);
+				this.form.rbtnCanLevelUp.setActive(false);
+			} 
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * updateGUIBySubType
+		 * ---------------------------------------------------------------------
+		 */
+		private function updateGUIBySubType()
+		{
 			var pilotType:String = this.rbgType.getValue();
 
 			this.form.pdLinkedTo.clearSelection();
 			this.form.pdLinkedTo.setActive(false);
 			
+			this.intTotalEP = Pilot.BASE_EP_OTHER;
+			this.intCurrentEP = Pilot.BASE_EP_OTHER;
+			this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
+			this.form.txtStartEp.selectable = false;
+			this.form.txtStartEp.type = TextFieldType.DYNAMIC;
 			this.form.btnAddEP.setActive(true);
-// TODO add ace pilot and other subtypes
-/*
-			if( pilotType == Pilot.TYPE_HERO ) 
+			this.intMissionCount = 0;
+			
+			if( this.lastSelectedSubType == Pilot.SUBTYPE_ACE ) 
 			{
+				this.intTotalEP = Pilot.BASE_EP_ACE;
+				this.intCurrentEP = Pilot.BASE_EP_ACE;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_ACE);
+				this.intMissionCount = 5;
+				
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_HERO ) {
 				this.intTotalEP = Pilot.BASE_EP_HERO;
 				this.intCurrentEP = Pilot.BASE_EP_HERO;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_HERO);
 				
-			} else if( pilotType == Pilot.TYPE_SIDEKICK ) {
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_SIDEKICK ) {
 				this.intTotalEP = Pilot.BASE_EP_SIDEKICK;
 				this.intCurrentEP = Pilot.BASE_EP_SIDEKICK;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_SIDEKICK);
 				
-			} else if( pilotType == Pilot.TYPE_GUNNER ) {
-				this.intTotalEP = Pilot.BASE_EP_OTHER;
-				this.intCurrentEP = Pilot.BASE_EP_OTHER;
-								
-				this.form.pdLinkedTo.setActive(true);
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_CUSTOM ) {
+				
+				this.form.txtStartEp.selectable = true;
+				this.form.txtStartEp.type = TextFieldType.INPUT;
+				
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_CAPTAIN ) {
+				//captain starting EP left over CP from Zeppelin so we use the custom Start EP
+				this.form.txtStartEp.selectable = true;
+				this.form.txtStartEp.type = TextFieldType.INPUT;
+				// TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
+				// TODO set use in Zeppelin Checkbox
+			
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_BOMBARDIER
+					|| lastSelectedSubType == Pilot.SUBTYPE_CREWCHIEF
+					|| lastSelectedSubType == Pilot.SUBTYPE_LOADMASTER ) 
+			{
+				this.form.rbtnCanLevelUp.setSelected(true);
+				this.form.rbtnCanLevelUp.setActive(false);
 				this.form.btnAddEP.setActive(false);
-				
-			} else if( pilotType == Pilot.TYPE_NPC ) {
-				this.intTotalEP = Pilot.BASE_EP_OTHER;
-				this.intCurrentEP = Pilot.BASE_EP_OTHER;
-				
-				this.form.btnAddEP.setActive(false);
+				// TODO crew starting EP ????
+				// Pilot.SUBTYPE_COPILOT  SS 3 CO 3 NT 3 all other 1
+				// SUBTYPE_BOMBARDIER CO 3 DE ? SH ?
+				// SUBTYPE_GUNNER CO 3 DE 3 QD ?
+				// SUBTYPE_GUARD CO 3 DE 3 
+				// SUBTYPE_LOADER CO 3 all other 1
+				// SUBTYPE_CREWCHIEF CO 3 SH ?
+				// SUBTYPE_LOADMASTER CO 3 QD
 			}
-*/			
+
 			this.form.myStatsBar.init(this);
 			this.form.myFeatBox.init(this);
 			this.form.myLanguageBox.init(this);			
@@ -1046,20 +1203,99 @@ this.form.btnImportCadet
 		 */
 		private function typeChangedHandler(e:MouseEvent):void
 		{
-			// TODO also add a new function subtype changed Handler
-			
-			var rbtn:CSRadioButton = CSRadioButton(e.currentTarget);
-			if( !rbtn.getIsActive() 
-					|| this.lastSelectedType == this.rbgType.getValue() )
+			var pd:CSPullDown = CSPullDown(e.currentTarget);
+			if( !pd.getIsActive() )
 				return;
 			
-			this.lastSelectedType =  this.rbgType.getValue();
-			this.updateGUIByType();
+			if( pd == this.pdType )
+			{
+				if( lastSelectedType == pd.getIDForCurrentSelection() )
+					return;
+				this.lastSelectedType =  this.pd.getIDForCurrentSelection();
+				this.updateGUIByType();
+			}
+			if( pd == this.pdSubType )
+			{
+				if( lastSelectedSubType == pd.getIDForCurrentSelection() )
+					return;
+					
+				this.lastSelectedSubType =  this.pd.getIDForCurrentSelection();
+			}
+			this.updateGUIBySubType();
 				
 			this.form.myStatsBar.calcEP();
 			this.calcEP();
 				
 			this.validateForm();
+			this.setSaved(false);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * canLevelHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function canLevelHandler(e:MouseEvent):void
+		{
+			this.form.btnAddEP.setActive(
+					this.rbtnCanLevelUp.getIsSelected()
+				);
+			
+			// TODO this.form.pdLinkedTo.setActive(false);
+			
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * importCadetHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function importCadetHandler(e:MouseEvent):void
+		{
+			// abort import if window contains unsaved data 
+			// and the user wants to discard it.
+			if( !this.getIsSaved() )
+				if( !CSDialogs.changesNotSaved() )
+					return;
+			
+			var file:String = AbstractCadetImporter.selectImportCadetFile(
+					"Pilot",
+					"cdp"
+				);
+				
+			if( file == "false" )
+				return;
+				
+			var loader:BinaryLoader = new BinaryLoader(file);
+			loader.addEventListener(
+					Event.COMPLETE, 
+					cadetLoadedHandler
+				); 
+			loader.load();	
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * cadetLoadedHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function cadetLoadedHandler(e:Event):void
+		{
+			var loader:BinaryLoader = BinaryLoader(e.currentTarget);
+			var importer:PilotImporter = new PilotImporter(loader.getBytes());
+			
+			if ( !importer.parseBytes() )
+			{
+				AbstractCadetImporter.invalidFile(loader.getFilename());
+				return;
+			}
+			this.fileWasUpdated = false;
+			this.initFromPilot(importer.getPilot());
+			// every import is unsaved.
 			this.setSaved(false);
 		}
 		

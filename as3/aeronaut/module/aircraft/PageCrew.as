@@ -163,6 +163,8 @@ package as3.aeronaut.module.aircraft
 		 */
 		public function getWeight():int
 		{
+			
+// TODO loader crew costs weight			
 			return this.intWeight;
 		}
 		

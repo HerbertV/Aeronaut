@@ -69,6 +69,15 @@ package as3.aeronaut.objects
 		public static const SUBTYPE_LOADMASTER:String = "loadmaster";
 		public static const SUBTYPE_GUARD:String = "guard";
 		public static const SUBTYPE_LOADER:String = "loader";
+		public static const SUBTYPE_BOMBARDIER:String = "bombardier";
+		// TODO check if zeppelin crew types are needed.
+		// Zeppelin Bridge Crew:
+		// elevatorman, wheelman, radioman
+		// Zepp Mechanic
+		// hangar master + personel	
+		// siege gun operators 
+		// security chief 
+		// but also gunners and guards loadmaster
 		
 		// subtype for npc
 		public static const SUBTYPE_NPC:String = "npc";
