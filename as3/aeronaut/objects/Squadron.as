@@ -356,22 +356,20 @@ package as3.aeronaut.objects
 		{
 			var arr:Array = new Array();
 
-			if( ready )
+			for each( var xml:XML in myXML..squadronPriority ) 
 			{
-				for each( var xml:XML in myXML..squadronPriority ) 
-				{
-					var obj:Priority = new Priority(
-							xml.@ID, 
-							xml.@rank
-						);
-					arr.push(obj);
-				}
-				if( arr.length > 1 )
-					arr.sortOn(
-							"rank",
-							Array.CASEINSENSITIVE
-						);
+				var obj:Priority = new Priority(
+						xml.@ID, 
+						xml.@rank
+					);
+				arr.push(obj);
 			}
+			if( arr.length > 1 )
+				arr.sortOn(
+						"rank",
+						Array.CASEINSENSITIVE
+					);
+			
 			return arr;
 		}
 		

@@ -112,14 +112,16 @@ package as3.aeronaut.module.pilot
 			this.pdFeat.setActive(true);
 			
 			this.listFeat.clearList();
-			if( pilotType == Pilot.TYPE_GUNNER ) 
+			// TODO
+			/*
+			if( !obj.canLevelUp() ) 
 			{
 				this.btnAddFeat.setActive(false);
 				this.pdFeat.setActive(false);
 				this.pdFeat.clearSelection();
 				
 				return;
-			}
+			}*/
 			
 			var arrLF:Array = obj.getLearnedFeats();
 			var updateList:Boolean = false;

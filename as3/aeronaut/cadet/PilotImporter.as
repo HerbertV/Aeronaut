@@ -127,7 +127,7 @@ package as3.aeronaut.cadet
 			pilot.setDeadEye( uint("0x"+statsHex.charAt(3)) );
 			pilot.setSteadyHand( uint("0x"+statsHex.charAt(2)) );
 			pilot.setConstitution( uint("0x"+statsHex.charAt(1)) );
-			pilot.setQuickDraw( uint("0x"+statsHex.charAt(0)) );	
+			pilot.setQuickDraw( uint("0x"+statsHex.charAt(0)),0 );	
 		}
 		
 		/**
