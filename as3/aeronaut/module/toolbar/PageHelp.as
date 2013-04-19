@@ -40,11 +40,12 @@ package as3.aeronaut.module.toolbar
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
 	
-	// =========================================================================
-	// Class PageHelp
-	// =========================================================================
-	// The Help Page from our toolbar
-	//
+	/**
+	 * =========================================================================
+	 * Class PageHelp
+	 * =========================================================================
+	 * The Help Page from our toolbar
+	 */
 	public class PageHelp 
 			extends AbstractPage 
 	{
@@ -55,9 +56,11 @@ package as3.aeronaut.module.toolbar
 		private var myHelpLoader:HTMLLoader = null;
 		private var myProgressSymbol:IProgressSymbol = null;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function PageHelp()
 		{
 			super();

@@ -21,38 +21,39 @@
  */
 package as3.aeronaut.module.toolbar
 {
-	// MDM ZINC Lib
-	import mdm.*;
+	import flash.text.TextField;
 		
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
-	import as3.aeronaut.objects.RuleConfigs;
-	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
 	
+	import as3.aeronaut.module.CSToolbarBottom;
+	import as3.aeronaut.module.ICSToolbarBottom;
+	import as3.aeronaut.module.ICSWindow;
+	
 	/**
 	 * =========================================================================
-	 * Class PageOptions
+	 * Class PageAddCompany
 	 * =========================================================================
-	 * The Options Page from our toolbar
+	 * Page for adding a new custom company for airplanes and zeppelins
 	 */
-	public class PageOptions 
+	public class PageAddCompany
 			extends AbstractPage 
 	{
 		
 		// =====================================================================
 		// Variables
 		// =====================================================================
-		private var rbgRocketHPMass:CSRadioButtonGroup = null;
+		private var linkedWindow:ICSWindow = null;
 		
 		/**
 		 * =====================================================================
 		 * Constructor
 		 * =====================================================================
 		 */
-		public function PageOptions()
+		public function PageAddCompany()
 		{
 			super();
 		}
@@ -68,22 +69,20 @@ package as3.aeronaut.module.toolbar
 		 */
 		public function setup():void
 		{
-			this.rbgRocketHPMass = new CSRadioButtonGroup();
-			this.rbgRocketHPMass.addMember(
-					this.rbtnOfficialRocketHPMass,
-					RuleConfigs.USE_OFFICIAL
-				);
-			this.rbgRocketHPMass.addMember(
-					this.rbtnCustomRocketHPMass,
-					RuleConfigs.USE_CUSTOM
-				);
+// TODO setup inputs
+			/*
 			
-			this.btnSaveSettings.addEventListener(
+			this.btnOk.addEventListener(
 					MouseEvent.MOUSE_DOWN, 
-					clickSaveHandler
+					clickOkHandler
 				);
+			this.btnCancel.addEventListener(
+					MouseEvent.MOUSE_DOWN, 
+					clickCancelHandler
+				);
+			*/
 		}
-		
+	
 		/**
 		 * ---------------------------------------------------------------------
 		 * showPage
@@ -92,52 +91,43 @@ package as3.aeronaut.module.toolbar
 		override public function showPage():void
 		{
 			super.showPage();
-			
-			this.rbtnUsePilotFeats.setSelected(
-					Globals.myRuleConfigs.getIsPilotFeatsActive()
-				);
-			this.rbtnCheckMaxCharacteristics.setSelected(
-					Globals.myRuleConfigs.getIsMaxCharacteristicCheckActive()
-				);
-			
-			this.rbgRocketHPMass.setValue(
-					Globals.myRuleConfigs.usesRuleRocketHardpointMassreduction()
-				);
-			
-			this.rbtnPrintAircraftFlavorSheet.setSelected(
-					Globals.myRuleConfigs.getIsPrintingAircraftFlavorSheet()
-				);
+//TODO			
 		}
-		
+			
 		// =====================================================================
 		// EventHandler
 		// =====================================================================
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * clickSaveHandler
+		 * clickOkHandler
 		 * ---------------------------------------------------------------------
 		 * @param e
 		 */
-		private function clickSaveHandler(e:MouseEvent):void
+		private function clickOkHandler(e:MouseEvent):void
 		{
-			Globals.myRuleConfigs.setPilotFeatsActive(
-					this.rbtnUsePilotFeats.getIsSelected()
-				);
-			Globals.myRuleConfigs.setMaxCharacteristicCheckActive(
-					this.rbtnCheckMaxCharacteristics.getIsSelected()
-				);
-			
-			Globals.myRuleConfigs.useRuleRocketHardpointMassreduction(
-					this.rbgRocketHPMass.getValue()
-				);
-			
-			Globals.myRuleConfigs.setPrintingAircraftFlavorSheet(
-					this.rbtnPrintAircraftFlavorSheet.getIsSelected()
-				);
-			
-			Globals.myRuleConfigs.saveFile();
+//TODO	save new company
+//TODO force reload companies
+			//close toolbar
+			Globals.myToolbarBottom.changeState(0);
+			this.linkedWindow = null;
 		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * clickCancelHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function clickCancelHandler(e:MouseEvent):void
+		{
+			Globals.myToolbarBottom.changeState(0);
+			this.linkedPilotWindow = null;
+		}
+		
+		
+		
+		
 	
 	}
 }

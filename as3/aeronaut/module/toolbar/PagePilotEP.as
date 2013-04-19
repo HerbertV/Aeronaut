@@ -37,11 +37,12 @@ package as3.aeronaut.module.toolbar
 	import as3.aeronaut.module.ICSToolbarBottom;
 	import as3.aeronaut.module.ICSWindowPilot;
 	
-	// =========================================================================
-	// Class PagePilotEP
-	// =========================================================================
-	// The Pilot EP and Misson Page from our toolbar
-	//
+	/**
+	 * =========================================================================
+	 * Class PagePilotEP
+	 * =========================================================================
+	 * The Pilot EP and Misson Page from our toolbar
+	 */
 	public class PagePilotEP
 			extends AbstractPage 
 	{
@@ -51,9 +52,11 @@ package as3.aeronaut.module.toolbar
 		// =====================================================================
 		private var linkedPilotWindow:ICSWindowPilot = null;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function PagePilotEP()
 		{
 			super();
