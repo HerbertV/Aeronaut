@@ -106,13 +106,13 @@ package as3.aeronaut.module.pilot
 				return;
 				
 			var obj:Pilot = Pilot(this.winPilot.getObject());
-			var pilotType:String = this.winPilot.getPilotType();
 			
 			this.btnAddLanguage.setActive(true);
 			this.pdLanguage.setActive(true);
 					
 			this.listLanguage.clearList();
-			if( pilotType == Pilot.TYPE_GUNNER ) 
+			
+			if( !obj.canLevelUp() ) 
 			{
 				this.btnAddLanguage.setActive(false);
 				this.pdLanguage.setActive(false);
@@ -212,19 +212,13 @@ package as3.aeronaut.module.pilot
 		 */
 		public function calcEP():void
 		{
-			if( !Globals.myRuleConfigs.getIsPilotFeatsActive() )
+			if( !Globals.myRuleConfigs.getIsPilotFeatsActive()
+				|| !this.winPilot.canPilotLevelUp()	)
 			{
 				this.winPilot.setLanguageEP(0);
 				return;
 			}
 			
-			var pilotType:String = this.winPilot.getPilotType();
-			if( pilotType != Pilot.TYPE_HERO 
-					&& pilotType != Pilot.TYPE_SIDEKICK )
-			{
-				this.winPilot.setLanguageEP(0);
-				return;
-			}
 			var obj:Pilot = Pilot(this.winPilot.getObject());
 			var objcount:int = obj.getLearnedLanguages().length;
 			var listcount:int = this.listLanguage.getCountOfItems();

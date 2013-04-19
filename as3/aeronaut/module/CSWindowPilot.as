@@ -183,15 +183,15 @@ package as3.aeronaut.module
 			//Type and subtype
 			this.form.pdType.setEmptySelectionText("", false);
 			this.form.pdType.addSelectionItem(
-						"Pilot", 
+						Pilot.getTypeLabel(Pilot.TYPE_PILOT), 
 						Pilot.TYPE_PILOT
 					);
 			this.form.pdType.addSelectionItem(
-						"Crew Member", 
+						Pilot.getTypeLabel(Pilot.TYPE_CREW), 
 						Pilot.TYPE_CREW
 					);
 			this.form.pdType.addSelectionItem(
-						"NPC", 
+						Pilot.getTypeLabel(Pilot.TYPE_NPC), 
 						Pilot.TYPE_NPC
 					);
 			this.form.pdType.addEventListener(
@@ -566,7 +566,7 @@ package as3.aeronaut.module
 			this.myObject.setType(this.form.pdType.getIDForCurrentSelection());
 			this.myObject.setSubType(this.form.pdSubType.getIDForCurrentSelection());
 			this.myObject.setStartEP(int(this.form.txtStartEP.text));
-			this.myObject.setCanLevelUp(this.from.rbtnCanLevelUp.getIsSelected());
+			this.myObject.setCanLevelUp(this.form.rbtnCanLevelUp.getIsSelected());
 			
 			this.myObject.setGender(this.rbgGender.getValue());
 			this.myObject.setHeight(
@@ -836,6 +836,17 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * canPilotLevelUp
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function canPilotLevelUp():Boolean
+		{
+			return this.form.rbtnCanLevelUp.getIsSelected();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * setStatsEP
 		 * ---------------------------------------------------------------------
 		 * used by StatsBar to update the stats ep
@@ -904,23 +915,23 @@ package as3.aeronaut.module
 			if( this.lastSelectedType == Pilot.TYPE_PILOT )
 			{
 				this.form.pdSubType.addSelectionItem(
-						"Ace Pilot", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_ACE), 
 						Pilot.SUBTYPE_ACE
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Hero", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_HERO), 
 						Pilot.SUBTYPE_HERO
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Wingman", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_SIDEKICK), 
 						Pilot.SUBTYPE_SIDEKICK
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Custom Pilot", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_CUSTOM), 
 						Pilot.SUBTYPE_CUSTOM
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Zeppelin Captain", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_CAPTAIN), 
 						Pilot.SUBTYPE_CAPTAIN
 					);
 				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_HERO);
@@ -929,31 +940,31 @@ package as3.aeronaut.module
 				
 			} else if( this.lastSelectedType == Pilot.TYPE_CREW ) {
 				this.form.pdSubType.addSelectionItem(
-						"Co-Pilot", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_COPILOT), 
 						Pilot.SUBTYPE_COPILOT
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Gunner", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_GUNNER), 
 						Pilot.SUBTYPE_GUNNER
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Bombardier", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_BOMBARDIER), 
 						Pilot.SUBTYPE_BOMBARDIER
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Crew Chief", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_CREWCHIEF), 
 						Pilot.SUBTYPE_CREWCHIEF
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Security Guard", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_GUARD), 
 						Pilot.SUBTYPE_GUARD
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Load Master", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_LOADMASTER), 
 						Pilot.SUBTYPE_LOADMASTER
 					);
 				this.form.pdSubType.addSelectionItem(
-						"Loader", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_LOADER), 
 						Pilot.SUBTYPE_LOADER
 					);
 				
@@ -961,7 +972,7 @@ package as3.aeronaut.module
 				
 			} else if( this.lastSelectedType == Pilot.TYPE_NPC ) {
 				this.form.pdSubType.addSelectionItem(
-						"NPC", 
+						Pilot.getSubTypeLabel(Pilot.SUBTYPE_NPC), 
 						Pilot.SUBTYPE_NPC
 					);
 				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_NPC);
@@ -976,8 +987,6 @@ package as3.aeronaut.module
 		 */
 		private function updateGUIBySubType()
 		{
-			var pilotType:String = this.rbgType.getValue();
-
 			this.form.pdLinkedTo.clearSelection();
 			this.form.pdLinkedTo.setActive(false);
 			
@@ -1207,19 +1216,19 @@ package as3.aeronaut.module
 			if( !pd.getIsActive() )
 				return;
 			
-			if( pd == this.pdType )
+			if( pd == this.form.pdType )
 			{
 				if( lastSelectedType == pd.getIDForCurrentSelection() )
 					return;
-				this.lastSelectedType =  this.pd.getIDForCurrentSelection();
+				this.lastSelectedType =  pd.getIDForCurrentSelection();
 				this.updateGUIByType();
 			}
-			if( pd == this.pdSubType )
+			if( pd == this.form.pdSubType )
 			{
 				if( lastSelectedSubType == pd.getIDForCurrentSelection() )
 					return;
 					
-				this.lastSelectedSubType =  this.pd.getIDForCurrentSelection();
+				this.lastSelectedSubType =  pd.getIDForCurrentSelection();
 			}
 			this.updateGUIBySubType();
 				
@@ -1239,7 +1248,7 @@ package as3.aeronaut.module
 		private function canLevelHandler(e:MouseEvent):void
 		{
 			this.form.btnAddEP.setActive(
-					this.rbtnCanLevelUp.getIsSelected()
+					this.form.rbtnCanLevelUp.getIsSelected()
 				);
 			
 			// TODO this.form.pdLinkedTo.setActive(false);

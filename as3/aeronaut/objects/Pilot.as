@@ -128,6 +128,81 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * getTypeLabel
+		 * ---------------------------------------------------------------------
+		 * @param type
+		 *
+		 * @return
+		 */
+		public static function getTypeLabel(type:String):String
+		{
+			if( type == TYPE_PILOT )
+				return "Pilot";
+			
+			if( type == TYPE_CREW )
+				return "Crew Member";
+				
+			if( type == TYPE_NPC )
+				return "NPC";
+			
+			return "unknown type";
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getSubTypeLabel
+		 * ---------------------------------------------------------------------
+		 * @param stype
+		 *
+		 * @return
+		 */
+		public static function getSubTypeLabel(stype:String):String
+		{
+			if( stype == SUBTYPE_ACE )
+				return "Ace Pilot";
+			
+			if( stype == SUBTYPE_HERO )
+				return "Hero";
+			
+			if( stype == SUBTYPE_SIDEKICK )
+				return "Wingman";
+			
+			if( stype == SUBTYPE_CUSTOM )
+				return "Custom Pilot";
+			
+			if( stype == SUBTYPE_CAPTAIN )
+				return "Zeppelin Captain";
+			
+			if( stype == SUBTYPE_COPILOT )
+				return "Co-Pilot";
+			
+			if( stype == SUBTYPE_GUNNER )
+				return "Gunner";
+			
+			if( stype == SUBTYPE_CREWCHIEF )
+				return "Crew Chief";
+			
+			if( stype == SUBTYPE_LOADMASTER )
+				return "Load Master";
+			
+			if( stype == SUBTYPE_GUARD )
+				return "Security Guard";
+			
+			if( stype == SUBTYPE_LOADER )
+				return "Loader";
+			
+			if( stype == SUBTYPE_BOMBARDIER )
+				return "Bombardier";
+				
+			if( stype == SUBTYPE_NPC )
+				return "NPC";
+			
+			return "unknown subtype";
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * checkXML
 		 * ---------------------------------------------------------------------
 		 * @param xmldoc

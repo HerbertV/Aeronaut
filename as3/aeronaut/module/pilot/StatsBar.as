@@ -96,13 +96,14 @@ package as3.aeronaut.module.pilot
 		{
 			this.winPilot = win;
 			
+			var obj:Pilot = Pilot(this.winPilot.getObject());
 			var pilotType:String = this.winPilot.getPilotType();
 			var max:int = 10;
 			
 			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
 				max = 11;
 			
-			if( pilotType == Pilot.TYPE_GUNNER) 
+			if( pilotType != Pilot.TYPE_NPC && !obj.canLevelUp() ) 
 			{
 // TODO  if linked to is implemented use other pilot stats -1 
 				this.numStepNT.setupSteps(0, max, 0, 1);
@@ -120,8 +121,6 @@ package as3.aeronaut.module.pilot
 				this.numStepQD.setActive(false);
 				
 			} else {
-				var obj:Pilot = Pilot(this.winPilot.getObject());
-				
 				this.initActiveStatStepper(this.numStepNT, obj.getNaturalTouch(), max);
 				this.initActiveStatStepper(this.numStepSS, obj.getSixthSense(), max);
 				this.initActiveStatStepper(this.numStepDE, obj.getDeadEye(), max);
@@ -328,12 +327,10 @@ package as3.aeronaut.module.pilot
 		 */
 		public function calcEP():void
 		{
-			var pilotType:String = this.winPilot.getPilotType();
 			var obj:Pilot = Pilot(this.winPilot.getObject());
 			var ep:int = 0;
 			
-			if( pilotType != Pilot.TYPE_HERO 
-					&& pilotType != Pilot.TYPE_SIDEKICK )
+			if( !obj.canLevelUp() )
 			{
 				this.winPilot.setStatsEP(0);
 				return;

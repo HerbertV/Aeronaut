@@ -146,7 +146,8 @@ package as3.aeronaut.print.pilot
 				this.movPrintFotoContainer.addChild(foto);
 			}
 				
-			if( obj.getType() != Pilot.TYPE_GUNNER ) 
+			if( obj.getType() == Pilot.TYPE_NPC
+					|| obj.canLevelUp() ) 
 			{
 				this.lblNT.htmlText = "<b>"+obj.getNaturalTouch()+"</b>";
 				this.lblSS.htmlText = "<b>"+obj.getSixthSense()+"</b>";
@@ -170,17 +171,7 @@ package as3.aeronaut.print.pilot
 				this.lblQD.htmlText = "";
 			}
 			
-			if( obj.getType() == Pilot.TYPE_HERO )
-			{
-				this.lblType.text = "Hero";
-			} else if( obj.getType() == Pilot.TYPE_SIDEKICK ) {
-				this.lblType.text = "Sidekick";
-			} else if( obj.getType() == Pilot.TYPE_GUNNER ) {
-				this.lblType.text = "Co-Pilot/Gunner";
-			} else if( obj.getType() == Pilot.TYPE_NPC ) {
-				this.lblType.text = "NPC";
-			}
-			
+			this.lblType.text = Pilot.getSubTypeLabel(obj.getSubType());
 			this.lblGender.text = obj.getGender();
 			this.lblHeight.text = CSFormatter.formatFeetInch(
 					obj.getHeight()[0],
@@ -193,7 +184,8 @@ package as3.aeronaut.print.pilot
 			this.lblEquipment.text = obj.getEquipment();
 			this.lblDescription.text = obj.getDescription();
 			
-			if( obj.getType() != Pilot.TYPE_GUNNER ) 
+			if( obj.canLevelUp() 
+					|| obj.getType() == Pilot.TYPE_NPC ) 
 			{
 				this.lblKills.text = String(obj.getKills());
 				this.lblMissions.text = String(obj.getMissionCount());

@@ -67,11 +67,13 @@ package as3.aeronaut.module
 		public static const TBSTATE_HELP:int = 1;
 		public static const TBSTATE_ADDEP:int = 2;
 		public static const TBSTATE_OPTIONS:int = 3;
+		public static const TBSTATE_ADDCOMPANY:int = 4;
 		
 		public static const HEADLINE_CLOSED:String = "AE-Tool-Book";
 		public static const HEADLINE_HELP:String = "Help";
 		public static const HEADLINE_ADDEP:String = "Add Experience and Mission Update";
 		public static const HEADLINE_OPTIONS:String = "Options";
+		public static const HEADLINE_ADDCOMPANY:String = "Add new Company";
 		
 		// =====================================================================
 		// Variables
@@ -232,6 +234,7 @@ package as3.aeronaut.module
 			this.tbPageHelp.visible = false;
 			this.tbPageOptions.visible = false;
 			this.tbPagePilotEP.visible = false;
+// TODO add company page
 		}
 		
 		/**
@@ -281,7 +284,7 @@ package as3.aeronaut.module
 							+ HEADLINE_OPTIONS + "</b>";
 					this.tbPageOptions.showPage();
 					break;
-					
+// TODO add company page					
 				default:
 					break;
 			}

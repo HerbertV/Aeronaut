@@ -181,14 +181,15 @@ package as3.aeronaut.print.aircraft
 			strQD = strQD + "</b>";
 			this.lblQD.htmlText = strQD;
 			
-			var gunner:Pilot = null;
+			// copilot/gunner for heavy fighters
+			var copilot:Pilot = null;
 			if( SheetAircraft(this.mySheet).getCrew().length > 0 )
-				gunner = Pilot(SheetAircraft(this.mySheet).getCrew()[0]);
+				copilot = Pilot(SheetAircraft(this.mySheet).getCrew()[0]);
 			
 			this.lblPilotName.text = pilot.getName();
 		
-			if( gunner != null ) {
-				this.lblPilotName.appendText("\nCo-pilot: " + gunner.getName()); 
+			if( copilot != null ) {
+				this.lblPilotName.appendText("\nCo-pilot: " + copilot.getName()); 
 			} else {
 				this.lblPilotName.y = 89;
 			}
