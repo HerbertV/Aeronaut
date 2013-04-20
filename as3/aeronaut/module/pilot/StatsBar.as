@@ -35,6 +35,10 @@ package as3.aeronaut.module.pilot
 	
 	import as3.aeronaut.module.CSWindowPilot;
 	
+	import as3.hv.core.console.Console;
+	import as3.hv.core.console.DebugLevel;
+	
+	
 	
 	// =========================================================================
 	// StatsBar
@@ -103,7 +107,8 @@ package as3.aeronaut.module.pilot
 			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
 				max = 11;
 			
-			if( pilotType != Pilot.TYPE_NPC && !obj.canLevelUp() ) 
+			if( pilotType != Pilot.TYPE_NPC 
+					&& !this.winPilot.canPilotLevelUp() ) 
 			{
 // TODO  if linked to is implemented use other pilot stats -1 
 				this.numStepNT.setupSteps(0, max, 0, 1);
@@ -330,7 +335,7 @@ package as3.aeronaut.module.pilot
 			var obj:Pilot = Pilot(this.winPilot.getObject());
 			var ep:int = 0;
 			
-			if( !obj.canLevelUp() )
+			if( !winPilot.canPilotLevelUp() )
 			{
 				this.winPilot.setStatsEP(0);
 				return;
@@ -368,6 +373,7 @@ package as3.aeronaut.module.pilot
 						- obj.getQuickDraw()[1] )
 					* 10
 				);
+				
 			// update window
 			this.winPilot.setStatsEP(ep);
 		}

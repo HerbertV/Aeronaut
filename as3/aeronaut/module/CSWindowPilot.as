@@ -992,9 +992,9 @@ package as3.aeronaut.module
 			
 			this.intTotalEP = Pilot.BASE_EP_OTHER;
 			this.intCurrentEP = Pilot.BASE_EP_OTHER;
+			this.form.txtStartEP.selectable = false;
+			this.form.txtStartEP.type = TextFieldType.DYNAMIC;
 			this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
-			this.form.txtStartEp.selectable = false;
-			this.form.txtStartEp.type = TextFieldType.DYNAMIC;
 			this.form.btnAddEP.setActive(true);
 			this.intMissionCount = 0;
 			
@@ -1016,14 +1016,13 @@ package as3.aeronaut.module
 				this.form.txtStartEP.text = String(Pilot.BASE_EP_SIDEKICK);
 				
 			} else if( lastSelectedSubType == Pilot.SUBTYPE_CUSTOM ) {
-				
-				this.form.txtStartEp.selectable = true;
-				this.form.txtStartEp.type = TextFieldType.INPUT;
+				this.form.txtStartEP.selectable = true;
+				this.form.txtStartEP.type = TextFieldType.INPUT;
 				
 			} else if( lastSelectedSubType == Pilot.SUBTYPE_CAPTAIN ) {
 				//captain starting EP left over CP from Zeppelin so we use the custom Start EP
-				this.form.txtStartEp.selectable = true;
-				this.form.txtStartEp.type = TextFieldType.INPUT;
+				this.form.txtStartEP.selectable = true;
+				this.form.txtStartEP.type = TextFieldType.INPUT;
 				// TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
 				// TODO set use in Zeppelin Checkbox
 			

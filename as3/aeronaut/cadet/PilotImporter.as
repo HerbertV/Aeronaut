@@ -100,6 +100,7 @@ package as3.aeronaut.cadet
 			pilot.setPlanename(parseString());
 			// hero or sidekick
 			pilot.setType(Pilot.TYPE_PILOT);
+//FIXME subtype is not correct			
 			pilot.setSubType(PTYPE[bytes.readByte()]);
 			
 			this.parseSkills();

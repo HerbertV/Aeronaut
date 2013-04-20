@@ -8,6 +8,12 @@ Change Log -- Version 1.1.0 alpha 03
 ================================================================================
 for reference numbers see https://github.com/HerbertV/Aeronaut/issues
 
+Version - 1.1.0 alpha 04: 
+--------------------------------------------------------------------------------
+- 	added new Pilot types/subtypes (Issue #26 and #35) and updated pilot file
+	version to 2.1
+- 	added pilot importer for CADET files.
+
 
 Version - 1.1.0 alpha 03: 
 --------------------------------------------------------------------------------

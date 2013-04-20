@@ -232,7 +232,7 @@ package as3.aeronaut.objects
 				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
 					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="false">
 						<name>New Pilot</name>
-						<stats naturalTouch="1" sixthSense="1" deadEye="1" steadyHand="1" constitution="3" quickDraw="1,0" bailOutBonus="0" />
+						<stats naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" bailOutBonus="0" />
 						<appearance gender="male" height="5,11" weight="130" hairColor="" eyeColor="" srcFoto=""/>
 						<country ID=""/>
 						<squadron ID=""/>
