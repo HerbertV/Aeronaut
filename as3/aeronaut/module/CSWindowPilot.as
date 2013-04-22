@@ -393,7 +393,7 @@ package as3.aeronaut.module
 			this.form.pdType.setActiveSelectionItem(this.myObject.getType());
 			this.lastSelectedType = this.myObject.getType();
 			this.updateGUIByType();
-			this.form.pdType.setActiveSelectionItem(this.myObject.getSubType());
+			this.form.pdSubType.setActiveSelectionItem(this.myObject.getSubType());
 			this.lastSelectedSubType = this.myObject.getSubType();
 			this.updateGUIBySubType();
 			this.form.rbtnCanLevelUp.setSelected(this.myObject.canLevelUp());
@@ -453,7 +453,6 @@ package as3.aeronaut.module
 			this.form.myDescriptionBox.init(this);
 			this.form.myEquipmentBox.init(this);
 			
-			this.form.txtStartEP.text = this.myObject.getStartEP();
 			
 			// locked gui elements that are no
 			// longer changeable
@@ -462,23 +461,24 @@ package as3.aeronaut.module
 				this.form.pdType.setActive(false);
 				this.form.pdSubType.setActive(false);
 				this.form.rbtnCanLevelUp.setActive(false);
-				this.form.txtStartEp.selectable = false;
-				this.form.txtStartEp.type = TextFieldType.DYNAMIC;
-			
+				this.form.txtStartEP.text = this.myObject.getStartEP();
+				this.form.txtStartEP.selectable = false;
+				this.form.txtStartEP.type = TextFieldType.DYNAMIC;
 				
 				this.form.rbtnGenderMale.setActive(false);
 				this.form.rbtnGenderFemale.setActive(false);
 			}
 			
 // TODO this.form.pdLinkedTo
-			
+// TODO use for zepp and aircraft rbtns
+
 			this.intMissionCount = this.myObject.getMissionCount();
 			this.intKillCount = this.myObject.getKills();
 			this.intCraftLostCount = this.myObject.getCraftLost();
 		
 			this.intTotalEP = this.myObject.getTotalEP();
 			this.intCurrentEP = this.myObject.getCurrentEP();
-			
+						
 			this.form.myFeatBox.calcEP();
 			this.form.myLanguageBox.calcEP();
 			this.form.myStatsBar.calcEP();
@@ -1006,36 +1006,36 @@ package as3.aeronaut.module
 				this.form.txtStartEP.text = String(Pilot.BASE_EP_ACE);
 				this.intMissionCount = 5;
 				
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_HERO ) {
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_HERO ) {
 				this.intTotalEP = Pilot.BASE_EP_HERO;
 				this.intCurrentEP = Pilot.BASE_EP_HERO;
 				this.form.txtStartEP.text = String(Pilot.BASE_EP_HERO);
 				
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_SIDEKICK ) {
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_SIDEKICK ) {
 				this.intTotalEP = Pilot.BASE_EP_SIDEKICK;
 				this.intCurrentEP = Pilot.BASE_EP_SIDEKICK;
 				this.form.txtStartEP.text = String(Pilot.BASE_EP_SIDEKICK);
 				
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_CUSTOM ) {
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_CUSTOM ) {
 				this.form.txtStartEP.selectable = true;
 				this.form.txtStartEP.type = TextFieldType.INPUT;
 				
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_CAPTAIN ) {
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_CAPTAIN ) {
 				//captain starting EP left over CP from Zeppelin so we use the custom Start EP
 				this.form.txtStartEP.selectable = true;
 				this.form.txtStartEP.type = TextFieldType.INPUT;
 // TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
 // TODO set use in Zeppelin Checkbox
 			
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_BOMBARDIER
-					|| lastSelectedSubType == Pilot.SUBTYPE_CREWCHIEF
-					|| lastSelectedSubType == Pilot.SUBTYPE_LOADMASTER ) 
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_BOMBARDIER
+					|| this.lastSelectedSubType == Pilot.SUBTYPE_CREWCHIEF
+					|| this.lastSelectedSubType == Pilot.SUBTYPE_LOADMASTER ) 
 			{
 				this.form.rbtnCanLevelUp.setSelected(true);
 				this.form.rbtnCanLevelUp.setActive(false);
 				
-			} else if ( lastSelectedSubType == Pilot.SUBTYPE_COPILOT
-					|| lastSelectedSubType == Pilot.UBTYPE_GUNNER ) 
+			} else if ( this.lastSelectedSubType == Pilot.SUBTYPE_COPILOT
+					|| this.lastSelectedSubType == Pilot.SUBTYPE_GUNNER ) 
 			{
 				// there are 2 types of co-pilots 
 				// the one from cargos/bombes who can level
@@ -1046,15 +1046,17 @@ package as3.aeronaut.module
 				this.form.rbtnCanLevelUp.setSelected(true);
 				this.form.rbtnCanLevelUp.setActive(true);
 				
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_LOADER ) {
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_LOADER ) {
 				this.form.rbtnCanLevelUp.setSelected(false);
 				this.form.rbtnCanLevelUp.setActive(false);
 				this.form.pdLinkedTo.setActive(true);
 			
-			} else if( lastSelectedSubType == Pilot.SUBTYPE_GUARD ) {
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_GUARD ) {
 				this.form.rbtnCanLevelUp.setSelected(true);
 				this.form.rbtnCanLevelUp.setActive(true);
 			}
+			
+// TODO maybe Loader and Guard as generic NPC (see behind the crimson veil)			
 
 // TODO crew starting EP above ????
 			// Pilot.SUBTYPE_COPILOT  SS 3 CO 3 NT 3 all other 1

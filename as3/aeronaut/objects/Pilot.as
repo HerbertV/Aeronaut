@@ -352,7 +352,7 @@ package as3.aeronaut.objects
 			this.setUsedForZeppelins(false);
 			
 			// add new stats tag
-			myXML.insertChildAfter(myXML.name[0], <stats />);
+			myXML.pilot.insertChildAfter(myXML.pilot.name[0], <stats />);
 			// move stats to the new stats tag
 			this.setNaturalTouch(int(myXML.pilot.@naturalTouch));
 			this.setSixthSense(int(myXML.pilot.@sixthSense));
@@ -387,6 +387,13 @@ package as3.aeronaut.objects
 				this.setStartEP(BASE_EP_SIDEKICK);
 			else
 				this.setStartEP(BASE_EP_OTHER);
+				
+			Console.getInstance().writeln(
+				"XML after update:", 
+				DebugLevel.INFO, 
+				StringHelper.replaceHTMLbrackets(this.myXML.toString())
+			);
+			
 		}
 		
 		/**
@@ -1222,7 +1229,7 @@ package as3.aeronaut.objects
 		 */
 		public function isUsedForAircrafts():Boolean 
 		{
-			if( myXML.pilot.useForAircrafts == "false" )
+			if( myXML.pilot.@useForAircrafts == "false" )
 				return false;
 				
 			return true;
@@ -1236,7 +1243,7 @@ package as3.aeronaut.objects
 		 */
 		public function setUsedForAircrafts(val:Boolean)
 		{
-			myXML.pilot.useForAircrafts = val;
+			myXML.pilot.@useForAircrafts = val;
 		}
 	
 		/**
@@ -1247,7 +1254,7 @@ package as3.aeronaut.objects
 		 */
 		public function isUsedForZeppelins():Boolean 
 		{
-			if( myXML.pilot.useForZeppelins == "false" )
+			if( myXML.pilot.@useForZeppelins == "false" )
 				return false;
 				
 			return true;
@@ -1261,7 +1268,7 @@ package as3.aeronaut.objects
 		 */
 		public function setUsedForZeppelins(val:Boolean)
 		{
-			myXML.pilot.useForZeppelins = val;
+			myXML.pilot.@useForZeppelins = val;
 		}
 
 	}

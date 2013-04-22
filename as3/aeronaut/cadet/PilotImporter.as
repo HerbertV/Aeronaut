@@ -98,10 +98,11 @@ package as3.aeronaut.cadet
 			// squadname is skipped
 			parseString();
 			pilot.setPlanename(parseString());
+			
 			// hero or sidekick
 			pilot.setType(Pilot.TYPE_PILOT);
-//FIXME subtype is not correct			
-			pilot.setSubType(PTYPE[bytes.readByte()]);
+			var st:int = bytes.readByte();
+			pilot.setSubType( PTYPE[(st-1)] );
 			
 			this.parseSkills();
 			
