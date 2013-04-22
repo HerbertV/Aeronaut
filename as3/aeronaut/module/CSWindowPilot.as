@@ -30,6 +30,8 @@ package as3.aeronaut.module
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TextEvent;
+	import flash.events.FocusEvent;
 	
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
@@ -210,9 +212,14 @@ package as3.aeronaut.module
 				);
 		
 			this.form.txtStartEP.restrict = "0-9";
-				
-// TODO this.form.txtStartEP event listener (input and focus lost)
-		
+			this.form.txtStartEP.addEventListener(
+					TextEvent.TEXT_INPUT, 
+					startEPInputHandler
+				);	
+			this.form.txtStartEP.addEventListener(
+					FocusEvent.FOCUS_OUT, 
+					startEPFocusHandler
+				);	
 			
 			//gender
 			this.rbgGender = new CSRadioButtonGroup();
@@ -247,8 +254,6 @@ package as3.aeronaut.module
 			
 			this.form.pdLinkedTo.setEmptySelectionText("not linked", true);
 // TODO this.form.pdLinkedTo
-
-// TODO add checkboxes for aircraft and zeppelin filters
 
 			this.form.btnImportCadet.setupTooltip(
 					Globals.myTooltip,
@@ -312,6 +317,15 @@ package as3.aeronaut.module
 			this.form.myDescriptionBox.dispose();
 			this.form.myEquipmentBox.dispose();
 			
+			this.form.txtStartEP.removeEventListener(
+					TextEvent.TEXT_INPUT, 
+					startEPInputHandler
+				);	
+			this.form.txtStartEP.removeEventListener(
+					FocusEvent.FOCUS_OUT, 
+					startEPFocusHandler
+				);
+				
 			super.dispose();
 		}
 		
@@ -470,7 +484,12 @@ package as3.aeronaut.module
 			}
 			
 // TODO this.form.pdLinkedTo
-// TODO use for zepp and aircraft rbtns
+			this.form.rbtnUsedForAircrafts.setSelected(
+					this.myObject.isUsedForAircrafts()
+				);
+			this.form.rbtnUsedForZeppelins.setSelected(
+					this.myObject.isUsedForZeppelins()
+				);
 
 			this.intMissionCount = this.myObject.getMissionCount();
 			this.intKillCount = this.myObject.getKills();
@@ -625,7 +644,14 @@ package as3.aeronaut.module
 			this.myObject.setEquipment(
 					this.form.myEquipmentBox.txtEquipment.text
 				);
-			
+				
+			this.myObject.setUsedForAircrafts(
+					this.form.rbtnUsedForAircrafts.getIsSelected()
+				);	
+			this.myObject.setUsedForZeppelins(
+					this.form.rbtnUsedForZeppelins.getIsSelected()
+				);	
+				
 // TODO this.form.pdLinkedTo
 		}
 		
@@ -1511,6 +1537,63 @@ package as3.aeronaut.module
 				return;
 			
 			nl.load();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * startEPInputHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function startEPInputHandler(e:TextEvent):void
+		{
+			var numExp:RegExp = /[0-9]/;
+            // default handling gets the new digit after
+			// updateNewEp was called so we need to handle 
+			// the complete input by our selfs.
+			e.preventDefault();  
+
+			var targetField:TextField = (e.target as TextField);
+			
+			if( !numExp.test(e.text) )
+				return;
+				
+			if( targetField.text.length >= 3 )
+			{
+				targetField.text = targetField.text.substring(0,3); 
+				return;
+			}
+			if( targetField.text == "0" )
+			{
+				targetField.text = e.text;
+			} else {
+				var lastcaret:int = targetField.caretIndex;
+				var txtlen:int = targetField.text.length;
+				var beforeCaret:String = targetField.text.substring(0,lastcaret);
+				var afterCaret:String = targetField.text.substring(lastcaret,txtlen);
+				
+				targetField.text = beforeCaret + e.text + afterCaret;
+				targetField.setSelection(lastcaret+1,lastcaret+1);
+			}
+			
+			this.intTotalEP = int(targetField.text);
+			this.intCurrentEP = this.intTotalEP;
+			this.calcEP();
+			this.validateForm();
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * startEPFocusHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function startEPFocusHandler(e:FocusEvent):void
+		{
+			this.intTotalEP = int((e.target as TextField).text);
+			this.intCurrentEP = this.intTotalEP;
+			this.calcEP();
+			this.validateForm();
 		}
 
 	}
