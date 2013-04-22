@@ -121,7 +121,7 @@ package as3.aeronaut.cadet
 		 */
 		private function parseSkills():void
 		{
-			var statsHex:String = bytes.readInt().toString(16)
+			var statsHex:String = bytes.readInt().toString(16);
 			
 			pilot.setNaturalTouch( uint("0x"+statsHex.charAt(5)) );
 			pilot.setSixthSense( uint("0x"+statsHex.charAt(4)) );

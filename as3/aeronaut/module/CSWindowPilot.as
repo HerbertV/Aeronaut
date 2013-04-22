@@ -245,6 +245,7 @@ package as3.aeronaut.module
 					clickFotoButtonHandler
 				);
 			
+			this.form.pdLinkedTo.setEmptySelectionText("not linked", true);
 // TODO this.form.pdLinkedTo
 
 // TODO add checkboxes for aircraft and zeppelin filters
@@ -456,7 +457,7 @@ package as3.aeronaut.module
 			
 			// locked gui elements that are no
 			// longer changeable
-			if( this.myObject.getIsLocked() == true )
+			if( this.myObject.getIsLocked() )
 			{
 				this.form.pdType.setActive(false);
 				this.form.pdSubType.setActive(false);
@@ -1023,8 +1024,8 @@ package as3.aeronaut.module
 				//captain starting EP left over CP from Zeppelin so we use the custom Start EP
 				this.form.txtStartEP.selectable = true;
 				this.form.txtStartEP.type = TextFieldType.INPUT;
-				// TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
-				// TODO set use in Zeppelin Checkbox
+// TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
+// TODO set use in Zeppelin Checkbox
 			
 			} else if( lastSelectedSubType == Pilot.SUBTYPE_BOMBARDIER
 					|| lastSelectedSubType == Pilot.SUBTYPE_CREWCHIEF
@@ -1032,17 +1033,38 @@ package as3.aeronaut.module
 			{
 				this.form.rbtnCanLevelUp.setSelected(true);
 				this.form.rbtnCanLevelUp.setActive(false);
-				this.form.btnAddEP.setActive(false);
-				// TODO crew starting EP ????
-				// Pilot.SUBTYPE_COPILOT  SS 3 CO 3 NT 3 all other 1
-				// SUBTYPE_BOMBARDIER CO 3 DE ? SH ?
-				// SUBTYPE_GUNNER CO 3 DE 3 QD ?
-				// SUBTYPE_GUARD CO 3 DE 3 
-				// SUBTYPE_LOADER CO 3 all other 1
-				// SUBTYPE_CREWCHIEF CO 3 SH ?
-				// SUBTYPE_LOADMASTER CO 3 QD
+				
+			} else if ( lastSelectedSubType == Pilot.SUBTYPE_COPILOT
+					|| lastSelectedSubType == Pilot.UBTYPE_GUNNER ) 
+			{
+				// there are 2 types of co-pilots 
+				// the one from cargos/bombes who can level
+				// and the other from heavy fighters who is linked to 
+				// its pilot
+				// same is with gunners the nose gunner of a bomber
+				// can level but all other gunners cannot level
+				this.form.rbtnCanLevelUp.setSelected(true);
+				this.form.rbtnCanLevelUp.setActive(true);
+				
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_LOADER ) {
+				this.form.rbtnCanLevelUp.setSelected(false);
+				this.form.rbtnCanLevelUp.setActive(false);
+				this.form.pdLinkedTo.setActive(true);
+			
+			} else if( lastSelectedSubType == Pilot.SUBTYPE_GUARD ) {
+				this.form.rbtnCanLevelUp.setSelected(true);
+				this.form.rbtnCanLevelUp.setActive(true);
 			}
 
+// TODO crew starting EP above ????
+			// Pilot.SUBTYPE_COPILOT  SS 3 CO 3 NT 3 all other 1
+			// SUBTYPE_BOMBARDIER CO 3 DE ? SH ?
+			// SUBTYPE_GUNNER CO 3 DE 3 QD ?
+			// SUBTYPE_GUARD CO 3 DE 3 
+			// SUBTYPE_LOADER CO 3 all other 1
+			// SUBTYPE_CREWCHIEF CO 3 SH ?
+			// SUBTYPE_LOADMASTER CO 3 QD
+			
 			this.form.myStatsBar.init(this);
 			this.form.myFeatBox.init(this);
 			this.form.myLanguageBox.init(this);			
