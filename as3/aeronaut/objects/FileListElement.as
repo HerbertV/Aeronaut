@@ -24,6 +24,7 @@ package as3.aeronaut.objects
 	// =========================================================================
 	// FileListElement
 	// =========================================================================
+	// obsolete will be replaced by XMLFileListElement
 	// 
 	public class FileListElement
 	{

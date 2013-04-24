@@ -174,11 +174,10 @@ package as3.aeronaut.print.aircraft
 		 */
 		private function initCoPilot()
 		{
-			// TODO load copilot
-			//var pilot:Pilot = SheetAircraft(this.mySheet).getPilot();
+			var p:Pilot = SheetAircraft(this.mySheet).getCoPilot();
 			
-			//if( pilot == null )
-			//{
+			if( p == null )
+			{
 				this.lblCoPilotName.text = "";
 				this.lblCoPilotNT.htmlText = "";
 				this.lblCoPilotSS.htmlText = "";
@@ -186,23 +185,22 @@ package as3.aeronaut.print.aircraft
 				this.lblCoPilotSH.htmlText = "";
 				this.lblCoPilotCO.htmlText = "";
 				this.lblCoPilotQD.htmlText = "";
-			//	return;
-			//}
-			/*
+				return;
+			}
+			
 			this.lblCoPilotName.text = "";
-			this.lblCoPilotNT.htmlText = "<b>" + pilot.getNaturalTouch() + "</b>";
-			this.lblCoPilotSS.htmlText = "<b>" + pilot.getSixthSense() + "</b>";
-			this.lblCoPilotDE.htmlText = "<b>" + pilot.getDeadEye() + "</b>";
-			this.lblCoPilotSH.htmlText = "<b>" + pilot.getSteadyHand() + "</b>";
-			this.lblCoPilotCO.htmlText = "<b>" + pilot.getConstitution() + "</b>";
+			this.lblCoPilotNT.htmlText = "<b>" + p.getNaturalTouch() + "</b>";
+			this.lblCoPilotSS.htmlText = "<b>" + p.getSixthSense() + "</b>";
+			this.lblCoPilotDE.htmlText = "<b>" + p.getDeadEye() + "</b>";
+			this.lblCoPilotSH.htmlText = "<b>" + p.getSteadyHand() + "</b>";
+			this.lblCoPilotCO.htmlText = "<b>" + p.getConstitution() + "</b>";
 				
-			var strQD:String = "<b>"+ pilot.getQuickDraw()[0];
-			if( pilot.getQuickDraw()[1] > 0 ) 
-				strQD = strQD + "." + pilot.getQuickDraw()[1];
+			var strQD:String = "<b>"+ p.getQuickDraw()[0];
+			if( p.getQuickDraw()[1] > 0 ) 
+				strQD = strQD + "." + p.getQuickDraw()[1];
 				
 			strQD = strQD + "</b>";
 			this.lblCoPilotQD.htmlText = strQD;
-			*/
 		}
 		
 		/**

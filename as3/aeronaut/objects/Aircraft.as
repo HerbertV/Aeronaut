@@ -52,11 +52,21 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Variables
 		// =====================================================================
+		// all these files are not save with the aircraft
+		// you have to assign them before printing.
 		private var myLoadoutFile:String = "";
+		// the pilot
 		private var myPilotFile:String = "";
-// TODO new handling for additional crew 
-		private var myGunnerFile:String = "";
-				
+		// the rest of the crew
+		private var myCoPilotFile:String = "";
+		private var myCrewChiefFile:String = "";
+		private var myLoadMasterFile:String = "";
+		private var myBombardierFile:String = "";
+		// myGunnerFiles[0] is the nose gunner
+		private var myGunnerFiles:Array = new Array("","","","","","");
+		private var myGuardFiles:Array = new Array("","","","","","");
+		private var myLoaderFiles:Array = new Array("","","","","","","","");
+		
 		/**
 		 * =====================================================================
 		 * Contructor
@@ -136,6 +146,8 @@ package as3.aeronaut.objects
 		public function loadFile(filename:String):void
 		{
 			this.myFilename = filename;
+			
+// TODO switch to new as3.hv.zinc.z3.xml.XMLProcessorRW		
 			var loadedxml:XML = XMLProcessor.loadXML(filename);
 			
 			if( Aircraft.checkXML(loadedxml) ) 
@@ -255,24 +267,164 @@ package as3.aeronaut.objects
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getGunnerFile
+		 * getCoPilotFile
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getGunnerFile():String 
+		public function getCoPilotFile():String 
 		{
-			return myGunnerFile;
+			return myCoPilotFile;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setCoPilotFile
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setCoPilotFile(val:String) 
+		{
+			myCoPilotFile = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCrewChiefFile
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getCrewChiefFile():String 
+		{
+			return myCrewChiefFile;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setCrewChiefFile
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setCrewChiefFile(val:String) 
+		{
+			myCrewChiefFile = val;
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLoadMasterFile
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLoadMasterFile():String 
+		{
+			return myLoadMasterFile;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setLoadMasterFile
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setLoadMasterFile(val:String) 
+		{
+			myLoadMasterFile = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBombardierFile
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getBombardierFile():String 
+		{
+			return myBombardierFile;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setLoadMasterFile
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setBombardierFile(val:String) 
+		{
+			myBombardierFile = val;
+		}
+				
+		/**
+		 * ---------------------------------------------------------------------
+		 * getGunnerFiles
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getGunnerFiles():Array 
+		{
+			return myGunnerFiles;
 		}
 		
 		/**
 		 * ---------------------------------------------------------------------
 		 * setGunnerFile
 		 * ---------------------------------------------------------------------
+		 * myGunnerFiles[0] is the nose gunner
+		 * 
 		 * @param val
+		 * @param idx
 		 */
-		public function setGunnerFile(val:String) 
+		public function setGunnerFile(val:String,idx:int) 
 		{
-			myGunnerFile = val;
+			myGunnerFiles[idx] = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getGuardFiles
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getGuardFiles():Array 
+		{
+			return myGuardFiles;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setGuardFile
+		 * ---------------------------------------------------------------------
+		 * 
+		 * @param val
+		 * @param idx
+		 */
+		public function setGuardFile(val:String,idx:int) 
+		{
+			myGuardFiles[idx] = val;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLoaderFiles
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLoaderFiles():Array 
+		{
+			return myLoaderFiles;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setLoaderFile
+		 * ---------------------------------------------------------------------
+		 * 
+		 * @param val
+		 * @param idx
+		 */
+		public function setLoaderFile(val:String,idx:int) 
+		{
+			myLoaderFiles[idx] = val;
 		}
 		
 		/**

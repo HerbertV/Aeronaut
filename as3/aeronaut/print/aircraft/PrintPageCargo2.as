@@ -87,17 +87,17 @@ package as3.aeronaut.print.aircraft
 		{
 			super.initFromAircraft(obj);
 			
-			// TODO fill it with crew members if aircraft crewpage is finished
-			setupCrew("", "Chief", null);
-			setupCrew("", "Master", null);
+			setupCrew("", "Chief", SheetAircraft(this.mySheet).getCrewChief());
+			setupCrew("", "Master", SheetAircraft(this.mySheet).getLoadMaster());
 			
 			var i:int;
-			
+			var arr:Array = SheetAircraft(this.mySheet).getCrewLoaders();
 			for( i = 1; i < 9; i++ )
-				setupCrew(String(i), "Loader", null);
+				setupCrew(String(i), "Loader", arr[i-1]);
 			
+			arr = SheetAircraft(this.mySheet).getGuards();
 			for( i = 1; i < 7; i++ )
-				setupCrew(String(i), "Guard", null);
+				setupCrew(String(i), "Guard", arr[i-1]);
 			
 			// TODO fill cargo if cargo page is done
 			for ( i = 1; i < 3; i++ )
@@ -123,26 +123,15 @@ package as3.aeronaut.print.aircraft
 				crew:Pilot
 			):void
 		{
-			
-			Console.getInstance().writeln("setupCrew", DebugLevel.DEBUG, "num: "+num+" crewtype: "+crewtype);
-			
-		
 			if( crew == null )
 			{
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "Name")).text = "";
-				Console.getInstance().writeln("foo1", DebugLevel.DEBUG);
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "NT")).htmlText = "";
-				Console.getInstance().writeln("foo2", DebugLevel.DEBUG);
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "SS")).htmlText = "";
-				Console.getInstance().writeln("foo3", DebugLevel.DEBUG);
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "DE")).htmlText = "";
-				Console.getInstance().writeln("foo4", DebugLevel.DEBUG);
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "SH")).htmlText = "";
-				Console.getInstance().writeln("foo5", DebugLevel.DEBUG);
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "CO")).htmlText = "";
-				Console.getInstance().writeln("foo6", DebugLevel.DEBUG);
 				TextField(this.myCrew.getChildByName("lbl"+ crewtype + num + "QD")).htmlText = "";
-				Console.getInstance().writeln("foo7", DebugLevel.DEBUG);
 				return;
 			}
 			

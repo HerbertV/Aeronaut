@@ -35,6 +35,7 @@ package as3.aeronaut
 	// based on AS3 xml 
 	// read/write xml
 	// 
+	// Obsolete will be repelace by XMLProcessorRW
 	public class XMLProcessor
 	{
 		// =====================================================================

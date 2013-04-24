@@ -13,6 +13,7 @@ Version - 1.1.0 alpha 04:
 - 	added new Pilot types/subtypes (Issue #26 and #35) and updated pilot file
 	version to 2.1
 - 	added pilot importer for CADET files.
+- 	updated Help files.
 
 
 Version - 1.1.0 alpha 03: 

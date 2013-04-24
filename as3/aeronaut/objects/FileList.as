@@ -29,7 +29,7 @@ package as3.aeronaut.objects
 	// =========================================================================
 	// FileList
 	// =========================================================================
-	// 
+	// obsolete will be replaced by XMLFileList
 	public class FileList
 	{
 		/**

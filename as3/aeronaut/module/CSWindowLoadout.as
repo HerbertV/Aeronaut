@@ -262,6 +262,7 @@ package as3.aeronaut.module
 			
 			// aircraft linking
 			id = this.form.pdAircraft.getIDForCurrentSelection();
+// TODO store relative sub folders
 			if( id != CSPullDown.ID_EMPTYSELECTION ) 
 			{
 				this.myObject.setSrcAircraft(id);

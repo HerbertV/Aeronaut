@@ -81,7 +81,14 @@ package as3.aeronaut.print
 		// main pilot which is used for stats and aicraft name 
 		private var pilot:Pilot;
 		// all other Gunners, Co-Pilots etc
-		private var crew:Array;
+		private var coPilot:Pilot;
+		private var crewChief:Pilot;
+		private var loadMaster:Pilot;
+		private var bombardier:Pilot;
+		private var gunners:Array = new Array();
+		private var guards:Array = new Array();
+		private var crewLoaders:Array = new Array();
+		
 		// we use the squadron from the pilot
 		private var squad:Squadron;
 		private var squadLogo:Bitmap;
@@ -224,7 +231,11 @@ package as3.aeronaut.print
 		 * loads crew (pilots) and squadfiles.
 		 */
 		private function loadCrew():void
-		{
+		{	
+// FIXME when changed to new as3.hv.zinc.z3.xml.XMLFileList 
+// all file pathes stored in object are relative pathes 
+// so we can remove here the path assembling except for the application path
+
 			if( this.myObject.getPilotFile() != "") 
 			{
 				this.pilot = new Pilot();
@@ -259,17 +270,128 @@ package as3.aeronaut.print
 					}
 				}
 				
-// TODO this needs to be changed for bombers				
-				if( this.myObject.getGunnerFile() != "") 
+				if( this.myObject.getCoPilotFile() != "") 
 				{
-					var gunner:Pilot = new Pilot();
-					gunner.loadFile(
+					this.coPilot = new Pilot();
+					coPilot.loadFile(
 							mdm.Application.path 
 								+ Globals.PATH_DATA
 								+ Globals.PATH_PILOT 
-								+ this.myObject.getGunnerFile()
+								+ this.myObject.getCoPilotFile()
 						);
-					this.crew.push(gunner);
+				}
+				
+				if( this.myObject.getCrewChiefFile() != "") 
+				{
+					this.crewChief = new Pilot();
+					crewChief.loadFile(
+							mdm.Application.path 
+								+ Globals.PATH_DATA
+								+ Globals.PATH_PILOT 
+								+ this.myObject.getCrewChiefFile()
+						);
+				}
+				
+				if( this.myObject.getLoadMasterFile() != "") 
+				{
+					this.loadMaster = new Pilot();
+					loadMaster.loadFile(
+							mdm.Application.path 
+								+ Globals.PATH_DATA
+								+ Globals.PATH_PILOT 
+								+ this.myObject.getLoadMasterFile()
+						);
+				}
+				
+				if( this.myObject.getBombardierFile() != "") 
+				{
+					this.bombardier = new Pilot();
+					bombardier.loadFile(
+							mdm.Application.path 
+								+ Globals.PATH_DATA
+								+ Globals.PATH_PILOT 
+								+ this.myObject.getBombardierFile()
+						);
+				}
+				
+				var i:int;
+				var arr:Array = this.myObject.getGunnerFiles();
+				var firstGunner:Pilot = null;
+				
+				for( i = 0; i < arr.length; i++ ) 
+				{
+					if( arr[i] != "" )
+					{
+						var p:Pilot = new Pilot();
+						p.loadFile(
+								mdm.Application.path 
+									+ Globals.PATH_DATA
+									+ Globals.PATH_PILOT 
+									+ arr[i]
+							);
+						if ( i == 0 )
+						{
+							firstGunner = p;
+						} else {
+							// update the stats from first gunner
+							if ( firstGunner != null 
+									&& !p.canLevelUp() 
+									&& p.getType() != Pilot.TYPE_NPC 
+								)
+							{
+								p.setDeadEye(firstGunner.getDeadEye()-1);
+								p.setConstitution(firstGunner.getConstitution()-1);
+								p.setNaturalTouch(firstGunner.getNaturalTouch()-1);
+								p.setQuickDraw(firstGunner.getQuickDraw()-1);
+								p.setSixthSense(firstGunner.getSixthSense()-1);
+								p.setSteadyHand(firstGunner.getSteadyHand()-1);
+							}
+						}
+						this.gunners.push(p);
+						
+					} else {
+						this.gunners.push(null);
+					}
+				}
+				
+				arr = this.myObject.getGuardFiles();
+				
+				for( i = 0; i < arr.length; i++ ) 
+				{
+					if( arr[i] != "" )
+					{
+						var p:Pilot = new Pilot();
+						p.loadFile(
+								mdm.Application.path 
+									+ Globals.PATH_DATA
+									+ Globals.PATH_PILOT 
+									+ arr[i]
+							);
+						this.guards.push(p);
+					
+					} else {
+						this.guards.push(null);
+					}
+				}
+		
+				arr = this.myObject.getLoaderFiles();
+				
+				for( i = 0; i < arr.length; i++ ) 
+				{
+					if( arr[i] != "" )
+					{
+						var p:Pilot = new Pilot();
+						p.loadFile(
+								mdm.Application.path 
+									+ Globals.PATH_DATA
+									+ Globals.PATH_PILOT 
+									+ arr[i]
+							);
+						this.crewLoaders.push(p);
+					
+					} else {
+						this.crewLoaders.push(null);
+					}
 				}
 			}
 		}
@@ -306,13 +428,79 @@ package as3.aeronaut.print
 		
 		/**
 		 * ---------------------------------------------------------------------
-		 * getCrew
+		 * getCoPilot
 		 * ---------------------------------------------------------------------
 		 * @return
 		 */
-		public function getCrew():Array
+		public function getCoPilot():Pilot
 		{
-			return this.crew;
+			return this.coPilot;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCrewChief
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getCrewChief():Pilot
+		{
+			return this.crewChief;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLoadMaster
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLoadMaster():Pilot
+		{
+			return this.loadMaster;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getBombardier
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getBombardier():Pilot
+		{
+			return this.bombardier;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getGunners
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getGunners():Array
+		{
+			return this.gunners;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getGuards
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getGuards():Array
+		{
+			return this.guards;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getCrewLoaders
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getCrewLoaders():Array
+		{
+			return this.crewLoaders;
 		}
 		
 		/**

@@ -88,19 +88,13 @@ package as3.aeronaut.print.aircraft
 			super.initFromAircraft(obj);
 			
 			var turrets:SpriteTurrets;
-			var gunners:Array;
+			var gunners:Array = SheetAircraft(this.mySheet).getGunners();
 			
 			if ( obj.getFrameType() == FrameDefinition.FT_HEAVY_BOMBER )
 			{
 				turrets = new SpriteBomberTurrets10();
-// TODO fill it with the gunners if crew is implemented				
-				gunners = new Array(null, null, null, null, null, null);
-				
 			} else {
-				
 				turrets = new SpriteBomberTurrets4();
-// TODO fill it with the gunners if crew is implemented				
-				gunners = new Array(null, null);
 			}
 			turrets.init(
 					obj, 
@@ -108,12 +102,10 @@ package as3.aeronaut.print.aircraft
 					gunners
 				);
 			this.addChild(turrets);	
-			
-// TODO fill bombardier if crew is implemented		
 			this.myBombBays.init(
 					obj,
 					SheetAircraft(this.mySheet).getLoadout(),
-					null
+					SheetAircraft(this.mySheet).getBombardier()
 				);
 		}	
 	}

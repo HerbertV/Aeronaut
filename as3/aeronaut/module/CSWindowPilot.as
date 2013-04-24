@@ -607,7 +607,7 @@ package as3.aeronaut.module
 						this.form.pdNation.getIDForCurrentSelection()
 					);
 			}
-			
+// TODO store relative sub folders			
 			if (this.form.pdSquadron.getIDForCurrentSelection() 
 					== CSPullDown.ID_EMPTYSELECTION ) 
 			{
@@ -653,6 +653,7 @@ package as3.aeronaut.module
 				);	
 				
 // TODO this.form.pdLinkedTo
+// TODO store relative sub folders
 		}
 		
 		/**
@@ -665,7 +666,8 @@ package as3.aeronaut.module
 		{
 			this.form.pdSquadron.clearSelectionItemList();
 			this.form.pdSquadron.setEmptySelectionText("",true);
-			
+
+// TODO switch to new as3.hv.zinc.z3.xml.XMLFileList			
 			var arrFLSquad:Array = FileList.generate(
 					Globals.PATH_DATA
 						+ Globals.PATH_SQUADRON
@@ -937,6 +939,7 @@ package as3.aeronaut.module
 			this.form.pdSubType.setEmptySelectionText("", false);
 			this.form.rbtnCanLevelUp.setSelected(false);
 			this.form.rbtnCanLevelUp.setActive(true);
+			this.form.pdLinkedTo.clearSelection();
 			this.form.pdLinkedTo.setActive(false);
 			
 			if( this.lastSelectedType == Pilot.TYPE_PILOT )
@@ -983,16 +986,8 @@ package as3.aeronaut.module
 						Pilot.SUBTYPE_CREWCHIEF
 					);
 				this.form.pdSubType.addSelectionItem(
-						Pilot.getSubTypeLabel(Pilot.SUBTYPE_GUARD), 
-						Pilot.SUBTYPE_GUARD
-					);
-				this.form.pdSubType.addSelectionItem(
 						Pilot.getSubTypeLabel(Pilot.SUBTYPE_LOADMASTER), 
 						Pilot.SUBTYPE_LOADMASTER
-					);
-				this.form.pdSubType.addSelectionItem(
-						Pilot.getSubTypeLabel(Pilot.SUBTYPE_LOADER), 
-						Pilot.SUBTYPE_LOADER
 					);
 				
 				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_COPILOT);
@@ -1053,45 +1048,52 @@ package as3.aeronaut.module
 // TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
 // TODO set use in Zeppelin Checkbox
 			
-			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_BOMBARDIER
-					|| this.lastSelectedSubType == Pilot.SUBTYPE_CREWCHIEF
-					|| this.lastSelectedSubType == Pilot.SUBTYPE_LOADMASTER ) 
-			{
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_BOMBARDIER ) {
 				this.form.rbtnCanLevelUp.setSelected(true);
 				this.form.rbtnCanLevelUp.setActive(false);
 				
-			} else if ( this.lastSelectedSubType == Pilot.SUBTYPE_COPILOT
-					|| this.lastSelectedSubType == Pilot.SUBTYPE_GUNNER ) 
-			{
+				this.intTotalEP = Pilot.BASE_EP_BOMBARDIER;
+				this.intCurrentEP = Pilot.BASE_EP_BOMBARDIER;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_BOMBARDIER);
+				
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_CREWCHIEF ) {
+				this.form.rbtnCanLevelUp.setSelected(true);
+				this.form.rbtnCanLevelUp.setActive(false);
+				
+				this.intTotalEP = Pilot.BASE_EP_CREWCHIEF;
+				this.intCurrentEP = Pilot.BASE_EP_CREWCHIEF;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_CREWCHIEF);
+				
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_LOADMASTER ) {
+				this.form.rbtnCanLevelUp.setSelected(true);
+				this.form.rbtnCanLevelUp.setActive(false);
+				
+				this.intTotalEP = Pilot.BASE_EP_LOADMASTER;
+				this.intCurrentEP = Pilot.BASE_EP_LOADMASTER;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_LOADMASTER);
+				
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_COPILOT ) {
 				// there are 2 types of co-pilots 
 				// the one from cargos/bombes who can level
 				// and the other from heavy fighters who is linked to 
 				// its pilot
-				// same is with gunners the nose gunner of a bomber
-				// can level but all other gunners cannot level
 				this.form.rbtnCanLevelUp.setSelected(true);
 				this.form.rbtnCanLevelUp.setActive(true);
 				
-			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_LOADER ) {
-				this.form.rbtnCanLevelUp.setSelected(false);
-				this.form.rbtnCanLevelUp.setActive(false);
-				this.form.pdLinkedTo.setActive(true);
-			
-			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_GUARD ) {
+				this.intTotalEP = Pilot.BASE_EP_COPILOT;
+				this.intCurrentEP = Pilot.BASE_EP_COPILOT;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_COPILOT);
+				
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_GUNNER ) {
+				// same is with gunners the nose gunner of a bomber
+				// can level but all other gunners cannot level
 				this.form.rbtnCanLevelUp.setSelected(true);
-				this.form.rbtnCanLevelUp.setActive(true);
+				this.form.rbtnCanLevelUp.setActive(true);	
+				
+				this.intTotalEP = Pilot.BASE_EP_GUNNER;
+				this.intCurrentEP = Pilot.BASE_EP_GUNNER;
+				this.form.txtStartEP.text = String(Pilot.BASE_EP_GUNNER);
 			}
-			
-// TODO maybe Loader and Guard as generic NPC (see behind the crimson veil)			
-
-// TODO crew starting EP above ????
-			// Pilot.SUBTYPE_COPILOT  SS 3 CO 3 NT 3 all other 1
-			// SUBTYPE_BOMBARDIER CO 3 DE ? SH ?
-			// SUBTYPE_GUNNER CO 3 DE 3 QD ?
-			// SUBTYPE_GUARD CO 3 DE 3 
-			// SUBTYPE_LOADER CO 3 all other 1
-			// SUBTYPE_CREWCHIEF CO 3 SH ?
-			// SUBTYPE_LOADMASTER CO 3 QD
 			
 			this.form.myStatsBar.init(this);
 			this.form.myFeatBox.init(this);
@@ -1300,8 +1302,36 @@ package as3.aeronaut.module
 					this.form.rbtnCanLevelUp.getIsSelected()
 				);
 			
-			// TODO this.form.pdLinkedTo.setActive(false);
-			
+			this.form.pdLinkedTo.clearSelection();	
+			this.form.pdLinkedTo.setActive(
+					this.form.rbtnCanLevelUp.getIsSelected()
+				);
+				
+			if( this.lastSelectedSubType == Pilot.SUBTYPE_COPILOT )
+			{
+				if( this.form.rbtnCanLevelUp.getIsSelected() )
+				{	
+					this.intTotalEP = Pilot.BASE_EP_COPILOT;
+					this.intCurrentEP = Pilot.BASE_EP_COPILOT;
+					this.form.txtStartEP.text = String(Pilot.BASE_EP_COPILOT);
+				} else {
+					this.intTotalEP = Pilot.BASE_EP_OTHER;
+					this.intCurrentEP = Pilot.BASE_EP_OTHER;
+					this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
+				}
+				
+			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_GUNNER ) {
+				if( this.form.rbtnCanLevelUp.getIsSelected() )
+				{	
+					this.intTotalEP = Pilot.BASE_EP_GUNNER;
+					this.intCurrentEP = Pilot.BASE_EP_GUNNER;
+					this.form.txtStartEP.text = String(Pilot.BASE_EP_GUNNER);
+				} else {
+					this.intTotalEP = Pilot.BASE_EP_OTHER;
+					this.intCurrentEP = Pilot.BASE_EP_OTHER;
+					this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
+				}
+			}
 		}
 		
 		

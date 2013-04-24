@@ -67,8 +67,6 @@ package as3.aeronaut.objects
 		public static const SUBTYPE_GUNNER:String = "gunner";
 		public static const SUBTYPE_CREWCHIEF:String = "crewchief";
 		public static const SUBTYPE_LOADMASTER:String = "loadmaster";
-		public static const SUBTYPE_GUARD:String = "guard";
-		public static const SUBTYPE_LOADER:String = "loader";
 		public static const SUBTYPE_BOMBARDIER:String = "bombardier";
 		// TODO check if zeppelin crew types are needed.
 		// Zeppelin Bridge Crew:
@@ -85,6 +83,19 @@ package as3.aeronaut.objects
 		public static const BASE_EP_ACE:int = 500;
 		public static const BASE_EP_HERO:int = 450;
 		public static const BASE_EP_SIDEKICK:int = 350;
+	
+// TODO ADJUST
+		// copilot bomber/cargo SS3 CO 3 NT 3 other 1
+		public static const BASE_EP_COPILOT:int = 100;
+		// CO3 DE? SH ? other 1
+		public static const BASE_EP_BOMBARDIER:int = 100;
+		// CO3 DE3 QD ? other 1
+		public static const BASE_EP_GUNNER:int = 100;
+		// CO3 SH ? other 1
+		public static const BASE_EP_CREWCHIEF:int = 100;
+		// CO3 QD ? other 1
+		public static const BASE_EP_LOADMASTER:int = 100;
+			
 		public static const BASE_EP_OTHER:int = 0;
 		
 		// xp cost for all stats sort by stat level
@@ -184,12 +195,6 @@ package as3.aeronaut.objects
 			
 			if( stype == SUBTYPE_LOADMASTER )
 				return "Load Master";
-			
-			if( stype == SUBTYPE_GUARD )
-				return "Security Guard";
-			
-			if( stype == SUBTYPE_LOADER )
-				return "Loader";
 			
 			if( stype == SUBTYPE_BOMBARDIER )
 				return "Bombardier";
@@ -393,7 +398,7 @@ package as3.aeronaut.objects
 				DebugLevel.INFO, 
 				StringHelper.replaceHTMLbrackets(this.myXML.toString())
 			);
-			
+// TODO updated pathes for Squad link (data+squad)
 		}
 		
 		/**

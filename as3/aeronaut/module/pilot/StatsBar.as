@@ -106,15 +106,7 @@ package as3.aeronaut.module.pilot
 			
 			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
 				max = 11;
-// TODO asjust stat setup for crew members
-// Pilot.SUBTYPE_COPILOT  SS 3 CO 3 NT 3 all other 1
-// SUBTYPE_BOMBARDIER CO 3 DE ? SH ?
-// SUBTYPE_GUNNER CO 3 DE 3 QD ?
-// SUBTYPE_GUARD CO 3 DE 3 
-// SUBTYPE_LOADER CO 3 all other 1
-// SUBTYPE_CREWCHIEF CO 3 SH ?
-// SUBTYPE_LOADMASTER CO 3 QD
-			
+				
 			if( pilotType != Pilot.TYPE_NPC 
 					&& !this.winPilot.canPilotLevelUp() ) 
 			{
