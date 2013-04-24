@@ -36,6 +36,7 @@ package as3.aeronaut.module
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
+	import as3.aeronaut.CSDialogs;
 	
 	import as3.aeronaut.objects.FileList;
 	import as3.aeronaut.objects.Aircraft;	

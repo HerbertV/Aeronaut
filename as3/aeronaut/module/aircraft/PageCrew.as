@@ -61,7 +61,7 @@ package as3.aeronaut.module.aircraft
 			
 			this.numStepCrew.setupSteps(1,2,1,1);
 			this.numStepCrew.setActive(false);
-			this.pdGunner.setActive(false);
+			this.pdCoPilot.setActive(false);
 // TODO for bombers			
 			//this.numStepEngine.addEventListener(MouseEvent.MOUSE_DOWN, engineCountChangedHandler); 
 		}
@@ -88,12 +88,12 @@ package as3.aeronaut.module.aircraft
 			if( frame == "fighter" || frame == "hoplite" )
 			{
 				this.numStepCrew.setupSteps(1,2,1,1);
-				this.pdGunner.setActive(false);
-				this.pdGunner.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
+				this.pdCoPilot.setActive(false);
+				this.pdCoPilot.setActiveSelectionItem(CSPullDown.ID_EMPTYSELECTION);
 			
 			} else if( frame == "heavyFighter" ) {
 				this.numStepCrew.setupSteps(1,2,2,1);
-				this.pdGunner.setActive(true);
+				this.pdCoPilot.setActive(true);
 				
 			} 
 // TODO new bomber crew members			
@@ -133,10 +133,10 @@ package as3.aeronaut.module.aircraft
 				obj.setPilotFile("");
 			}
 			
-			if( this.pdGunner.getIDForCurrentSelection() != CSPullDown.ID_EMPTYSELECTION ) {
-				obj.setGunnerFile(this.pdGunner.getIDForCurrentSelection());
+			if( this.pdCoPilot.getIDForCurrentSelection() != CSPullDown.ID_EMPTYSELECTION ) {
+				obj.setCoPilotFile(this.pdCoPilot.getIDForCurrentSelection());
 			} else {
-				obj.setGunnerFile("");
+				obj.setCoPilotFile("");
 			}
 		
 			obj.setCrewCount(this.numStepCrew.getValue());
@@ -176,22 +176,24 @@ package as3.aeronaut.module.aircraft
 		public function updateDirLists():void
 		{
 			this.pdPilot.clearSelectionItemList();
-			this.pdGunner.clearSelectionItemList();
+			this.pdCoPilot.clearSelectionItemList();
 			this.pdPilot.setEmptySelectionText("",true);
-			this.pdGunner.setEmptySelectionText("",true);
+			this.pdCoPilot.setEmptySelectionText("",true);
 			
 			var arrFLPilots:Array = FileList.generate(
 					Globals.PATH_DATA
 						+ Globals.PATH_PILOT
 				);
-																																							  
+
+// TODO add filter for copilots and other crews
+// copilot filter is differnet for HeavyFighters and Bombers/Cargos
 			for( var i:int = 0; i< arrFLPilots.length; i++ ) 
 			{
 				this.pdPilot.addSelectionItem(
 						arrFLPilots[i].viewname,
 						arrFLPilots[i].filename
 					); 
-				this.pdGunner.addSelectionItem(
+				this.pdCoPilot.addSelectionItem(
 						arrFLPilots[i].viewname,
 						arrFLPilots[i].filename
 					); 

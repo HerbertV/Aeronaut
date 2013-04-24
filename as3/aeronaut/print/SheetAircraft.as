@@ -106,8 +106,7 @@ package as3.aeronaut.print
 		public function SheetAircraft()
 		{
 			super();
-			crew = new Array();
-		
+			
 			initArmorRows();
 		}
 
@@ -317,12 +316,13 @@ package as3.aeronaut.print
 				var i:int;
 				var arr:Array = this.myObject.getGunnerFiles();
 				var firstGunner:Pilot = null;
+				var p:Pilot;
 				
 				for( i = 0; i < arr.length; i++ ) 
 				{
 					if( arr[i] != "" )
 					{
-						var p:Pilot = new Pilot();
+						p = new Pilot();
 						p.loadFile(
 								mdm.Application.path 
 									+ Globals.PATH_DATA
@@ -342,7 +342,7 @@ package as3.aeronaut.print
 								p.setDeadEye(firstGunner.getDeadEye()-1);
 								p.setConstitution(firstGunner.getConstitution()-1);
 								p.setNaturalTouch(firstGunner.getNaturalTouch()-1);
-								p.setQuickDraw(firstGunner.getQuickDraw()-1);
+								p.setQuickDraw(firstGunner.getQuickDraw()[0]-1,0);
 								p.setSixthSense(firstGunner.getSixthSense()-1);
 								p.setSteadyHand(firstGunner.getSteadyHand()-1);
 							}
@@ -360,7 +360,7 @@ package as3.aeronaut.print
 				{
 					if( arr[i] != "" )
 					{
-						var p:Pilot = new Pilot();
+						p = new Pilot();
 						p.loadFile(
 								mdm.Application.path 
 									+ Globals.PATH_DATA
@@ -380,7 +380,7 @@ package as3.aeronaut.print
 				{
 					if( arr[i] != "" )
 					{
-						var p:Pilot = new Pilot();
+						p = new Pilot();
 						p.loadFile(
 								mdm.Application.path 
 									+ Globals.PATH_DATA

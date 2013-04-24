@@ -1273,6 +1273,8 @@ package as3.aeronaut.module
 					return;
 				this.lastSelectedType =  pd.getIDForCurrentSelection();
 				this.updateGUIByType();
+				// update subtyp as well
+				this.lastSelectedSubType =  pd.getIDForCurrentSelection();
 			}
 			if( pd == this.form.pdSubType )
 			{
@@ -1304,7 +1306,7 @@ package as3.aeronaut.module
 			
 			this.form.pdLinkedTo.clearSelection();	
 			this.form.pdLinkedTo.setActive(
-					this.form.rbtnCanLevelUp.getIsSelected()
+					!this.form.rbtnCanLevelUp.getIsSelected()
 				);
 				
 			if( this.lastSelectedSubType == Pilot.SUBTYPE_COPILOT )
@@ -1332,6 +1334,8 @@ package as3.aeronaut.module
 					this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
 				}
 			}
+			
+			this.calcEP();
 		}
 		
 		
