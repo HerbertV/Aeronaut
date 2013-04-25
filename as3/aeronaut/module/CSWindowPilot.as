@@ -39,6 +39,7 @@ package as3.aeronaut.module
 	import as3.hv.core.utils.StringHelper;
 	import as3.hv.core.net.ImageLoader;
 	import as3.hv.core.net.BinaryLoader;
+	import as3.hv.zinc.z3.xml.XMLFileList;
 	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
@@ -46,7 +47,6 @@ package as3.aeronaut.module
 	
 	import as3.aeronaut.gui.*;
 	
-	import as3.aeronaut.objects.FileList;
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.Pilot;
 	import as3.aeronaut.objects.pilot.*;
@@ -607,7 +607,7 @@ package as3.aeronaut.module
 						this.form.pdNation.getIDForCurrentSelection()
 					);
 			}
-// TODO store relative sub folders			
+
 			if (this.form.pdSquadron.getIDForCurrentSelection() 
 					== CSPullDown.ID_EMPTYSELECTION ) 
 			{
@@ -653,7 +653,6 @@ package as3.aeronaut.module
 				);	
 				
 // TODO this.form.pdLinkedTo
-// TODO store relative sub folders
 		}
 		
 		/**
@@ -667,19 +666,22 @@ package as3.aeronaut.module
 			this.form.pdSquadron.clearSelectionItemList();
 			this.form.pdSquadron.setEmptySelectionText("",true);
 
-// TODO switch to new as3.hv.zinc.z3.xml.XMLFileList			
-			var arrFLSquad:Array = FileList.generate(
-					Globals.PATH_DATA
-						+ Globals.PATH_SQUADRON
-				);
+			var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
+					
+			var arrFLSquad:Array = fl.generate( 
+					mdm.Application.path, 
+					Globals.PATH_DATA 
+						+ Globals.PATH_SQUADRON,
+					Squadron.BASE_TAG
+				);	
 
-				for( var i:int=0; i< arrFLSquad.length; i++ )
+			for( var i:int=0; i< arrFLSquad.length; i++ )
 				this.form.pdSquadron.addSelectionItem(
 						arrFLSquad[i].viewname,
 						arrFLSquad[i].filename
 					); 
 			
-			// TODO add new filtering
+			// TODO add new filtering (subtype, used for aircraft canLevel)
 			/*
 			if( this.rbgType.getValue() == Pilot.TYPE_GUNNER )
 			{

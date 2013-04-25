@@ -33,7 +33,8 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.module.CSWindowAircraft;
 	
 	import as3.aeronaut.objects.Aircraft;	
-	import as3.aeronaut.objects.FileList;
+	
+	import as3.hv.zinc.z3.xml.XMLFileList;
 	
 	// =========================================================================
 	// Class PageCrew
@@ -180,11 +181,15 @@ package as3.aeronaut.module.aircraft
 			this.pdPilot.setEmptySelectionText("",true);
 			this.pdCoPilot.setEmptySelectionText("",true);
 			
-			var arrFLPilots:Array = FileList.generate(
-					Globals.PATH_DATA
-						+ Globals.PATH_PILOT
-				);
-
+			
+			var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
+			var arrFLPilots:Array = fl.generate( 
+					mdm.Application.path, 
+					Globals.PATH_DATA 
+						+ Globals.PATH_AIRCRAFT,
+					Aircraft.BASE_TAG
+				);	
+		
 // TODO add filter for copilots and other crews
 // copilot filter is differnet for HeavyFighters and Bombers/Cargos
 			for( var i:int = 0; i< arrFLPilots.length; i++ ) 

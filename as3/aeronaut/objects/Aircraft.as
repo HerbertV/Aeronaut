@@ -29,8 +29,10 @@ package as3.aeronaut.objects
 	
 	import as3.hv.core.utils.StringHelper;
 	
+	import as3.hv.core.xml.AbstractXMLProcessor;
+	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 		
 	import as3.aeronaut.objects.aircraft.*;
 	
@@ -91,7 +93,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if( XMLProcessor.checkDoc(xmldoc)
+			if( AbstractXMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -108,7 +110,7 @@ package as3.aeronaut.objects
 		{
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
 					<aircraft version={FILE_VERSION} frameType="fighter" PropType="tractor" baseTarget="5" accelRate="1" maxSpeed="1" maxGs="1" decelRate="2" engineCount="1" crewCount="1" srcFoto="">
 						<name>New Plane</name>
 						<manufacturer ID=""/>
@@ -147,8 +149,9 @@ package as3.aeronaut.objects
 		{
 			this.myFilename = filename;
 			
-// TODO switch to new as3.hv.zinc.z3.xml.XMLProcessorRW		
-			var loadedxml:XML = XMLProcessor.loadXML(filename);
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			var loadedxml:XML = aexml.getXML();
 			
 			if( Aircraft.checkXML(loadedxml) ) 
 			{

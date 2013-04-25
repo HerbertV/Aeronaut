@@ -32,6 +32,8 @@ package as3.aeronaut.module
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.hv.zinc.z3.xml.XMLFileList;
+	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
 	import as3.aeronaut.CSFormatter;
@@ -40,7 +42,6 @@ package as3.aeronaut.module
 	import as3.aeronaut.gui.CSPullDown;
 	import as3.aeronaut.gui.PageButtonController;
 	
-	import as3.aeronaut.objects.FileList;
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.BaseData;
 	import as3.aeronaut.objects.baseData.Gun;
@@ -262,7 +263,6 @@ package as3.aeronaut.module
 			
 			// aircraft linking
 			id = this.form.pdAircraft.getIDForCurrentSelection();
-// TODO store relative sub folders
 			if( id != CSPullDown.ID_EMPTYSELECTION ) 
 			{
 				this.myObject.setSrcAircraft(id);
@@ -290,10 +290,15 @@ package as3.aeronaut.module
 					false
 				);
 			
-			var flAircraft:Array = FileList.generate(
-					Globals.PATH_DATA + Globals.PATH_AIRCRAFT
-				);
-
+			var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
+					
+			var flAircraft:Array = fl.generate( 
+						mdm.Application.path, 
+						Globals.PATH_DATA 
+							+ Globals.PATH_AIRCRAFT,
+						Aircraft.BASE_TAG
+					);	
+			
 			for( var i:int=0; i< flAircraft.length; i++ ) 
 				this.form.pdAircraft.addSelectionItem(
 						flAircraft[i].viewname,

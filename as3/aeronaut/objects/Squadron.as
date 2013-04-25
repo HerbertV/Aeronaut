@@ -25,18 +25,22 @@ package as3.aeronaut.objects
 	import mdm.*;
 	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 	
 	import as3.aeronaut.objects.squadron.*;
+	
+	import as3.hv.core.xml.AbstractXMLProcessor;
 	
 	import as3.hv.core.utils.StringHelper;
 	
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
-	// =========================================================================
-	// Squadron
-	// =========================================================================
+	/**
+	 * =========================================================================
+	 * Class Squadron
+	 * =========================================================================
+	 */
 	public class Squadron
 			extends CSBaseObject 
 			implements ICSBaseObject
@@ -52,9 +56,11 @@ package as3.aeronaut.objects
 		// =====================================================================
 		
 		
-		// =====================================================================
-		// Contructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Contructor
+		 * =====================================================================
+		 */
 		public function Squadron()
 		{
 			super();
@@ -74,7 +80,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if( XMLProcessor.checkDoc(xmldoc)
+			if( AbstractXMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -91,7 +97,7 @@ package as3.aeronaut.objects
 		{
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
 					<squadron version="2.0" srcLogo="" typeID="" honorLevel="1">
 						<name>New Squadron</name>
 						<priorityList> </priorityList>
@@ -112,7 +118,9 @@ package as3.aeronaut.objects
 		public function loadFile(filename:String):void
 		{
 			this.myFilename = filename;
-			var loadedxml:XML = XMLProcessor.loadXML(filename);
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			var loadedxml:XML = aexml.getXML();
 			
 			if( Squadron.checkXML(loadedxml) ) 
 			{

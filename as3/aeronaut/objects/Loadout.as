@@ -25,9 +25,11 @@ package as3.aeronaut.objects
 	import mdm.*;
 	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 	
 	import as3.aeronaut.objects.loadout.*;
+	
+	import as3.hv.core.xml.AbstractXMLProcessor;
 	
 	import as3.hv.core.utils.StringHelper;
 	
@@ -79,7 +81,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if( XMLProcessor.checkDoc(xmldoc)
+			if( AbstractXMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -96,7 +98,7 @@ package as3.aeronaut.objects
 		{
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
 					<loadout version={Loadout.FILE_VERSION} srcAircraft="">
 						<name>New Loadout</name>
 						<gunAmmos>
@@ -118,7 +120,11 @@ package as3.aeronaut.objects
 		public function loadFile(filename:String):void
 		{
 			this.myFilename = filename;
-			var loadedxml:XML = XMLProcessor.loadXML(filename);
+			
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			var loadedxml:XML = aexml.getXML();
+			
 			if( Loadout.checkXML(loadedxml) ) 
 			{
 				this.myXML = loadedxml;
@@ -141,7 +147,7 @@ package as3.aeronaut.objects
 		 */
 		public function setXML(xmldoc:XML):void 
 		{
-			if (Loadout.checkXML(xmldoc) == true) 
+			if( Loadout.checkXML(xmldoc) == true ) 
 			{
 				this.myXML = xmldoc;
 			} else {
@@ -161,7 +167,7 @@ package as3.aeronaut.objects
 		 */
 		public function updateVersion():Boolean
 		{
-			if( this.myXML.loadout.@version == FILE_VERSION )
+			if( this.myXML.loadout.@version == Loadout.FILE_VERSION )
 				return false;
 				
 			if( Console.isConsoleAvailable() )
@@ -169,7 +175,7 @@ package as3.aeronaut.objects
 						"Updating Loadout File",
 						DebugLevel.DEBUG,
 						"from " + this.myXML.loadout.@version 
-							+ " to " +FILE_VERSION
+							+ " to " + Loadout.FILE_VERSION
 					);
 			
 			
@@ -179,7 +185,7 @@ package as3.aeronaut.objects
 				this.myXML.loadout.appendChild(<bombs />);
 			
 			// finaly update version
-			this.myXML.loadout.@version = FILE_VERSION;
+			this.myXML.loadout.@version = Loadout.FILE_VERSION;
 			
 			return true;
 		}

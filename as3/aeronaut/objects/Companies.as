@@ -27,8 +27,10 @@ package as3.aeronaut.objects
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.hv.core.xml.AbstractXMLProcessor;
+	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 		
 	import as3.aeronaut.objects.companies.*;
 	
@@ -67,8 +69,11 @@ package as3.aeronaut.objects
 					+ Globals.PATH_DATA 
 					+ "companies" 
 					+ Globals.AE_EXT;
-			this.myXML = XMLProcessor.loadXML(file);
 			
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			this.myXML = aexml.getXML();
+					
 			if( this.myXML == null ) 
 				return;
 			
@@ -106,7 +111,7 @@ package as3.aeronaut.objects
 		{
 			myCustomXML = new XML();
 			myCustomXML =
-				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
 					<companies version={FILE_VERSION}>
 					</companies>
 				</aeronaut>;

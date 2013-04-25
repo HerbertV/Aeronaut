@@ -27,16 +27,20 @@ package as3.aeronaut.objects
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.hv.core.xml.AbstractXMLProcessor;
+	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 		
 	import as3.aeronaut.objects.aircraftConfigs.*;
 	
-	// =========================================================================
-	// AircraftConfigs
-	// =========================================================================
-	// object for aircraftConfigs.ae
-	// read only
+	/**
+	 * =========================================================================
+	 * AircraftConfigs
+	 * =========================================================================
+	 * object for aircraftConfigs.ae
+	 * read only
+	 */
 	public class AircraftConfigs
 	{
 		// =====================================================================
@@ -51,21 +55,26 @@ package as3.aeronaut.objects
 		private var ready:Boolean = false;
 		private var myXML:XML = new XML();
 				
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function AircraftConfigs()
 		{
 			var file:String = mdm.Application.path 
 					+ Globals.PATH_DATA 
 					+ "aircraftConfigs" 
 					+ Globals.AE_EXT;
-			this.myXML = XMLProcessor.loadXML(file);
+					
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			this.myXML = aexml.getXML();
 			
 			if( this.myXML == null ) 
 				return;
 			
-			if( XMLProcessor.checkDoc(this.myXML) == false ) 
+			if( AbstractXMLProcessor.checkDoc(this.myXML) == false ) 
 				return;
 			
 			ready = true;

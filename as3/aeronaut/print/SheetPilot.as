@@ -206,8 +206,6 @@ package as3.aeronaut.print
 			this.squad = new Squadron();
 			this.squad.loadFile(
 					mdm.Application.path 
-						+ Globals.PATH_DATA
-						+ Globals.PATH_SQUADRON 
 						+ this.myObject.getSquadronID()
 				);
 			

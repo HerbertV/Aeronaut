@@ -23,16 +23,17 @@ package as3.aeronaut.objects
 {
 	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 		
-	// =========================================================================
-	// CSBaseObject
-	// =========================================================================
-	// Base class for all CS(crimson skies) related objects that are 
-	// stored as .ae files.
-	//
-	// e.g. Aircraft, Loadout, Pilot, Squadron, Zeppelin
-	// 
+	/**
+	 * =========================================================================
+	 * CSBaseObject
+	 * =========================================================================
+	 * Base class for all CS(crimson skies) related objects that are 
+	 * stored as .ae files.
+	 *
+	 * e.g. Aircraft, Loadout, Pilot, Squadron, Zeppelin
+	 */ 
 	public class CSBaseObject
 	{
 		// =====================================================================
@@ -41,9 +42,11 @@ package as3.aeronaut.objects
 		protected var myFilename:String = "";
 		protected var myXML:XML = new XML();
 				
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function CSBaseObject()
 		{
 			XML.ignoreProcessingInstructions = false;
@@ -81,7 +84,10 @@ package as3.aeronaut.objects
 					&& filename != "" ) 
 				this.myFilename = filename;
 			
-			return XMLProcessor.saveXML(this.myXML, this.myFilename);
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.saveXML(filename,this.myXML);
+				
+			return (!aexml.hasSavingError());
 		}
 		
 	}

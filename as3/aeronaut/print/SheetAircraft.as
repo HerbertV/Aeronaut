@@ -231,17 +231,11 @@ package as3.aeronaut.print
 		 */
 		private function loadCrew():void
 		{	
-// FIXME when changed to new as3.hv.zinc.z3.xml.XMLFileList 
-// all file pathes stored in object are relative pathes 
-// so we can remove here the path assembling except for the application path
-
 			if( this.myObject.getPilotFile() != "") 
 			{
 				this.pilot = new Pilot();
 				this.pilot.loadFile(
 						mdm.Application.path 
-							+ Globals.PATH_DATA 
-							+ Globals.PATH_PILOT 
 							+ this.myObject.getPilotFile()
 					);
 				
@@ -250,8 +244,6 @@ package as3.aeronaut.print
 					this.squad = new Squadron();
 					this.squad.loadFile(
 							mdm.Application.path 
-								+ Globals.PATH_DATA
-								+ Globals.PATH_SQUADRON 
 								+ this.pilot.getSquadronID()
 						);
 					
@@ -274,8 +266,6 @@ package as3.aeronaut.print
 					this.coPilot = new Pilot();
 					coPilot.loadFile(
 							mdm.Application.path 
-								+ Globals.PATH_DATA
-								+ Globals.PATH_PILOT 
 								+ this.myObject.getCoPilotFile()
 						);
 				}
@@ -285,8 +275,6 @@ package as3.aeronaut.print
 					this.crewChief = new Pilot();
 					crewChief.loadFile(
 							mdm.Application.path 
-								+ Globals.PATH_DATA
-								+ Globals.PATH_PILOT 
 								+ this.myObject.getCrewChiefFile()
 						);
 				}
@@ -296,8 +284,6 @@ package as3.aeronaut.print
 					this.loadMaster = new Pilot();
 					loadMaster.loadFile(
 							mdm.Application.path 
-								+ Globals.PATH_DATA
-								+ Globals.PATH_PILOT 
 								+ this.myObject.getLoadMasterFile()
 						);
 				}
@@ -307,8 +293,6 @@ package as3.aeronaut.print
 					this.bombardier = new Pilot();
 					bombardier.loadFile(
 							mdm.Application.path 
-								+ Globals.PATH_DATA
-								+ Globals.PATH_PILOT 
 								+ this.myObject.getBombardierFile()
 						);
 				}
@@ -325,8 +309,6 @@ package as3.aeronaut.print
 						p = new Pilot();
 						p.loadFile(
 								mdm.Application.path 
-									+ Globals.PATH_DATA
-									+ Globals.PATH_PILOT 
 									+ arr[i]
 							);
 						if ( i == 0 )
@@ -363,8 +345,6 @@ package as3.aeronaut.print
 						p = new Pilot();
 						p.loadFile(
 								mdm.Application.path 
-									+ Globals.PATH_DATA
-									+ Globals.PATH_PILOT 
 									+ arr[i]
 							);
 						this.guards.push(p);
@@ -383,8 +363,6 @@ package as3.aeronaut.print
 						p = new Pilot();
 						p.loadFile(
 								mdm.Application.path 
-									+ Globals.PATH_DATA
-									+ Globals.PATH_PILOT 
 									+ arr[i]
 							);
 						this.crewLoaders.push(p);

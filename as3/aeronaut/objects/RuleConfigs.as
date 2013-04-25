@@ -25,15 +25,18 @@ package as3.aeronaut.objects
 	import mdm.*;
 		
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
+	
+	import as3.hv.core.xml.AbstractXMLProcessor;
 	
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
-	// =========================================================================
-	// RuleConfigs
-	// =========================================================================
-	// 
+	/**
+	 * =========================================================================
+	 * RuleConfigs
+	 * =========================================================================
+	 */ 
 	public class RuleConfigs
 	{
 		// =====================================================================
@@ -51,21 +54,26 @@ package as3.aeronaut.objects
 		private var settingsChanged:Boolean = false;
 		private var myXML:XML = new XML();
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Constructor
+		 * =====================================================================
+		 */
 		public function RuleConfigs()
 		{
 			var file:String = mdm.Application.path 
 					+ Globals.PATH_DATA
 					+ "ruleConfigs"
 					+ Globals.AE_EXT;
-			this.myXML = XMLProcessor.loadXML(file);
+			
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			this.myXML = aexml.getXML();
 			
 			if( this.myXML == null ) 
 				return;
 			
-			if( XMLProcessor.checkDoc(this.myXML) == false ) 
+			if( AbstractXMLProcessor.checkDoc(this.myXML) == false ) 
 				return;
 			
 			ready = true;
@@ -101,8 +109,9 @@ package as3.aeronaut.objects
 						+ Globals.PATH_DATA 
 						+ "ruleConfigs"
 						+ Globals.AE_EXT;
-						
-				XMLProcessor.saveXML(this.myXML, file);
+				
+				var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+				aexml.saveXML(file,this.myXML);
 				this.settingsChanged = false;
 			}
 		}

@@ -33,15 +33,17 @@ package as3.aeronaut.module
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.hv.zinc.z3.xml.XMLFileList;
+	
 	import as3.aeronaut.CSFormatter;
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
 	import as3.aeronaut.CSDialogs;
 	
-	import as3.aeronaut.objects.FileList;
 	import as3.aeronaut.objects.Aircraft;	
 	import as3.aeronaut.objects.aircraft.*;
 	import as3.aeronaut.objects.ICSBaseObject;
+	import as3.aeronaut.objects.Loadout;
 	
 	import as3.aeronaut.objects.aircraftConfigs.*;
 	
@@ -495,11 +497,16 @@ package as3.aeronaut.module
 			{
 				if( this.myObject.getFilename() != "" )
 				{
-					var arrFLLoadout:Array = FileList.generateFilteredLoadouts(
-							Globals.PATH_DATA + Globals.PATH_LOADOUT,
-							this.getFilename()
+					var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
+					fl.addFilter( "loadout", "srcAircraft", (this.getFilename()) );
+					
+					var arrFLLoadout:Array = fl.generate( 
+							mdm.Application.path, 
+							Globals.PATH_DATA 
+								+ Globals.PATH_LOADOUT,
+							Loadout.BASE_TAG
 						);
-																																									  
+					
 					for( var i:int=0; i< arrFLLoadout.length; i++ ) 
 						this.form.pdLoadout.addSelectionItem(
 								arrFLLoadout[i].viewname,

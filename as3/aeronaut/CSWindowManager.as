@@ -48,11 +48,12 @@ package as3.aeronaut
 	
 	import as3.hv.core.net.AbstractModule;
 	
-	// =========================================================================
-	// Class CSWindowManager
-	// =========================================================================
-	// for handling the window managment
-	// 
+	/**
+	 * =========================================================================
+	 * Class CSWindowManager
+	 * =========================================================================
+	 * for handling the window managment
+	 */ 
 	public class CSWindowManager
 	{
 		// =====================================================================
@@ -83,11 +84,10 @@ package as3.aeronaut
 		
 		private var loadingWindowFilename:String = null;
 		
-		// =====================================================================
-		// Constructor
-		// =====================================================================
 		/**
+		 * =====================================================================
 		 * Constructor
+		 * =====================================================================
 		 * 
 		 * @param cont container for all CSWindows
 		 */
@@ -368,8 +368,10 @@ package as3.aeronaut
 		{
 			if( this.myWindowLoader != null )
 				return;
-				
-			var loadedxml:XML = XMLProcessor.loadXML(filename);
+			
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			var loadedxml:XML = aexml.getXML();
 			
 			if( loadedxml == null )
 				return;

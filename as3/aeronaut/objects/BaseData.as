@@ -27,8 +27,10 @@ package as3.aeronaut.objects
 	import as3.hv.core.console.Console;
 	import as3.hv.core.console.DebugLevel;
 	
+	import as3.hv.core.xml.AbstractXMLProcessor;
+	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 		
 	import as3.aeronaut.objects.baseData.*;
 	
@@ -73,12 +75,15 @@ package as3.aeronaut.objects
 					+ Globals.PATH_DATA 
 					+ "baseData" 
 					+ Globals.AE_EXT;
-			this.myXML = XMLProcessor.loadXML(file);
+			
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			this.myXML = aexml.getXML();
 			
 			if( this.myXML == null ) 
 				return;
 			
-			if( XMLProcessor.checkDoc(this.myXML) == false ) 
+			if( AbstractXMLProcessor.checkDoc(this.myXML) == false ) 
 				return;
 			
 			ready = true;

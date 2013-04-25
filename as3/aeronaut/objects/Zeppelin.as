@@ -28,13 +28,17 @@ package as3.aeronaut.objects
 	import as3.hv.core.console.DebugLevel;
 	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
+	
+	import as3.hv.core.xml.AbstractXMLProcessor;
 	
 	
-	// =========================================================================
-	// Zeppelin
-	// =========================================================================
-	// TODO 
+	/**
+	 * =========================================================================
+	 * Zeppelin
+	 * =========================================================================
+	 * TODO
+	 */
 	public class Zeppelin 
 			extends CSBaseObject 
 			implements ICSBaseObject
@@ -50,9 +54,11 @@ package as3.aeronaut.objects
 		// =====================================================================
 		
 		
-		// =====================================================================
-		// Contructor
-		// =====================================================================
+		/**
+		 * =====================================================================
+		 * Contructor
+		 * =====================================================================
+		 */
 		public function Zeppelin()
 		{
 			super();
@@ -72,7 +78,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if( XMLProcessor.checkDoc(xmldoc)
+			if( AbstractXMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -91,7 +97,7 @@ package as3.aeronaut.objects
 			TODO
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
 					<zeppelin version="FILE_VERSION">
 						TODO
 					</zeppelin>
@@ -108,7 +114,9 @@ package as3.aeronaut.objects
 		public function loadFile(filename:String):void
 		{
 			this.myFilename = filename;
-			var loadedxml:XML = XMLProcessor.loadXML(filename);
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			var loadedxml:XML = aexml.getXML();
 			
 			if( Zeppelin.checkXML(loadedxml) ) 
 			{

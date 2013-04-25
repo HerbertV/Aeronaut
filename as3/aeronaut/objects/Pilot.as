@@ -29,8 +29,10 @@ package as3.aeronaut.objects
 	
 	import as3.hv.core.utils.StringHelper;
 	
+	import as3.hv.core.xml.AbstractXMLProcessor;
+	
 	import as3.aeronaut.Globals;
-	import as3.aeronaut.XMLProcessor;
+	import as3.aeronaut.AeronautXMLProcessor;
 		
 	import as3.aeronaut.objects.pilot.*;
 	
@@ -84,7 +86,7 @@ package as3.aeronaut.objects
 		public static const BASE_EP_HERO:int = 450;
 		public static const BASE_EP_SIDEKICK:int = 350;
 	
-// TODO ADJUST
+// TODO Adjust EP values
 		// copilot bomber/cargo SS3 CO 3 NT 3 other 1
 		public static const BASE_EP_COPILOT:int = 100;
 		// CO3 DE? SH ? other 1
@@ -216,7 +218,7 @@ package as3.aeronaut.objects
 		 */
 		public static function checkXML(xmldoc:XML):Boolean
 		{
-			if( XMLProcessor.checkDoc(xmldoc)
+			if( AbstractXMLProcessor.checkDoc(xmldoc)
 					&& xmldoc.child(BASE_TAG).length() == 1 ) 
 				return true;
 			
@@ -234,7 +236,7 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			
 			myXML =
-				<aeronaut XMLVersion={XMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
 					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="false">
 						<name>New Pilot</name>
 						<stats naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" bailOutBonus="0" />
@@ -263,7 +265,10 @@ package as3.aeronaut.objects
 		public function loadFile(filename:String):void
 		{
 			this.myFilename = filename;
-			var loadedxml:XML = XMLProcessor.loadXML(filename);
+			
+			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			aexml.loadXML(filename);
+			var loadedxml:XML = aexml.getXML();
 			
 			if( Pilot.checkXML(loadedxml) ) 
 			{
@@ -392,13 +397,20 @@ package as3.aeronaut.objects
 				this.setStartEP(BASE_EP_SIDEKICK);
 			else
 				this.setStartEP(BASE_EP_OTHER);
+			
+			//update pathes for squadlinks
+			if( this.getSquadronID() != "" )
+				this.setSquadronID(
+						Globals.PATH_DATA 
+							+ Globals.PATH_SQUADRON 
+							+ this.getSquadronID()
+					);
 				
 			Console.getInstance().writeln(
 				"XML after update:", 
 				DebugLevel.INFO, 
 				StringHelper.replaceHTMLbrackets(this.myXML.toString())
 			);
-// TODO updated pathes for Squad link (data+squad)
 		}
 		
 		/**
