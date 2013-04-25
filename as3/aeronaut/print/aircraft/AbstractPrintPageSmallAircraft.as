@@ -188,7 +188,7 @@ package as3.aeronaut.print.aircraft
 			if( copilot != null ) {
 				this.lblPilotName.appendText("\nCo-pilot: " + copilot.getName()); 
 			} else {
-				this.lblPilotName.y = 89;
+				this.lblPilotName.y = 69;
 			}
 			
 			var squad:Squadron = SheetAircraft(this.mySheet).getSquadron();

@@ -9,7 +9,7 @@
     
     <country ID="CY_001"/>
     
-    <squadron ID="BlackSwans.ae"/>
+    <squadron ID="data\squadrons\BlackSwans.ae"/>
     
     <planename>Your Planename</planename>
     

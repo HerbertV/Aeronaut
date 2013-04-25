@@ -21,6 +21,8 @@
  */
 package as3.aeronaut.module.aircraft
 {
+	import mdm.*;
+	
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	
@@ -32,7 +34,8 @@ package as3.aeronaut.module.aircraft
 	
 	import as3.aeronaut.module.CSWindowAircraft;
 	
-	import as3.aeronaut.objects.Aircraft;	
+	import as3.aeronaut.objects.Aircraft;
+	import as3.aeronaut.objects.Pilot;
 	
 	import as3.hv.zinc.z3.xml.XMLFileList;
 	
@@ -186,8 +189,8 @@ package as3.aeronaut.module.aircraft
 			var arrFLPilots:Array = fl.generate( 
 					mdm.Application.path, 
 					Globals.PATH_DATA 
-						+ Globals.PATH_AIRCRAFT,
-					Aircraft.BASE_TAG
+						+ Globals.PATH_PILOT,
+					Pilot.BASE_TAG
 				);	
 		
 // TODO add filter for copilots and other crews

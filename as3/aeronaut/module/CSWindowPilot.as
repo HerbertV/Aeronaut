@@ -40,6 +40,7 @@ package as3.aeronaut.module
 	import as3.hv.core.net.ImageLoader;
 	import as3.hv.core.net.BinaryLoader;
 	import as3.hv.zinc.z3.xml.XMLFileList;
+	import as3.hv.zinc.z3.xml.XMLFileListElement;
 	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
@@ -451,8 +452,6 @@ package as3.aeronaut.module
 				var squad:Squadron = new Squadron();
 				squad.loadFile(
 						mdm.Application.path
-							+ Globals.PATH_DATA
-							+ Globals.PATH_SQUADRON 
 							+ this.lastSelectedSquadron
 					);
 				if( squad.getSrcLogo() != "" && squad.getSrcLogo() != null )
@@ -674,11 +673,13 @@ package as3.aeronaut.module
 						+ Globals.PATH_SQUADRON,
 					Squadron.BASE_TAG
 				);	
-
+			
+			fl.sort(arrFLSquad);
+			
 			for( var i:int=0; i< arrFLSquad.length; i++ )
 				this.form.pdSquadron.addSelectionItem(
-						arrFLSquad[i].viewname,
-						arrFLSquad[i].filename
+						XMLFileListElement(arrFLSquad[i]).viewname,
+						XMLFileListElement(arrFLSquad[i]).filename
 					); 
 			
 			// TODO add new filtering (subtype, used for aircraft canLevel)
@@ -1236,8 +1237,6 @@ package as3.aeronaut.module
 				var squad:Squadron = new Squadron();
 				squad.loadFile(
 						mdm.Application.path
-							+ Globals.PATH_DATA
-							+ Globals.PATH_SQUADRON 
 							+ filename
 					);
 				

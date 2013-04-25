@@ -71,13 +71,13 @@ package as3.aeronaut.objects
 					+ Globals.AE_EXT;
 			
 			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
-			aexml.loadXML(filename);
+			aexml.loadXML(file);
 			this.myXML = aexml.getXML();
 					
 			if( this.myXML == null ) 
 				return;
 			
-			if( XMLProcessor.checkDoc(this.myXML) == false ) 
+			if( AbstractXMLProcessor.checkDoc(this.myXML) == false ) 
 				return;
 			
 			ready = true;

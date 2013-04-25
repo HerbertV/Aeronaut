@@ -498,7 +498,14 @@ package as3.aeronaut.module
 				if( this.myObject.getFilename() != "" )
 				{
 					var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
-					fl.addFilter( "loadout", "srcAircraft", (this.getFilename()) );
+					fl.addFilter( 
+							"loadout", 
+							"srcAircraft", 
+							new Array( Globals.PATH_DATA 
+									+ Globals.PATH_LOADOUT
+									+ this.getFilename()
+								) 
+						);
 					
 					var arrFLLoadout:Array = fl.generate( 
 							mdm.Application.path, 
@@ -507,6 +514,8 @@ package as3.aeronaut.module
 							Loadout.BASE_TAG
 						);
 					
+					fl.sort(arrFLLoadout);
+				
 					for( var i:int=0; i< arrFLLoadout.length; i++ ) 
 						this.form.pdLoadout.addSelectionItem(
 								arrFLLoadout[i].viewname,
