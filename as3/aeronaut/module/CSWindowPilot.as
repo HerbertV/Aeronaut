@@ -39,6 +39,7 @@ package as3.aeronaut.module
 	import as3.hv.core.utils.StringHelper;
 	import as3.hv.core.net.ImageLoader;
 	import as3.hv.core.net.BinaryLoader;
+	
 	import as3.hv.zinc.z3.xml.XMLFileList;
 	import as3.hv.zinc.z3.xml.XMLFileListElement;
 	
@@ -254,7 +255,6 @@ package as3.aeronaut.module
 				);
 			
 			this.form.pdLinkedTo.setEmptySelectionText("not linked", true);
-// TODO this.form.pdLinkedTo
 
 			this.form.btnImportCadet.setupTooltip(
 					Globals.myTooltip,
@@ -664,10 +664,12 @@ package as3.aeronaut.module
 		{
 			this.form.pdSquadron.clearSelectionItemList();
 			this.form.pdSquadron.setEmptySelectionText("",true);
-
+			this.form.pdLinkedTo.clearSelectionItemList();
+			this.form.pdLinkedTo.setEmptySelectionText("not linked", true);
+			
+			var fle:XMLFileListElement;
 			var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
-			
-			
+						
 			var arrFLSquad:Array = fl.generate( 
 					mdm.Application.path, 
 					Globals.PATH_DATA 
@@ -677,22 +679,40 @@ package as3.aeronaut.module
 			
 			fl.sort(arrFLSquad);
 			
-			for( var i:int=0; i< arrFLSquad.length; i++ )
-				this.form.pdSquadron.addSelectionItem(
-						XMLFileListElement(arrFLSquad[i]).viewname,
-						XMLFileListElement(arrFLSquad[i]).filename
-					); 
-			
-			// TODO add new filtering (subtype, used for aircraft canLevel)
-			//fl.addUserDataQuery("pilot", "subtype");
-			
-			/*
-			if( this.rbgType.getValue() == Pilot.TYPE_GUNNER )
+			for ( var i:int = 0; i < arrFLSquad.length; i++ )
 			{
-				this.form.pdLinkedTo
+				fle = XMLFileListElement(arrFLSquad[i]);
+				this.form.pdSquadron.addSelectionItem(
+						fle.viewname,
+						fle.filename
+					); 
 			}
-			*/
 			
+			if( this.form.pdLinkedTo.getIsActive() )
+			{
+				fl.addUserDataQuery("pilot", "subtype");
+				//filters for aircraft pilots
+				fl.addFilter("pilot", "useForAircrafts", new Array("true"));
+				fl.addFilter("pilot", "canLevelUp", new Array("true"));
+				
+				var arrFLPilot:Array = fl.generate( 
+						mdm.Application.path, 
+						Globals.PATH_DATA 
+							+ Globals.PATH_PILOT,
+						Pilot.BASE_TAG
+					);	
+				fl.sort(arrFLPilot);
+			
+				// fill the pilots into linked to
+				for( i = 0; i< arrFLPilot.length; i++ ) 
+				{
+					fle = XMLFileListElement(arrFLPilot[i]);
+					this.form.pdLinkedTo.addSelectionItem(
+							CSWindow.assembleCrewPulldownLabel(fle),
+							fle.filename
+						); 
+				}
+			}
 		}
 		
 		/**

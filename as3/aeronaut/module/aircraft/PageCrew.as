@@ -32,6 +32,7 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.gui.*;
 	
+	import as3.aeronaut.module.CSWindow;
 	import as3.aeronaut.module.CSWindowAircraft;
 	
 	import as3.aeronaut.objects.Aircraft;
@@ -39,7 +40,6 @@ package as3.aeronaut.module.aircraft
 	
 	import as3.hv.zinc.z3.xml.XMLFileList;
 	import as3.hv.zinc.z3.xml.XMLFileListElement;
-	import as3.hv.zinc.z3.xml.XMLFileListUserDataQuery;
 	
 	// =========================================================================
 	// Class PageCrew
@@ -220,7 +220,7 @@ package as3.aeronaut.module.aircraft
 			{
 				fle = XMLFileListElement(arrFiltered[i]);
 				this.pdPilot.addSelectionItem(
-						assembleCrewPulldownLabel(fle),
+						CSWindow.assembleCrewPulldownLabel(fle),
 						fle.filename
 					); 
 			}
@@ -243,34 +243,12 @@ package as3.aeronaut.module.aircraft
 			{
 				fle = XMLFileListElement(arrFiltered[i]);
 				this.pdCoPilot.addSelectionItem(
-						assembleCrewPulldownLabel(fle),
+						CSWindow.assembleCrewPulldownLabel(fle),
 						fle.filename
 					); 
 			}
 			
 // TODO add filter for other crews after new pulldowns are in fla
-		}
-		
-		/**
-		 * ---------------------------------------------------------------------
-		 * assembleCrewPulldownLabel
-		 * ---------------------------------------------------------------------
-		 * @param fle
-		 * 
-		 * @return
-		 */
-		private function assembleCrewPulldownLabel(
-				fle:XMLFileListElement				
-			):String
-		{
-			var subtype:String = fle.getUserData(
-					XMLFileListUserDataQuery.createKey("pilot", "subtype")
-				);
-				
-			return fle.viewname 
-					+ " ("
-					+ Pilot.getSubTypeLabel(subtype)
-					+ ")";
 		}
 		
 		

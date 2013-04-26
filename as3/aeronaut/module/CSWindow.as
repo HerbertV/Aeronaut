@@ -29,8 +29,13 @@ package as3.aeronaut.module
 	import fl.transitions.TweenEvent;
  	import fl.transitions.easing.*;
 	
+	import as3.hv.zinc.z3.xml.XMLFileListElement;
+	import as3.hv.zinc.z3.xml.XMLFileListUserDataQuery;
+	
 	import as3.aeronaut.Globals;
 	import as3.aeronaut.CSWindowManager;
+	
+	import as3.aeronaut.objects.Pilot;
 	
 	import as3.aeronaut.gui.ICSStyleable;
 	import as3.aeronaut.gui.CSStyle;
@@ -102,6 +107,28 @@ package as3.aeronaut.module
 		// =====================================================================
 		// Functions
 		// =====================================================================
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * assembleCrewPulldownLabel
+		 * ---------------------------------------------------------------------
+		 * @param fle
+		 * 
+		 * @return
+		 */
+		public static function assembleCrewPulldownLabel(
+				fle:XMLFileListElement				
+			):String
+		{
+			var subtype:String = fle.getUserData(
+					XMLFileListUserDataQuery.createKey("pilot", "subtype")
+				);
+				
+			return fle.viewname 
+					+ " ("
+					+ Pilot.getSubTypeLabel(subtype)
+					+ ")";
+		}
 		
 		/**
 		 * ---------------------------------------------------------------------
