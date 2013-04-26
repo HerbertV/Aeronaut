@@ -48,7 +48,7 @@ package as3.aeronaut.objects
 		// =====================================================================
 		// Constants
 		// =====================================================================
-		public static const FILE_VERSION:String = "2.0";
+		public static const FILE_VERSION:String = "2.1";
 		public static const BASE_TAG:String = "loadout";
 		
 		
@@ -184,6 +184,18 @@ package as3.aeronaut.objects
 			if( this.myXML.loadout.child("bombs").length() == 0 )
 				this.myXML.loadout.appendChild(<bombs />);
 			
+			//update to 2.1
+			//adjust pathe to aircraft
+			//update pathes for squadlinks
+			if ( this.getSrcAircraft() != "" )
+			{
+				if( this.getSrcAircraft().indexOf(Globals.PATH_DATA) == -1 )
+					this.setSrcAircraft(
+							Globals.PATH_DATA 
+								+ Globals.PATH_AIRCRAFT
+								+ this.getSrcAircraft()
+						);
+			}	
 			// finaly update version
 			this.myXML.loadout.@version = Loadout.FILE_VERSION;
 			

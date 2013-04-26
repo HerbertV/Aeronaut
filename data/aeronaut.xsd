@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Herbert Veitengruber (privat) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="aeronaut">
 		<xs:annotation>
@@ -653,7 +652,7 @@ maxSC max special characteristics</xs:documentation>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="version" type="xs:string" use="required" fixed="2.0"/>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="2.1"/>
 			<xs:attribute name="srcAircraft" type="url"/>
 		</xs:complexType>
 	</xs:element>

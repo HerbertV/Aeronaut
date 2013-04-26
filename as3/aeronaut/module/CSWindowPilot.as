@@ -666,7 +666,8 @@ package as3.aeronaut.module
 			this.form.pdSquadron.setEmptySelectionText("",true);
 
 			var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
-					
+			
+			
 			var arrFLSquad:Array = fl.generate( 
 					mdm.Application.path, 
 					Globals.PATH_DATA 
@@ -683,6 +684,8 @@ package as3.aeronaut.module
 					); 
 			
 			// TODO add new filtering (subtype, used for aircraft canLevel)
+			//fl.addUserDataQuery("pilot", "subtype");
+			
 			/*
 			if( this.rbgType.getValue() == Pilot.TYPE_GUNNER )
 			{

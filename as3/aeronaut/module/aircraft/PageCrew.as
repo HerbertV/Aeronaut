@@ -38,6 +38,8 @@ package as3.aeronaut.module.aircraft
 	import as3.aeronaut.objects.Pilot;
 	
 	import as3.hv.zinc.z3.xml.XMLFileList;
+	import as3.hv.zinc.z3.xml.XMLFileListElement;
+	import as3.hv.zinc.z3.xml.XMLFileListUserDataQuery;
 	
 	// =========================================================================
 	// Class PageCrew
@@ -185,28 +187,92 @@ package as3.aeronaut.module.aircraft
 			this.pdCoPilot.setEmptySelectionText("",true);
 			
 			
+			var i:int = 0;
+			var arrFiltered:Array;
+			var fle:XMLFileListElement;
 			var fl:XMLFileList = new XMLFileList(Globals.AE_EXT, "name");
-			var arrFLPilots:Array = fl.generate( 
+			fl.addUserDataQuery("pilot", "subtype");
+			
+			//filters for aircraft pilots
+			fl.addFilter("pilot", "useForAircrafts", new Array("true"));
+			
+			var arrListAll:Array = fl.generate( 
 					mdm.Application.path, 
 					Globals.PATH_DATA 
 						+ Globals.PATH_PILOT,
 					Pilot.BASE_TAG
 				);	
+			fl.sort(arrListAll);
 		
-// TODO add filter for copilots and other crews
-// copilot filter is differnet for HeavyFighters and Bombers/Cargos
-			for( var i:int = 0; i< arrFLPilots.length; i++ ) 
+			// now choose only pilots and npcs
+			fl.clearFilters();
+			fl.addFilter(
+					"pilot", 
+					"type", 
+					new Array(
+							Pilot.TYPE_PILOT, 
+							Pilot.TYPE_NPC
+						)
+				);
+			arrFiltered = fl.filter(arrListAll);
+			// fill the pilots
+			for( i = 0; i< arrFiltered.length; i++ ) 
 			{
+				fle = XMLFileListElement(arrFiltered[i]);
 				this.pdPilot.addSelectionItem(
-						arrFLPilots[i].viewname,
-						arrFLPilots[i].filename
-					); 
-				this.pdCoPilot.addSelectionItem(
-						arrFLPilots[i].viewname,
-						arrFLPilots[i].filename
+						assembleCrewPulldownLabel(fle),
+						fle.filename
 					); 
 			}
+			
+			// now get copilots 
+			fl.clearFilters();
+			fl.addFilter(
+					"pilot", 
+					"subtype", 
+					new Array(
+							Pilot.SUBTYPE_COPILOT, 
+							Pilot.SUBTYPE_NPC
+						)
+				);
+// TODO add filter for can level depending on heavyFighter and Bombers/Cargos				
+				
+			arrFiltered = fl.filter(arrListAll);
+			// fill the pilots
+			for( i = 0; i< arrFiltered.length; i++ ) 
+			{
+				fle = XMLFileListElement(arrFiltered[i]);
+				this.pdCoPilot.addSelectionItem(
+						assembleCrewPulldownLabel(fle),
+						fle.filename
+					); 
+			}
+			
+// TODO add filter for other crews after new pulldowns are in fla
 		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * assembleCrewPulldownLabel
+		 * ---------------------------------------------------------------------
+		 * @param fle
+		 * 
+		 * @return
+		 */
+		private function assembleCrewPulldownLabel(
+				fle:XMLFileListElement				
+			):String
+		{
+			var subtype:String = fle.getUserData(
+					XMLFileListUserDataQuery.createKey("pilot", "subtype")
+				);
+				
+			return fle.viewname 
+					+ " ("
+					+ Pilot.getSubTypeLabel(subtype)
+					+ ")";
+		}
+		
 		
 		/**
 		 * ---------------------------------------------------------------------

@@ -298,7 +298,9 @@ package as3.aeronaut.module
 							+ Globals.PATH_AIRCRAFT,
 						Aircraft.BASE_TAG
 					);	
-			
+					
+			fl.sort(flAircraft);
+					
 			for( var i:int=0; i< flAircraft.length; i++ ) 
 				this.form.pdAircraft.addSelectionItem(
 						flAircraft[i].viewname,
@@ -456,10 +458,7 @@ package as3.aeronaut.module
 			if( filename == "" )
 				return;
 				
-			var file:String = mdm.Application.path
-					+ Globals.PATH_DATA 
-					+ Globals.PATH_AIRCRAFT 
-					+ filename;
+			var file:String = mdm.Application.path + filename;
 			this.myAircraft = new Aircraft();
 			this.myAircraft.loadFile(file);
 		}
