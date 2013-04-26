@@ -946,12 +946,18 @@ package as3.aeronaut.module
 		{
 			this.form.lblTotalEP.text = String(intTotalEP);
 			// intCurrentEP is only updated after a reload.
-			this.form.lblCurrentEP.text = String(
-					intCurrentEP 
-						- intStatEP 
-						- intFeatEP 
-						- intLanguageEP
-				);
+			
+			if( this.form.rbtnCanLevelUp.getIsSelected() )
+			{
+				this.form.lblCurrentEP.text = String(
+						intCurrentEP 
+							- intStatEP 
+							- intFeatEP 
+							- intLanguageEP
+					);
+			} else {
+				this.form.lblCurrentEP.text = "0";
+			}
 		}
 		
 		/**
@@ -963,7 +969,7 @@ package as3.aeronaut.module
 		{
 			this.form.pdSubType.clearSelectionItemList();
 			this.form.pdSubType.setEmptySelectionText("", false);
-			this.form.rbtnCanLevelUp.setSelected(false);
+			this.form.rbtnCanLevelUp.setSelected(true);
 			this.form.rbtnCanLevelUp.setActive(true);
 			this.form.pdLinkedTo.clearSelection();
 			this.form.pdLinkedTo.setActive(false);
@@ -991,7 +997,7 @@ package as3.aeronaut.module
 						Pilot.SUBTYPE_CAPTAIN
 					);
 				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_HERO);
-				this.form.rbtnCanLevelUp.setSelected(true);
+				this.lastSelectedSubType = Pilot.SUBTYPE_HERO;
 				this.form.rbtnCanLevelUp.setActive(false);
 				
 			} else if( this.lastSelectedType == Pilot.TYPE_CREW ) {
@@ -1017,6 +1023,7 @@ package as3.aeronaut.module
 					);
 				
 				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_COPILOT);
+				this.lastSelectedSubType = Pilot.SUBTYPE_COPILOT;
 				
 			} else if( this.lastSelectedType == Pilot.TYPE_NPC ) {
 				this.form.pdSubType.addSelectionItem(
@@ -1024,6 +1031,8 @@ package as3.aeronaut.module
 						Pilot.SUBTYPE_NPC
 					);
 				this.form.pdSubType.setActiveSelectionItem(Pilot.SUBTYPE_NPC);
+				this.lastSelectedSubType = Pilot.SUBTYPE_NPC;
+				
 				this.form.rbtnCanLevelUp.setActive(false);
 			} 
 		}
@@ -1297,8 +1306,6 @@ package as3.aeronaut.module
 					return;
 				this.lastSelectedType =  pd.getIDForCurrentSelection();
 				this.updateGUIByType();
-				// update subtyp as well
-				this.lastSelectedSubType =  pd.getIDForCurrentSelection();
 			}
 			if( pd == this.form.pdSubType )
 			{

@@ -108,7 +108,8 @@ package as3.aeronaut.module.pilot
 				max = 11;
 				
 			if( pilotType != Pilot.TYPE_NPC 
-					&& !this.winPilot.canPilotLevelUp() ) 
+					&& !this.winPilot.form.rbtnCanLevelUp.getIsSelected()
+				) 
 			{
 // TODO  if linked to is implemented use other pilot stats -1 
 				this.numStepNT.setupSteps(0, max, 0, 1);
