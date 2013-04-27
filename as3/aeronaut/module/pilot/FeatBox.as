@@ -112,7 +112,7 @@ package as3.aeronaut.module.pilot
 			
 			this.listFeat.clearList();
 			
-			if( !obj.canLevelUp() ) 
+			if( !winPilot.form.rbtnCanLevelUp.getIsSelected() ) 
 			{
 				this.btnAddFeat.setActive(false);
 				this.pdFeat.setActive(false);
@@ -238,7 +238,7 @@ package as3.aeronaut.module.pilot
 		public function calcEP():void
 		{
 			if( !Globals.myRuleConfigs.getIsPilotFeatsActive()
-				|| !this.winPilot.canPilotLevelUp()	)
+				|| !this.winPilot.form.rbtnCanLevelUp.getIsSelected() )
 			{
 				this.winPilot.setFeatEP(0);
 				return;

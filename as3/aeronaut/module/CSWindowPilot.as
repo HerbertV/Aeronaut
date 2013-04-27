@@ -823,22 +823,25 @@ package as3.aeronaut.module
 		public function validateForm():void
 		{
 			var valid:Boolean = true;
-			if( (intCurrentEP - intStatEP - intFeatEP - intLanguageEP) < 0 ) 
-				valid = false;
 			
-			this.setTextFieldValid(this.form.lblCurrentEP, valid);
-			
-			if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
-			{
-				// the eleven checks
-				if( this.form.myStatsBar.hasElevenStat() 
-						&& !this.form.myFeatBox.hasAceOfAces() )
+			if( !this.lastSelectedType == Pilot.TYPE_NPC )
+			{				
+				if( (intCurrentEP - intStatEP - intFeatEP - intLanguageEP) < 0 ) 
 					valid = false;
 				
-				if( this.form.myStatsBar.hasToMuchElevenStats() )
-					valid = false;
+				this.setTextFieldValid(this.form.lblCurrentEP, valid);
+				
+				if( Globals.myRuleConfigs.getIsPilotFeatsActive() )
+				{
+					// the eleven checks
+					if( this.form.myStatsBar.hasElevenStat() 
+							&& !this.form.myFeatBox.hasAceOfAces() )
+						valid = false;
+					
+					if( this.form.myStatsBar.hasToMuchElevenStats() )
+						valid = false;
+				}
 			}
-			
 			this.setValid(valid);
 		}
 		
@@ -947,16 +950,17 @@ package as3.aeronaut.module
 			this.form.lblTotalEP.text = String(intTotalEP);
 			// intCurrentEP is only updated after a reload.
 			
-			if( this.form.rbtnCanLevelUp.getIsSelected() )
+			if ( !this.form.rbtnCanLevelUp.getIsSelected()
+					|| this.lastSelectedType == Pilot.TYPE_NPC )
 			{
+				this.form.lblCurrentEP.text = "0";
+			} else {
 				this.form.lblCurrentEP.text = String(
 						intCurrentEP 
 							- intStatEP 
 							- intFeatEP 
 							- intLanguageEP
 					);
-			} else {
-				this.form.lblCurrentEP.text = "0";
 			}
 		}
 		
@@ -1132,7 +1136,12 @@ package as3.aeronaut.module
 			
 			this.form.myStatsBar.init(this);
 			this.form.myFeatBox.init(this);
-			this.form.myLanguageBox.init(this);			
+			this.form.myLanguageBox.init(this);		
+			
+			this.form.myStatsBar.calcEP();
+			this.form.myFeatBox.calcEP();
+			this.form.myLanguageBox.calcEP();
+			this.calcEP();
 		}
 		
 		/**
@@ -1315,10 +1324,7 @@ package as3.aeronaut.module
 				this.lastSelectedSubType =  pd.getIDForCurrentSelection();
 			}
 			this.updateGUIBySubType();
-				
-			this.form.myStatsBar.calcEP();
-			this.calcEP();
-				
+			
 			this.validateForm();
 			this.setSaved(false);
 		}
@@ -1365,7 +1371,13 @@ package as3.aeronaut.module
 					this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
 				}
 			}
+			this.form.myStatsBar.init(this);
+			this.form.myFeatBox.init(this);
+			this.form.myLanguageBox.init(this);		
 			
+			this.form.myStatsBar.calcEP();
+			this.form.myFeatBox.calcEP();
+			this.form.myLanguageBox.calcEP();
 			this.calcEP();
 		}
 		

@@ -86,17 +86,16 @@ package as3.aeronaut.objects
 		public static const BASE_EP_HERO:int = 450;
 		public static const BASE_EP_SIDEKICK:int = 350;
 	
-// TODO Adjust EP values
 		// copilot bomber/cargo SS3 CO 3 NT 3 other 1
-		public static const BASE_EP_COPILOT:int = 100;
+		public static const BASE_EP_COPILOT:int = 110;
 		// CO3 DE? SH ? other 1
-		public static const BASE_EP_BOMBARDIER:int = 100;
+		public static const BASE_EP_BOMBARDIER:int = 80;
 		// CO3 DE3 QD ? other 1
-		public static const BASE_EP_GUNNER:int = 100;
+		public static const BASE_EP_GUNNER:int = 80;
 		// CO3 SH ? other 1
-		public static const BASE_EP_CREWCHIEF:int = 100;
+		public static const BASE_EP_CREWCHIEF:int = 60;
 		// CO3 QD ? other 1
-		public static const BASE_EP_LOADMASTER:int = 100;
+		public static const BASE_EP_LOADMASTER:int = 60;
 			
 		public static const BASE_EP_OTHER:int = 0;
 		

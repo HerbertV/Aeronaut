@@ -112,7 +112,7 @@ package as3.aeronaut.module.pilot
 					
 			this.listLanguage.clearList();
 			
-			if( !obj.canLevelUp() ) 
+			if( !winPilot.form.rbtnCanLevelUp.getIsSelected() ) 
 			{
 				this.btnAddLanguage.setActive(false);
 				this.pdLanguage.setActive(false);
@@ -213,7 +213,7 @@ package as3.aeronaut.module.pilot
 		public function calcEP():void
 		{
 			if( !Globals.myRuleConfigs.getIsPilotFeatsActive()
-				|| !this.winPilot.canPilotLevelUp()	)
+				|| !this.winPilot.form.rbtnCanLevelUp.getIsSelected() )
 			{
 				this.winPilot.setLanguageEP(0);
 				return;

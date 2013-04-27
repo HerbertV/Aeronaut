@@ -336,7 +336,7 @@ package as3.aeronaut.module.pilot
 			var obj:Pilot = Pilot(this.winPilot.getObject());
 			var ep:int = 0;
 			
-			if( !winPilot.canPilotLevelUp() )
+			if( !winPilot.form.rbtnCanLevelUp.getIsSelected())
 			{
 				this.winPilot.setStatsEP(0);
 				return;
