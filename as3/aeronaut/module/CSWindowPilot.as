@@ -111,6 +111,8 @@ package as3.aeronaut.module
 		private var lastSelectedNation:String = "";
 		private var lastSelectedSquadron:String = "";
 		
+		private var lastSelectedLinkedTo:String = "";
+		
 		private var intMissionCount:int = 0;
 		private var intKillCount:int = 0;
 		private var intCraftLostCount:int = 0;
@@ -255,7 +257,11 @@ package as3.aeronaut.module
 				);
 			
 			this.form.pdLinkedTo.setEmptySelectionText("not linked", true);
-
+			this.form.pdLinkedTo.addEventListener(
+					MouseEvent.MOUSE_DOWN,
+					linkedToChangedHandler
+				);	
+			
 			this.form.btnImportCadet.setupTooltip(
 					Globals.myTooltip,
 					"Import CADET Pilot"
@@ -310,6 +316,10 @@ package as3.aeronaut.module
 			this.form.btnImportCadet.removeEventListener(
 					MouseEvent.MOUSE_DOWN,
 					importCadetHandler
+				);	
+			this.form.pdLinkedTo.removeEventListener(
+					MouseEvent.MOUSE_DOWN,
+					linkedToChangedHandler
 				);	
 				
 			this.form.myStatsBar.dispose();
@@ -405,13 +415,32 @@ package as3.aeronaut.module
 			
 			this.form.txtName.text = this.myObject.getName();
 			
+			this.form.rbtnCanLevelUp.setSelected(this.myObject.canLevelUp());
+			this.lastSelectedLinkedTo = this.myObject.getLinkedTo();
+			if( this.lastSelectedLinkedTo != "" )
+			{
+				this.form.pdLinkedTo.setActiveSelectionItem(
+						this.lastSelectedLinkedTo
+					);
+			}
+
 			this.form.pdType.setActiveSelectionItem(this.myObject.getType());
 			this.lastSelectedType = this.myObject.getType();
 			this.updateGUIByType();
 			this.form.pdSubType.setActiveSelectionItem(this.myObject.getSubType());
 			this.lastSelectedSubType = this.myObject.getSubType();
 			this.updateGUIBySubType();
+			
 			this.form.rbtnCanLevelUp.setSelected(this.myObject.canLevelUp());
+			this.lastSelectedLinkedTo = this.myObject.getLinkedTo();
+			if( this.lastSelectedLinkedTo != "" )
+			{
+				this.form.pdLinkedTo.setActiveSelectionItem(
+						this.lastSelectedLinkedTo
+					);
+			}
+			if( !this.myObject.canLevelUp() )
+				this.form.pdLinkedTo.setActive(true);
 			
 			this.form.lblBailOutBonus.text = String(
 					this.myObject.getBailOutBonus()
@@ -482,7 +511,6 @@ package as3.aeronaut.module
 				this.form.rbtnGenderFemale.setActive(false);
 			}
 			
-// TODO this.form.pdLinkedTo
 			this.form.rbtnUsedForAircrafts.setSelected(
 					this.myObject.isUsedForAircrafts()
 				);
@@ -650,8 +678,16 @@ package as3.aeronaut.module
 			this.myObject.setUsedForZeppelins(
 					this.form.rbtnUsedForZeppelins.getIsSelected()
 				);	
-				
-// TODO this.form.pdLinkedTo
+			
+			if (this.form.pdLinkedTo.getIDForCurrentSelection() 
+					== CSPullDown.ID_EMPTYSELECTION ) 
+			{
+				this.myObject.setLinkedTo("");
+			} else {
+				this.myObject.setLinkedTo(
+						this.form.pdLinkedTo.getIDForCurrentSelection()
+					);
+			}	
 		}
 		
 		/**
@@ -1326,6 +1362,27 @@ package as3.aeronaut.module
 			this.updateGUIBySubType();
 			
 			this.validateForm();
+			this.setSaved(false);
+		}
+		
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * linkedToChangedHandler
+		 * ---------------------------------------------------------------------
+		 * @param e
+		 */
+		private function linkedToChangedHandler(e:MouseEvent):void
+		{
+			if( !this.form.pdLinkedTo.getIsActive() )
+				return;
+			
+			if( lastSelectedLinkedTo == this.form.pdLinkedTo.getIDForCurrentSelection() )
+				return;
+			
+			this.lastSelectedLinkedTo =  this.form.pdLinkedTo.getIDForCurrentSelection();
+			
+			this.form.myStatsBar.init(this);
 			this.setSaved(false);
 		}
 		

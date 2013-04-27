@@ -1286,6 +1286,30 @@ package as3.aeronaut.objects
 		{
 			myXML.pilot.@useForZeppelins = val;
 		}
+		
+				/**
+		 * ---------------------------------------------------------------------
+		 * getLinkedTo
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLinkedTo():String 
+		{
+			return myXML.pilot.@linkedTo;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * setLinkedTo
+		 * ---------------------------------------------------------------------
+		 * @param val
+		 */
+		public function setLinkedTo(val:String)
+		{
+			myXML.pilot.@linkedTo = val;
+		}
+
+
 
 	}
 }
