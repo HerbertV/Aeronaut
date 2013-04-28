@@ -1,0 +1,31 @@
+<aeronaut XMLVersion="1.0">
+  
+  <pilot version="2.1" type="npc" subtype="npc" linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="true">
+    
+    <name>Guard Green</name>
+    
+    <stats naturalTouch="1" sixthSense="1" deadEye="2" steadyHand="1" constitution="3" quickDraw="2,0" bailOutBonus="0"/>
+    
+    <appearance gender="male" height="5,11" weight="200" hairColor="" eyeColor="" srcFoto=""/>
+    
+    <country ID=""/>
+    
+    <squadron ID=""/>
+    
+    <planename>Your Planename</planename>
+    
+    <noseart src=""/>
+    
+    <description/>
+    
+    <equipment/>
+    
+    <languages></languages>
+    
+    <feats></feats>
+    
+    <logs missions="0" kills="0" craftLost="0" startEP="0" totalEP="0" currentEP="-70" lostConstitutionEP="0"/>
+    
+  </pilot>
+  
+</aeronaut>
