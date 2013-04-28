@@ -415,15 +415,6 @@ package as3.aeronaut.module
 			
 			this.form.txtName.text = this.myObject.getName();
 			
-			this.form.rbtnCanLevelUp.setSelected(this.myObject.canLevelUp());
-			this.lastSelectedLinkedTo = this.myObject.getLinkedTo();
-			if( this.lastSelectedLinkedTo != "" )
-			{
-				this.form.pdLinkedTo.setActiveSelectionItem(
-						this.lastSelectedLinkedTo
-					);
-			}
-
 			this.form.pdType.setActiveSelectionItem(this.myObject.getType());
 			this.lastSelectedType = this.myObject.getType();
 			this.updateGUIByType();
@@ -495,7 +486,6 @@ package as3.aeronaut.module
 			this.form.myDescriptionBox.init(this);
 			this.form.myEquipmentBox.init(this);
 			
-			
 			// locked gui elements that are no
 			// longer changeable
 			if( this.myObject.getIsLocked() )
@@ -517,14 +507,18 @@ package as3.aeronaut.module
 			this.form.rbtnUsedForZeppelins.setSelected(
 					this.myObject.isUsedForZeppelins()
 				);
-
+			
 			this.intMissionCount = this.myObject.getMissionCount();
 			this.intKillCount = this.myObject.getKills();
 			this.intCraftLostCount = this.myObject.getCraftLost();
 		
 			this.intTotalEP = this.myObject.getTotalEP();
 			this.intCurrentEP = this.myObject.getCurrentEP();
-						
+			
+			this.form.myStatsBar.init(this);
+			this.form.myFeatBox.init(this);
+			this.form.myLanguageBox.init(this);		
+			
 			this.form.myFeatBox.calcEP();
 			this.form.myLanguageBox.calcEP();
 			this.form.myStatsBar.calcEP();
@@ -1169,15 +1163,6 @@ package as3.aeronaut.module
 				this.intCurrentEP = Pilot.BASE_EP_GUNNER;
 				this.form.txtStartEP.text = String(Pilot.BASE_EP_GUNNER);
 			}
-			
-			this.form.myStatsBar.init(this);
-			this.form.myFeatBox.init(this);
-			this.form.myLanguageBox.init(this);		
-			
-			this.form.myStatsBar.calcEP();
-			this.form.myFeatBox.calcEP();
-			this.form.myLanguageBox.calcEP();
-			this.calcEP();
 		}
 		
 		/**
@@ -1360,6 +1345,15 @@ package as3.aeronaut.module
 				this.lastSelectedSubType =  pd.getIDForCurrentSelection();
 			}
 			this.updateGUIBySubType();
+			
+			this.form.myStatsBar.init(this);
+			this.form.myFeatBox.init(this);
+			this.form.myLanguageBox.init(this);		
+			
+			this.form.myStatsBar.calcEP();
+			this.form.myFeatBox.calcEP();
+			this.form.myLanguageBox.calcEP();
+			this.calcEP();
 			
 			this.validateForm();
 			this.setSaved(false);
