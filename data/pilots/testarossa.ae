@@ -3,7 +3,8 @@
   <pilot type="pilot" linkedTo="" subtype="sidekick" canLevelUp="true" useForAircrafts="true" useForZeppelins="false" version="2.1">
     
     <name>Testa Rossa</name>
-    <stats naturalTouch="2" sixthSense="2" deadEye="2" steadyHand="2" constitution="3" quickDraw="2,0" bailOutBonus="1"/>
+    
+    <stats naturalTouch="2" sixthSense="2" deadEye="4" steadyHand="2" constitution="3" quickDraw="2,0" bailOutBonus="1"/>
     
     <appearance gender="female" height="6,0" weight="121" hairColor="black" eyeColor="blue" srcFoto="female_advent150x150.jpg"/>
     
@@ -24,7 +25,7 @@
     
     <feats></feats>
     
-    <logs missions="1" kills="0" craftLost="1" totalEP="455" currentEP="355" lostConstitutionEP="0" startEP="350"/>
+    <logs missions="1" kills="0" craftLost="1" totalEP="455" currentEP="305" lostConstitutionEP="0" startEP="350"/>
     
   </pilot>
   

@@ -21,6 +21,8 @@
  */
 package as3.aeronaut.module.pilot
 {
+	import mdm.*;
+	
 	import flash.display.MovieClip;
 	
 	import as3.aeronaut.Globals;
@@ -29,6 +31,7 @@ package as3.aeronaut.module.pilot
 	import as3.aeronaut.gui.CSNumStepperQuickDraw;
 	import as3.aeronaut.gui.NumStepperValueChangedEvent;
 	import as3.aeronaut.gui.ICSStyleable;
+	import as3.aeronaut.gui.CSPullDown;
 	
 	import as3.aeronaut.objects.ICSBaseObject;
 	import as3.aeronaut.objects.Pilot;
@@ -111,19 +114,34 @@ package as3.aeronaut.module.pilot
 					&& !this.winPilot.form.rbtnCanLevelUp.getIsSelected()
 				) 
 			{
-// TODO  if linked to is implemented use other pilot stats -1 
-				this.numStepNT.setupSteps(0, max, 0, 1);
-				this.numStepNT.setActive(false);
-				this.numStepSS.setupSteps(0, max, 0, 1);
-				this.numStepSS.setActive(false);
-				this.numStepDE.setupSteps(0, max, 0, 1);
-				this.numStepDE.setActive(false);
-				this.numStepSH.setupSteps(0, max, 0, 1);
-				this.numStepSH.setActive(false);
-				this.numStepCO.setupSteps(0, max, 0, 1);
-				this.numStepCO.setActive(false);
+				var linked:String = this.winPilot.form.pdLinkedTo.getIDForCurrentSelection() ;
 				
-				this.numStepQD.setupSteps(0, 0, max, 0, 0);
+				if( linked	== CSPullDown.ID_EMPTYSELECTION )
+				{
+					this.numStepNT.setupSteps(0, max, 0, 1);
+					this.numStepSS.setupSteps(0, max, 0, 1);
+					this.numStepDE.setupSteps(0, max, 0, 1);
+					this.numStepSH.setupSteps(0, max, 0, 1);
+					this.numStepCO.setupSteps(0, max, 0, 1);				
+					this.numStepQD.setupSteps(0, 0, max, 0, 0);
+
+				} else {
+					var lp:Pilot = new Pilot();
+					lp.loadFile(mdm.Application.path + linked);
+					
+					this.numStepNT.setupSteps(0, max, lp.getNaturalTouch()-1, 1);
+					this.numStepSS.setupSteps(0, max, lp.getSixthSense()-1, 1);
+					this.numStepDE.setupSteps(0, max, lp.getDeadEye()-1, 1);
+					this.numStepSH.setupSteps(0, max, lp.getSteadyHand()-1, 1);
+					this.numStepCO.setupSteps(0, max, lp.getConstitution(), 1);				
+					this.numStepQD.setupSteps(0, 0, max, (lp.getQuickDraw()[0])-1, 0);
+				}
+				
+				this.numStepNT.setActive(false);
+				this.numStepSS.setActive(false);
+				this.numStepDE.setActive(false);
+				this.numStepSH.setActive(false);
+				this.numStepCO.setActive(false);
 				this.numStepQD.setActive(false);
 				
 			} else {				
