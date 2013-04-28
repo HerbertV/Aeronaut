@@ -4,7 +4,7 @@ ________              ___   ____     Crimson Skies      __             ________
        \______\----/_/ |_/___/_/  \___/_//_/\_,_/\_,_/\__/----/______/
 
 ================================================================================
-Change Log -- Version 1.1.0 alpha 03
+Change Log -- Version 1.1.0 beta 01
 ================================================================================
 for reference numbers see https://github.com/HerbertV/Aeronaut/issues
 
@@ -17,6 +17,7 @@ Version - 1.1.0 beta 01:
 - 	updated Loadout file version to 2.1 for path adjustment
 -	new file list for pulldowns allows you to store pilots, aircrafts, loadouts
 	squadrons into sub folders of thier base folder.
+-	Implemented issue #9: linked to for pilots who cannot level by thier own.
 
 
 Version - 1.1.0 alpha 03: 
