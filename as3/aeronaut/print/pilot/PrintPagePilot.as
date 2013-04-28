@@ -162,13 +162,23 @@ package as3.aeronaut.print.pilot
 				strQD = strQD + "</b>";
 				this.lblQD.htmlText = strQD;
 			} else {
-// TODO get value from linked to (-1)
 				this.lblNT.htmlText = "";
 				this.lblSS.htmlText = "";
 				this.lblDE.htmlText = "";
 				this.lblSH.htmlText = "";
 				this.lblCO.htmlText = "";
 				this.lblQD.htmlText = "";
+				
+				var lp:Pilot = SheetPilot(this.mySheet).getLinkedPilot();
+				if( lp != null )
+				{
+					this.lblNT.htmlText = "<b>" + (lp.getNaturalTouch()-1) + "</b>";
+					this.lblSS.htmlText = "<b>" + (lp.getSixthSense()-1) + "</b>";
+					this.lblDE.htmlText = "<b>" + (lp.getDeadEye()-1) + "</b>";
+					this.lblSH.htmlText = "<b>" + (lp.getSteadyHand()-1) + "</b>";
+					this.lblCO.htmlText = "<b>" + lp.getConstitution() + "</b>";
+					this.lblQD.htmlText = "<b>" + ((lp.getQuickDraw()[0])-1) + "</b>";
+				}
 			}
 			
 			this.lblType.text = Pilot.getSubTypeLabel(obj.getSubType());

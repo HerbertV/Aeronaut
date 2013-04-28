@@ -69,6 +69,7 @@ package as3.aeronaut.print
 		
 		private var myObject:Pilot;
 		private var squad:Squadron;
+		private var linkedPilot:Pilot;
 		
 		private var loader:ImageLoader;
 		
@@ -115,7 +116,8 @@ package as3.aeronaut.print
 			this.myObject = obj;
 			
 			this.loadSquadron();
-
+			this.loadLinkedPilot();
+			
 			var l:ImageLoader;
 			if( obj.getSrcFoto() != "" )
 			{
@@ -232,6 +234,34 @@ package as3.aeronaut.print
 		public function getSquadron():Squadron
 		{
 			return this.squad;
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * loadLinkedPilot
+		 * ---------------------------------------------------------------------
+		 */
+		private function loadLinkedPilot():void
+		{
+			if( this.myObject.getLinkedTo() == "") 
+				return;
+			
+			this.linkedPilot = new Pilot();
+			this.linkedPilot.loadFile(
+					mdm.Application.path 
+						+ this.myObject.getLinkedTo()
+				);
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
+		 * getLinkedPilot
+		 * ---------------------------------------------------------------------
+		 * @return
+		 */
+		public function getLinkedPilot():Pilot
+		{
+			return this.linkedPilot;
 		}
 		
 		/**
