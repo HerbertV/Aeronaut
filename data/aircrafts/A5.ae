@@ -1,6 +1,6 @@
 <aeronaut XMLVersion="1.0">
   
-  <aircraft frameType="fighter" PropType="tractor" baseTarget="8" accelRate="2" maxSpeed="4" maxGs="3" decelRate="2" engineCount="1" crewCount="1" srcFoto="" version="2.0">
+  <aircraft frameType="fighter" PropType="tractor" baseTarget="8" accelRate="2" maxSpeed="4" maxGs="3" decelRate="2" engineCount="1" crewCount="1" srcFoto="" version="2.0" freeWeight="10">
     
     <name>A5</name>
     
@@ -34,7 +34,9 @@
       <gunpoint pointNumber="8" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
       
       <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
       <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
     </gunpoints>
     
     <rocketslots count="3"/>

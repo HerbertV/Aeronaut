@@ -1,6 +1,6 @@
 <aeronaut XMLVersion="1.0">
   
-  <aircraft frameType="fighter" PropType="tractor" baseTarget="5" accelRate="2" maxSpeed="4" maxGs="2" decelRate="2" engineCount="1" crewCount="1" version="2.0" srcFoto="">
+  <aircraft frameType="fighter" PropType="tractor" baseTarget="5" accelRate="2" maxSpeed="4" maxGs="2" decelRate="2" engineCount="1" crewCount="1" version="2.0" srcFoto="" freeWeight="20">
     
     <name>F-3 Aguila</name>
     
@@ -34,7 +34,9 @@
       <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
       
       <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
       <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
     </gunpoints>
     
     <rocketslots count="6"/>

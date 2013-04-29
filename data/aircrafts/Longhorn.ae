@@ -1,0 +1,60 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft version="2.0" frameType="heavyBomber" PropType="tractor" baseTarget="22" accelRate="1" maxSpeed="1" maxGs="1" decelRate="2" engineCount="4" crewCount="1" srcFoto="" freeWeight="15696">
+    
+    <name>Longhorn</name>
+    
+    <manufacturer ID="C_037"/>
+    
+    <specs height="10,6" length="20,0" range="2000" serviceCeiling="5000" wingspan="25,0"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_017BC"/>
+      <specialCharacteristic ID="AC_039"/>
+      <specialCharacteristic ID="AC_004BC"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="3" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="4" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="5" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="6" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="9" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="10" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="0"/>
+    
+    <turrets>
+      
+      <turret direction="front" linkedGuns="1,2"/>
+      <turret direction="dorsal" linkedGuns="3,4"/>
+      <turret direction="ventral" linkedGuns="5,6"/>
+      <turret direction="left" linkedGuns="7"/>
+      <turret direction="right" linkedGuns="8"/>
+      <turret direction="rear" linkedGuns="9,10"/>
+    </turrets>
+    
+    <cargo></cargo>
+    
+    <armor starboardwingTrailing="100" tail="100" portwingTrailing="100" starboardwingLeading="100" nose="100" portwingLeading="100" portBow="100" portStern="100" starboardBow="100" starboardStern="100"/>
+    
+  </aircraft>
+  
+</aeronaut>

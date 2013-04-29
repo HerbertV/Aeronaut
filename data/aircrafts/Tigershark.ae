@@ -1,6 +1,6 @@
 <aeronaut XMLVersion="1.0">
   
-  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="4" accelRate="2" maxSpeed="3" maxGs="2" decelRate="2" engineCount="2" crewCount="2">
+  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="4" accelRate="2" maxSpeed="3" maxGs="2" decelRate="2" engineCount="2" crewCount="2" version="2.0" freeWeight="10" srcFoto="">
     
     <name>Tigershark</name>
     
@@ -35,13 +35,15 @@
       
       <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
       
+      <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
     </gunpoints>
     
     <rocketslots count="6"/>
     
     <turrets></turrets>
     
-    <armor starboardwingTrailing="70" tail="80" portwingTrailing="70" starboardwingLeading="60" nose="70" portwingLeading="60"/>
+    <armor starboardwingTrailing="70" tail="80" portwingTrailing="70" starboardwingLeading="60" nose="70" portwingLeading="60" portBow="0" portStern="0" starboardBow="0" starboardStern="0"/>
     
   </aircraft>
   

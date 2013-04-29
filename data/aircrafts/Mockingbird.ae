@@ -1,6 +1,6 @@
 <aeronaut XMLVersion="1.0">
   
-  <aircraft frameType="fighter" PropType="pusher" baseTarget="7" accelRate="3" maxSpeed="4" maxGs="4" decelRate="2" engineCount="1" crewCount="1">
+  <aircraft frameType="fighter" PropType="pusher" baseTarget="7" accelRate="3" maxSpeed="4" maxGs="4" decelRate="2" engineCount="1" crewCount="1" version="2.0" freeWeight="0" srcFoto="">
     
     <name>Mockingbird</name>
     
@@ -34,13 +34,15 @@
       
       <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
       
+      <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
     </gunpoints>
     
     <rocketslots count="4"/>
     
     <turrets></turrets>
     
-    <armor starboardwingTrailing="30" tail="40" portwingTrailing="30" starboardwingLeading="30" nose="30" portwingLeading="30"/>
+    <armor starboardwingTrailing="30" tail="40" portwingTrailing="30" starboardwingLeading="30" nose="30" portwingLeading="30" portBow="0" portStern="0" starboardBow="0" starboardStern="0"/>
     
   </aircraft>
   

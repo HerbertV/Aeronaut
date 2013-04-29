@@ -1,6 +1,6 @@
 <aeronaut XMLVersion="1.0">
   
-  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="2" accelRate="1" maxSpeed="2" maxGs="3" decelRate="2" engineCount="3" crewCount="2">
+  <aircraft frameType="heavyFighter" PropType="tractor" baseTarget="2" accelRate="1" maxSpeed="2" maxGs="3" decelRate="2" engineCount="3" crewCount="2" version="2.0" freeWeight="0" srcFoto="">
     
     <name>P2 Warhawk</name>
     
@@ -33,13 +33,15 @@
       
       <gunpoint pointNumber="8" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
       
+      <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
     </gunpoints>
     
     <rocketslots count="9"/>
     
     <turrets></turrets>
     
-    <armor starboardwingTrailing="50" tail="70" portwingTrailing="50" starboardwingLeading="50" nose="70" portwingLeading="50"/>
+    <armor starboardwingTrailing="50" tail="70" portwingTrailing="50" starboardwingLeading="50" nose="70" portwingLeading="50" portBow="0" portStern="0" starboardBow="0" starboardStern="0"/>
     
   </aircraft>
   
