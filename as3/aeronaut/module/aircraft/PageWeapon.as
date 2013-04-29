@@ -151,6 +151,8 @@ package as3.aeronaut.module.aircraft
 				var gunrow:GunRow = getGunRow(i);
 				setTurretLabel(i, gunrow.lblGunNTurret);
 			
+				gunrow.pdGunN.clearSelection();
+				
 				if( i <= this.intMaxGuns )
 				{
 					// active row get the values from our object
