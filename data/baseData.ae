@@ -451,7 +451,7 @@
 		<aircraftCharacteristics>
 
 			<specialCharacteristic ID="AC_001" groupID="nitro"  hasHardcodedAbility="true" countsToSCLimit="false" >
-				<name>Nitro Injectors</name>
+				<name>Nitro Injectors (5)</name>
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
 				<allowedFrame type="hoplite" />
@@ -835,7 +835,7 @@
 			</specialCharacteristic>
 		
 			<specialCharacteristic ID="AC_037" groupID="nitro" hasHardcodedAbility="true"  countsToSCLimit="false">
-				<name>Nitro Injectors (4 pack)</name>
+				<name>Nitro Injectors (4)</name>
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
 				<allowedFrame type="hoplite" />

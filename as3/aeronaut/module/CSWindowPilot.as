@@ -494,9 +494,8 @@ package as3.aeronaut.module
 				this.form.pdSubType.setActive(false);
 				this.form.rbtnCanLevelUp.setActive(false);
 				this.form.txtStartEP.text = this.myObject.getStartEP();
-				this.form.txtStartEP.selectable = false;
-				this.form.txtStartEP.type = TextFieldType.DYNAMIC;
-				
+				setTextFieldActive(this.form.txtStartEP, false);
+			
 				this.form.rbtnGenderMale.setActive(false);
 				this.form.rbtnGenderFemale.setActive(false);
 			}
@@ -996,6 +995,32 @@ package as3.aeronaut.module
 		
 		/**
 		 * ---------------------------------------------------------------------
+		 * setTextFieldActive
+		 * ---------------------------------------------------------------------
+		 * enables/disables the input for a textfield
+		 * 
+		 * @param txt
+		 * @param val
+		 */
+		private function setTextFieldActive(
+				txt:TextField, 
+				val:Boolean
+			):void
+		{
+			if( val ) 
+			{
+				txt.selectable = true;
+				txt.type = TextFieldType.INPUT;
+				txt.textColor = 0x000000;
+			} else {
+				txt.selectable = false;
+				txt.type = TextFieldType.DYNAMIC;
+				txt.textColor = 0xB1B1B1;
+			}
+		}
+		
+		/**
+		 * ---------------------------------------------------------------------
 		 * updateGUIByType
 		 * ---------------------------------------------------------------------
 		 */
@@ -1083,9 +1108,10 @@ package as3.aeronaut.module
 			
 			this.intTotalEP = Pilot.BASE_EP_OTHER;
 			this.intCurrentEP = Pilot.BASE_EP_OTHER;
-			this.form.txtStartEP.selectable = false;
-			this.form.txtStartEP.type = TextFieldType.DYNAMIC;
+			
+			setTextFieldActive(this.form.txtStartEP, false);
 			this.form.txtStartEP.text = String(Pilot.BASE_EP_OTHER);
+			
 			this.form.btnAddEP.setActive(true);
 			this.intMissionCount = 0;
 			
@@ -1107,13 +1133,12 @@ package as3.aeronaut.module
 				this.form.txtStartEP.text = String(Pilot.BASE_EP_SIDEKICK);
 				
 			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_CUSTOM ) {
-				this.form.txtStartEP.selectable = true;
-				this.form.txtStartEP.type = TextFieldType.INPUT;
-				
+				setTextFieldActive(this.form.txtStartEP, true);
+			
 			} else if( this.lastSelectedSubType == Pilot.SUBTYPE_CAPTAIN ) {
 				//captain starting EP left over CP from Zeppelin so we use the custom Start EP
-				this.form.txtStartEP.selectable = true;
-				this.form.txtStartEP.type = TextFieldType.INPUT;
+				setTextFieldActive(this.form.txtStartEP, true);
+			
 // TODO FF5 houserule CAPTAIN gets Zeppelin Pilot level 1 for free
 // TODO set use in Zeppelin Checkbox
 			

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aeronaut XMLVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="aeronaut.xsd">
-	<baseData version="2.0">
+	<baseData version="2.1">
 		<!--
 			 debug level:
 				0 = OFF
@@ -450,7 +450,7 @@
 		<aircraftCharacteristics>
 
 			<specialCharacteristic ID="AC_001" groupID="nitro"  hasHardcodedAbility="true" countsToSCLimit="false" >
-				<name>Nitro Injectors</name>
+				<name>Nitro Injectors (5)</name>
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
 				<allowedFrame type="hoplite" />
@@ -834,7 +834,7 @@
 			</specialCharacteristic>
 		
 			<specialCharacteristic ID="AC_037" groupID="nitro" hasHardcodedAbility="true"  countsToSCLimit="false">
-				<name>Nitro Injectors (4 pack)</name>
+				<name>Nitro Injectors (4)</name>
 				<allowedFrame type="fighter" />
 				<allowedFrame type="heavyFighter" />
 				<allowedFrame type="hoplite" />

@@ -2,7 +2,7 @@
 
 -----------------------------------
 
-*An unoffical custom aircraft, pilot design and editing tool for the out-of-print CRIMSON SKIES boardgame created by FASA.*
+*An unoffical custom aircraft, zeppelin and pilot design/editing tool for the out-of-print CRIMSON SKIES boardgame created by FASA.*
 
 *Inspired by Scott Janssens' CADET.*
 *Very special thanks to Patrick Koepke for releasing his "Zeppelin & Bombers" sourcebook un-official.*

@@ -64,7 +64,7 @@ package as3.aeronaut.objects
 		private var myCrewChiefFile:String = "";
 		private var myLoadMasterFile:String = "";
 		private var myBombardierFile:String = "";
-		// myGunnerFiles[0] is the nose gunner
+		// myGunnerFiles[0] is the main gunner (mostly the nosegunner)
 		private var myGunnerFiles:Array = new Array("","","","","","");
 		private var myGuardFiles:Array = new Array("","","","","","");
 		private var myLoaderFiles:Array = new Array("","","","","","","","");

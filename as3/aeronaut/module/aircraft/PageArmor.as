@@ -330,16 +330,28 @@ package as3.aeronaut.module.aircraft
 			
 			this.validateForm();
 			
-			//Cost
-			this.intCost = int(this.numStepArmorComplete.getValue() * 2.5 );
-			// mod
+			var frame:String = CSWindowAircraft(this.winAircraft).getFrameType();
+			if( frame == FrameDefinition.FT_HEAVY_BOMBER
+					|| frame == FrameDefinition.FT_HEAVY_CARGO
+					|| frame == FrameDefinition.FT_LIGHT_BOMBER
+					|| frame == FrameDefinition.FT_LIGHT_CARGO
+				)
+			{
+				// Weight and cost for bombers/cargos
+				this.intWeight = this.numStepArmorComplete.getValue() * 10;
+				this.intCost = int(this.numStepArmorComplete.getValue() * 5);
+			} else {
+				// Weight and cost for normal aircrafts
+				this.intWeight = this.numStepArmorComplete.getValue() * 3;
+				this.intCost = int(this.numStepArmorComplete.getValue() * 2.5 );
+			}
+			// mod cost
 			this.intCost += int( this.winAircraft.form.page1.getArmorCostMod() 
 					* this.intCost 
 				);
 			this.winAircraft.form.lblCostArmor.text = 
 					CSFormatter.formatDollar(this.intCost);
-			// Weight
-			this.intWeight = this.numStepArmorComplete.getValue() * 3;
+			
 			this.lblArmorWeight.text =  CSFormatter.formatLbs(this.intWeight);
 		}
 		

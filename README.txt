@@ -3,7 +3,7 @@ ________              ___   ____     Crimson Skies      __             ________
     \_______\-------/ __ |/ _// __/ _ \/ _ \/ _ `/ // / __/-------/_______/ 
        \______\----/_/ |_/___/_/  \___/_//_/\_,_/\_,_/\__/----/______/
 
-	an unoffical custom aircraft, pilot design and editing tool 
+	an unoffical custom aircraft, zeppelin and pilot design/editing tool 
 	for the out-of-print CRIMSON SKIES boardgame by created FASA. 
  
 	Inspired by Scott Janssens' CADET. 
@@ -18,7 +18,7 @@ ________              ___   ____     Crimson Skies      __             ________
 	Sources: http://github.com/HerbertV/Aeronaut/
 
 ================================================================================
-	Version 1.1.0 alpha 03
+	Version 1.1.0 beta 01
 ================================================================================
 
 --------------------------------------------------------------------------------
