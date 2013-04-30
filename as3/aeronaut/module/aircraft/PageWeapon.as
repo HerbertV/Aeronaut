@@ -657,11 +657,11 @@ package as3.aeronaut.module.aircraft
 				var gun:Gun = Globals.myBaseData.getGun(gunid);
 				var gunWeight:int = gun.weight;
 				var gunCost:int = gun.price;
-				var modCost:Number = 0.00;
+				var modCost:int = 0;
 			
 				if( gunrow.rbtnGunNAmmoLinked.getIsSelected() )
 				{
-					modCost = modCostAmmoLinked;
+					modCost = modCostAmmoLinked * 100;
 					gunrow.numStepGunNAmmo.setActive(true);
 					if( gunrow.numStepGunNAmmo.getValue() == 0 ) 
 						gunrow.numStepGunNAmmo.setValue(1);
@@ -672,7 +672,7 @@ package as3.aeronaut.module.aircraft
 				
 				if( gunrow.rbtnGunNFireLinked.getIsSelected() )
 				{
-					modCost += modCostFireLinked;
+					modCost += modCostFireLinked * 100;
 					gunrow.numStepGunNFire.setActive(true);
 					if( gunrow.numStepGunNFire.getValue() == 0 ) 
 						gunrow.numStepGunNFire.setValue(1);
@@ -683,14 +683,17 @@ package as3.aeronaut.module.aircraft
 				
 				if(	gunrow.rbtnGunNTurret.getIsSelected() )
 				{
-					gunWeight += (gun.weight * 0.5);
-					modCost += 0.50;				
+					// Note: this is done to avoid a floating point problem.
+					gunWeight += int((gun.weight * 50) / 100);
+					// factor 0.5
+					modCost += 50;				
 					// for later cost and weight calculation we store every active turret once.
 					tdir = frameDef.getTurretDirectionForGunPoint(i);
 					if( arrTurretsInUse.indexOf(tdir) == -1 )
 						arrTurretsInUse.push(tdir);
 				}
-				gunCost += int(gun.price * modCost);
+				// Note: this is done to avoid a floating point problem.
+				gunCost += int((gun.price * modCost)/100);
 				
 				gunrow.lblGunNWeight.text = CSFormatter.formatLbs(gunWeight);
 				

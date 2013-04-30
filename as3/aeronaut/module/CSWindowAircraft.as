@@ -271,11 +271,11 @@ package as3.aeronaut.module
 			this.form.numStepRange.setupTooltip(Globals.myTooltip,"");
 			this.form.numStepEngine.setupSteps(1,8,1,1);
 			this.form.numStepEngine.setActive(false);
-			this.form.numStepWingSpan.setupSteps(10 ,100 ,25, 0);
+			this.form.numStepWingSpan.setupSteps(10, 500 ,25, 0);
 			this.form.numStepWingSpan.setupTooltip(Globals.myTooltip,"");
-			this.form.numStepLength.setupSteps(10 ,100 ,20, 0);
+			this.form.numStepLength.setupSteps(10, 500 ,20, 0);
 			this.form.numStepLength.setupTooltip(Globals.myTooltip,"");
-			this.form.numStepHeight.setupSteps(5 ,30 ,10, 6);
+			this.form.numStepHeight.setupSteps(5, 100 ,10, 6);
 			this.form.numStepHeight.setupTooltip(Globals.myTooltip, "");
 			
 			this.form.btnImportCadet.setupTooltip(Globals.myTooltip,"Import CADET Aircraft");

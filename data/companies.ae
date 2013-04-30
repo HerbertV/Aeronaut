@@ -175,6 +175,35 @@
 			<shortName>Lockheed</shortName>
 			<longName>Lockheed Aircraft Company</longName>
 		</company>
-							
+		<company ID="C_044">
+			<shortName>Hawknest</shortName>
+			<longName>Hawknest Aviation</longName>
+		</company>
+		<company ID="C_045">
+			<shortName>Heinkel</shortName>
+			<longName>Heinkel Flugzeugwerke</longName>
+		</company>
+		<company ID="C_046">
+			<shortName>Lehi</shortName>
+			<longName>Lehi Aerocorp</longName>
+		</company>
+		<company ID="C_047">
+			<shortName>CDB</shortName>
+			<longName>Columbia Design Bureau (CDB)</longName>
+		</company>
+		<company ID="C_048">
+			<shortName>DCE</shortName>
+			<longName>Deseret Cooperative Engineering (DCE)</longName>
+		</company>
+		<company ID="C_049">
+			<shortName>Brunswick</shortName>
+			<longName>Brunswick Comet Co.</longName>
+		</company>
+		<company ID="C_050">
+			<shortName>Pursuit</shortName>
+			<longName>Pursuit Aviation</longName>
+		</company>
+		
+		
 	</companies>
 </aeronaut>

@@ -1,0 +1,51 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft version="2.0" frameType="heavyBomber" PropType="pusher" baseTarget="23" accelRate="1" maxSpeed="2" maxGs="1" decelRate="2" engineCount="4" crewCount="1" srcFoto="" freeWeight="26400">
+    
+    <name>Gunslinger</name>
+    
+    <manufacturer ID="C_043"/>
+    
+    <specs height="10,6" length="20,0" range="2200" serviceCeiling="5000" wingspan="25,0"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_040"/>
+      <specialCharacteristic ID="AC_017BC"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="0"/>
+    
+    <turrets></turrets>
+    
+    <cargo></cargo>
+    
+    <armor starboardwingTrailing="40" tail="40" portwingTrailing="40" starboardwingLeading="40" nose="40" portwingLeading="40" portBow="40" portStern="40" starboardBow="40" starboardStern="40"/>
+    
+  </aircraft>
+  
+</aeronaut>

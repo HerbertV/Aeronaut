@@ -1,0 +1,55 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft version="2.0" frameType="lightBomber" PropType="tractor" baseTarget="12" accelRate="1" maxSpeed="3" maxGs="2" decelRate="2" engineCount="2" crewCount="1" srcFoto="" freeWeight="3550">
+    
+    <name>HE-101</name>
+    
+    <manufacturer ID="C_045"/>
+    
+    <specs height="10,6" length="20,0" range="800" serviceCeiling="5000" wingspan="25,0"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_045"/>
+      <specialCharacteristic ID="AC_026"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="3" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="4" gunID="CAL_30_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="5" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="0"/>
+    
+    <turrets>
+      
+      <turret direction="front" linkedGuns="1,2"/>
+      <turret direction="rear" linkedGuns="3,4"/>
+    </turrets>
+    
+    <cargo></cargo>
+    
+    <armor starboardwingTrailing="30" tail="30" portwingTrailing="30" starboardwingLeading="30" nose="30" portwingLeading="30" portBow="30" portStern="30" starboardBow="30" starboardStern="30"/>
+    
+  </aircraft>
+  
+</aeronaut>

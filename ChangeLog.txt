@@ -18,6 +18,8 @@ Version - 1.1.0 beta 01:
 -	new file list for pulldowns allows you to store pilots, aircrafts, loadouts
 	squadrons into sub folders of thier base folder.
 -	Implemented issue #9: linked to for pilots who cannot level by thier own.
+-	added new aircrafts and companies from Z&B
+-	updated existing aircrafts to file version 2.0
 
 
 Version - 1.1.0 alpha 03: 

@@ -1,0 +1,52 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft version="2.0" frameType="fighter" PropType="pusher" baseTarget="9" accelRate="2" maxSpeed="4" maxGs="4" decelRate="2" engineCount="1" crewCount="1" srcFoto="" freeWeight="0">
+    
+    <name>Bloodhawk E</name>
+    
+    <manufacturer ID="C_006"/>
+    
+    <specs height="10,6" length="20,0" range="75" serviceCeiling="5000" wingspan="25,0"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_038"/>
+      <specialCharacteristic ID="AC_009"/>
+      <specialCharacteristic ID="AC_027"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_40_N" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="8" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="9" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="10" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="2"/>
+    
+    <turrets></turrets>
+    
+    <cargo></cargo>
+    
+    <armor starboardwingTrailing="30" tail="40" portwingTrailing="30" starboardwingLeading="30" nose="30" portwingLeading="30" portBow="0" portStern="0" starboardBow="0" starboardStern="0"/>
+    
+  </aircraft>
+  
+</aeronaut>

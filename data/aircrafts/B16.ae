@@ -1,0 +1,57 @@
+<aeronaut XMLVersion="1.0">
+  
+  <aircraft version="2.0" frameType="heavyBomber" PropType="tractor" baseTarget="19" accelRate="1" maxSpeed="2" maxGs="1" decelRate="2" engineCount="2" crewCount="1" srcFoto="" freeWeight="10000">
+    
+    <name>B-16/Rainer</name>
+    
+    <manufacturer ID="C_044"/>
+    
+    <specs height="10,6" length="20,0" range="800" serviceCeiling="5000" wingspan="25,0"/>
+    
+    <specialCharacteristics>
+      
+      <specialCharacteristic ID="AC_039"/>
+      <specialCharacteristic ID="AC_043"/>
+    </specialCharacteristics>
+    
+    <gunpoints>
+      
+      <gunpoint pointNumber="1" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="2" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="3" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="4" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="5" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="6" gunID="" firelinkGroup="0" ammolinkGroup="0" direction="forward"/>
+      
+      <gunpoint pointNumber="7" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="8" gunID="CAL_50_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="9" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+      <gunpoint pointNumber="10" gunID="CAL_60_N" firelinkGroup="0" ammolinkGroup="0" direction="turret"/>
+      
+    </gunpoints>
+    
+    <rocketslots count="0"/>
+    
+    <turrets>
+      
+      <turret direction="front" linkedGuns="1,2"/>
+      <turret direction="left" linkedGuns="7"/>
+      <turret direction="right" linkedGuns="8"/>
+      <turret direction="rear" linkedGuns="9,10"/>
+    </turrets>
+    
+    <cargo></cargo>
+    
+    <armor starboardwingTrailing="80" tail="80" portwingTrailing="80" starboardwingLeading="80" nose="80" portwingLeading="80" portBow="80" portStern="80" starboardBow="80" starboardStern="80"/>
+    
+  </aircraft>
+  
+</aeronaut>

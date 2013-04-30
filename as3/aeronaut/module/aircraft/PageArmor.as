@@ -343,7 +343,7 @@ package as3.aeronaut.module.aircraft
 			} else {
 				// Weight and cost for normal aircrafts
 				this.intWeight = this.numStepArmorComplete.getValue() * 3;
-				this.intCost = int(this.numStepArmorComplete.getValue() * 2.5 );
+				this.intCost = int(this.numStepArmorComplete.getValue() * 2.50 );
 			}
 			// mod cost
 			this.intCost += int( this.winAircraft.form.page1.getArmorCostMod() 
