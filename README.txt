@@ -26,6 +26,10 @@ ________              ___   ____     Crimson Skies      __             ________
 --------------------------------------------------------------------------------
 	Supports the official rules from all official sources.
 	Supports FF5 housrules.
+	Covers also rockets and aircrafts from the original PC game.	
+	
+	Including new items and aircrafts from "National Air Races" by Jason Tudor	
+	http://www.jasontudor.com/
 	
 	Since version 1.1.0 (Work in Progress):
 	Supports the "un-official" "Zeppelin & Bombers" rules written 
