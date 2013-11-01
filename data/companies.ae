@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<aeronaut XMLVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="aeronaut.xsd">
+<aeronaut XMLVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.veitengruber.com/aeronaut.xsd">
 	
 	<!-- ==================================== Companies ==================================== -->
-	<companies>
+	<companies version="1.0">
 		<company ID="C_001">
 			<shortName>Bell</shortName>
 			<longName>Bell Aircraft Corporation</longName>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Herbert Veitengruber (privat) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="aeronaut">
 		<xs:annotation>
-			<xs:documentation>ROOT</xs:documentation>
+			<xs:documentation>ROOT latest version also at: xsd.veitengruber,com/aeronaut.xsd</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:choice>
@@ -584,7 +585,7 @@ maxSC max special characteristics</xs:documentation>
 										<xs:simpleType>
 											<xs:restriction base="xs:int">
 												<xs:minInclusive value="1"/>
-												<xs:maxInclusive value="8"/>
+												<xs:maxInclusive value="10"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:attribute>
@@ -625,7 +626,7 @@ maxSC max special characteristics</xs:documentation>
 				<xs:element name="bombs">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="bombLoadout" maxOccurs="32">
+							<xs:element name="bombLoadout" minOccurs="0" maxOccurs="32">
 								<xs:complexType>
 									<xs:attribute name="bay" use="required">
 										<xs:simpleType>
@@ -671,7 +672,7 @@ maxSC max special characteristics</xs:documentation>
 						<xs:attribute name="naturalTouch" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
-									<xs:minInclusive value="1"/>
+									<xs:minInclusive value="0"/>
 									<xs:maxInclusive value="11"/>
 								</xs:restriction>
 							</xs:simpleType>
@@ -679,7 +680,7 @@ maxSC max special characteristics</xs:documentation>
 						<xs:attribute name="sixthSense" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
-									<xs:minInclusive value="1"/>
+									<xs:minInclusive value="0"/>
 									<xs:maxInclusive value="11"/>
 								</xs:restriction>
 							</xs:simpleType>
@@ -687,7 +688,7 @@ maxSC max special characteristics</xs:documentation>
 						<xs:attribute name="deadEye" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
-									<xs:minInclusive value="1"/>
+									<xs:minInclusive value="0"/>
 									<xs:maxInclusive value="11"/>
 								</xs:restriction>
 							</xs:simpleType>
@@ -695,7 +696,7 @@ maxSC max special characteristics</xs:documentation>
 						<xs:attribute name="steadyHand" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
-									<xs:minInclusive value="1"/>
+									<xs:minInclusive value="0"/>
 									<xs:maxInclusive value="11"/>
 								</xs:restriction>
 							</xs:simpleType>
@@ -703,13 +704,19 @@ maxSC max special characteristics</xs:documentation>
 						<xs:attribute name="constitution" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:int">
-									<xs:minInclusive value="1"/>
+									<xs:minInclusive value="0"/>
 									<xs:maxInclusive value="11"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:attribute>
 						<xs:attribute name="quickDraw" type="xs:string" use="required"/>
-						<xs:attribute name="bailOutBonus" type="xs:int" use="required"/>
+						<xs:attribute name="bailOutBonus" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="0"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="appearance">
@@ -753,7 +760,7 @@ maxSC max special characteristics</xs:documentation>
 						<xs:sequence>
 							<xs:element name="learnedLanguage" minOccurs="0" maxOccurs="unbounded">
 								<xs:complexType>
-									<xs:attribute name="languageID" type="xs:string" use="required"/>
+									<xs:attribute name="ID" type="xs:string" use="required"/>
 									<xs:attribute name="isMotherTongue" type="xs:boolean" use="required"/>
 								</xs:complexType>
 							</xs:element>
@@ -874,7 +881,7 @@ wingspan, length and height in feets and inches as CSV first feet then inches. N
 										<xs:simpleType>
 											<xs:restriction base="xs:int">
 												<xs:minInclusive value="1"/>
-												<xs:maxInclusive value="8"/>
+												<xs:maxInclusive value="10"/>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:attribute>
@@ -1037,7 +1044,7 @@ it includes aircraft and zeppelin manufactures</xs:documentation>
 	</xs:element>
 	<xs:simpleType name="url">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[a-zA-Z0-9\.]+/*[a-zA-Z0-9/\\%_.]*\?*[a-zA-Z0-9/\\%_.=&amp;]*"/>
+			<xs:pattern value="(^$|[a-zA-Z0-9\.]+/*[a-zA-Z0-9/\\%_.]*\?*[a-zA-Z0-9/\\%_.=&amp;]*)|"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="aircraftFrames">

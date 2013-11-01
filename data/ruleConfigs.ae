@@ -1,4 +1,4 @@
-<aeronaut XMLVersion="1.0" xsi:noNamespaceSchemaLocation="aeronaut.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<aeronaut XMLVersion="1.0" xsi:noNamespaceSchemaLocation="http://xsd.veitengruber.com/aeronaut.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ruleConfigs version="1.1">
     <genericSettings>
       <printAircraftFlavorSheet doPrint="false"/>
