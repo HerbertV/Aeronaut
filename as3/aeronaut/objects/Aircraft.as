@@ -110,7 +110,7 @@ package as3.aeronaut.objects
 		{
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.veitengruber.com/aeronaut.xsd">
 					<aircraft version={FILE_VERSION} frameType="fighter" PropType="tractor" baseTarget="5" accelRate="1" maxSpeed="1" maxGs="1" decelRate="2" engineCount="1" crewCount="1" srcFoto="">
 						<name>New Plane</name>
 						<manufacturer ID=""/>

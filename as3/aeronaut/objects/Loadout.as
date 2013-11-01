@@ -98,7 +98,7 @@ package as3.aeronaut.objects
 		{
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.veitengruber.com/aeronaut.xsd">
 					<loadout version={Loadout.FILE_VERSION} srcAircraft="">
 						<name>New Loadout</name>
 						<gunAmmos>

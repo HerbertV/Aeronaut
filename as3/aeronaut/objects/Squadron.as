@@ -97,7 +97,7 @@ package as3.aeronaut.objects
 		{
 			myXML = new XML();
 			myXML =
-				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.veitengruber.com/aeronaut.xsd">
 					<squadron version="2.0" srcLogo="" typeID="" honorLevel="1">
 						<name>New Squadron</name>
 						<priorityList> </priorityList>

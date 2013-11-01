@@ -85,6 +85,10 @@ package as3.aeronaut.objects
 				this.myFilename = filename;
 			
 			var aexml:AeronautXMLProcessor = new AeronautXMLProcessor();
+			
+			// set the schema
+			this.myXML.@['xmlns:xsi'] = "http://www.w3.org/2001/XMLSchema-instance";
+			this.myXML.@['xsi:noNamespaceSchemaLocation'] = "http://xsd.veitengruber.com/aeronaut.xsd";
 			aexml.saveXML(filename,this.myXML);
 				
 			return (!aexml.hasSavingError());

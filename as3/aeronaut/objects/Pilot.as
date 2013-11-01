@@ -235,7 +235,7 @@ package as3.aeronaut.objects
 			myXML = new XML();
 			
 			myXML =
-				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION}>
+				<aeronaut XMLVersion={AbstractXMLProcessor.XMLDOCVERSION} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.veitengruber.com/aeronaut.xsd">
 					<pilot version={FILE_VERSION} type={TYPE_PILOT} subtype={SUBTYPE_HERO} linkedTo="" canLevelUp="true" useForAircrafts="true" useForZeppelins="false">
 						<name>New Pilot</name>
 						<stats naturalTouch="0" sixthSense="0" deadEye="0" steadyHand="0" constitution="3" quickDraw="0,0" bailOutBonus="0" />
